@@ -1,77 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Publications of Vishal John</title>
-    <style>
-        /* Existing styles here... (Same as before) */
 
-        .publication {
+<head>
+    <!-- ... (your existing meta tags and other head elements) -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header, section, footer {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1, section h2 {
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        /* Navigation styles */
+        nav ul {
+            padding: 0;
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
             margin-bottom: 20px;
         }
 
-        .publication h3 {
-            margin: 0;
-            font-size: 1.2em;
+        nav li {
+            margin: 0 15px;
         }
 
-        .publication p {
-            margin: 5px 0;
-        }
-
-        .publication a {
-            color: #0077cc;
+        nav a {
             text-decoration: none;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
 
-        .publication a:hover {
-            text-decoration: underline;
+        nav a:hover {
+            background-color: #e0e0e0;
         }
+
+        /* Publications list styles */
+        #publications-list {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        #publications-list li {
+            margin-bottom: 20px;
+        }
+
+        #publications-list a {
+            color: #007BFF;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        #publications-list a:hover {
+            color: #0056b3;
+        }
+
     </style>
 </head>
+
 <body>
     <header>
         <h1>Vishal John</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Welcome</a></li>
-                <li><a href="about.html">About Me</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="publications.html">Publications</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.html">Welcome.</a></li>
+                <li><a href="about.html">About Me.</a></li>
+                <li><a href="blog.html">Blog.</a></li>
+                <li><a href="publications.html">Publications.</a></li>
+                <li><a href="contact.html">Contact.</a></li>
             </ul>
         </nav>
+        <p>Welcome to my Publications page!</p>
     </header>
-    
+
     <section id="publications">
         <h2>My Publications</h2>
-
-        <!-- Example publication entry -->
-        <div class="publication">
-            <h3>Research Paper Title 1</h3>
-            <p>
-                Brief description or abstract of the research paper.
-            </p>
-            <a href="link_to_paper1.pdf" target="_blank">Read the full paper</a>
-        </div>
-
-        <!-- Another example publication entry -->
-        <div class="publication">
-            <h3>Research Paper Title 2</h3>
-            <p>
-                Another description or abstract of a different research paper.
-            </p>
-            <a href="link_to_paper2.pdf" target="_blank">Read the full paper</a>
-        </div>
-
-        <!-- Continue to add more publications in the same format -->
+        <ul id="publications-list">
+            <li>
+                <strong>Title of Paper 1:</strong> Brief description or abstract of the paper. 
+                [<a href="link_to_paper_1.pdf" target="_blank">Read Paper</a>]
+            </li>
+            <li>
+                <strong>Title of Paper 2:</strong> Brief description or abstract of the paper. 
+                [<a href="link_to_paper_2.pdf" target="_blank">Read Paper</a>]
+            </li>
+            <!-- Continue to add more papers in this format -->
+        </ul>
     </section>
 
     <footer>
         <p>© 2023 Vishal John. All Rights Reserved.</p>
     </footer>
 </body>
+
 </html>
+
 
