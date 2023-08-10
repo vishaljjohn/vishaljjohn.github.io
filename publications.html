@@ -4,66 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Vishal John</title>
+    <title>Publications of Vishal John</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        /* Existing styles here... (Same as before) */
+
+        .publication {
+            margin-bottom: 20px;
+        }
+
+        .publication h3 {
             margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+            font-size: 1.2em;
         }
 
-        header, section, footer {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .publication p {
+            margin: 5px 0;
         }
 
-        header h1, section h2 {
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 10px;
-        }
-
-        /* Navigation styles */
-        nav ul {
-            padding: 0;
-            list-style-type: none;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px; 
-        }
-
-        nav li {
-            margin: 0 15px;
-        }
-
-        nav a {
+        .publication a {
+            color: #0077cc;
             text-decoration: none;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
         }
 
-        nav a:hover {
-            background-color: #e0e0e0;
-        }
-
-        .image-wrapper, .info-wrapper {
-            display: inline-block;
-            vertical-align: top;
-        }
-
-        .image-wrapper {
-            width: 30%;
-            padding: 20px;
-        }
-
-        .info-wrapper {
-            width: 65%;
-            padding: 20px;
+        .publication a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -81,15 +45,28 @@
         </nav>
     </header>
     
-    <section id="about-me">
-        <div class="image-wrapper">
-            <img src="Vishal John Headshot.jpg" alt="Portrait of Vishal John" width="300">
+    <section id="publications">
+        <h2>My Publications</h2>
+
+        <!-- Example publication entry -->
+        <div class="publication">
+            <h3>Research Paper Title 1</h3>
+            <p>
+                Brief description or abstract of the research paper.
+            </p>
+            <a href="link_to_paper1.pdf" target="_blank">Read the full paper</a>
         </div>
-        <div class="info-wrapper">
-            <h2>About Me</h2>
-            <!-- Your content goes here -->
-            <p>Hey there! I'm Vishal, a lifelong learner, avid rock climber, community volunteer... [continue the rest of your content]</p>
+
+        <!-- Another example publication entry -->
+        <div class="publication">
+            <h3>Research Paper Title 2</h3>
+            <p>
+                Another description or abstract of a different research paper.
+            </p>
+            <a href="link_to_paper2.pdf" target="_blank">Read the full paper</a>
         </div>
+
+        <!-- Continue to add more publications in the same format -->
     </section>
 
     <footer>
@@ -97,3 +74,4 @@
     </footer>
 </body>
 </html>
+
