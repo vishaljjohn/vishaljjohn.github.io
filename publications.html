@@ -88,6 +88,38 @@
         <p>Welcome to my Publications page!</p>
     </header>
 
+<section id="Gallery">
+    <h2>Gallery</h2>
+    <div class="image-grid">
+        <img src="path_to_image1.jpg" alt="Description of Image 1">
+        <img src="path_to_image2.jpg" alt="Description of Image 2">
+        <img src="path_to_image3.jpg" alt="Description of Image 3">
+        <!-- Add more images as needed -->
+    </div>
+</section>
+
+/* Gallery styles */
+#gallery .image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* This will create a responsive grid of images */
+    gap: 10px; /* Spacing between images */
+    margin-top: 20px;
+}
+
+#gallery img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+#gallery img:hover {
+    transform: scale(1.05); /* Slightly enlarges the image on hover */
+}
+
+
+    
     <section id="publications">
         <h2>My Publications</h2>
         <ul id="publications-list">
