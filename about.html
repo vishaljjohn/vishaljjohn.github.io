@@ -51,31 +51,16 @@
             background-color: #e0e0e0;
         }
 
-       * {
-    box-sizing: border-box;
+    .image-wrapper, .info-wrapper {
+    width: 100%; /* Make them full width */
+    text-align: center; /* Center the contents */
 }
 
-
-.image-wrapper, .info-wrapper {
-    display: inline-block;
-    vertical-align: top;
-    overflow: auto; /* Add this line */
-}
-
-.image-wrapper {
-    width: 30%;
-    padding: 20px;
-    max-width: 300px; /* Limit the width */
-}
-
-.info-wrapper {
-    width: 65%;
-    padding: 20px;
-}
-
-img {
+.image-wrapper img {
     max-width: 100%; /* Ensures the image doesn't overflow its container */
+    margin: 0 auto; /* Center the image if it's width is smaller than the container */
 }
+
     </style>
 </head>
 <body>
@@ -92,11 +77,11 @@ img {
         </nav>
     </header>
     
-    <section id="about-me">
-        <div class="image-wrapper">
-            <img src="Vishal John Headshot.jpg" alt="Portrait of Vishal John" width="600">
-        </div>
-        <div class="info-wrapper">
+   <section id="about-me">
+    <div class="image-wrapper">
+        <img src="Vishal John Headshot.jpg" alt="Portrait of Vishal John" width="300">
+    </div>
+    <div class="info-wrapper">
             <h2>About Me</h2>
             <!-- Your content goes here -->
             <p>Hey there! I'm Vishal, a lifelong learner, avid rock climber, community volunteer.
