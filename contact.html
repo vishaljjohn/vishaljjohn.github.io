@@ -1,86 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Vishal John</title>
+    <!-- ... (your existing meta tags and other head elements) -->
     <style>
-        /* Existing styles here... (Same as before) */
-
-        .contact-form {
-            max-width: 500px;
-            margin: 20px auto;
-        }
-
-        .contact-form label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .contact-form input[type="text"], 
-        .contact-form input[type="email"], 
-        .contact-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        body {
             font-family: Arial, sans-serif;
-            font-size: 1em;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header, section, footer {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1, section h2 {
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        /* Navigation styles */
+        nav ul {
+            padding: 0;
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;  /* Additional spacing below the navigation */
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Contact Form Styles */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;  /* Space between input fields */
+        }
+
+        .contact-form input, .contact-form textarea {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .contact-form button {
-            padding: 10px 20px;
-            background-color: #333;
-            color: #fff;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: #ffffff;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .contact-form button:hover {
-            background-color: #555;
+            background-color: #0056b3;
         }
 
     </style>
 </head>
+
 <body>
     <header>
         <h1>Vishal John</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Welcome</a></li>
-                <li><a href="about.html">About Me</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="publications.html">Publications</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.html">Welcome.</a></li>
+                <li><a href="about.html">About Me.</a></li>
+                <li><a href="blog.html">Blog.</a></li>
+                <li><a href="publications.html">Publications.</a></li>
+                <li><a href="contact.html">Contact.</a></li>
             </ul>
         </nav>
+        <p>Welcome to my Contact page!</p>
     </header>
-    
+
     <section id="contact-info">
         <h2>Contact Information</h2>
-        <p>Email: <a href="mailto:johnvish@umich.edu">johnvish@umich.edu</a></p>
-        <!-- Add more contact info if needed -->
+        <p>You can get in touch with me directly at: 
+           <a href="mailto:johnvish@umich.edu">johnvish@umich.edu</a></p>
     </section>
 
     <section id="contact-form">
-        <h2>Get in Touch</h2>
-        <form action="process_contact.php" method="POST" class="contact-form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="subject">Subject:</label>
-            <input type="text" id="subject" name="subject" required>
-
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" rows="5" required></textarea>
-
-            <button type="submit">Submit</button>
+        <h2>Message Me</h2>
+        <form class="contact-form" action="YOUR_SERVER_SCRIPT_URL" method="post">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="subject" placeholder="Subject" required>
+            <textarea name="message" rows="6" placeholder="Description" required></textarea>
+            <button type="submit">Send Message</button>
         </form>
     </section>
 
@@ -88,4 +117,6 @@
         <p>© 2023 Vishal John. All Rights Reserved.</p>
     </footer>
 </body>
+
 </html>
+
