@@ -1,56 +1,51 @@
-body {
-    font-family: 'San Francisco', Arial, sans-serif; /* Apple uses the San Francisco font, but fall back to Arial and sans-serif if not available */
+/* Reset some default styles */
+body, h1, p, ul, li {
     margin: 0;
     padding: 0;
+    font-family: 'Arial', sans-serif;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+body {
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-nav {
+header {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px 0;
-}
-
-nav .logo {
-    font-weight: bold;
-    font-size: 24px;
 }
 
 nav ul {
-    list-style: none;
-    padding-left: 0;
     display: flex;
-    gap: 20px;
+    justify-content: space-around;
+    list-style-type: none;
+    padding: 1rem 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #007AFF; /* Apple's signature blue */
 }
 
 .hero {
-    background-color: #f0f0f0;
-    padding: 100px 0;
+    background-color: #fff;
+    padding: 6rem 0;
     text-align: center;
 }
 
-.content {
-    padding: 50px 0;
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
 }
 
 footer {
-    background-color: #222;
-    color: #fff;
-    padding: 20px 0;
+    background-color: #fff;
     text-align: center;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-    transition: color 0.3s;
-}
-
-a:hover {
-    color: #007aff; /* Apple's link hover color */
+    padding: 1rem 0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
