@@ -2,26 +2,28 @@
 <html lang="en">
 <head>
     <!-- ... (your existing meta tags and other head elements) -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
+            font-weight: 300; /* Lighter font-weight */
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #ffffff; /* Solid white background */
         }
 
         header, section, footer {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
+            max-width: 100%; /* Make it span the full width */
+            margin: 0 auto;
+            padding: 20px 50px; /* Added some side padding */
             background-color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: none; /* Removed the shadow for cleaner look */
         }
 
         header h1, section h2 {
-            border-bottom: 2px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0; /* Thinner border */
             padding-bottom: 10px;
+            font-weight: 300; /* Lighter font-weight */
         }
 
         /* Navigation styles */
@@ -29,8 +31,7 @@
             padding: 0;
             list-style-type: none;
             display: flex;
-            justify-content: center;
-            margin-bottom: 20px;  /* Additional spacing below the navigation */
+            justify-content: space-around; /* Change to space-around for even distribution */
         }
 
         nav li {
@@ -39,18 +40,40 @@
 
         nav a {
             text-decoration: none;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+            color: #8e8e93;  /* Muted color */
+            font-weight: 300;
+            transition: color 0.3s;
         }
 
         nav a:hover {
-            background-color: #e0e0e0;
+            color: #007aff; /* Apple's link hover color */
         }
 
+        footer {
+            text-align: center;
+        }
+
+        footer a {
+            color: #8e8e93;
+        }
+
+        footer p {
+            color: #8e8e93;
+            font-size: 14px;
+        }
+
+        /* Font Awesome icons styling */
+        .fab {
+            color: #8e8e93;
+            transition: color 0.3s;
+        }
+
+        .fab:hover {
+            color: #007aff;
+        }
     </style>
 </head>
+
 <body>
     <header>
         <h1>Vishal John</h1>
