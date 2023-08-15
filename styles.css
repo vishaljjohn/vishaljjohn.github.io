@@ -43,9 +43,11 @@ nav a:hover {
     margin-bottom: 1rem;
 }
 
-footer {
-    background-color: #fff;
-    text-align: center;
-    padding: 1rem 0;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+
+    footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #333;
+            color: #fff;
+        }
 }
