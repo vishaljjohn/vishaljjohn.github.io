@@ -6,12 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vishal John</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   
   <style>
-      
-      
-        
-        
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -72,6 +69,25 @@
             margin: 20px 0;
         }
 
+        .articles-list {
+            margin-top: 30px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .articles-list li {
+            margin-bottom: 15px;
+        }
+
+        .articles-list a {
+            color: #0077b6;
+            transition: color 0.3s;
+        }
+
+        .articles-list a:hover {
+            color: #005885;
+        }
+
         footer {
             text-align: center;
             padding: 20px 0;
@@ -96,17 +112,42 @@
         </nav>
     </header>
 
+    <div class="container">
+        <div class="main-content">
+            <h2>My Medium Articles</h2>
+            <ul id="medium-articles" class="articles-list"></ul>
+        </div>
+    </div>
+
+ 
+
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: 'https://cors-anywhere.herokuapp.com/https://medium.com/@vishaljjohn/latest?format=rss',
+                dataType: 'xml',
+                success: function(response) {
+                    $(response).find('item').each(function() {
+                        var el = $(this);
+                        var title = el.find('title').text();
+                        var link = el.find('link').text();
+
+                        $('#medium-articles').append('<li><a href="' + link + '" target="_blank">' + title + '</a></li>');
+                    });
+                }
+            });
+        });
+    </script>
 
 
-    
-   <footer>
+  <footer>
       <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"> <i class="fab fa-linkedin fa-2x"> </i>
        <a href="https://github.com/vishaljjohn" target="_blank"> <i class="fab fa-github fa-2x"> </i> 
         <a href="https://medium.com/@vishaljjohn" target="_blank"> <i class="fab fa-medium fa-2x"> </i> 
        </a>  <p>© 2023 Vishal John. All Rights Reserved.</p>
-   
     </footer>
 
+    
 </body>
 
 </html>
