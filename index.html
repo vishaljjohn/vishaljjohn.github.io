@@ -7,6 +7,40 @@
     <title>Vishal John</title>
     
     <style>
+      
+        .projects-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.project-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.project-item img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s;
+}
+
+.project-item:hover img {
+    transform: scale(1.1);
+}
+
+.project-caption {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+        
+        
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
