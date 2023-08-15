@@ -1,49 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hi! I'm Vishal John</title>
     <link rel="stylesheet" href="styles.css">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <title>Your Name | Personal Professional Website</title>
 </head>
+
 <body>
-    <header>
-        <h1>Vishal John</h1>
-        <nav>
-                <li><a href="index.html">Welcome</a></li>
-                <li><a href="about.html">About Me</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="publications.html">Publications</a></li>
-                <li><a href="contact.html"> Contact</a></li>
-        </nav>
-    </header>
-    <div class="container">
-        <section class="hero">
-            <h2>Welcome to My Website</h2>
-            <p>This is a minimalist, Apple-inspired design template. Customize it to fit your brand and content.</p>
-        </section>
-    </div>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#newsletter">Newsletter</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
-<section class="portfolio">
-    <div class="container">
-        <h2>My Portfolio</h2>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="path_to_image1.jpg" alt="Description for Image 1">
-                <p>Description for Image 1</p>
-            </div>
-            <div class="portfolio-item">
-                <img src="path_to_image2.jpg" alt="Description for Image 2">
-                <p>Description for Image 2</p>
-            </div>
-            <!-- ... continue similarly for all six images ... -->
-        </div>
-    </div>
-</section>
+    <section id="home">
+        <h1>Welcome to My Website</h1>
+        <p>Introductory text goes here...</p>
+    </section>
 
+    <section id="about">
+        <h1>About Me</h1>
+        <p>Information about yourself...</p>
+    </section>
 
+    <section id="newsletter">
+        <h1>Newsletter</h1>
+        <form action="/subscribe" method="post">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
 
+    <section id="contact">
+        <h1>Contact</h1>
+        <p>You can reach out to me via email at [your-email@example.com]</p>
+    </section>
     
 <footer>
   <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
@@ -52,4 +48,5 @@
     </footer>
 
 </body>
+
 </html>
