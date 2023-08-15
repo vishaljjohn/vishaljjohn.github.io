@@ -1,72 +1,55 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'San Francisco', 'Segoe UI', sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f4f5f7;
     color: #333;
-    line-height: 1.6;
-    background-color: #f4f4f4;
+}
+
+nav {
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 nav ul {
-    background-color: #fff;
-    padding: 20px 0;
+    display: flex;
+    justify-content: center;
     list-style-type: none;
-    text-align: center;
+    padding: 10px 0;
 }
 
 nav li {
-    display: inline;
     margin: 0 20px;
 }
 
 nav a {
     text-decoration: none;
     color: #333;
-    font-weight: bold;
-    transition: color 0.3s ease;
+    font-weight: 600;
+    transition: color 0.2s;
 }
 
 nav a:hover {
-    color: #007AFF; /* Apple blue color */
+    color: #007AFF;
 }
 
-section {
-    padding: 50px 0;
-    max-width: 800px;
-    margin: auto;
+header {
+    text-align: center;
+    margin-top: 100px;
 }
 
-h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
+footer {
+    background-color: #fff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-input[type="email"] {
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    font-size: 0.9em;
-    width: 80%;
-    max-width: 300px;
-}
-
-button {
-    background-color: #007AFF;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #0055cc;
-}
 
 
