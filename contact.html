@@ -134,16 +134,34 @@ button:hover {
         </nav>
     </header>
 
- <section id="contact-form">
-        <h2>Message Me</h2>
-        <form class="contact-form" action="https://formspree.io/f/mbjvgonb" method="post">
-            <input type="text" name="name" placeholder="Name" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="text" name="subject" placeholder="Subject" required>
-            <textarea name="message" rows="6" placeholder="Description" required></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-    </section>
+        
+
+<div class="contact-form">
+    <h2>Contact Me</h2>
+    <form action="https://formspree.io/f/mbjvgonb" method="POST">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="_replyto" required>
+        </div>
+
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+        </div>
+
+        <!-- This is a field to prevent spam. It will be hidden with CSS -->
+        <input type="text" name="_gotcha" style="display:none" />
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+
     
    <footer>
       <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"> <i class="fab fa-linkedin fa-2x"> </i>
