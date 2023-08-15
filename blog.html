@@ -124,7 +124,7 @@
     <script>
         $(document).ready(function() {
             $.ajax({
-                url: 'https://cors-anywhere.herokuapp.com/https://medium.com/feed/@vishaljjohn?format=rss',
+                url: 'https://api.allorigins.win/raw?url=https://medium.com/feed/@vishaljjohn',
                 dataType: 'xml',
                 success: function(response) {
                     $(response).find('item').each(function() {
