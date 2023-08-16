@@ -122,6 +122,13 @@
             background-color: #f90;
         }
 
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 150px);  /* rough estimation of header and footer height combined */
+    flex-direction: column;
+}
 
       
     </style>
@@ -162,14 +169,24 @@
                 <figcaption>Caption for image 1</figcaption>
             </figure>
 
-            <h2>Check Out Rock Cancer!</h2>
-            <p>
-                Your support helps provide free climbing experiences to cancer patients.
-                Consider making a donation to help further the cause.
-            </p>
-            <a href="https://linktr.ee/rockcancer?utm_source=qr_code" target="_blank" rel="noopener noreferrer" class="donate-button">Rock Cancer Website</a>
         </div>
     </div>
+
+<div class="container">
+        <div class="main-content">
+            <div class="center-content">
+                <h2>Check Out Rock Cancer!</h2>
+                <p>
+                    Your support helps provide free climbing experiences to cancer patients.
+                    Consider making a donation to help further the cause.
+                </p>
+                <a href="https://linktr.ee/rockcancer?utm_source=qr_code" target="_blank" rel="noopener noreferrer" class="donate-button">Rock Cancer Website</a>
+            </div>
+        </div>
+    </div>
+
+
+
     
    <footer>
       <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"> <i class="fab fa-linkedin fa-2x"> </i>
