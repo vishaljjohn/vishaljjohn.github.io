@@ -78,6 +78,29 @@
             background-color: #333;
             color: #fff;
         }
+
+  .publication-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 15px 0;
+        }
+
+        .publication-item:last-child {
+            border-bottom: none;
+        }
+
+        .publication-title {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .publication-details {
+            color: #888;
+            font-size: 14px;
+        }
+      
     </style>
 </head>
 
@@ -96,12 +119,50 @@
         </nav>
     </header>
 
-    <div class="container">
+    
+      <div class="container">
         <div class="main-content">
-            <h2>Welcome to Our Brand</h2>
-            <p>
-                Welcome to our website. We're inspired by innovation, driven by design, and dedicated to delivering exceptional products to our customers.
-            </p>
+            <h2>My Publications</h2>
+            
+            <!-- Publication 1 -->
+            <div class="publication-item">
+                <div class="publication-title">
+                    <strong>Liquid biopsy in pediatric brain tumors:</strong>
+                </div>
+                <div class="publication-description">
+                    Malignant primary brain tumors are the most common cancer in children aged 0–14 years ... <a href="https://www.frontiersin.org/articles/10.3389/fgene.2022.1114762/full" target="_blank" class="publication-link">Read Paper</a>
+                </div>
+            </div>
+
+            <!-- Publication 2 -->
+            <div class="publication-item">
+                <div class="publication-title">
+                    <strong>Cell-Free Tumor DNA (cf-tDNA) Liquid Biopsy: Current Methods and Use in Brain Tumor Immunotherapy:</strong>
+                </div>
+                <div class="publication-description">
+                    Gliomas are tumors derived from mutations in glial brain cells ... <a href="https://www.frontiersin.org/articles/10.3389/fimmu.2022.882452/full" target="_blank" class="publication-link">Read Paper</a>
+                </div>
+            </div>
+
+            <!-- Publication 3 -->
+            <div class="publication-item">
+                <div class="publication-title">
+                    <strong>Serial H3K27M cell-free tumor DNA (cf-tDNA) tracking predicts ONC201 treatment response and progression in diffuse midline glioma:</strong>
+                </div>
+                <div class="publication-description">
+                    To our knowledge, we report the first demonstrated feasibility for serial CSF collection ... <a href="https://academic.oup.com/neuro-oncology/article/24/8/1366/6523277?login=false" target="_blank" class="publication-link">Read Paper</a>
+                </div>
+            </div>
+
+            <!-- Publication 4 -->
+            <div class="publication-item">
+                <div class="publication-title">
+                    <strong>Ultra-rapid somatic variant detection via real-time targeted amplicon sequencing:</strong>
+                </div>
+                <div class="publication-description">
+                    Molecular markers are essential for cancer diagnosis ... <a href="https://www.nature.com/articles/s42003-022-03657-6" target="_blank" class="publication-link">Read Paper</a>
+                </div>
+            </div>
         </div>
     </div>
 
