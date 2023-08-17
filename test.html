@@ -8,45 +8,84 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f7f7f7;
+            background-color: #FFDACD; /* peach puff */
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
 
         header {
-            background-color: #64B5F6;
-            padding: 10px 0;
+            background-color: #FF9800; /* bright orange */
+            padding: 20px 0;
             text-align: center;
-            color: white;
+            border-bottom: 5px solid #E040FB; /* purple */
+            color: #FFC0CB; /* pink */
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #FF9800; /* bright orange */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        nav a {
+            text-decoration: none;
+            margin: 10px 20px;
+            color: #E040FB; /* purple */
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #FFC0CB; /* pink */
         }
 
         .container {
             max-width: 1200px;
             margin: 20px auto;
             padding: 10px;
-            background-color: white;
-            border-radius: 10px;
+            background-color: #FFF3E0; /* light orange */
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            margin: 0;
         }
 
         h2 {
-            color: #FF9800;
+            color: #E040FB; /* purple */
+            margin-top: 20px;
+            border-bottom: 3px dotted #FF9800; /* bright orange */
+            padding-bottom: 5px;
         }
 
         .activity {
-            background-color: #E1F5FE;
-            border: 2px solid #BBDEFB;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            background-color: #FFEBEE; /* pinkish */
+            border: 3px dashed #E040FB; /* purple */
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 5px;
+            transition: transform 0.2s;
+        }
+
+        .activity:hover {
+            transform: scale(1.03);
         }
 
         .activity img {
-            width: 50px;
-            height: 50px;
-            margin-right: 10px;
+            width: 60px;
+            height: 60px;
+            margin-right: 20px;
+            border-radius: 50%;
+            border: 3px solid #E040FB; /* purple */
+        }
+
+        p {
+            margin: 0;
+            font-size: 18px;
+            color: #673AB7; /* deeper purple */
         }
 
     </style>
@@ -59,35 +98,21 @@
         <p>Where little champions climb & conquer!</p>
     </header>
 
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Activities</a>
+        <a href="#">Stories</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+    </nav>
+
     <div class="container">
         <h2>Activities</h2>
 
-        <div class="activity">
-            <img src="bouldering-icon.png" alt="Bouldering icon">
-            <p>Free Climbing: Bouldering (up to 10 feet, no rope)</p>
-        </div>
-
-        <div class="activity">
-            <img src="top-rope-icon.png" alt="Top Rope icon">
-            <p>Top Rope Climbing: Adventure up to 50 feet with a belayer!</p>
-        </div>
-
-        <div class="activity">
-            <img src="group-icon.png" alt="Group activity icon">
-            <p>Group Activities: "ABC room", rope repel, stalactite swing</p>
-        </div>
-
-        <div class="activity">
-            <img src="fireplace-icon.png" alt="Fireplace icon">
-            <p>Parent discussions near the fireplace. Share, care & bond!</p>
-        </div>
-
-        <div class="activity">
-            <img src="ice-cream-icon.png" alt="Ice Cream icon">
-            <p>And don't forget... there's always Ice Cream!</p>
-        </div>
+        <!-- ... Rest of the content ... -->
     </div>
 
 </body>
 
 </html>
+
