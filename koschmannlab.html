@@ -145,18 +145,21 @@
 
 .image-container {
     display: flex;
-    flex-wrap: wrap;  /* Allows the images to wrap into new rows */
-    justify-content: space-between;
-    gap: 20px;  /* Space between images */
+    flex-wrap: nowrap;  /* Prevent wrapping */
+    overflow: hidden;  /* Hide overflow images */
+    width: 100%;  /* Full width of parent */
+    position: relative;  /* This can be useful for positioning navigation controls if needed */
 }
 
 figure {
-    flex: 0 0 calc(20% - 10px);  /* This will display 5 images in a row, adjust as needed */
+    flex: 0 0 100%;  /* Each figure will be 100% of the .image-container's width */
 }
 
 figure img {
-    width: 100%;  /* This will make sure the image takes up the full width of its container */
+    width: 100%;  /* Image takes full width of the figure */
 }
+
+
 
 .carousel {
     position: relative;
