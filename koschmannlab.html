@@ -158,6 +158,34 @@ figure img {
     width: 100%;  /* This will make sure the image takes up the full width of its container */
 }
 
+.carousel {
+    position: relative;
+    overflow: hidden;  /* Hide images outside of the display area */
+}
+
+.carousel .image-container {
+    display: flex;
+    transition: all 0.5s ease;  /* Smooth transition effect */
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
 
       
     </style>
@@ -203,32 +231,35 @@ figure img {
 
            <h2>Some Pictures from Koschmann Lab</h2>
 
-<div class="image-container">
-    <figure>
-        <img src="lab1.JPG" alt="Image 1 Description">
-        <figcaption> Caption 1 </figcaption>
-    </figure>
+<!-- Image Carousel -->
+<div class="carousel">
+    <div class="image-container">
+        <figure>
+            <img src="lab1.JPG" alt="Image 1 Description">
+            <figcaption> Caption 1 </figcaption>
+        </figure>
+        <figure>
+            <img src="lab2.JPG" alt="Image 2 Description">
+            <figcaption> Caption 2 </figcaption>
+        </figure>
+        <figure>
+            <img src="lab.JPG" alt="Image 3 Description">
+            <figcaption> Caption 3 </figcaption>
+        </figure>
+        <figure>
+            <img src="lab4.JPG" alt="Image 4 Description">
+            <figcaption> Caption 4 </figcaption>
+        </figure>
+        <figure>
+            <img src="lab5.JPG" alt="Image 5 Description">
+            <figcaption> Caption 5 </figcaption>
+        </figure>
+    </div>
 
-    <figure>
-        <img src="lab2.JPG" alt="Image 2 Description">
-        <figcaption> Caption 2 </figcaption>
-    </figure>
-
-    <figure>
-        <img src="lab.JPG" alt="Image 3 Description">
-        <figcaption> Caption 3 </figcaption>
-    </figure>
-
-    <figure>
-        <img src="lab4.JPG" alt="Image 4 Description">
-        <figcaption> Caption 4 </figcaption>
-    </figure>
-
-    <figure>
-        <img src="lab5.JPG" alt="Image 5 Description">
-        <figcaption> Caption 5 </figcaption>
-    </figure>
+    <button class="carousel-button prev">Prev</button>
+    <button class="carousel-button next">Next</button>
 </div>
+
 
 
 
@@ -253,6 +284,35 @@ figure img {
    
     </footer>
 
+
+           
+<script>
+    let currentImageIndex = 0;
+    const images = document.querySelectorAll('.carousel .image-container figure');
+    const container = document.querySelector('.carousel .image-container');
+    const nextBtn = document.querySelector('.carousel-button.next');
+    const prevBtn = document.querySelector('.carousel-button.prev');
+
+    function updateCarousel() {
+        const offset = -currentImageIndex * 100;
+        container.style.transform = `translateX(${offset}%)`;
+    }
+
+    nextBtn.addEventListener('click', function() {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        updateCarousel();
+    });
+
+    prevBtn.addEventListener('click', function() {
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        updateCarousel();
+    });
+
+    updateCarousel();  // Initialize
+</script>
+
+
+           
 </body>
 
 </html>
