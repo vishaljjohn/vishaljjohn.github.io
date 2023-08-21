@@ -158,25 +158,25 @@ figure img {
 
 
 
-/* Styles for Gallery */
+/* Gallery container style */
 .gallery {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* This creates 2 columns of equal width */
+    gap: 20px;  /* Spacing between images */
 }
 
- .gallery-image {
-            max-width: 150px;
-            cursor: pointer;
-            transition: transform 0.3s;
-            border-radius: 5px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-        }
+/* Gallery Image Styles */
+.gallery-image {
+    max-width: 100%; /* Using 100% here will allow the image to adjust to the width of the grid column */
+    cursor: pointer;
+    transition: transform 0.3s;
+    border-radius: 5px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
 
-        .gallery-image:hover {
-            transform: scale(1.1);
-        }
+.gallery-image:hover {
+    transform: scale(1.1);
+}
 
 /* Styles for Lightbox */
 .lightbox {
