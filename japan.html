@@ -142,13 +142,17 @@
 
 .image-container {
     display: flex;
+    flex-wrap: wrap; /* This will allow images to wrap to the next line */
     justify-content: space-between; /* Spacing between images */
 }
 
+
 figure {
     margin: 0; /* Remove default margin */
-    width: calc(50% - 10px); /* This assumes you want two images side by side, with a small gap in between */
+    width: calc(50% - 10px); /* This ensures you have two images per row with a small gap in between */
+    box-sizing: border-box; /* This makes sure padding and border are included in the element's total width and height */
 }
+
 
 figure img {
     max-width: 100%; /* Ensure images don't overflow their container */
