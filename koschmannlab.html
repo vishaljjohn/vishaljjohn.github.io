@@ -345,6 +345,13 @@ figure img {
         lightbox.style.display = 'none';
     });
 
+// Close the lightbox with the 'Esc' key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape" && lightbox.style.display === 'block') {
+                lightbox.style.display = 'none';
+            }
+        });
+    
     // Close lightbox when clicked anywhere besides the image
     lightbox.addEventListener('click', (event) => {
         if(event.target !== lightboxImage) {
