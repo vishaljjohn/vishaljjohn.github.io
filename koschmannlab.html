@@ -158,34 +158,67 @@ figure img {
 
 
 
-.carousel {
-    position: relative;
-    overflow: hidden;  /* Hide images outside of the display area */
-}
-
-.carousel .image-container {
+/* Styles for Gallery */
+.gallery {
     display: flex;
-    transition: all 0.5s ease;  /* Smooth transition effect */
-    width: 500%;  /* Rough estimation for 5 images */
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-.carousel-button {
+.gallery-image {
+    max-width: 100%;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.gallery-image:hover {
+    transform: scale(1.05);
+}
+
+/* Styles for Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+.lightbox-close {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px 20px;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
     cursor: pointer;
 }
 
-.carousel-button.prev {
-    left: 10px;
+.lightbox-close:hover, .lightbox-close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.carousel-button.next {
-    right: 10px;
+.lightbox-caption {
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
 }
 
       
@@ -234,34 +267,37 @@ figure img {
            <h2>Some Pictures from Koschmann Lab</h2>
 
 <!-- Image Carousel -->
-<div class="carousel">
-    <div class="image-container">
-        <figure>
-            <img src="lab1.JPG" alt="Image 1 Description">
-            <figcaption> Caption 1 </figcaption>
-        </figure>
-        <figure>
-            <img src="lab2.JPG" alt="Image 2 Description">
-            <figcaption> Caption 2 </figcaption>
-        </figure>
-        <figure>
-            <img src="lab3.JPG" alt="Image 3 Description">
-            <figcaption> Caption 3 </figcaption>
-        </figure>
-        <figure>
-            <img src="lab4.JPG" alt="Image 4 Description">
-            <figcaption> Caption 4 </figcaption>
-        </figure>
-        <figure>
-            <img src="lab5.JPG" alt="Image 5 Description">
-            <figcaption> Caption 5 </figcaption>
-        </figure>
-    </div>
-
-    <button class="carousel-button prev">Prev</button>
-    <button class="carousel-button next">Next</button>
+<!-- Image Gallery -->
+<div class="gallery">
+    <figure>
+        <img src="lab1.JPG" alt="Image 1 Description" class="gallery-image" data-index="0">
+        <figcaption> Caption 1 </figcaption>
+    </figure>
+    <figure>
+        <img src="lab2.JPG" alt="Image 2 Description" class="gallery-image" data-index="1">
+        <figcaption> Caption 2 </figcaption>
+    </figure>
+    <figure>
+        <img src="lab3.JPG" alt="Image 3 Description" class="gallery-image" data-index="2">
+        <figcaption> Caption 3 </figcaption>
+    </figure>
+    <figure>
+        <img src="lab4.JPG" alt="Image 4 Description" class="gallery-image" data-index="3">
+        <figcaption> Caption 4 </figcaption>
+    </figure>
+    <figure>
+        <img src="lab5.JPG" alt="Image 5 Description" class="gallery-image" data-index="4">
+        <figcaption> Caption 5 </figcaption>
+    </figure>
 </div>
 
+
+<!-- Lightbox Modal -->
+<div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lightboxClose">&times;</span>
+    <img class="lightbox-content" id="lightboxImage">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
 
 
 
@@ -288,30 +324,24 @@ figure img {
 
 
            
-<script>
-    let currentImageIndex = 0;
-    const images = document.querySelectorAll('.carousel .image-container figure');
-    const container = document.querySelector('.carousel .image-container');
-    const nextBtn = document.querySelector('.carousel-button.next');
-    const prevBtn = document.querySelector('.carousel-button.prev');
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxCaption = document.getElementById('lightboxCaption');
+const closeLightbox = document.getElementById('lightboxClose');
+const galleryImages = document.querySelectorAll('.gallery-image');
 
-    function updateCarousel() {
-        const offset = -currentImageIndex * 100 / images.length;  // Calculate offset based on number of images
-        container.style.transform = `translateX(${offset}%)`;
-    }
-
-    nextBtn.addEventListener('click', function() {
-        currentImageIndex = (currentImageIndex + 1) % images.length;
-        updateCarousel();
+galleryImages.forEach((image, index) => {
+    image.addEventListener('click', () => {
+        lightbox.style.display = 'block';
+        lightboxImage.src = image.src;
+        lightboxCaption.innerHTML = image.nextElementSibling.textContent;
     });
+});
 
-    prevBtn.addEventListener('click', function() {
-        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-        updateCarousel();
-    });
+closeLightbox.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+});
 
-    updateCarousel();  // Initialize
-</script>
 
 
 
