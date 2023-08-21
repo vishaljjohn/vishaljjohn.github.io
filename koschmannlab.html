@@ -145,19 +145,19 @@
 
 .image-container {
     display: flex;
-    justify-content: space-between; /* Spacing between images */
+    flex-wrap: wrap;  /* Allows the images to wrap into new rows */
+    justify-content: space-between;
+    gap: 20px;  /* Space between images */
 }
 
 figure {
-    margin: 0; /* Remove default margin */
-    width: calc(50% - 10px); /* This assumes you want two images side by side, with a small gap in between */
+    flex: 0 0 calc(20% - 10px);  /* This will display 5 images in a row, adjust as needed */
 }
 
 figure img {
-    max-width: 100%; /* Ensure images don't overflow their container */
-    border-radius: 5px;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;  /* This will make sure the image takes up the full width of its container */
 }
+
 
       
     </style>
@@ -201,19 +201,35 @@ figure img {
             <h2>$1M Donation To Koschmann Lab</h2>
             <iframe width="650" height="315" src="https://www.youtube.com/embed/t-hOPLaE5vk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-            <h2>Some Pictures from Koschmann Lab</h2>
-         
-            <div class="image-container">
+           <h2>Some Pictures from Koschmann Lab</h2>
+
+<div class="image-container">
     <figure>
-        <img src="placeholder.JPG" alt="Vishal Bouldering at Planet Rock 1">
-        <figcaption> Caption </figcaption>
+        <img src="lab1.JPG" alt="Image 1 Description">
+        <figcaption> Caption 1 </figcaption>
     </figure>
-                
+
     <figure>
-        <img src="placeholder.JPG" alt="Vishal Bouldering at Planet Rock 2">
-        <figcaption>Picture 2 Caption</figcaption>
+        <img src="lab2.JPG" alt="Image 2 Description">
+        <figcaption> Caption 2 </figcaption>
+    </figure>
+
+    <figure>
+        <img src="lab.JPG" alt="Image 3 Description">
+        <figcaption> Caption 3 </figcaption>
+    </figure>
+
+    <figure>
+        <img src="lab4.JPG" alt="Image 4 Description">
+        <figcaption> Caption 4 </figcaption>
+    </figure>
+
+    <figure>
+        <img src="lab5.JPG" alt="Image 5 Description">
+        <figcaption> Caption 5 </figcaption>
     </figure>
 </div>
+
 
 
        <div class="center-content">
