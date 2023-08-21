@@ -166,19 +166,17 @@ figure img {
     gap: 20px;
 }
 
-.gallery-image {
-    width: 150px;  /* Or the desired width for thumbnails */
-    height: 100px; /* Or the desired height for thumbnails */
-    object-fit: cover; /* Ensures images retain their aspect ratio */
-    border-radius: 5px;
-    transition: transform 0.3s;
-    cursor: pointer;
-}
+ .gallery-image {
+            max-width: 150px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border-radius: 5px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+        }
 
-
-.gallery-image:hover {
-    transform: scale(1.05);
-}
+        .gallery-image:hover {
+            transform: scale(1.1);
+        }
 
 /* Styles for Lightbox */
 .lightbox {
@@ -298,10 +296,10 @@ figure img {
 
 <!-- Lightbox Modal -->
 <div class="lightbox" id="lightbox">
-    <span class="lightbox-close" id="lightboxClose">&times;</span>
-    <img class="lightbox-content" id="lightboxImage">
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-</div>
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img class="lightbox-content" id="lightboxImage">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
 
 
 
@@ -328,30 +326,25 @@ figure img {
 
 
            
-document.addEventListener('DOMContentLoaded', function() {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxCaption = document.getElementById('lightboxCaption');
-    const closeLightbox = document.getElementById('lightboxClose');
-    const galleryImages = document.querySelectorAll('.gallery-image');
+<script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        const closeLightbox = document.getElementById('lightboxClose');
+        const galleryImages = document.querySelectorAll('.gallery-image');
 
-    galleryImages.forEach((image, index) => {
-        image.addEventListener('click', () => {
-            lightbox.style.display = 'block';
-            lightboxImage.src = image.src;
-            lightboxCaption.innerHTML = image.nextElementSibling.textContent;
+        galleryImages.forEach((image, index) => {
+            image.addEventListener('click', () => {
+                lightbox.style.display = 'block';
+                lightboxImage.src = image.src;
+                lightboxCaption.innerHTML = image.nextElementSibling.textContent;
+            });
         });
-    });
 
-    closeLightbox.addEventListener('click', () => {
-        lightbox.style.display = 'none';
-    });
-});
-
-
-
-
-
+        closeLightbox.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+    </script>
 
            
 </body>
