@@ -327,24 +327,33 @@ figure img {
 
            
 <script>
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImage = document.getElementById('lightboxImage');
-        const lightboxCaption = document.getElementById('lightboxCaption');
-        const closeLightbox = document.getElementById('lightboxClose');
-        const galleryImages = document.querySelectorAll('.gallery-image');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const closeLightbox = document.getElementById('lightboxClose');
+    const galleryImages = document.querySelectorAll('.gallery-image');
 
-        galleryImages.forEach((image, index) => {
-            image.addEventListener('click', () => {
-                lightbox.style.display = 'block';
-                lightboxImage.src = image.src;
-                lightboxCaption.innerHTML = image.nextElementSibling.textContent;
-            });
+    galleryImages.forEach((image, index) => {
+        image.addEventListener('click', () => {
+            lightbox.style.display = 'block';
+            lightboxImage.src = image.src;
+            lightboxCaption.innerHTML = image.nextElementSibling.textContent;
         });
+    });
 
-        closeLightbox.addEventListener('click', () => {
+    closeLightbox.addEventListener('click', () => {
+        lightbox.style.display = 'none';
+    });
+
+    // Close lightbox when clicked anywhere besides the image
+    lightbox.addEventListener('click', (event) => {
+        if(event.target !== lightboxImage) {
             lightbox.style.display = 'none';
-        });
-    </script>
+        }
+    });
+
+</script>
+
 
            
 </body>
