@@ -105,11 +105,18 @@
             text-align: center;
         }
 
-        figure img {
-            max-width: 25%;
-            border-radius: 5px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-        }
+       figure img {
+    max-width: 100%; /* Ensure images don't overflow their container */
+    border-radius: 5px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for scaling and shadow */
+}
+
+figure img:hover {
+    transform: scale(1.05); /* Image will zoom in slightly */
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth effect */
+}
+
 
         figcaption {
             margin-top: 10px;
