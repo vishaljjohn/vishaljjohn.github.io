@@ -159,6 +159,42 @@ figure img {
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
 }
 
+
+
+ #lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        #lightbox img {
+            display: block;
+            max-width: 80%;
+            max-height: 80%;
+            margin: 10% auto;
+            box-shadow: 0px 0px 10px white;
+            border-radius: 5px;
+        }
+
+        #lightbox p {
+            text-align: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        #lightboxClose {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            cursor: pointer;
+        }
+
       
     </style>
 </head>
@@ -197,17 +233,52 @@ figure img {
 
             <h2>Some Pictures from Ishinomaki</h2>
          
-            <div class="image-container">
+            <div class="image-container">         
     <figure>
-        <img src="placeholder.JPG" alt="Vishal Bouldering at Planet Rock 1">
+        <img src="japan2.JPG" alt="hold">
+        <figcaption>Picture 2 Caption</figcaption>
+    </figure>
+
+<figure>
+        <img src="japan3.JPG" alt="hold">
+        <figcaption> Caption </figcaption>
+    </figure>
+
+    <figure>
+        <img src="japan4.JPG" alt="hold">
+        <figcaption> Caption </figcaption>
+    </figure>
+<figure>
+        <img src="japan5.JPG" alt="hold">
+        <figcaption> Caption </figcaption>
+    </figure>
+<figure>
+        <img src="japan6.JPG" alt="hold">
+        <figcaption> Caption </figcaption>
+    </figure>
+<figure>
+        <img src="japan7.JPG" alt="hold">
+        <figcaption> Caption </figcaption>
+    </figure>
+
+<figure>
+        <img src="japan8.JPG" alt="hold">
         <figcaption> Caption </figcaption>
     </figure>
                 
-    <figure>
-        <img src="placeholder.JPG" alt="Vishal Bouldering at Planet Rock 2">
-        <figcaption>Picture 2 Caption</figcaption>
+<figure>
+        <img src="japan9.JPG" alt="hold">
+        <figcaption> Caption </figcaption>
     </figure>
+                
 </div>
+
+<!-- Lightbox structure -->
+    <div id="lightbox">
+        <span id="lightboxClose">&times;</span>
+        <img id="lightboxImage" src="" alt="Enlarged Image">
+        <p id="lightboxCaption"></p>
+    </div>
 
 
        <div class="center-content">
@@ -218,7 +289,6 @@ figure img {
               </div>
     </div>
 
-
     
    <footer>
       <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"> <i class="fab fa-linkedin fa-2x"> </i>
@@ -228,6 +298,44 @@ figure img {
    
     </footer>
 
+ <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        const closeLightbox = document.getElementById('lightboxClose');
+        const galleryImages = document.querySelectorAll('.image-container img');
+
+        galleryImages.forEach((image, index) => {
+            image.addEventListener('click', () => {
+                lightbox.style.display = 'block';
+                lightboxImage.src = image.src;
+                lightboxCaption.innerHTML = image.nextElementSibling.textContent;
+            });
+        });
+
+        closeLightbox.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+// Close the lightbox with the 'Esc' key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape" && lightbox.style.display === 'block') {
+                lightbox.style.display = 'none';
+            }
+        });
+     
+        // Close lightbox when clicked anywhere besides the image
+        lightbox.addEventListener('click', (event) => {
+            if (event.target !== lightboxImage) {
+                lightbox.style.display = 'none';
+            }
+        });
+
+
+     
+    </script>
+
+           
 </body>
 
 </html>
