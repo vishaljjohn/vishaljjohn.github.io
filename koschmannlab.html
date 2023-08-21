@@ -166,6 +166,7 @@ figure img {
 .carousel .image-container {
     display: flex;
     transition: all 0.5s ease;  /* Smooth transition effect */
+    width: 500%;  /* Rough estimation for 5 images */
 }
 
 .carousel-button {
@@ -189,6 +190,7 @@ figure img {
 
       
     </style>
+    
 </head>
 
 <body>
@@ -294,7 +296,7 @@ figure img {
     const prevBtn = document.querySelector('.carousel-button.prev');
 
     function updateCarousel() {
-        const offset = -currentImageIndex * 100;
+        const offset = -currentImageIndex * 100 / images.length;  // Calculate offset based on number of images
         container.style.transform = `translateX(${offset}%)`;
     }
 
@@ -310,6 +312,7 @@ figure img {
 
     updateCarousel();  // Initialize
 </script>
+
 
 
 
