@@ -6,12 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vishal John</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-  
-  <style>
-      
-      
-        
-        
+
+    <style>
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -29,19 +25,16 @@
             align-items: center;
         }
 
-        header h1 {
-            margin: 0;
+        header a {
+            text-decoration: none;
+            color: inherit;
         }
 
         nav ul {
-            list-style-type: none;
+            list-style: none;
             padding: 0;
             display: flex;
-            justify-content: space-around;
-        }
-
-        nav li {
-            display: inline-block;
+            gap: 20px;
         }
 
         nav a {
@@ -66,6 +59,7 @@
             background-color: #fff;
             padding: 50px;
             box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
 
         .main-content h2, .main-content p {
@@ -79,103 +73,90 @@
             color: #fff;
         }
 
-       /* Styles for social media icons */
         footer i {
-            color: #ff5733;  /* Change this color as you desire */
+            margin: 0 10px;
+            color: #ff5733;
+            transition: color 0.3s;
         }
 
         footer a:hover i {
-            color: #ff9966;  /* Change this color as you desire */
+            color: #ff9966;
         }
 
-.image-section img {
-    max-width: 300px;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: block;
-    margin: 0 auto;
-}
+        .image-section img {
+            max-width: 300px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin: 40px auto;
+        }
 
-.description-section {
-    margin-top: 20px;
-    text-align: center;
-}
+        .description-section {
+            text-align: center;
+        }
 
-.cv-section {
-    margin-top: 30px;
-    text-align: center;
-}
+        .cv-section {
+            text-align: center;
+            margin-top: 40px;
+        }
 
-.cv-button {
-    padding: 10px 20px;
-    background-color: #0077b6;
-    color: white;
-    border-radius: 3px;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
+        .cv-button {
+            padding: 10px 20px;
+            background-color: #0077b6;
+            color: white;
+            border-radius: 3px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
 
-.cv-button:hover {
-    background-color: #005885;
-}
-
-      
+        .cv-button:hover {
+            background-color: #005885;
+        }
     </style>
 </head>
 
 <body>
-
     <header>
-        <h1><a href="index.html" style="text-decoration: none; color: inherit;">Vishal John</a></h1>
-
-       <nav>
+        <h1><a href="index.html">Vishal John</a></h1>
+        <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Me</a></li>
-                 <li><a href="blog.html">Newsletter</a></li>
+                <li><a href="blog.html">Newsletter</a></li>
                 <li><a href="publications.html">Publications</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-   <h2>About Me</h2>
+    <main class="container">
+        <section class="main-content">
+            <h2>About Me</h2>
 
-<!-- Image Section -->
-<div class="image-section">
-    <img src="Vishal John Headshot.jpg" alt="Vishal John">
-</div>
+            <div class="image-section">
+                <img src="Vishal John Headshot.jpg" alt="Vishal John">
+            </div>
 
-<!-- Description Section -->
-<div class="description-section">
-    <p>
-        Hey there! I'm Vishal, I am deeply passionate about learning. Whether it's professional skills or personal interests, my constant curiosity drives me to understand more about the world around me. This passion shapes my life's journey, fueling my desire for growth and development. Outside the realm of formal learning, I am drawn to the exhilarating challenge of rock climbing. This adrenaline-filled adventure embodies my approach to life - pushing boundaries, overcoming obstacles, and reaching new heights. But rock climbing isn't just a personal pursuit; it's also a means of bringing joy to others.  </p>
- 
-    <p>   When I'm not scaling rock faces or encouraging others to do the same, I volunteer at Saint Andrew's Breakfast Program, an organization committed to providing essential services to the unhoused population of Ann Arbor. This volunteering experience humbles me, deepening my understanding of empathy and gratitude, and reminding me of the importance of giving back to the community. In my downtime, there's nothing I cherish more than the company of my friends. The shared laughter, learning experiences, and the support we provide one another are invaluable. They make life's journey rich and meaningful.</p>
+            <div class="description-section">
+                <p>Hey there! I'm Vishal, I am deeply passionate about learning. Whether it's professional skills or personal interests, my constant curiosity drives me to understand more about the world around me. This passion shapes my life's journey, fueling my desire for growth and development. Outside the realm of formal learning, I am drawn to the exhilarating challenge of rock climbing. This adrenaline-filled adventure embodies my approach to life - pushing boundaries, overcoming obstacles, and reaching new heights. But rock climbing isn't just a personal pursuit; it's also a means of bringing joy to others.</p>
+                <p>When I'm not scaling rock faces or encouraging others to do the same, I volunteer at Saint Andrew's Breakfast Program, an organization committed to providing essential services to the unhoused population of Ann Arbor. This volunteering experience humbles me, deepening my understanding of empathy and gratitude, and reminding me of the importance of giving back to the community. In my downtime, there's nothing I cherish more than the company of my friends. The shared laughter, learning experiences, and the support we provide one another are invaluable. They make life's journey rich and meaningful.</p>
+            </div>
 
-        
-    </p>
-</div>
+            <div class="cv-section">
+                <a href="VishalJohnCV.pdf" class="cv-button" target="_blank">View My CV</a>
+            </div>
+        </section>
+    </main>
 
-<!-- CV Button -->
-<div class="cv-section">
-    <a href="VishalJohnCV.pdf" class="cv-button" target="_blank">
-        View My CV
-    </a>
-
-           
-</div>
-
-
-    
-   <footer>
-      <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"> <i class="fab fa-linkedin fa-2x"> </i>
-       <a href="https://github.com/vishaljjohn" target="_blank"> <i class="fab fa-github fa-2x"> </i> 
-        <a href="https://medium.com/@vishaljjohn" target="_blank"> <i class="fab fa-medium fa-2x"> </i> 
-       </a>  <p>© 2023 Vishal John. All Rights Reserved.</p>
-   
+    <footer>
+        <div>
+            <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
+            <a href="https://github.com/vishaljjohn" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+            <a href="https://medium.com/@vishaljjohn" target="_blank"><i class="fab fa-medium fa-2x"></i></a>
+        </div>
+        <p>© 2023 Vishal John. All Rights Reserved.</p>
     </footer>
-
 </body>
 
 </html>
+
