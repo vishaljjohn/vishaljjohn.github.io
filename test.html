@@ -1,118 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Cancer - Climb & Smile!</title>
+    <title>Kids Fun Site</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
+        /* Basic styling */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #FFDACD; /* peach puff */
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff; /* Light blue background */
         }
-
         header {
-            background-color: #FF9800; /* bright orange */
-            padding: 20px 0;
+            background-color: #ffa500; /* Orange header */
+            color: white;
+            padding: 10px 0;
             text-align: center;
-            border-bottom: 5px solid #E040FB; /* purple */
-            color: #FFC0CB; /* pink */
         }
-
         nav {
             display: flex;
-            justify-content: center;
-            background-color: #FF9800; /* bright orange */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            justify-content: space-around;
+            background-color: #ff69b4; /* Pink navbar */
+            padding: 5px;
+            margin-top: 10px;
         }
-
         nav a {
+            color: white;
             text-decoration: none;
-            margin: 10px 20px;
-            color: #E040FB; /* purple */
-            font-weight: bold;
-            transition: color 0.3s;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-
-        nav a:hover {
-            color: #FFC0CB; /* pink */
+        nav a:hover, nav .dropdown-content a:hover {
+            background-color: #ff4500; /* Orange hover */
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 10px;
-            background-color: #FFF3E0; /* light orange */
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .dropdown {
+            position: relative;
+            display: inline-block;
         }
-
-        h1, h2 {
-            margin: 0;
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffa500; /* Orange dropdown */
+            min-width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
         }
-
-        h2 {
-            color: #E040FB; /* purple */
-            margin-top: 20px;
-            border-bottom: 3px dotted #FF9800; /* bright orange */
-            padding-bottom: 5px;
+        .dropdown-content a {
+            color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+            display: block;
         }
-
-        .activity {
-            background-color: #FFEBEE; /* pinkish */
-            border: 3px dashed #E040FB; /* purple */
-            border-radius: 15px;
-            padding: 15px;
-            margin: 15px 5px;
-            transition: transform 0.2s;
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
-
-        .activity:hover {
-            transform: scale(1.03);
+        footer {
+            background-color: #32cd32; /* Green footer */
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
         }
-
-        .activity img {
-            width: 60px;
-            height: 60px;
-            margin-right: 20px;
-            border-radius: 50%;
-            border: 3px solid #E040FB; /* purple */
+        footer a {
+            margin: 0 10px;
+            color: white;
         }
-
-        p {
-            margin: 0;
-            font-size: 18px;
-            color: #673AB7; /* deeper purple */
-        }
-
     </style>
 </head>
-
 <body>
 
-    <header>
-        <h1>🧗‍♂️ Rock Cancer 🧗‍♀️</h1>
-        <p>Where little champions climb & conquer!</p>
-    </header>
+<header>
+    <h1>climbing Fun Site</h1>
+</header>
 
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">Activities</a>
-        <a href="#">Stories</a>
+<nav>
+    <a href="#">Home</a>
+    <div class="dropdown">
         <a href="#">About Us</a>
-        <a href="#">Contact</a>
-    </nav>
-
-    <div class="container">
-        <h2>Activities</h2>
-
-        <!-- ... Rest of the content ... -->
+        <div class="dropdown-content">
+            <a href="#">Mission</a>
+            <a href="#">Team</a>
+            <a href="#">History</a>
+        </div>
     </div>
+    <a href="#">Donate</a>
+    <a href="#">Gallery</a>
+    <a href="#">Testimonials</a>
+</nav>
+
+<!-- Content Section -->
+<div>
+    <!-- Content can be added here -->
+</div>
+
+<footer>
+    Follow us on:
+    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+    <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+</footer>
 
 </body>
-
 </html>
+
 
