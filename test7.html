@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Cancer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* ...previous styles... */
+
+        /* Rock climbing themed interactive styles */
+        .climbing-wall {
+            display: inline-block;
+            padding: 20px;
+            background-color: #9E9E9E;
+            border: 5px solid #424242;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .climbing-wall:hover {
+            transform: scale(1.05);
+        }
+
+        .climbing-wall::before {
+            content: "Climb me!";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+        }
+
+        .rope {
+            display: inline-block;
+            width: 5px;
+            height: 50px;
+            background-color: #795548;
+            border-radius: 5px;
+            margin: 0 10px;
+            transition: transform 0.3s;
+        }
+
+        .rope:hover {
+            transform: rotate(5deg);
+        }
+
+        .helmet {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: #FFDAB9;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.5s;
+        }
+
+        .helmet::before, .helmet::after {
+            content: "";
+            position: absolute;
+            border-style: solid;
+            display: block;
+            width: 0;
+            z-index: 1;
+        }
+
+        .helmet::before {
+            top: 10px;
+            left: 10px;
+            border-width: 15px 15px 0;
+            border-color: white transparent;
+        }
+
+        .helmet::after {
+            bottom: 10px;
+            left: 10px;
+            border-width: 0 15px 15px;
+            border-color: transparent transparent white;
+        }
+
+    </style>
+
+    <script>
+        function changeHelmetColor() {
+            const colors = ["#FFDAB9", "#B2DFDA", "#FFABAB", "#FFA07A"];
+            document.querySelector('.helmet').style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function cheer() {
+            alert('You made it to the top! Keep climbing!');
+        }
+    </script>
+
+</head>
+
+<body>
+
+<!-- ...previous content... -->
+
+<main>
+    <section>
+        <p>Click on the climbing elements below to interact!</p>
+
+        <!-- Climbing themed interactive elements -->
+        <div class="climbing-wall" onclick="cheer()"> </div>
+        <div class="rope"></div>
+        <div class="rope"></div>
+        <div class="helmet" onclick="changeHelmetColor()"></div>
+    </section>
+</main>
+
+<!-- ...previous footer... -->
+
+</body>
+
+</html>
