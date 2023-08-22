@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Cancer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Basic styles, colors, fonts */
+        body {
+            font-family: 'Comic Sans MS', sans-serif;
+            background-color: #FFEBB7;
+            color: #5C4B51;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.5s;
+        }
+
+        header, footer {
+            background-color: #FFA07A;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        nav ul li a {
+            color: #333;
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: #FFDAB9;
+            border-radius: 15px;
+        }
+
+        footer a {
+            color: #333;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Interactive styles and animations */
+        nav ul li a:hover, footer a:hover {
+            animation: bounce 0.5s;
+        }
+
+        .interactive-element {
+            display: inline-block;
+            padding: 10px;
+            margin: 20px;
+            border: 3px dashed #FFA07A;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .interactive-element:hover {
+            transform: scale(1.1);
+            background-color: #FFDAB9;
+        }
+
+        /* Bounce animation */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+
+    <script>
+        function changeBackground() {
+            const colors = ["#FFEBB7", "#B2DFDA", "#FFABAB", "#FFDAB9"];
+            document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        }
+    </script>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Rock Cancer</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+
+<main>
+    <section>
+        <p>Click on the elements below to interact!</p>
+
+        <!-- Example interactive elements -->
+        <div class="interactive-element" onclick="changeBackground()">Change Background Color</div>
+        <div class="interactive-element">Another Fun Action</div>
+        <div class="interactive-element">Play a Sound</div>
+    </section>
+</main>
+
+<footer>
+    <a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+    <a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+    <a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+</footer>
+
+</body>
+
+</html>
