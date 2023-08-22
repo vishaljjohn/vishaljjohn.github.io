@@ -6,113 +6,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Cancer</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-
     <style>
-        /* ...previous styles... */
-
-        /* Rock climbing themed interactive styles */
-        .climbing-wall {
-            display: inline-block;
-            padding: 20px;
-            background-color: #9E9E9E;
-            border: 5px solid #424242;
-            cursor: pointer;
-            position: relative;
-            transition: transform 0.3s;
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FFDDC1;
+            color: #4A4A4A;
         }
 
-        .climbing-wall:hover {
-            transform: scale(1.05);
-        }
-
-        .climbing-wall::before {
-            content: "Climb me!";
-            position: absolute;
-            top: 10px;
-            left: 10px;
+        header {
+            background-color: #FF6B6B;
+            padding: 20px 0;
             color: white;
+            text-align: center;
         }
 
-        .rope {
-            display: inline-block;
-            width: 5px;
-            height: 50px;
-            background-color: #795548;
-            border-radius: 5px;
-            margin: 0 10px;
-            transition: transform 0.3s;
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
         }
 
-        .rope:hover {
-            transform: rotate(5deg);
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
         }
 
-        .helmet {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            background-color: #FFDAB9;
-            border-radius: 50%;
+        nav a:hover, nav .dropdown-content a:hover {
+            background-color: #FF8888;
+        }
+
+        .dropdown {
             position: relative;
-            cursor: pointer;
-            transition: background-color 0.5s;
+            display: inline-block;
         }
 
-        .helmet::before, .helmet::after {
-            content: "";
+        .dropdown-content {
+            display: none;
             position: absolute;
-            border-style: solid;
-            display: block;
-            width: 0;
+            background-color: #FF6B6B;
+            min-width: 160px;
             z-index: 1;
         }
 
-        .helmet::before {
-            top: 10px;
-            left: 10px;
-            border-width: 15px 15px 0;
-            border-color: white transparent;
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
 
-        .helmet::after {
-            bottom: 10px;
-            left: 10px;
-            border-width: 0 15px 15px;
-            border-color: transparent transparent white;
+        footer {
+            background-color: #FF8888;
+            padding: 20px 0;
+            color: white;
+            text-align: center;
+            margin-top: 20px;
         }
 
+        footer a {
+            color: white;
+            margin: 0 10px;
+        }
     </style>
-
-    <script>
-        function changeHelmetColor() {
-            const colors = ["#FFDAB9", "#B2DFDA", "#FFABAB", "#FFA07A"];
-            document.querySelector('.helmet').style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        }
-
-        function cheer() {
-            alert('You made it to the top! Keep climbing!');
-        }
-    </script>
-
 </head>
 
 <body>
 
-<!-- ...previous content... -->
+    <header>
+        <h1>Welcome to Rock Cancer</h1>
+        <nav>
+            <a href="#">Home</a>
+            <div class="dropdown">
+                <a href="#">About Us</a>
+                <div class="dropdown-content">
+                    <a href="#">Mission</a>
+                    <a href="#">History</a>
+                    <a href="#">Team</a>
+                </div>
+            </div>
+            <a href="#">Events</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
 
-<main>
-    <section>
-        <p>Click on the climbing elements below to interact!</p>
+    <main>
+        <section>
+            <h2>About Rock Cancer</h2>
+            <p>Rock Cancer is an inspiring initiative that offers free rock climbing sessions to young patients aged 4-25 battling cancer or with a history of the ailment, along with other chronic medical conditions. Hosted every third Friday at Planet Rock Ann Arbor, this program empowers participants to reclaim their strength, enhance their range of motion, and rebuild confidence post-treatment. Additionally, each participant can bring along a friend or sibling, fostering a sense of community and mutual support. Beyond climbing, Rock Cancer serves as a beacon of hope and resilience, celebrating the indomitable spirit of its young climbers.</p>
+        </section>
+    </main>
 
-        <!-- Climbing themed interactive elements -->
-        <div class="climbing-wall" onclick="cheer()"> </div>
-        <div class="rope"></div>
-        <div class="rope"></div>
-        <div class="helmet" onclick="changeHelmetColor()"></div>
-    </section>
-</main>
-
-<!-- ...previous footer... -->
+    <footer>
+        <p>Connect with us on social media!</p>
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+    </footer>
 
 </body>
 
