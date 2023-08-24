@@ -125,6 +125,63 @@ button:hover {
     background-color: #555;
 }
 
+/* Mobile-Friendly Adjustments */
+
+@media screen and (max-width: 768px) {
+    
+    /* Header and Navigation Styles */
+    header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    nav a {
+        display: block;
+        margin: 5px 0;
+        text-align: center;
+    }
+
+    /* Container adjustments */
+    .container {
+        width: 95%; /* Increased width for smaller devices */
+    }
+
+    .main-content {
+        padding: 30px; /* Reduced padding for smaller devices */
+    }
+
+    .image-section img {
+        max-width: 80%; /* Images should take more width on mobile */
+    }
+
+    .cv-section {
+        margin-top: 20px; /* Reduced margin for mobile */
+    }
+
+    footer div {
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    
+    header h1 {
+        font-size: 24px; /* Adjust title size for very small devices */
+    }
+
+    nav a {
+        padding: 5px;
+        font-size: 14px; /* Adjust font size for very small devices */
+    }
+}
+
+      
     </style>
 </head>
 
