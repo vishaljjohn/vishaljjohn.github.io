@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vishal John</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  
+  <style>
+      
+      
+        
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav li {
+            display: inline-block;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #f8f8f8;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 50px 0;
+        }
+
+        .main-content {
+            background-color: #fff;
+            padding: 50px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content h2, .main-content p {
+            margin: 20px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #333;
+            color: #fff;
+        }
+
+       /* Styles for social media icons */
+        footer i {
+            color: #ff5733;  /* Change this color as you desire */
+        }
+
+        footer a:hover i {
+            color: #ff9966;  /* Change this color as you desire */
+        }
+      
+.main-content h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        iframe {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        figure img {
+            max-width: 25%;
+            border-radius: 5px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        figcaption {
+            margin-top: 10px;
+            color: #666;
+        }
+
+        .donate-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #FF0000;
+            color: #fff;
+            border-radius: 3px;
+            text-decoration: none;
+            margin: 20px 0;
+            transition: background-color 0.3s;
+        }
+
+        .donate-button:hover {
+            background-color: #FF7276;
+        }
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 150px);  /* rough estimation of header and footer height combined */
+    flex-direction: column;
+}
+
+
+.image-container {
+    display: flex;
+    flex-wrap: nowrap;  /* Prevent wrapping */
+    overflow: hidden;  /* Hide overflow images */
+    width: 100%;  /* Full width of parent */
+    position: relative;  /* This can be useful for positioning navigation controls if needed */
+}
+
+figure {
+    flex: 0 0 100%;  /* Each figure will be 100% of the .image-container's width */
+}
+
+figure img {
+    width: 100%;  /* Image takes full width of the figure */
+}
+
+
+
+/* Gallery container style */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* This creates 2 columns of equal width */
+    gap: 20px;  /* Spacing between images */
+}
+
+/* Gallery Image Styles */
+.gallery-image {
+    max-width: 100%; /* Using 100% here will allow the image to adjust to the width of the grid column */
+    cursor: pointer;
+    transition: transform 0.3s;
+    border-radius: 5px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-image:hover {
+    transform: scale(1.1);
+}
+
+/* Styles for Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.lightbox-close:hover, .lightbox-close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.lightbox-caption {
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+      
+    </style>
+    
+</head>
+
+<body>
+
+    <header>
+       <h1><a href="index.html" style="text-decoration: none; color: inherit;">Vishal John</a></h1>
+
+       <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Me</a></li>
+                 <li><a href="blog.html">Newsletter</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    
+
+    <div class="container">
+        <div class="main-content">
+            <h2>What is the Saint Andrew's Breakfast Program</h2>
+        
+                
+  <p>In the heart of Ann Arbor, MI, the Breakfast Program at Saint Andrew's is more than just a place to grab a bite. Since 2021, I have had the honor of serving as a Food Server at this initiative. Recognizing the power of nutrition as a cornerstone of preventative medicine, we not only provide our city's underserved community with wholesome breakfasts but also offer clothing and prepared nutritional bagged lunches. Our goal goes beyond merely feeding: we aim to foster well-being, empowerment, and hope through each meal and interaction. At Saint Andrew's, we believe that when you feed the body with care, you nourish the soul and empower the spirit. </p>     
+
+
+            
+    
+
+            <h2>St. Andrew's Breakfast Program Video</h2>
+            <iframe width="650" height="315" src="https://www.youtube.com/embed/kA-UBdioii4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+           <h2>Some Pictures from The Breakfast Program</h2>
+
+<!-- Image Carousel -->
+<!-- Image Gallery -->
+<div class="gallery">
+    <figure>
+        <img src="andrew1.JPG" alt="Image 1 Description" class="gallery-image" data-index="0">
+        <figcaption> Typical Day at The Breakfast Program </figcaption>
+    </figure>
+    
+    <figure>
+        <img src="andrew2.JPG" alt="Image 2 Description" class="gallery-image" data-index="1">
+        <figcaption> Our Team Mascot </figcaption>
+    </figure>
+   
+</div>
+
+
+<!-- Lightbox Modal -->
+<div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img class="lightbox-content" id="lightboxImage">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
+
+
+       <div class="center-content">
+                <h2>Check Out the Breakfast Program!</h2>
+            
+                <a href="https://breakfastatstandrews.org/" target="_blank" rel="noopener noreferrer" class="donate-button">St. Andrew's Breakfast Program</a>
+            </div>
+              </div>
+    </div>
+
+
+
+
+
+    
+   <footer>
+      <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"> <i class="fab fa-linkedin fa-2x"> </i>
+       <a href="https://github.com/vishaljjohn" target="_blank"> <i class="fab fa-github fa-2x"> </i> 
+        <a href="https://medium.com/@vishaljjohn" target="_blank"> <i class="fab fa-medium fa-2x"> </i> 
+       </a>  <p>© 2023 Vishal John. All Rights Reserved.</p>
+   
+    </footer>
+
+
+           
+<script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const closeLightbox = document.getElementById('lightboxClose');
+    const galleryImages = document.querySelectorAll('.gallery-image');
+
+    galleryImages.forEach((image, index) => {
+        image.addEventListener('click', () => {
+            lightbox.style.display = 'block';
+            lightboxImage.src = image.src;
+            lightboxCaption.innerHTML = image.nextElementSibling.textContent;
+        });
+    });
+
+    closeLightbox.addEventListener('click', () => {
+        lightbox.style.display = 'none';
+    });
+
+// Close the lightbox with the 'Esc' key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape" && lightbox.style.display === 'block') {
+                lightbox.style.display = 'none';
+            }
+        });
+    
+    // Close lightbox when clicked anywhere besides the image
+    lightbox.addEventListener('click', (event) => {
+        if(event.target !== lightboxImage) {
+            lightbox.style.display = 'none';
+        }
+    });
+
+</script>
+
+
+           
+</body>
+
+</html>
