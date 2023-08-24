@@ -121,6 +121,59 @@
         footer a:hover i {
             color: #ff9966;  /* Change this color as you desire */
         }
+
+/* Mobile Friendly CSS */
+@media screen and (max-width: 768px) {
+    /* Make the navigation items more touch-friendly */
+    nav a {
+        padding: 10px 15px;
+    }
+    
+    /* Adjust font sizes for better readability */
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    .main-content h2 {
+        font-size: 1.4em;
+    }
+
+    .main-content p, .main-content ul {
+        font-size: 1em;
+    }
+
+    /* Convert navigation to a vertical list for smaller screens */
+    nav ul {
+        display: block;
+        text-align: center;
+    }
+
+    nav li {
+        display: block;
+        margin: 5px 0;
+    }
+
+    /* Adjust container for smaller screens */
+    .container {
+        width: 95%;
+    }
+
+    /* Adjust project items for better spacing and visibility */
+    .projects-gallery {
+        gap: 10px;
+    }
+    
+    .project-caption {
+        font-size: 0.9em;
+        bottom: 5px;
+        left: 5px;
+    }
+}
+
+/* If you want to implement a hamburger menu in the future, you'd need additional styling and a bit of JavaScript */
+
+
+
         
     </style>
 </head>
