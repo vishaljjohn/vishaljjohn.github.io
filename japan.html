@@ -8,257 +8,221 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   
   <style>
-      
-      
-        
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+    /* Base Styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+    }
 
-        header {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        nav li {
-            display: inline-block;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-
-        nav a:hover {
-            background-color: #f8f8f8;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 50px 0;
-        }
-
-        .main-content {
-            background-color: #fff;
-            padding: 50px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .main-content h2, .main-content p {
-            margin: 20px 0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #333;
-            color: #fff;
-        }
-
-       /* Styles for social media icons */
-        footer i {
-            color: #ff5733;  /* Change this color as you desire */
-        }
-
-        footer a:hover i {
-            color: #ff9966;  /* Change this color as you desire */
-        }
-      
-.main-content h2 {
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        iframe {
-            display: block;
-            margin: 20px auto;
-            max-width: 100%;
-        }
-
-        figure {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-       figure img {
-    max-width: 100%; /* Ensure images don't overflow their container */
-    border-radius: 5px;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for scaling and shadow */
-}
-
-figure img:hover {
-    transform: scale(1.05); /* Image will zoom in slightly */
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth effect */
-}
-
-
-        figcaption {
-            margin-top: 10px;
-            color: #666;
-        }
-
-        .donate-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #0000FF;
-            color: #fff;
-            border-radius: 3px;
-            text-decoration: none;
-            margin: 20px 0;
-            transition: background-color 0.3s;
-        }
-
-        .donate-button:hover {
-            background-color: #f90;
-        }
-
-.center-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: calc(100vh - 150px);  /* rough estimation of header and footer height combined */
-    flex-direction: column;
-}
-
-
-.image-container {
-    display: flex;
-    flex-wrap: wrap; /* This will allow images to wrap to the next line */
-    justify-content: space-between; /* Spacing between images */
-}
-
-
-figure {
-    margin: 0; /* Remove default margin */
-    width: calc(50% - 10px); /* This ensures you have two images per row with a small gap in between */
-    box-sizing: border-box; /* This makes sure padding and border are included in the element's total width and height */
-}
-
-
-figure img {
-    max-width: 100%; /* Ensure images don't overflow their container */
-    border-radius: 5px;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-
-
- #lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-        }
-
-        #lightbox img {
-            display: block;
-            max-width: 80%;
-            max-height: 80%;
-            margin: 10% auto;
-            box-shadow: 0px 0px 10px white;
-            border-radius: 5px;
-        }
-
-        #lightbox p {
-            text-align: center;
-            color: white;
-            font-size: 18px;
-        }
-
-        #lightboxClose {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: white;
-            cursor: pointer;
-        }
-
-      /* Mobile-Friendly Adjustments */
-
-@media screen and (max-width: 768px) {
-    
-    /* Header and Navigation Styles */
     header {
-        flex-direction: column;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
         align-items: center;
-        text-align: center;
+    }
+
+    header h1 {
+        margin: 0;
     }
 
     nav ul {
-        flex-direction: column;
-        gap: 10px;
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    nav li {
+        display: inline-block;
     }
 
     nav a {
-        display: block;
-        margin: 5px 0;
-        text-align: center;
+        text-decoration: none;
+        color: #333;
+        padding: 5px 10px;
+        border-radius: 3px;
+        transition: background-color 0.3s;
     }
 
-    /* Container adjustments */
+    nav a:hover {
+        background-color: #f8f8f8;
+    }
+
     .container {
-        width: 95%; /* Increased width for smaller devices */
+        width: 80%;
+        margin: auto;
+        padding: 50px 0;
     }
 
     .main-content {
-        padding: 30px; /* Reduced padding for smaller devices */
+        background-color: #fff;
+        padding: 50px;
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .image-section img {
-        max-width: 80%; /* Images should take more width on mobile */
+    .main-content h2, .main-content p {
+        margin: 20px 0;
     }
 
-    .cv-section {
-        margin-top: 20px; /* Reduced margin for mobile */
+    .main-content h2 {
+        border-bottom: 2px solid #333;
+        padding-bottom: 10px;
     }
 
-    footer div {
-        margin-bottom: 10px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    
-    header h1 {
-        font-size: 24px; /* Adjust title size for very small devices */
+    footer {
+        text-align: center;
+        padding: 20px 0;
+        background-color: #333;
+        color: #fff;
     }
 
-    nav a {
-        padding: 5px;
-        font-size: 14px; /* Adjust font size for very small devices */
+    /* Styles for social media icons */
+    footer i {
+        color: #ff5733;
     }
-}
-    </style>
+
+    footer a:hover i {
+        color: #ff9966;
+    }
+
+    iframe, figure {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    figure img {
+        max-width: 100%;
+        border-radius: 5px;
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    figure img:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    figcaption {
+        margin-top: 10px;
+        color: #666;
+    }
+
+    .donate-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #0000FF;
+        color: #fff;
+        border-radius: 3px;
+        text-decoration: none;
+        margin: 20px 0;
+        transition: background-color 0.3s;
+    }
+
+    .donate-button:hover {
+        background-color: #f90;
+    }
+
+    .center-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 150px);
+        flex-direction: column;
+    }
+
+    .image-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    figure {
+        margin: 0;
+        width: calc(50% - 10px);
+        box-sizing: border-box;
+    }
+
+    #lightbox {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+    }
+
+    #lightbox img {
+        display: block;
+        max-width: 80%;
+        max-height: 80%;
+        margin: 10% auto;
+        box-shadow: 0px 0px 10px white;
+        border-radius: 5px;
+    }
+
+    #lightbox p {
+        text-align: center;
+        color: white;
+        font-size: 18px;
+    }
+
+    #lightboxClose {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: white;
+        cursor: pointer;
+    }
+
+    /* Mobile Adjustments */
+    @media screen and (max-width: 768px) {
+        header {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        nav ul {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        nav a {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .container {
+            width: 95%;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        footer div {
+            margin-bottom: 10px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        header h1 {
+            font-size: 24px;
+        }
+
+        nav a {
+            padding: 5px;
+            font-size: 14px;
+        }
+    }
+</style>
 </head>
 
 <body>
