@@ -4,12 +4,12 @@ const ctx = canvas.getContext('2d');
 let bird = {
     x: canvas.width / 5,
     y: canvas.height / 2,
-    size: 40, // Adjust based on your face image's desired size
+    size: 40,
     dy: 2
 };
 
 let faceImage = new Image();
-faceImage.src = 'face.png'; // Ensure your face image is named 'face.png' and in the same directory
+faceImage.src = 'face.png';
 
 let pipes = [];
 let pipeSpacing = 150;
@@ -38,7 +38,6 @@ function updatePipes() {
         }
         if (bird.x + bird.size > pipes[i].x && bird.x < pipes[i].x + pipeWidth) {
             if (bird.y < pipes[i].top || bird.y + bird.size > pipes[i].top + pipeGap) {
-                // Bird hit the pipe - reset game
                 bird.y = canvas.height / 2;
                 pipes = [];
             }
@@ -64,11 +63,25 @@ canvas.addEventListener('click', function() {
     bird.dy = -5;
 });
 
+canvas.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    bird.dy = -5;
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.code === 'Space') {
+        bird.dy = -5;
+    }
+});
+
+window.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
+
 setInterval(function() {
     bird.dy += 1;
 }, 150);
 
-// Start the game loop only when the face image is fully loaded
 faceImage.onload = function() {
     draw();
 };
