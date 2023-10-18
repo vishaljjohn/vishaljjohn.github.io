@@ -9,7 +9,7 @@ let bird = {
 };
 
 let faceImage = new Image();
-faceImage.src = 'face.png';
+faceImage.src = '/images/face.png';
 
 let pipes = [];
 let pipeSpacing = 150;
