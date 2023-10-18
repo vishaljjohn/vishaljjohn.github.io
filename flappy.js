@@ -4,9 +4,12 @@ const ctx = canvas.getContext('2d');
 let bird = {
     x: canvas.width / 5,
     y: canvas.height / 2,
-    size: 20,
+    size: 40, // Adjust based on your face image's desired size
     dy: 2
 };
+
+let faceImage = new Image();
+faceImage.src = 'face.png'; // Ensure your face image is named 'face.png' and in the same directory
 
 let pipes = [];
 let pipeSpacing = 150;
@@ -14,8 +17,7 @@ let pipeWidth = 50;
 let pipeGap = 100;
 
 function drawBird() {
-    ctx.fillStyle = 'yellow';
-    ctx.fillRect(bird.x, bird.y, bird.size, bird.size);
+    ctx.drawImage(faceImage, bird.x, bird.y, bird.size, bird.size);
 }
 
 function drawPipe(pipe) {
@@ -66,4 +68,8 @@ setInterval(function() {
     bird.dy += 1;
 }, 150);
 
-draw();
+// Start the game loop only when the face image is fully loaded
+faceImage.onload = function() {
+    draw();
+};
+
