@@ -2,7 +2,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 let meImage = new Image();
-meImage.src = 'me.png';
+meImage.src = '/images/face.png';
 
 const dino = {
     x: 50,
