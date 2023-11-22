@@ -14,6 +14,8 @@ const dino = {
 };
 
 const obstacles = [];
+let score = 0;
+let gameRunning = false;
 
 function drawDino() {
     ctx.drawImage(meImage, dino.x, dino.y, dino.width, dino.height);
@@ -50,37 +52,73 @@ function updateObstacles() {
         obstacles[i].x -= 5;
         if (obstacles[i].x + obstacles[i].width < 0) {
             obstacles.splice(i, 1);
+            score++;
         }
         if (dino.x < obstacles[i].x + obstacles[i].width &&
             dino.x + dino.width > obstacles[i].x &&
             dino.y < canvas.height &&
             dino.y + dino.height > canvas.height - obstacles[i].height) {
-                obstacles.length = 0;
+                gameRunning = false;
+                showGameOverScreen();
+                return;
         }
     }
 }
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+function drawScore() {
+    ctx.font = '16px Arial';
+    ctx.fillStyle = '#000';
+    ctx.fillText('Score: ' + score, 8, 20);
+}
 
+function showStartScreen() {
+    ctx.font = '24px Arial';
+    ctx.fillStyle = '#000';
+    ctx.fillText('Press Space to Start', canvas.width / 2 - 100, canvas.height / 2);
+}
+
+function showGameOverScreen() {
+    ctx.font = '24px Arial';
+    ctx.fillStyle = '#000';
+    ctx.fillText('Game Over! Press Space to Restart', canvas.width / 2 - 150, canvas.height / 2);
+}
+
+function draw() {
+    if (!gameRunning) {
+        showStartScreen();
+        return;
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawDino();
     obstacles.forEach(drawObstacle);
-
+    drawScore();
     updateDino();
     updateObstacles();
-
     requestAnimationFrame(draw);
 }
 
 document.addEventListener('keydown', function(e) {
-    if (e.code === 'Space' && !dino.jumping) {
-        dino.jumping = true;
-        dino.velocity = -15;
+    if (e.code === 'Space') {
+        if (!gameRunning) {
+            gameRunning = true;
+            score = 0;
+            obstacles.length = 0;
+            draw();
+        } else if (!dino.jumping) {
+            dino.jumping = true;
+            dino.velocity = -15;
+        }
     }
 });
 
 canvas.addEventListener('touchstart', function() {
-    if (!dino.jumping) {
+    if (!gameRunning) {
+        gameRunning = true;
+        score = 0;
+        obstacles.length = 0;
+        draw();
+    } else if (!dino.jumping) {
         dino.jumping = true;
         dino.velocity = -15;
     }
@@ -91,5 +129,6 @@ window.addEventListener('touchmove', function(e) {
 }, { passive: false });
 
 meImage.onload = function() {
-    draw();
+    showStartScreen();
 };
+
