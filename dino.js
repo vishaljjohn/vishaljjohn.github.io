@@ -111,7 +111,7 @@ document.addEventListener('keydown', function(e) {
             draw();
         } else if (!dino.jumping) {
             dino.jumping = true;
-            dino.velocity = -10; // Reduced jump velocity
+            dino.velocity = -5; // Reduced jump velocity
         }
     }
 });
@@ -125,7 +125,7 @@ canvas.addEventListener('touchstart', function() {
         draw();
     } else if (!dino.jumping) {
         dino.jumping = true;
-        dino.velocity = -10; // Reduced jump velocity
+        dino.velocity = -5; // Reduced jump velocity
     }
 });
 
