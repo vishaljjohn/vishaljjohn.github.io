@@ -16,6 +16,7 @@ const dino = {
 const obstacles = [];
 let score = 0;
 let gameRunning = false;
+let timeSinceStart = 0;
 
 function drawDino() {
     ctx.drawImage(meImage, dino.x, dino.y, dino.width, dino.height);
@@ -38,7 +39,9 @@ function updateDino() {
 }
 
 function updateObstacles() {
-    if (Math.random() < 0.02) {
+    timeSinceStart++;
+
+    if (timeSinceStart > 180 && Math.random() < 0.01) {
         const height = 20 + Math.random() * 30;
         const obstacle = {
             x: canvas.width,
@@ -49,13 +52,13 @@ function updateObstacles() {
     }
 
     for (let i = obstacles.length - 1; i >= 0; i--) {
-        obstacles[i].x -= 5;
+        obstacles[i].x -= 3;
         if (obstacles[i].x + obstacles[i].width < 0) {
             obstacles.splice(i, 1);
             score++;
         }
         if (dino.x < obstacles[i].x + obstacles[i].width &&
-            dino.x + dino.width > obstacles[i].x &&
+            dino.x + dino.width - 10 > obstacles[i].x &&
             dino.y < canvas.height &&
             dino.y + dino.height > canvas.height - obstacles[i].height) {
                 gameRunning = false;
@@ -103,11 +106,12 @@ document.addEventListener('keydown', function(e) {
         if (!gameRunning) {
             gameRunning = true;
             score = 0;
+            timeSinceStart = 0;
             obstacles.length = 0;
             draw();
         } else if (!dino.jumping) {
             dino.jumping = true;
-            dino.velocity = -15;
+            dino.velocity = -10; // Reduced jump velocity
         }
     }
 });
@@ -116,11 +120,12 @@ canvas.addEventListener('touchstart', function() {
     if (!gameRunning) {
         gameRunning = true;
         score = 0;
+        timeSinceStart = 0;
         obstacles.length = 0;
         draw();
     } else if (!dino.jumping) {
         dino.jumping = true;
-        dino.velocity = -15;
+        dino.velocity = -10; // Reduced jump velocity
     }
 });
 
@@ -131,4 +136,3 @@ window.addEventListener('touchmove', function(e) {
 meImage.onload = function() {
     showStartScreen();
 };
-
