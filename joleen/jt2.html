@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.3/dist/tailwind.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+  <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/72387477?v=4">
+  <title>Joleen Thomas Art Portfolio</title>
+  <!-- Styles and scripts remain unchanged -->
+</head>
+<body class="bg-white relative">
+  <div id="particles-js"></div>
+  <nav class="p-4 flex flex-wrap items-center justify-between w-full px-2 md:px-4">
+    <div>
+      <span class="text-black font-bold">Joleen Thomas Art</span>
+    </div>
+    <button id="dark-mode-toggle" class="ml-4 p-2 text-black rounded shadow-md">🌓</button>
+  </nav>
+  <div class="flex flex-col items-center justify-center min-h-screen">
+    <div id="header-container" class="px-4 py-5 mt-8 space-x-4">
+      <h1 class="text-8xl font-bold mb-10">Joleen Thomas</h1>
+      <h2 class="text-xl mb-3">Passionate Painter and Visual Artist</h2>
+      <!-- Social media links and contact information -->
+    </div>
+  </div>
+  <div id="content-container" class="flex flex-col md:flex-row w-full flex-wrap mt-6 mb-20 mx-1 md:mx-0">
+    <!-- Posts section can be repurposed or removed based on your preference -->
+    <div id="projects-container" class="w-full md:w-2/3 px-4 py-5 mb-5 md:mb-0">
+      <h3 class="text-2xl font-semibold mb-4"><i class="fa-solid fa-palette"></i> My Paintings</h3>
+      <h4 class="text-sm italic mb-4">Explore my collection of artworks</h4>
+      <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-wrap">
+        <!-- Your paintings will be displayed here -->
+      </div>
+    </div>
+  </div>
+  <!-- Scripts for fetching content and other functionalities remain unchanged -->
+  <!-- Footer section -->
+    <!-- Scripts for fetching content and other functionalities -->
+    <script>
+      document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+  
+        const toggleBtn = document.getElementById("dark-mode-toggle");
+        const isDarkModeOn = document.body.classList.contains("dark-mode");
+  
+        toggleBtn.innerText = isDarkModeOn ? "☀️" : "🌓";
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+    <script>
+        // Script for loading content
+        // You may want to adjust this part to fetch and display your painting projects
+    </script>
+    <script>
+      particlesJS('particles-js', {
+        particles: {
+          number: {
+            value: 80,
+            density: {
+              enable: true,
+              value_area: 800
+            }
+          },
+          color: {
+            value: '#888888'
+          },
+          shape: {
+            type: 'circle',
+            stroke: {
+              width: 0,
+              color: '#000000'
+            },
+            polygon: {
+              nb_sides: 5
+            }
+          },
+          opacity: {
+            value: 0.5,
+            random: true,
+            anim: {
+              enable: false,
+              speed: 1,
+              opacity_min: 0.1,
+              sync: false
+            }
+          },
+          size: {
+            value: 3,
+            random: true,
+            anim: {
+              enable: false,
+              speed: 40,
+              size_min: 0.1,
+              sync: false
+            }
+          },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: '#888888',
+            opacity: 0.4,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 6,
+            direction: 'none',
+            random: false,
+            straight: false,
+            out_mode: 'out',
+            bounce: false,
+            attract: {
+              enable: false,
+              rotateX: 600,
+              rotateY: 1200
+            }
+          }
+        },
+        interactivity: {
+          detect_on: 'canvas',
+          events: {
+            onhover: {
+              enable: true,
+              mode: 'repulse'
+            },
+            onclick: {
+              enable: false
+            },
+            resize: true
+          },
+          modes: {
+            grab: {
+              distance: 400,
+              line_linked: {
+                opacity: 1
+              }
+            },
+            bubble: {
+              distance: 400,
+              size: 40,
+              duration: 2,
+              opacity: 8,
+              speed: 3
+            },
+            repulse: {
+              distance: 200,
+              duration: 0.4
+            },
+            push: {
+              particles_nb: 4
+            },
+            remove: {
+              particles_nb: 2
+            }
+          }
+        },
+        retina_detect: true
+      });
+    </script>
+    <footer class="mt-8 mb-4 text-center">
+      <div class="flex items-center justify-center">
+        <p>&copy; 2024 by Joleen Thomas. All rights reserved.</p>
+      </div>
+    </footer>
+    <button id="scroll-down-btn" class="fixed bottom-4 left-1/2 text-black p-2 rounded shadow-md opacity-80 transition-colors duration-200 ease-in-out">
+      <i class="fa-solid fa-angle-down"></i>
+    </button>
+    <script>
+      const scrollDownBtn = document.getElementById('scroll-down-btn');
+      const headerContainer = document.getElementById('header-container');
+
+      const toggleScrollButtonVisibility = () => {
+        if (window.pageYOffset === 0) {
+          scrollDownBtn.style.display = 'flex';
+        } else {
+          scrollDownBtn.style.display = 'none';
+        }
+      }
+
+      scrollDownBtn.addEventListener('click', () => {
+        const yOffset = headerContainer.getBoundingClientRect().bottom + window.pageYOffset;
+        window.scrollTo({top: yOffset, behavior: 'smooth'});
+      });
+
+      window.addEventListener('scroll', toggleScrollButtonVisibility);
+      toggleScrollButtonVisibility();
+    </script>
+</body>
+</html>
+
