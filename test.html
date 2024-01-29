@@ -1,416 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vishal John</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-
-
-    <meta name="description" content="Vishal John Personal Website">
-    <meta name="keywords" content="Vishal John, medicine, nonprofit, volunteer, Rock Cancer, miRcore">
-
-    <style>
-
- #particles-js {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
-            color: #333;
-            position: relative;
-            z-index: 1;
-        }
-
-
-      
-        .projects-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.3/dist/tailwind.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+  <link rel="icon" type="image/png" href="">
+  <title>Vishal John</title>
+  <style>
+.markdown-container img {
+  display: block;
+  margin: 0 auto;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
-.project-item {
-    position: relative;
-    overflow: hidden;
+.markdown-container h2 {
+  font-weight: bold;
 }
 
-.project-item img {
-    width: 100%;
-    height: auto;
-    transition: transform 0.3s;
+.markdown-container ul {
+  list-style-type: disc;
+  padding-left: 1.25rem;
 }
 
-.project-item:hover img {
-    transform: scale(1.1);
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
-
-.project-caption {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 5px 10px;
-    border-radius: 3px;
-}
-
-        
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
-            color: #333;
-            position: relative;
-            z-index: 1;
-        }
-
-        header {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        nav li {
-            display: inline-block;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-
-        nav a:hover {
-            background-color: #f8f8f8;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 50px 0;
-        }
-
-        .main-content {
-            background-color: #fff;
-            padding: 50px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .main-content h2, .main-content p {
-            margin: 20px 0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #333;
-            color: #fff;
-        }
-
- /* Styles for social media icons */
-        footer i {
-            color: #ff5733;  /* Change this color as you desire */
-        }
-
-        footer a:hover i {
-            color: #ff9966;  /* Change this color as you desire */
-        }
-
-/* Mobile-Friendly Adjustments */
-
-@media screen and (max-width: 768px) {
-    
-    /* Header and Navigation Styles */
-    header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    nav a {
-        display: block;
-        margin: 5px 0;
-        text-align: center;
-    }
-
-    /* Container adjustments */
-    .container {
-        width: 95%; /* Increased width for smaller devices */
-    }
-
-    .main-content {
-        padding: 30px; /* Reduced padding for smaller devices */
-    }
-
-    .image-section img {
-        max-width: 80%; /* Images should take more width on mobile */
-    }
-
-    .cv-section {
-        margin-top: 20px; /* Reduced margin for mobile */
-    }
-
-    footer div {
-        margin-bottom: 10px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    
-    header h1 {
-        font-size: 24px; /* Adjust title size for very small devices */
-    }
-
-    nav a {
-        padding: 5px;
-        font-size: 14px; /* Adjust font size for very small devices */
-    }
-}
-
-/* If you want to implement a hamburger menu in the future, you'd need additional styling and a bit of JavaScript */
-
-
-
-        
-    </style>
+  </style>
 </head>
-
-<body>
-
-    <header>
-        <h1><a href="index.html" style="text-decoration: none; color: inherit;">Vishal John</a></h1>
-        <nav>
-            <ul>
+<body class="bg-white relative">
+<style>
+/* Add necessary dark mode styles for the footer */
+.dark-mode .bg-white.p-4.rounded.shadow-md.transition-colors.duration-200.hover\:bg-gray-100:hover {
+  background-color: #333333;
+}
+.dark-mode {
+  background-color: #1a1a1a;
+}
+.dark-mode footer,
+.dark-mode footer .text-gray-600 {
+  color: #f8f8f8;
+}
+    .dark-mode .text-white,
+    .dark-mode .text-black,
+    .dark-mode .text-gray-900,
+    .dark-mode h1,
+    .dark-mode h2,
+    .dark-mode h3,
+    .dark-mode h4,
+    .dark-mode .bg-white .card-content,
+    .dark-mode .bg-white div {
+      color: #f8f8f8;
+    }
+    .dark-mode .bg-white {
+      background-color: #1a1a1a;
+    }
+    .dark-mode .shadow-md {
+      box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1), 0 1px 3px rgba(255, 255, 255, 0.06);
+    }
+  </style>
+ 
+   <nav class="bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-between">
+        <div class="flex space-x-4">
+          <!-- logo -->
+          <div>
+            <a href="#" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
+              <span class="font-bold">Vishal John</span>
+            </a>
+          </div>
+          <!-- primary nav -->
+         <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Me</a></li>
                  <li><a href="blog.html">Newsletter</a></li>
                 <li><a href="publications.html">Publications</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-        </nav>
-    </header>
+        
+  </nav>
 
-    <div class="container">
-        <div class="main-content">
-            <h2>Welcome to my website! Click on my work below:</h2>
-
-    <p>Scroll below to see the projects/experiences that I've been passionate about. Each one holds a unique tale of challenges, learning, and growth. Enjoy your journey here, and I hope our paths cross, be it virtually or in the real world!</p>
-        </div>
+  
+  
+  
+  <div id="particles-js"></div>
+  
+<nav class="p-4 flex flex-wrap items-center justify-between w-full px-2 md:px-4">
+    <div>
+      <span class="text-black font-bold">Vishal John</span><span class="text-black"></span>
     </div>
-
-<div class="projects-gallery">
-    <div class="project-item">
-        <a href="mircore.html">
-            <img src="mircorelogo.jpg" alt="Bioinformatics Nonprofit miRcore Ann Arbor">
-            <div class="project-caption">miRcore</div>
-        </a>
- </div>
-    
-    <div class="project-item">
-        <a href="rockcancer.html">
-            <img src="RockCancer.png" alt="Supporting Patients with cancer Rock Cancer">
-            <div class="project-caption">Rock Cancer</div>
-        </a>
+    <button id="dark-mode-toggle" class="ml-4 p-2  text-black rounded shadow-md">🌓</button>
+  </nav>
+  <div class="flex flex-col items-center justify-center min-h-screen">
+    <div id="header-container" class="px-4 py-5 mt-8 space-x-4">
+      <h1 class="text-8xl font-bold mb-10">Joleen Thomas</h1>
+      <h2 class="text-xl mb-3"> Welcome to my Online Portfolio! Below is a representation of my creative outlet!
+        <br><b>Merging Productivity and Creativity</b></h2>
+      <br>
+      <div class="flex space-x-4">
+        <a href="https://www.instagram.com/jtworks/?hl=en" target="_blank" class="text-xl text-black hover:text-pink-600 transition-colors duration-200 ease-in-out"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@jtworksco" target="_blank" class="text-xl text-black hover:text-pink-600 transition-colors duration-200 ease-in-out"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.etsy.com/shop/jtworksco/" target="_blank" class="text-xl text-black hover:text-pink-600 transition-colors duration-200 ease-in-out"><i class="fab fa-etsy"></i></a>
+     
+        <!-- If Joleen wants to add more links, add here:
+  
+        <a href="https://github.com/tobwil" target="_blank" class="text-xl text-black hover:text-pink-600 transition-colors duration-200 ease-in-out"><i class="fab fa-github"></i></a>
+        <a href="mailto:tobias@wilhelm.digital" target="_blank" class="text-xl text-black hover:text-pink-600 transition-colors duration-200 ease-in-out"><i class="fas fa-envelope"></i></a>
+   -->
+        
+      
+      </div>
     </div>
-   
-    <!-- Add more projects as needed -->
-
- <div class="project-item">
-        <a href="koschmannlab.html">
-            <img src="lab.jpg" alt="Koschmann Lab for Pediatric Brain Cancer at University of Michigan">
-            <div class="project-caption">Koschmann Lab for Pediatric Brain Cancer</div>
-        </a>
+  </div>
+  <div id="content-container" class="flex flex-col md:flex-row w-full flex-wrap mt-6 mb-20 mx-1 md:mx-0">
+    <div id="posts-container" class="w-full md:w-1/3 px-4 py-5 mb-5 md:mb-0">
+      <h3 class="text-2xl font-semibold mb-4"><i class="fa-solid fa-magnifying-glass"></i> Digital Endeavors</h3>
+      <h4 class="text-sm italic mb-4">A collection of thoughts and findings</h4>
+      <div id="posts-list" class="space-y-4">
+        <!-- Fetched Posts Markdown files will be displayed here -->
+      </div>
     </div>
-
- <div class="project-item">
-        <a href="standrews.html">
-            <img src="andrew.jpg" alt="Saint Andrew's Breakfast Program Ann Arbor">
-            <div class="project-caption">Saint Andrew's Breakfast Program</div>
-        </a>
+    <div id="projects-container" class="w-full md:w-2/3 px-4 py-5 mb-5 md:mb-0">
+      <h3 class="text-2xl font-semibold mb-4"><i class="fa-solid fa-code"></i> Paintings </h3>
+      <h4 class="text-sm italic mb-4">Discover what I do in my spare time</h4>
+      <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-wrap">
+        <!-- Fetched Projects Markdown files will be displayed here -->
+      </div>
     </div>
-    
-     <div class="project-item">
-        <a href="HELP.html">
-            <img src="help.jpg" alt="Hospital Elder Life Program University of Michigan Hospital">
-            <div class="project-caption">Hospital Elder Life Program</div>
-        </a>
+  </div>
+    <script>
+      document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+  
+        const toggleBtn = document.getElementById("dark-mode-toggle");
+        const isDarkModeOn = document.body.classList.contains("dark-mode");
+  
+        toggleBtn.innerText = isDarkModeOn ? "☀️" : "🌓";
+      });
+    </script>
+  
+  
+  
+  <div id="listening-container" class="w-full px-4 py-5">
+      <h3 class="text-2xl font-semibold mb-4"><i class="fab fa-spotify"></i> What's on my Playlist</h3>
+      <div id="listening-list" class="flex flex-wrap mx-auto md:-mx-2 md:space-x-4">
+        <!-- Fetched Listening Markdown files will be displayed here -->
+
+
+        
+      </div>
     </div>
- <div class="project-item">
-        <a href="japan.html">
-            <img src="japan1.jpg" alt="Center for Japanese Studies University of Michigan">
-            <div class="project-caption">Ishinomaki Community Revitilization (Japan)</div>
-        </a>
-    </div>
-    
-    
-    <!-- Example placeholder, just delete the arrows
-    
-    <div class="project-item">
-        <a href="hold.html">
-            <img src="holder.png" alt="hold description">
-            <div class="project-caption">hold caption</div>
-        </a>
-    </div>
--->
-
-
-    
-</div>
-    
-    <footer>
-      <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"> <i class="fab fa-linkedin fa-2x"> </i>
-       <a href="https://github.com/vishaljjohn" target="_blank"> <i class="fab fa-github fa-2x"> </i> 
-        <a href="https://medium.com/@vishaljjohn" target="_blank"> <i class="fab fa-medium fa-2x"> </i> 
-       </a>  <p>© 2023 Vishal John. All Rights Reserved.</p>
-   
-    </footer>
-
-</body>
-
-<script>
-    particlesJS('particles-js', {
-        particles: {
-            number: {
-                value: 80,
-                density: {
-                    enable: true,
-                    value_area: 800
-                }
-            },
-            color: {
-                value: '#888888'
-            },
-            shape: {
-                type: 'circle',
-                stroke: {
-                    width: 0,
-                    color: '#000000'
-                },
-                polygon: {
-                    nb_sides: 5
-                }
-            },
-            opacity: {
-                value: 0.5,
-                random: true,
-                anim: {
-                    enable: false,
-                    speed: 1,
-                    opacity_min: 0.1,
-                    sync: false
-                }
-            },
-            size: {
-                value: 3,
-                random: true,
-                anim: {
-                    enable: false,
-                    speed: 40,
-                    size_min: 0.1,
-                    sync: false
-                }
-            },
-            line_linked: {
-                enable: true,
-                distance: 150,
-                color: '#888888',
-                opacity: 0.4,
-                width: 1
-            },
-            move: {
-                enable: true,
-                speed: 6,
-                direction: 'none',
-                random: false,
-                straight: false,
-                out_mode: 'out',
-                bounce: false,
-                attract: {
-                    enable: false,
-                    rotateX: 600,
-                    rotateY: 1200
-                }
-            }
-        },
-        interactivity: {
-            detect_on: 'canvas',
-            events: {
-                onhover: {
-                    enable: true,
-                    mode: 'repulse'
-                },
-                onclick: {
-                    enable: false
-                },
-                resize: true
-            },
-            modes: {
-                grab: {
-                    distance: 400,
-                    line_linked: {
-                        opacity: 1
-                    }
-                },
-                bubble: {
-                    distance: 400,
-                    size: 40,
-                    duration: 2,
-                    opacity: 8,
-                    speed: 3
-                },
-                repulse: {
-                    distance: 200,
-                    duration: 0.4
-                },
-                push: {
-                    particles_nb: 4
-                },
-                remove: {
-                    particles_nb: 2
-                }
-            }
-        },
-        retina_detect: true
+  </div>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+  <script>
+      const postsList = document.getElementById('posts-list');
+    const projectsList = document.getElementById('projects-list');
+    const converter = new showdown.Converter({
+      simpleLineBreaks: true,
+      strikethrough: true,
+      tables: true,
     });
-</script>
+    const baseUrl = "https://api.github.com/repos/tobwil/markdown_website/contents/";
+    const folders = ['posts', 'projects', 'listening'];
 
+    async function fetchMarkdownFiles(folder) {
+      const response = await fetch(`${baseUrl}${folder}`);
+      const files = await response.json();
+      function shuffleArray(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+          }
+          return array;
+      }
 
+      const randomFiles = shuffleArray(files);
+      const maxVisibleItems = folder === 'posts' ? 3 : folder === 'projects' ? 5 : Infinity;
+      let itemCount = 0;
 
-           
+      for (const file of randomFiles) {
+        if (file.name.endsWith('.md')) {
+          const fileRes = await fetch(file.download_url);
+          const mdContent = await fileRes.text();
+          const mdWithLineBreaks = mdContent.replace(/\n/g, '  \n');
+          const htmlContent = converter.makeHtml(mdWithLineBreaks);
 
+          const title = mdContent.split('\n')[0].replace(/^#+\s*/, '');
+          const contentWithoutTitle = mdContent.replace(/^.+\n/, '');
+          const htmlContentWithoutTitle = converter.makeHtml(contentWithoutTitle);
+          const fileCard = `
+              <div class="markdown-container bg-white p-4 rounded shadow-md transition-colors duration-200 hover:bg-gray-100 w-200 h-200 overflow-auto flex-none mx-2 my-2">
+                <h2 class="text-xl font-semibold mb-2">${title}</h2>
+                <div>${htmlContentWithoutTitle}</div>
+              </div>
+          `;
+
+          if (itemCount < maxVisibleItems) {
+            if (folder === 'posts') {
+              postsList.innerHTML += fileCard;
+            } else if (folder === 'projects') {
+              projectsList.innerHTML += fileCard;
+            } else if (folder === 'listening') {
+              document.getElementById('listening-list').innerHTML += fileCard;
+            }
+          } else {
+            if (folder !== 'listening') {
+              const hiddenCard = `<div class='hidden'>${fileCard}</div>`;
+              if (folder === 'posts') {
+                postsList.innerHTML += hiddenCard;
+              } else if (folder === 'projects') {
+                projectsList.innerHTML += hiddenCard;
+              }
+            }
+          }
+          itemCount++;
+        }
+      }
+
+    if (folder !== 'listening' && itemCount > maxVisibleItems) {
+      const container = folder === 'posts' ? postsList : projectsList;
+      createShowMoreButton(container);
+    }
+  }
+
+        const createShowMoreButton = (container) => {
+        const button = document.createElement('button');
+        button.innerHTML = '➕ Show More';
+        button.classList.add('show-more');
+        button.style.color = 'gray'; // Set the text color to gray
+        button.style.marginTop = '10px'; // Add some margin on top
+        container.after(button);
+
+        button.addEventListener('click', () => {
+            const hiddenItems = container.querySelectorAll('.hidden');
+            hiddenItems.forEach(item => item.classList.remove('hidden'));
+            button.remove();
+        });
+    };
+
+    folders.forEach(folder => {
+        fetchMarkdownFiles(folder);
+    });
+  </script>
+  <script>
+    particlesJS('particles-js', {
+      particles: {
+        number: {
+          value: 80,
+          density: {
+            enable: true,
+            value_area: 800
+          }
+        },
+        color: {
+          value: '#888888'
+        },
+        shape: {
+          type: 'circle',
+          stroke: {
+            width: 0,
+            color: '#000000'
+          },
+          polygon: {
+            nb_sides: 5
+          }
+        },
+        opacity: {
+          value: 0.5,
+          random: true,
+          anim: {
+            enable: false,
+            speed: 1,
+            opacity_min: 0.1,
+            sync: false
+          }
+        },
+        size: {
+          value: 3,
+          random: true,
+          anim: {
+            enable: false,
+            speed: 40,
+            size_min: 0.1,
+            sync: false
+          }
+        },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: '#888888',
+          opacity: 0.4,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 6,
+          direction: 'none',
+          random: false,
+          straight: false,
+          out_mode: 'out',
+          bounce: false,
+          attract: {
+            enable: false,
+            rotateX: 600,
+            rotateY: 1200
+          }
+        }
+      },
+      interactivity: {
+        detect_on: 'canvas',
+        events: {
+          onhover: {
+            enable: true,
+            mode: 'repulse'
+          },
+          onclick: {
+            enable: false
+          },
+          resize: true
+        },
+        modes: {
+          grab: {
+            distance: 400,
+            line_linked: {
+              opacity: 1
+            }
+          },
+          bubble: {
+            distance: 400,
+            size: 40,
+            duration: 2,
+            opacity: 8,
+            speed: 3
+          },
+          repulse: {
+            distance: 200,
+            duration: 0.4
+          },
+          push: {
+            particles_nb: 4
+          },
+          remove: {
+            particles_nb: 2
+          }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
+  <script src="https://unpkg.com/elevator.js"></script>
+  <script>
+    const elevator = new Elevator({
+      mainAudio: "https://raw.githubusercontent.com/tholman/elevator.js/master/demo/music/elevator.mp3",
+      endAudio: "https://raw.githubusercontent.com/tholman/elevator.js/master/demo/music/ding.mp3",
+      duration: 5000,
+    });
+
+const footer = document.createElement("footer");
+footer.className = "mt-8 mb-4";
+const footerContent = document.createElement("div");
+footerContent.className = "flex items-center justify-between";
+footer.appendChild(footerContent);
+
+const copyright = document.createElement("div");
+copyright.className = "hidden md:flex";
+copyright.innerHTML = '&nbsp;&nbsp;&copy; ' + (new Date().getFullYear()) + ' Joleen Thomas ';
+footerContent.appendChild(copyright);
+
+const madeWith = document.createElement("div");
+madeWith.className = "hidden md:flex";
+madeWith.innerHTML = 'Imagined by Me';
+footerContent.appendChild(madeWith);
+
+const elevatorBtnDiv = document.createElement("div");
+elevatorBtnDiv.innerHTML = 'You need an elevator ride?&nbsp;&nbsp;<i class="fas fa-elevator"></i>&nbsp;&nbsp;';
+elevatorBtnDiv.className = "text-center flex justify-center items-center cursor-pointer mt-4";
+elevatorBtnDiv.onclick = () => {
+  elevator.elevate();
+};
+
+footerContent.appendChild(elevatorBtnDiv);
+document.body.appendChild(footer);
+  </script>
+    <style>
+      @keyframes pulsate {
+        0% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+      }
+      #scroll-down-btn i {
+        animation: pulsate 1.5s linear infinite;
+      }
+    </style>
+    <button id="scroll-down-btn" class="fixed bottom-4 left-1/2 text-black p-2 rounded shadow-md opacity-80 transition-colors duration-200 ease-in-out dark:bg-gray-800 dark:text-white">
+      <i class="fa-solid fa-v"></i>
+    </button>
+    <script>
+      const scrollDownBtn = document.getElementById('scroll-down-btn');
+      const headerContainer = document.getElementById('header-container');
+
+      const toggleScrollButtonVisibility = () => {
+        if (window.pageYOffset === 0) {
+          scrollDownBtn.style.display = 'flex';
+        } else {
+          scrollDownBtn.style.display = 'none';
+        }
+      }
+
+      scrollDownBtn.addEventListener('click', () => {
+        const yOffset = headerContainer.getBoundingClientRect().bottom + window.pageYOffset;
+        window.scrollTo({top: yOffset, behavior: 'smooth'});
+      });
+
+      window.addEventListener('scroll', toggleScrollButtonVisibility);
+      toggleScrollButtonVisibility();
+    </script>
+</body>
 </html>
-
