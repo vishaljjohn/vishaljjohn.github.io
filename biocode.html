@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cutadapt Puzzle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #puzzle-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .code-block {
+            padding: 10px;
+            background-color: #ddd;
+            border: 1px solid #ccc;
+            cursor: grab;
+            user-select: none; /* Prevent selection to make dragging look better */
+        }
+
+        #code-area {
+            min-height: 100px;
+            background-color: #eef;
+            border: 2px dashed #aac;
+            text-align: center;
+            line-height: 100px;
+            margin-bottom: 20px;
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cutadapt Puzzle</h1>
+        <p>Drag and drop the code blocks to trim a DNA sequence.</p>
+    </header>
+    <main>
+        <div id="puzzle-container">
+            <div id="block1" class="code-block" draggable="true">cutadapt -a AGATCGGAAG</div>
+            <div id="block2" class="code-block" draggable="true">-o output.fastq</div>
+            <div id="block3" class="code-block" draggable="true">input.fastq</div>
+        </div>
+        <div id="code-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <p>Drop code blocks here</p>
+        </div>
+        <button id="run-button">Run Code</button>
+        <div id="output"></div>
+    </main>
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            var nodeCopy = document.getElementById(data).cloneNode(true);
+            ev.target.appendChild(nodeCopy);
+            ev.target.removeChild(ev.target.firstChild); // Remove the placeholder text
+        }
+
+        document.getElementById("run-button").addEventListener("click", function() {
+            let codeArea = document.getElementById("code-area");
+            if (codeArea.textContent.includes("cutadapt") && codeArea.textContent.includes("-o") && codeArea.textContent.includes("input.fastq")) {
+                document.getElementById("output").textContent = "Code is correct! Sequence trimmed.";
+            } else {
+                document.getElementById("output").textContent = "Try again, make sure to order the blocks correctly.";
+            }
+        });
+
+        document.querySelectorAll('.code-block').forEach(item => {
+            item.addEventListener('dragstart', drag);
+        });
+    </script>
+</body>
+</html>
