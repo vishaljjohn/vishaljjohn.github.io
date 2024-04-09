@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cutadapt Puzzle Enhanced</title>
+    <title>Cutadapt Puzzle Enhanced with Gamification</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,9 +19,10 @@
             text-align: center;
         }
 
-        .instructions, #tutorial-content {
+        .instructions, #tutorial-content, #score-panel {
             margin: 15px;
             font-size: 1.1em;
+            text-align: center;
         }
 
         #puzzle-container, #code-area {
@@ -38,7 +39,7 @@
             border: 2px solid #ccc;
             cursor: pointer;
             border-radius: 5px;
-            user-select: none; /* Prevent selection to make dragging look better */
+            user-select: none;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -63,7 +64,7 @@
             border-radius: 5px;
         }
 
-        #output {
+        #output, #score {
             margin-top: 20px;
             text-align: center;
             font-size: 1.2em;
@@ -72,12 +73,15 @@
 </head>
 <body>
     <header>
-        <h1>Cutadapt Puzzle Enhanced</h1>
+        <h1>Cutadapt Puzzle Enhanced with Gamification</h1>
     </header>
     <div id="tutorial">
         <h2>Learn how to use cutadapt</h2>
         <div id="tutorial-content">Welcome to the cutadapt tutorial! Click "Next" to learn more.</div>
         <button id="next-button">Next</button>
+    </div>
+    <div id="score-panel">
+        <div id="score">Score: 0</div>
     </div>
     <div class="instructions">
         <p>Drag and drop the code blocks in the correct order to trim a DNA sequence using cutadapt.</p>
@@ -99,6 +103,8 @@
     <script>
         let correctOrder = ['block1', 'block3', 'block2'];
         let userOrder = [];
+        let score = 0;
+
         let tutorialSteps = [
             "cutadapt is a tool used to trim sequences.",
             "The -a option specifies the adapter sequence.",
@@ -129,39 +135,41 @@
             var data = ev.dataTransfer.getData("text");
             var target = ev.target;
 
-            if (target.classList.contains("placeholder") && !target.firstChild) { // Check if the target is a placeholder and empty
+            if (target.classList.contains("placeholder") && !target.firstChild) {
                 var nodeCopy = document.getElementById(data).cloneNode(true);
-                nodeCopy.id = "new" + data; // Change ID
+                nodeCopy.id = "new" + data;
                 target.appendChild(nodeCopy);
-                userOrder.push(data); // Track the order of user's actions
-                checkOrder(); // Check if all pieces are in the right place
-            }
-        }
-
-        function checkOrder() {
-            if (userOrder.length === correctOrder.length && userOrder.every((value, index) => value === correctOrder[index])) {
-                document.getElementById("output").textContent = "Blocks are in the correct order!";
+                userOrder.push(data);
+                score += 10; // Increment score for correct placement
+                updateScore();
             }
         }
 
         function runCode() {
             if (userOrder.length === correctOrder.length && userOrder.every((value, index) => value === correctOrder[index])) {
                 document.getElementById("output").innerHTML = "<span style='color: green;'>Success! The code is correct.</span>";
+                score += 50; // Bonus points for completing the puzzle
             } else {
                 document.getElementById("output").innerHTML = "<span style='color: red;'>Incorrect order, please try again.</span>";
+                score = Math.max(0, score - 10); // Penalize for incorrect attempt
                 resetPuzzle();
             }
+            updateScore();
         }
 
-        document.getElementById("run-button").onclick = runCode;
+        function updateScore() {
+            document.getElementById("score").textContent = "Score: " + score;
+        }
 
         function resetPuzzle() {
-            userOrder = []; // Reset user's progress
+            userOrder = [];
             let placeholders = document.querySelectorAll('.placeholder');
             placeholders.forEach((placeholder) => {
                 if (placeholder.firstChild) placeholder.removeChild(placeholder.firstChild);
             });
         }
+
+        document.getElementById("run-button").onclick = runCode;
 
         document.querySelectorAll('.code-block').forEach(item => {
             item.addEventListener('dragstart', drag);
@@ -174,4 +182,5 @@
     </script>
 </body>
 </html>
+
 
