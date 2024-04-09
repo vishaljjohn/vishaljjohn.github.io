@@ -3,182 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cutadapt Puzzle Enhanced with Gamification</title>
+    <title>Genomics Tools Puzzle</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        header, #tutorial {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .instructions, #tutorial-content, #score-panel {
-            margin: 15px;
-            font-size: 1.1em;
-            text-align: center;
-        }
-
-        #puzzle-container, #code-area {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px;
-        }
-
-        .code-block, .placeholder {
-            padding: 10px 15px;
-            min-width: 150px;
-            background-color: #ddd;
-            border: 2px solid #ccc;
-            cursor: pointer;
-            border-radius: 5px;
-            user-select: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .placeholder {
-            height: 40px;
-            background-color: #fff;
-            border: 2px dashed #aac;
-        }
-
-        #run-button {
-            display: block;
-            width: 200px;
-            margin: 20px auto;
-            padding: 10px;
-            font-size: 1em;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-
-        #output, #score {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 1.2em;
-        }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+        header, .module-selector { background-color: #4CAF50; color: white; padding: 20px; text-align: center; }
+        .instructions, #tutorial-content, #score-panel { margin: 15px; font-size: 1.1em; text-align: center; }
+        #puzzle-container, #code-area { display: flex; justify-content: center; gap: 10px; margin: 20px; }
+        .code-block, .placeholder { padding: 10px 15px; min-width: 150px; background-color: #ddd; border: 2px solid #ccc; cursor: pointer; border-radius: 5px; user-select: none; display: flex; justify-content: center; align-items: center; }
+        .placeholder { height: 40px; background-color: #fff; border: 2px dashed #aac; }
+        #run-button { display: block; width: 200px; margin: 20px auto; padding: 10px; font-size: 1em; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px; }
+        #output, #score { margin-top: 20px; text-align: center; font-size: 1.2em; }
     </style>
 </head>
 <body>
     <header>
-        <h1>Cutadapt Puzzle Enhanced with Gamification</h1>
+        <h1>Genomics Tools Puzzle</h1>
     </header>
-    <div id="tutorial">
-        <h2>Learn how to use cutadapt</h2>
-        <div id="tutorial-content">Welcome to the cutadapt tutorial! Click "Next" to learn more.</div>
-        <button id="next-button">Next</button>
+    <div class="module-selector">
+        <button onclick="loadModule('cutadapt')">Cutadapt</button>
+        <button onclick="loadModule('bowtie')">Bowtie</button>
+        <button onclick="loadModule('samtools')">Samtools</button>
     </div>
+    <div id="tutorial"></div>
     <div id="score-panel">
         <div id="score">Score: 0</div>
     </div>
-    <div class="instructions">
-        <p>Drag and drop the code blocks in the correct order to trim a DNA sequence using cutadapt.</p>
-    </div>
     <main>
-        <div id="puzzle-container">
-            <div id="block1" class="code-block" draggable="true">cutadapt -a AGATCGGAAG</div>
-            <div id="block2" class="code-block" draggable="true">-o output.fastq</div>
-            <div id="block3" class="code-block" draggable="true">input.fastq</div>
-        </div>
-        <div id="code-area">
-            <div id="placeholder1" class="placeholder"></div>
-            <div id="placeholder2" class="placeholder"></div>
-            <div id="placeholder3" class="placeholder"></div>
-        </div>
+        <div id="puzzle-container"></div>
+        <div id="code-area"></div>
         <button id="run-button">Run Code</button>
         <div id="output"></div>
     </main>
     <script>
-        let correctOrder = ['block1', 'block3', 'block2'];
-        let userOrder = [];
+        let modules = {
+            'cutadapt': {
+                tutorial: "Cutadapt trims adapters from high-throughput sequencing reads.",
+                codeBlocks: ['cutadapt -a AGATCGGAAG', '-o output.fastq', 'input.fastq'],
+                correctOrder: ['cutadapt -a AGATCGGAAG', 'input.fastq', '-o output.fastq']
+            },
+            // Placeholder for bowtie and samtools modules
+        };
+        let currentModule = '';
         let score = 0;
 
-        let tutorialSteps = [
-            "cutadapt is a tool used to trim sequences.",
-            "The -a option specifies the adapter sequence.",
-            "-o is used to specify the output file.",
-            "Finally, you provide the input file name."
-        ];
-        let currentStep = 0;
-
-        document.getElementById("next-button").addEventListener("click", function() {
-            if (currentStep < tutorialSteps.length) {
-                document.getElementById("tutorial-content").textContent = tutorialSteps[currentStep];
-                currentStep++;
-            } else {
-                document.getElementById("tutorial").style.display = "none";
-            }
-        });
-
-        function allowDrop(ev) {
-            ev.preventDefault();
+        function loadModule(moduleName) {
+            currentModule = moduleName;
+            let module = modules[moduleName];
+            document.getElementById("tutorial").textContent = module.tutorial;
+            // Load puzzle pieces
+            let puzzleContainer = document.getElementById("puzzle-container");
+            puzzleContainer.innerHTML = '';
+            module.codeBlocks.forEach((block, index) => {
+                let el = document.createElement('div');
+                el.textContent = block;
+                el.className = 'code-block';
+                el.draggable = true;
+                el.id = `block-${moduleName}-${index}`;
+                el.addEventListener('dragstart', drag);
+                puzzleContainer.appendChild(el);
+            });
+            // Prepare code area
+            let codeArea = document.getElementById("code-area");
+            codeArea.innerHTML = '';
+            module.correctOrder.forEach(() => {
+                let placeholder = document.createElement('div');
+                placeholder.className = 'placeholder';
+                placeholder.addEventListener('dragover', allowDrop);
+                placeholder.addEventListener('drop', drop);
+                codeArea.appendChild(placeholder);
+            });
+            updateScore();
         }
 
-        function drag(ev) {
-            ev.dataTransfer.setData("text", ev.target.id);
-        }
+        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+
+        function allowDrop(ev) { ev.preventDefault(); }
 
         function drop(ev) {
             ev.preventDefault();
             var data = ev.dataTransfer.getData("text");
-            var target = ev.target;
+            var draggedEl = document.getElementById(data);
+            if (!ev.target.textContent) { // Check if placeholder is empty
+                ev.target.appendChild(draggedEl.cloneNode(true));
+                checkOrder();
+            }
+        }
 
-            if (target.classList.contains("placeholder") && !target.firstChild) {
-                var nodeCopy = document.getElementById(data).cloneNode(true);
-                nodeCopy.id = "new" + data;
-                target.appendChild(nodeCopy);
-                userOrder.push(data);
-                score += 10; // Increment score for correct placement
+        function checkOrder() {
+            let userOrder = Array.from(document.getElementById("code-area").children).map(el => el.textContent);
+            if (JSON.stringify(userOrder) === JSON.stringify(modules[currentModule].correctOrder)) {
+                document.getElementById("output").textContent = "Correct!";
+                score += 100; // Example scoring system
                 updateScore();
             }
         }
 
-        function runCode() {
-            if (userOrder.length === correctOrder.length && userOrder.every((value, index) => value === correctOrder[index])) {
-                document.getElementById("output").innerHTML = "<span style='color: green;'>Success! The code is correct.</span>";
-                score += 50; // Bonus points for completing the puzzle
-            } else {
-                document.getElementById("output").innerHTML = "<span style='color: red;'>Incorrect order, please try again.</span>";
-                score = Math.max(0, score - 10); // Penalize for incorrect attempt
-                resetPuzzle();
-            }
-            updateScore();
-        }
-
         function updateScore() {
-            document.getElementById("score").textContent = "Score: " + score;
+            document.getElementById("score").textContent = `Score: ${score}`;
         }
 
-        function resetPuzzle() {
-            userOrder = [];
-            let placeholders = document.querySelectorAll('.placeholder');
-            placeholders.forEach((placeholder) => {
-                if (placeholder.firstChild) placeholder.removeChild(placeholder.firstChild);
-            });
-        }
-
-        document.getElementById("run-button").onclick = runCode;
-
-        document.querySelectorAll('.code-block').forEach(item => {
-            item.addEventListener('dragstart', drag);
-        });
-
-        document.querySelectorAll('.placeholder').forEach(item => {
-            item.addEventListener('dragover', allowDrop);
-            item.addEventListener('drop', drop);
-        });
+        loadModule('cutadapt'); // Load cutadapt module by default
     </script>
 </body>
 </html>
