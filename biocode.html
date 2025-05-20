@@ -1,109 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genomics Tools Puzzle</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
-        header, .module-selector { background-color: #4CAF50; color: white; padding: 20px; text-align: center; }
-        .instructions, #tutorial-content, #score-panel { margin: 15px; font-size: 1.1em; text-align: center; }
-        #puzzle-container, #code-area { display: flex; justify-content: center; gap: 10px; margin: 20px; }
-        .code-block, .placeholder { padding: 10px 15px; min-width: 150px; background-color: #ddd; border: 2px solid #ccc; cursor: pointer; border-radius: 5px; user-select: none; display: flex; justify-content: center; align-items: center; }
-        .placeholder { height: 40px; background-color: #fff; border: 2px dashed #aac; }
-        #run-button { display: block; width: 200px; margin: 20px auto; padding: 10px; font-size: 1em; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px; }
-        #output, #score { margin-top: 20px; text-align: center; font-size: 1.2em; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Genomics Tools Puzzle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    header, .module-selector {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .module-selector button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      background-color: white;
+      color: #4CAF50;
+      border: 2px solid #4CAF50;
+      border-radius: 5px;
+    }
+    .module-selector button:hover {
+      background-color: #e7f5ea;
+    }
+    .instructions, #tutorial, #score-panel {
+      margin: 15px;
+      font-size: 1.1em;
+      text-align: center;
+    }
+    #puzzle-container, #code-area {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 20px;
+    }
+    .code-block, .placeholder {
+      padding: 10px 15px;
+      min-width: 150px;
+      background-color: #ddd;
+      border: 2px solid #ccc;
+      cursor: pointer;
+      border-radius: 5px;
+      user-select: none;
+      text-align: center;
+    }
+    .placeholder {
+      background-color: #fff;
+      border: 2px dashed #aac;
+      height: 40px;
+    }
+    .filled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+    #run-button {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      padding: 10px;
+      font-size: 1em;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    #output, #score {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1.2em;
+    }
+    #output {
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Genomics Tools Puzzle</h1>
-    </header>
-    <div class="module-selector">
-        <button onclick="loadModule('cutadapt')">Cutadapt</button>
-        <button onclick="loadModule('bowtie')">Bowtie</button>
-        <button onclick="loadModule('samtools')">Samtools</button>
-    </div>
-    <div id="tutorial"></div>
-    <div id="score-panel">
-        <div id="score">Score: 0</div>
-    </div>
-    <main>
-        <div id="puzzle-container"></div>
-        <div id="code-area"></div>
-        <button id="run-button">Run Code</button>
-        <div id="output"></div>
-    </main>
-    <script>
-        let modules = {
-            'cutadapt': {
-                tutorial: "Cutadapt trims adapters from high-throughput sequencing reads.",
-                codeBlocks: ['cutadapt -a AGATCGGAAG', '-o output.fastq', 'input.fastq'],
-                correctOrder: ['cutadapt -a AGATCGGAAG', 'input.fastq', '-o output.fastq']
-            },
-            // Placeholder for bowtie and samtools modules
-        };
-        let currentModule = '';
-        let score = 0;
+  <header>
+    <h1>Genomics Tools Puzzle</h1>
+  </header>
 
-        function loadModule(moduleName) {
-            currentModule = moduleName;
-            let module = modules[moduleName];
-            document.getElementById("tutorial").textContent = module.tutorial;
-            // Load puzzle pieces
-            let puzzleContainer = document.getElementById("puzzle-container");
-            puzzleContainer.innerHTML = '';
-            module.codeBlocks.forEach((block, index) => {
-                let el = document.createElement('div');
-                el.textContent = block;
-                el.className = 'code-block';
-                el.draggable = true;
-                el.id = `block-${moduleName}-${index}`;
-                el.addEventListener('dragstart', drag);
-                puzzleContainer.appendChild(el);
-            });
-            // Prepare code area
-            let codeArea = document.getElementById("code-area");
-            codeArea.innerHTML = '';
-            module.correctOrder.forEach(() => {
-                let placeholder = document.createElement('div');
-                placeholder.className = 'placeholder';
-                placeholder.addEventListener('dragover', allowDrop);
-                placeholder.addEventListener('drop', drop);
-                codeArea.appendChild(placeholder);
-            });
-            updateScore();
-        }
+  <div class="module-selector">
+    <button onclick="loadModule('cutadapt')">Cutadapt</button>
+    <button onclick="loadModule('bowtie')">Bowtie</button>
+    <button onclick="loadModule('samtools')">Samtools</button>
+  </div>
 
-        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+  <div id="tutorial"></div>
+  <div id="score-panel"><div id="score">Score: 0</div></div>
 
-        function allowDrop(ev) { ev.preventDefault(); }
+  <main>
+    <div id="puzzle-container"></div>
+    <div id="code-area"></div>
+    <button id="run-button" onclick="checkOrder()">Run Code</button>
+    <div id="output"></div>
+  </main>
 
-        function drop(ev) {
-            ev.preventDefault();
-            var data = ev.dataTransfer.getData("text");
-            var draggedEl = document.getElementById(data);
-            if (!ev.target.textContent) { // Check if placeholder is empty
-                ev.target.appendChild(draggedEl.cloneNode(true));
-                checkOrder();
-            }
-        }
+  <script>
+    const modules = {
+      'cutadapt': {
+        tutorial: "Cutadapt trims adapters from high-throughput sequencing reads.",
+        codeBlocks: ['cutadapt -a AGATCGGAAG', '-o output.fastq', 'input.fastq'],
+        correctOrder: ['cutadapt -a AGATCGGAAG', 'input.fastq', '-o output.fastq']
+      },
+      'bowtie': {
+        tutorial: "Bowtie aligns sequencing reads to long reference sequences.",
+        codeBlocks: ['bowtie', '-x genome_index', '-U reads.fastq', '-S output.sam'],
+        correctOrder: ['bowtie', '-x genome_index', '-U reads.fastq', '-S output.sam']
+      },
+      'samtools': {
+        tutorial: "Samtools manipulates and indexes sequencing alignments in SAM/BAM formats.",
+        codeBlocks: ['samtools view', '-bS output.sam', '>', 'output.bam'],
+        correctOrder: ['samtools view', '-bS output.sam', '>', 'output.bam']
+      }
+    };
 
-        function checkOrder() {
-            let userOrder = Array.from(document.getElementById("code-area").children).map(el => el.textContent);
-            if (JSON.stringify(userOrder) === JSON.stringify(modules[currentModule].correctOrder)) {
-                document.getElementById("output").textContent = "Correct!";
-                score += 100; // Example scoring system
-                updateScore();
-            }
-        }
+    let currentModule = '';
+    let score = 0;
 
-        function updateScore() {
-            document.getElementById("score").textContent = `Score: ${score}`;
-        }
+    function loadModule(moduleName) {
+      currentModule = moduleName;
+      const module = modules[moduleName];
 
-        loadModule('cutadapt'); // Load cutadapt module by default
-    </script>
+      document.getElementById("tutorial").textContent = module.tutorial;
+      document.getElementById("output").textContent = '';
+
+      const puzzleContainer = document.getElementById("puzzle-container");
+      puzzleContainer.innerHTML = '';
+      module.codeBlocks.forEach((block, index) => {
+        const el = document.createElement('div');
+        el.textContent = block;
+        el.className = 'code-block';
+        el.draggable = true;
+        el.id = `block-${moduleName}-${index}`;
+        el.addEventListener('dragstart', drag);
+        puzzleContainer.appendChild(el);
+      });
+
+      const codeArea = document.getElementById("code-area");
+      codeArea.innerHTML = '';
+      module.correctOrder.forEach(() => {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'placeholder';
+        placeholder.addEventListener('dragover', allowDrop);
+        placeholder.addEventListener('drop', drop);
+        codeArea.appendChild(placeholder);
+      });
+
+      updateScore();
+    }
+
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      const data = ev.dataTransfer.getData("text");
+      const draggedEl = document.getElementById(data);
+      const target = ev.target;
+
+      if (!target.classList.contains('placeholder') || target.hasChildNodes()) return;
+
+      // Move the element instead of cloning
+      target.appendChild(draggedEl);
+      draggedEl.classList.add('filled');
+      draggedEl.draggable = false;
+    }
+
+    function checkOrder() {
+      const userOrder = Array.from(document.getElementById("code-area").children).map(el =>
+        el.textContent.trim()
+      );
+
+      const correctOrder = modules[currentModule].correctOrder;
+
+      if (JSON.stringify(userOrder) === JSON.stringify(correctOrder)) {
+        document.getElementById("output").textContent = "✅ Correct!";
+        score += 100;
+      } else {
+        document.getElementById("output").textContent = "❌ Try again. Something's out of order.";
+      }
+      updateScore();
+    }
+
+    function updateScore() {
+      document.getElementById("score").textContent = `Score: ${score}`;
+    }
+
+    window.onload = () => loadModule('cutadapt');
+  </script>
 </body>
 </html>
 
