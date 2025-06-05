@@ -1,119 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vishal John</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.3/dist/tailwind.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.3/dist/tailwind.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <style>
     .project-caption {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      color: white;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 5px 10px;
-      border-radius: 5px;
-    }
-    .project-item {
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s;
+      @apply absolute bottom-0 left-0 text-white bg-black bg-opacity-50 p-2 text-sm rounded-t;
     }
     .project-item:hover img {
       transform: scale(1.05);
     }
-    .dark-mode .bg-white {
-      background-color: #1a1a1a;
-    }
-    .dark-mode .text-black, .dark-mode h1, .dark-mode h2, .dark-mode .project-caption {
-      color: #f8f8f8;
+    .project-item img {
+      transition: transform 0.3s ease-in-out;
     }
   </style>
 </head>
-<body class="bg-white relative">
-  <nav class="bg-white shadow-md">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="flex justify-between items-center py-4">
-        <h1 class="text-2xl font-bold text-gray-800"><a href="#">Vishal John</a></h1>
-        <div class="space-x-4 hidden md:flex">
-          <a href="index.html" class="text-gray-700 hover:text-blue-500">Home</a>
-          <a href="about.html" class="text-gray-700 hover:text-blue-500">About Me</a>
-          <a href="blog.html" class="text-gray-700 hover:text-blue-500">Newsletter</a>
-          <a href="publications.html" class="text-gray-700 hover:text-blue-500">Publications</a>
-          <a href="contact.html" class="text-gray-700 hover:text-blue-500">Contact</a>
-        </div>
+
+<body class="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+  <!-- Navbar -->
+  <nav class="bg-white dark:bg-gray-800 shadow-md">
+    <div class="max-w-6xl mx-auto px-4 flex justify-between items-center h-16">
+      <div class="text-xl font-bold">Vishal John</div>
+      <div class="space-x-4 hidden md:flex">
+        <a href="index.html" class="hover:text-pink-600">Home</a>
+        <a href="about.html" class="hover:text-pink-600">About Me</a>
+        <a href="blog.html" class="hover:text-pink-600">Newsletter</a>
+        <a href="publications.html" class="hover:text-pink-600">Publications</a>
+        <a href="contact.html" class="hover:text-pink-600">Contact</a>
       </div>
+      <button id="dark-mode-toggle" class="md:ml-4 p-2">🌓</button>
     </div>
   </nav>
 
-  <header class="text-center py-10">
-    <h2 class="text-4xl font-bold mb-4">Welcome to my website!</h2>
-    <p class="text-lg text-gray-600">Scroll below to see the projects/experiences that I've been passionate about. Each one holds a unique tale of challenges, learning, and growth.</p>
-  </header>
+  <!-- Header -->
+  <section class="text-center py-12 px-4">
+    <h1 class="text-5xl font-bold mb-4">Welcome to my Website</h1>
+    <p class="text-lg max-w-2xl mx-auto">Explore the projects and initiatives I've dedicated my time to—from medicine and research to community outreach and creativity.</p>
+    <div class="flex justify-center space-x-6 mt-6 text-xl">
+      <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" class="hover:text-pink-600"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/vishaljjohn" target="_blank" class="hover:text-pink-600"><i class="fab fa-github"></i></a>
+      <a href="https://medium.com/@vishaljjohn" target="_blank" class="hover:text-pink-600"><i class="fab fa-medium"></i></a>
+    </div>
+  </section>
 
-  <section class="px-4 md:px-12 py-6">
+  <!-- Projects Grid -->
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <h2 class="text-3xl font-semibold mb-6">Projects & Experiences</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      <div class="project-item">
+      <!-- Example Project Card -->
+      <div class="project-item relative overflow-hidden rounded-lg shadow-md">
         <a href="mircore.html">
-          <img src="mircorelogo.jpg" alt="miRcore" class="w-full rounded shadow">
+          <img src="mircorelogo.jpg" alt="miRcore" class="w-full h-48 object-cover" />
           <div class="project-caption">miRcore</div>
         </a>
       </div>
-      <div class="project-item">
+
+      <div class="project-item relative overflow-hidden rounded-lg shadow-md">
         <a href="rockcancer.html">
-          <img src="RockCancer.png" alt="Rock Cancer" class="w-full rounded shadow">
+          <img src="RockCancer.png" alt="Rock Cancer" class="w-full h-48 object-cover" />
           <div class="project-caption">Rock Cancer</div>
         </a>
       </div>
-      <div class="project-item">
+
+      <div class="project-item relative overflow-hidden rounded-lg shadow-md">
         <a href="koschmannlab.html">
-          <img src="lab.jpg" alt="Koschmann Lab" class="w-full rounded shadow">
-          <div class="project-caption">Koschmann Lab</div>
+          <img src="lab.jpg" alt="Koschmann Lab" class="w-full h-48 object-cover" />
+          <div class="project-caption">Koschmann Lab for Pediatric Brain Cancer</div>
         </a>
       </div>
-      <div class="project-item">
+
+      <div class="project-item relative overflow-hidden rounded-lg shadow-md">
         <a href="standrews.html">
-          <img src="andrew.jpg" alt="Saint Andrew's" class="w-full rounded shadow">
-          <div class="project-caption">Saint Andrew's Program</div>
+          <img src="andrew.jpg" alt="Saint Andrew's" class="w-full h-48 object-cover" />
+          <div class="project-caption">Saint Andrew's Breakfast Program</div>
         </a>
       </div>
-      <div class="project-item">
+
+      <div class="project-item relative overflow-hidden rounded-lg shadow-md">
         <a href="HELP.html">
-          <img src="help.jpg" alt="HELP" class="w-full rounded shadow">
-          <div class="project-caption">HELP Program</div>
+          <img src="help.jpg" alt="HELP Program" class="w-full h-48 object-cover" />
+          <div class="project-caption">Hospital Elder Life Program</div>
         </a>
       </div>
-      <div class="project-item">
+
+      <div class="project-item relative overflow-hidden rounded-lg shadow-md">
         <a href="japan.html">
-          <img src="japan1.jpg" alt="Japan Project" class="w-full rounded shadow">
-          <div class="project-caption">Ishinomaki Community (Japan)</div>
+          <img src="japan1.jpg" alt="Japan" class="w-full h-48 object-cover" />
+          <div class="project-caption">Ishinomaki Community Revitalization (Japan)</div>
         </a>
       </div>
     </div>
   </section>
 
-  <footer class="bg-gray-900 text-white text-center py-6">
-    <div class="flex justify-center space-x-6 mb-4">
-      <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
-      <a href="https://github.com/vishaljjohn" target="_blank"><i class="fab fa-github fa-2x"></i></a>
-      <a href="https://medium.com/@vishaljjohn" target="_blank"><i class="fab fa-medium fa-2x"></i></a>
-    </div>
-    <p>&copy; 2025 Vishal John. All Rights Reserved.</p>
+  <!-- Footer -->
+  <footer class="bg-gray-100 dark:bg-gray-800 py-6 text-center text-sm mt-12">
+    <p>&copy; <span id="year"></span> Vishal John. All Rights Reserved.</p>
+    <p class="text-gray-500 dark:text-gray-400">Crafted with 💡 + ☕</p>
   </footer>
 
+  <!-- Dark Mode Script -->
   <script>
-    // Dark mode toggle (optional to activate)
-    const darkModeToggle = document.createElement('button');
-    darkModeToggle.textContent = '🌓';
-    darkModeToggle.className = 'fixed top-4 right-4 p-2 bg-gray-200 text-black rounded shadow-md';
-    document.body.appendChild(darkModeToggle);
-
-    darkModeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-      darkModeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌓';
+    document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+      document.body.classList.toggle("dark");
     });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
