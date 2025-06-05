@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vishal John</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.3/dist/tailwind.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+  <style>
+    .project-caption {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 5px 10px;
+      border-radius: 3px;
+    }
+
+    .project-item img {
+      transition: transform 0.3s;
+    }
+
+    .project-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .dark-mode .text-black {
+      color: #f8f8f8;
+    }
+
+    .dark-mode .bg-white {
+      background-color: #1a1a1a;
+    }
+  </style>
+</head>
+
+<body class="bg-white relative">
+  <!-- Navigation Bar -->
+  <nav class="bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-between">
+        <div class="flex space-x-4">
+          <div>
+            <a href="#" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900 font-bold">Vishal John</a>
+          </div>
+          <div class="hidden md:flex items-center space-x-1">
+            <a href="index.html" class="py-5 px-3 text-gray-700 hover:text-gray-900">Home</a>
+            <a href="about.html" class="py-5 px-3 text-gray-700 hover:text-gray-900">About Me</a>
+            <a href="blog.html" class="py-5 px-3 text-gray-700 hover:text-gray-900">Newsletter</a>
+            <a href="publications.html" class="py-5 px-3 text-gray-700 hover:text-gray-900">Publications</a>
+            <a href="contact.html" class="py-5 px-3 text-gray-700 hover:text-gray-900">Contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="flex flex-col items-center justify-center text-center py-12">
+    <h1 class="text-6xl font-bold mb-4">Vishal John</h1>
+    <h2 class="text-xl mb-4">Welcome to my Online Portfolio</h2>
+    <p class="max-w-2xl">Explore a journey of service, science, and creativity. Below, you'll find projects that have shaped my path and reflect my passion for meaningful work.</p>
+    <div class="flex space-x-6 mt-6">
+      <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" class="text-xl text-black hover:text-blue-600"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/vishaljjohn" target="_blank" class="text-xl text-black hover:text-gray-800"><i class="fab fa-github"></i></a>
+      <a href="https://medium.com/@vishaljjohn" target="_blank" class="text-xl text-black hover:text-gray-600"><i class="fab fa-medium"></i></a>
+    </div>
+  </div>
+
+  <!-- Projects Gallery -->
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <h2 class="text-3xl font-semibold mb-6 text-center">Professional Projects</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div class="relative project-item">
+        <a href="mircore.html">
+          <img src="mircorelogo.jpg" alt="miRcore" class="rounded-lg shadow-md">
+          <div class="project-caption">miRcore</div>
+        </a>
+      </div>
+      <div class="relative project-item">
+        <a href="rockcancer.html">
+          <img src="RockCancer.png" alt="Rock Cancer" class="rounded-lg shadow-md">
+          <div class="project-caption">Rock Cancer</div>
+        </a>
+      </div>
+      <div class="relative project-item">
+        <a href="koschmannlab.html">
+          <img src="lab.jpg" alt="Koschmann Lab" class="rounded-lg shadow-md">
+          <div class="project-caption">Koschmann Lab</div>
+        </a>
+      </div>
+      <div class="relative project-item">
+        <a href="standrews.html">
+          <img src="andrew.jpg" alt="St. Andrew's" class="rounded-lg shadow-md">
+          <div class="project-caption">St. Andrew's Breakfast Program</div>
+        </a>
+      </div>
+      <div class="relative project-item">
+        <a href="HELP.html">
+          <img src="help.jpg" alt="HELP Program" class="rounded-lg shadow-md">
+          <div class="project-caption">Hospital Elder Life Program</div>
+        </a>
+      </div>
+      <div class="relative project-item">
+        <a href="japan.html">
+          <img src="japan1.jpg" alt="Japan Revitalization" class="rounded-lg shadow-md">
+          <div class="project-caption">Ishinomaki Revitilization</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-center py-6 mt-10">
+    <p>© <span id="year"></span> Vishal John. All Rights Reserved.</p>
+    <p>Built with ❤️ and a little Tailwind.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
