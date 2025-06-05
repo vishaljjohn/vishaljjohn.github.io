@@ -206,7 +206,7 @@
 
           const title = mdContent.split('\n')[0].replace(/^#+\s*/, '');
           const contentWithoutTitle = mdContent.replace(/^.+\n/, '');
-          const htmlContentWithoutTitle = converter.makeHtml(contentWithoutTitle);
+const htmlContentWithoutTitle = converter.makeHtml(contentWithoutTitle).replace(/<a /g, '<a target="_blank" rel="noopener noreferrer" ');
           const fileCard = `
               <div class="markdown-container bg-white p-4 rounded shadow-md transition-colors duration-200 hover:bg-gray-100 w-200 h-200 overflow-auto flex-none mx-2 my-2">
                 <h2 class="text-xl font-semibold mb-2">${title}</h2>
