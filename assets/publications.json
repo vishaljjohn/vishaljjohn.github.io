@@ -1,0 +1,97 @@
+{
+  "_instructions": {
+    "about": "Add your peer-reviewed publications here. The page renders this automatically — no HTML edits needed.",
+    "fields": {
+      "year": "Publication year (number, used for grouping)",
+      "title": "Full paper title",
+      "authors": "Author list. Wrap your name in **double stars** to bold it, e.g. **John V**. Use † after names for co-first authors.",
+      "journal": "Journal name",
+      "year_detail": "e.g. Jan 2023 or Aug 2022, Vol 24(8), pp 1366-1374",
+      "doi": "DOI string only, e.g. 10.1038/s42003-022-03657-6",
+      "url": "Full URL to the paper",
+      "abstract": "1-3 sentence summary of the paper",
+      "role": "One of: first | co-first | co-author",
+      "highlight": "true = green left border (use for first or co-first author papers)",
+      "plain": "Optional 1-2 sentence plain-English summary for non-scientists. Shows as a green 'In plain English' callout."
+    },
+    "example": {
+      "year": 2025,
+      "title": "Your paper title here",
+      "authors": "**John V**, Coauthor A, Coauthor B.",
+      "journal": "Journal Name",
+      "year_detail": "Month Year",
+      "doi": "10.xxxx/xxxxx",
+      "url": "https://link-to-paper.com",
+      "abstract": "Brief summary of the paper.",
+      "role": "co-author",
+      "highlight": false
+    }
+  },
+  "data": [
+    {
+      "year": 2023,
+      "title": "Clinical efficacy of ONC201 in H3K27M-mutant diffuse midline gliomas is driven by disruption of integrated metabolic and epigenetic pathways",
+      "authors": "Chung C, Sweha SR, Pratt D, Tamrazi B, Panwalkar P, Banda A, Bayliss J, Hawes D, Yang F, Lee HJ, Shan M, Cieslik M, Qin T, Wierzbicki K, Stallard S, Walling D, **John V**, Mullan B, Bruzek A, Cantor E, Koschmann C, et al.",
+      "journal": "Cancer Discovery",
+      "year_detail": "2023",
+      "doi": "10.1158/2159-8290.CD-23-0131",
+      "url": "https://aacrjournals.org/cancerdiscovery/article/doi/10.1158/2159-8290.CD-23-0131/728431/Clinical-efficacy-of-ONC201-in-H3K27M-mutant",
+      "abstract": "H3K27M-mutant diffuse midline glioma (DMG) patients have no proven effective therapies. ONC201 is an imipridone compound with clinical activity in H3K27M-mutant DMG. This study investigates the integrated metabolic and epigenetic mechanisms underlying ONC201's clinical efficacy in this devastating pediatric brain cancer.",
+      "role": "co-author",
+      "highlight": false,
+      "plain": "A drug called ONC201 helps some children with an aggressive, hard-to-treat brain tumor. This study worked out how it helps — by simultaneously cutting off the tumor's energy supply and flipping the chemical switches that keep its cancer genes turned on."
+    },
+    {
+      "year": 2022,
+      "title": "Liquid biopsy in pediatric brain tumors",
+      "authors": "Tripathy A†, **John V†**, Wadden J, Kong S, Sharba S, Koschmann C.",
+      "journal": "Frontiers in Genetics",
+      "year_detail": "Jan 2023",
+      "doi": "10.3389/fgene.2022.1114762",
+      "url": "https://www.frontiersin.org/articles/10.3389/fgene.2022.1114762/full",
+      "abstract": "Malignant primary brain tumors are the most common cancer in children aged 0-14 years and the leading cause of cancer death in pediatric patients. This review covers minimally invasive liquid biopsy approaches — including circulating tumor DNA in CSF and plasma — as tools for diagnosis, monitoring, and treatment guidance in pediatric brain tumors.",
+      "role": "co-first",
+      "highlight": true,
+      "plain": "Brain tumors are the deadliest cancer in young children. This review explains how a simple fluid sample — spinal fluid or blood — can pick up tumor DNA, letting doctors diagnose and monitor these tumors without risky brain surgery."
+    },
+    {
+      "year": 2022,
+      "title": "Cell-Free Tumor DNA (cf-tDNA) Liquid Biopsy: Current Methods and Use in Brain Tumor Immunotherapy",
+      "authors": "Wadden J, Ravi K, **John V**, Babila CM, Koschmann C.",
+      "journal": "Frontiers in Immunology",
+      "year_detail": "Apr 2022",
+      "doi": "10.3389/fimmu.2022.882452",
+      "url": "https://www.frontiersin.org/articles/10.3389/fimmu.2022.882452/full",
+      "abstract": "Gliomas cause significant morbidity and mortality, and development of precision diagnostics and novel targeted immunotherapies is critically important. This review examines cf-tDNA liquid biopsy methods and their application in brain tumor immunotherapy, addressing how circulating tumor DNA from CSF and plasma can resolve pseudoprogression and guide targeted therapies.",
+      "role": "co-author",
+      "highlight": false,
+      "plain": "Tiny fragments of tumor DNA float in spinal fluid and blood. This review surveys the methods for reading that DNA and shows how it can guide immunotherapy and help doctors avoid mistaking treatment-related healing for the tumor coming back."
+    },
+    {
+      "year": 2022,
+      "title": "Serial H3K27M cell-free tumor DNA (cf-tDNA) tracking predicts ONC201 treatment response and progression in diffuse midline glioma",
+      "authors": "Cantor E, Wierzbicki K, Tarapore RS, Ravi K, Thomas C, Cartaxo R, Yadav VN, Ravindran R, Bruzek AK, Wadden J, **John V**, Babila CM, Cummings JR, ..., Koschmann C.",
+      "journal": "Neuro-Oncology",
+      "year_detail": "Aug 2022, Vol 24(8), pp 1366-1374",
+      "doi": "10.1093/neuonc/noac030",
+      "url": "https://academic.oup.com/neuro-oncology/article/24/8/1366/6523277",
+      "abstract": "First demonstrated feasibility of serial CSF collection for cf-tDNA tracking in a multi-site Phase 1 trial of ONC201 in H3K27M-mutant diffuse midline glioma. Change in H3K27M variant allele fraction over time correlated with progression-free survival, enabling differentiation of pseudo-progression from true tumor progression.",
+      "role": "co-author",
+      "highlight": false,
+      "plain": "By repeatedly sampling spinal fluid during treatment, the team tracked a tumor's DNA over time. Falling levels matched patients doing better — and helped tell true tumor growth apart from harmless, treatment-related swelling."
+    },
+    {
+      "year": 2022,
+      "title": "Ultra-rapid somatic variant detection via real-time targeted amplicon sequencing",
+      "authors": "Wadden J, Wierzbicki K, Cantor E, Thomas C, Cartaxo R, **John V**, Koschmann C, et al.",
+      "journal": "Communications Biology (Nature)",
+      "year_detail": "Jul 2022",
+      "doi": "10.1038/s42003-022-03657-6",
+      "url": "https://www.nature.com/articles/s42003-022-03657-6",
+      "abstract": "Molecular markers are essential for cancer diagnosis, clinical trial enrollment, and intraoperative surgical decision-making. This work presents a proof-of-principle approach for sub-1-hour targeted variant detection using real-time DNA sequencers, demonstrating confirmation of a hotspot mutation from tumor tissue in approximately 52 minutes.",
+      "role": "co-author",
+      "highlight": false,
+      "plain": "Identifying a tumor's exact mutation normally takes days. This proof-of-concept method reads the key mutation in about 52 minutes — potentially fast enough to guide decisions while the patient is still in the operating room."
+    }
+  ]
+}

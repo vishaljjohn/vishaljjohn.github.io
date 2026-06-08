@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter | Vishal John</title>
+    <meta name="description" content="Newsletter and writing by Vishal John on medicine, research, and life as a medical student.">
+    <meta name="author" content="Vishal John">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.vishaljohn.com/pages/blog.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Newsletter | Vishal John">
+    <meta property="og:description" content="Newsletter and writing by Vishal John on medicine, research, and life as a medical student.">
+    <meta property="og:url" content="https://www.vishaljohn.com/pages/blog.html">
+    <meta property="og:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <meta property="og:site_name" content="Vishal John">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Newsletter | Vishal John">
+    <meta name="twitter:description" content="Newsletter and writing by Vishal John on medicine, research, and life as a medical student.">
+    <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  
+  <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav li {
+            display: inline-block;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #f8f8f8;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 50px 0;
+        }
+
+        .main-content {
+            background-color: #fff;
+            padding: 50px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content h2, .main-content p {
+            margin: 20px 0;
+        }
+
+        .articles-list {
+            margin-top: 30px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .articles-list li {
+            margin-bottom: 15px;
+        }
+
+        .articles-list a {
+            color: #0077b6;
+            transition: color 0.3s;
+        }
+
+        .articles-list a:hover {
+            color: #005885;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #333;
+            color: #fff;
+        }
+
+
+       /* Styles for social media icons */
+        footer i {
+            color: #ff5733;  /* Change this color as you desire */
+        }
+
+        footer a:hover i {
+            color: #ff9966;  /* Change this color as you desire */
+        }
+
+
+      /* Mobile-Friendly Adjustments */
+
+@media screen and (max-width: 768px) {
+    
+    /* Header and Navigation Styles */
+    header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    nav a {
+        display: block;
+        margin: 5px 0;
+        text-align: center;
+    }
+
+    /* Container adjustments */
+    .container {
+        width: 95%; /* Increased width for smaller devices */
+    }
+
+    .main-content {
+        padding: 30px; /* Reduced padding for smaller devices */
+    }
+
+    .image-section img {
+        max-width: 80%; /* Images should take more width on mobile */
+    }
+
+    .cv-section {
+        margin-top: 20px; /* Reduced margin for mobile */
+    }
+
+    footer div {
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    
+    header h1 {
+        font-size: 24px; /* Adjust title size for very small devices */
+    }
+
+    nav a {
+        padding: 5px;
+        font-size: 14px; /* Adjust font size for very small devices */
+    }
+}
+      
+    </style>
+
+    <style>
+    #particles-js {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    </style>
+    <style>
+    /* Mobile hamburger nav */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media screen and (max-width: 768px) {
+      header { flex-direction: row; align-items: center; text-align: left; position: relative; }
+      .hamburger { display: flex; }
+      nav { position: static; }
+      nav ul { display: none; flex-direction: column; gap: 0; position: absolute; top: 100%; right: 0; left: 0; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; padding: 8px 0; margin: 0; }
+      nav ul.open { display: flex; }
+      nav a { padding: 12px 24px; border-radius: 0; display: block; text-align: center; margin: 0; }
+    }
+    </style>
+    <link rel="stylesheet" href="../assets/site.css">
+</head>
+
+<body>
+
+
+    <header>
+        <h1><a href="../index.html" style="text-decoration: none; color: inherit;">Vishal John</a></h1>
+
+       <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="about.html">About Me</a></li>
+                 <li><a href="blog.html">Newsletter</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <h2>Check out some of my writings below!</h2>
+            <ul id="medium-articles" class="articles-list"></ul>
+        </div>
+    </div>
+
+ 
+
+    <script>
+        const mediumUser = 'vishaljjohn';
+        const feedUrl = `https://medium.com/feed/@${mediumUser}`;
+        const proxies = [
+            url => `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`,
+            url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
+            url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+        ];
+
+        const list = document.getElementById('medium-articles');
+
+        function showError() {
+            list.innerHTML = '<li style="color:#888;">Could not load articles right now. <a href="https://medium.com/@' + mediumUser + '" target="_blank" style="color:#0077b6;">Read on Medium directly →</a></li>';
+        }
+
+        function renderRSS(xmlText) {
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(xmlText, 'text/xml');
+            const items = xml.querySelectorAll('item');
+            if (!items.length) { showError(); return; }
+            list.innerHTML = '';
+            items.forEach(item => {
+                const title = item.querySelector('title')?.textContent || 'Untitled';
+                const link = item.querySelector('link')?.textContent ||
+                             item.querySelector('guid')?.textContent || '#';
+                const pubDate = item.querySelector('pubDate')?.textContent;
+                const date = pubDate ? new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+                list.innerHTML += `<li style="display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid #eee;">
+                    <a href="${link}" target="_blank">${title}</a>
+                    <span style="font-size:13px;color:#888;margin-left:16px;white-space:nowrap;">${date}</span>
+                </li>`;
+            });
+        }
+
+        async function tryProxy(index) {
+            if (index >= proxies.length) { showError(); return; }
+            try {
+                const res = await fetch(proxies[index](feedUrl));
+                if (!res.ok) throw new Error('bad response');
+                // rss2json returns JSON, others return raw XML or wrapped
+                const text = await res.text();
+                if (proxies[index](feedUrl).includes('rss2json')) {
+                    const json = JSON.parse(text);
+                    if (json.status !== 'ok') throw new Error('rss2json error');
+                    list.innerHTML = '';
+                    json.items.forEach(item => {
+                        const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+                        list.innerHTML += `<li style="display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid #eee;">
+                            <a href="${item.link}" target="_blank">${item.title}</a>
+                            <span style="font-size:13px;color:#888;margin-left:16px;white-space:nowrap;">${date}</span>
+                        </li>`;
+                    });
+                } else if (text.includes('"contents"')) {
+                    const json = JSON.parse(text);
+                    renderRSS(json.contents);
+                } else {
+                    renderRSS(text);
+                }
+            } catch(e) {
+                tryProxy(index + 1);
+            }
+        }
+
+        list.innerHTML = '<li style="color:#888;">Loading articles...</li>';
+        tryProxy(0);
+    </script>
+
+
+  <footer>
+      <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"> <i class="fab fa-linkedin fa-2x"> </i>
+       <a href="https://github.com/vishaljjohn" target="_blank"> <i class="fab fa-github fa-2x"> </i> 
+        <a href="https://medium.com/@vishaljjohn" target="_blank"> <i class="fab fa-medium fa-2x"> </i> 
+       </a>  <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+    (function(){
+      var btn = document.getElementById('hamburger');
+      var navUl = document.querySelector('nav ul');
+      if (btn && navUl) {
+        btn.addEventListener('click', function(){
+          btn.classList.toggle('open');
+          navUl.classList.toggle('open');
+        });
+      }
+    })();
+    </script>
+    <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
+    <script src="../assets/site.js"></script>
+</body>
+
+</html>

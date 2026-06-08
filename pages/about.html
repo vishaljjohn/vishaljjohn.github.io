@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO -->
+    <title>About Vishal John | UofL Medical Student & Researcher</title>
+    <meta name="description" content="Learn about Vishal John — a second-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
+    <meta name="author" content="Vishal John">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.vishaljohn.com/pages/about.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="About Vishal John | UofL Medical Student & Researcher">
+    <meta property="og:description" content="Learn about Vishal John — a second-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
+    <meta property="og:url" content="https://www.vishaljohn.com/pages/about.html">
+    <meta property="og:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <meta property="og:site_name" content="Vishal John">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About Vishal John | UofL Medical Student & Researcher">
+    <meta name="twitter:description" content="Learn about Vishal John — a second-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
+    <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            position: relative;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #f8f8f8;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 50px 0;
+        }
+
+        .main-content {
+            background-color: #fff;
+            padding: 50px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .main-content h2, .main-content p {
+            margin: 20px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #333;
+            color: #fff;
+        }
+
+        footer i {
+            margin: 0 10px;
+            color: #ff5733;
+            transition: color 0.3s;
+        }
+
+        footer a:hover i {
+            color: #ff9966;
+        }
+
+        .image-section {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 40px auto;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .image-section img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .image-section .img-fun {
+            opacity: 0;
+        }
+
+        .image-section:hover .img-default {
+            opacity: 0;
+        }
+
+        .image-section:hover .img-fun {
+            opacity: 1;
+        }
+
+        .description-section {
+            text-align: center;
+        }
+
+        .cv-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cv-button {
+            padding: 10px 20px;
+            background-color: #0077b6;
+            color: white;
+            border-radius: 3px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .cv-button:hover {
+            background-color: #005885;
+        }
+
+/* Mobile-Friendly Adjustments */
+
+@media screen and (max-width: 768px) {
+    
+    /* Header and Navigation Styles */
+    header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    nav a {
+        display: block;
+        margin: 5px 0;
+        text-align: center;
+    }
+
+    /* Container adjustments */
+    .container {
+        width: 95%; /* Increased width for smaller devices */
+    }
+
+    .main-content {
+        padding: 30px; /* Reduced padding for smaller devices */
+    }
+
+    .image-section img {
+        max-width: 80%; /* Images should take more width on mobile */
+    }
+
+    .cv-section {
+        margin-top: 20px; /* Reduced margin for mobile */
+    }
+
+    footer div {
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    
+    header h1 {
+        font-size: 24px; /* Adjust title size for very small devices */
+    }
+
+    nav a {
+        padding: 5px;
+        font-size: 14px; /* Adjust font size for very small devices */
+    }
+}
+        
+    </style>
+
+    <style>
+    #particles-js {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+            z-index: 200;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #333;
+            border-radius: 2px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        @media screen and (max-width: 768px) {
+            .hamburger { display: flex; }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                gap: 0;
+                position: absolute;
+                top: 64px;
+                right: 0;
+                left: 0;
+                background: #fff;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                z-index: 100;
+                padding: 8px 0;
+            }
+            nav ul.open { display: flex; }
+            nav a { padding: 12px 24px; border-radius: 0; display: block; }
+            header { position: relative; flex-wrap: nowrap; }
+        }
+        </style>
+    <link rel="stylesheet" href="../assets/site.css">
+</head>
+
+<body>
+
+    <header>
+        <h1><a href="../index.html">Vishal John</a></h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="about.html">About Me</a></li>
+                <li><a href="blog.html">Newsletter</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <main class="container">
+        <section class="main-content">
+            <h2>About Me</h2>
+
+            <div class="image-section">
+                <img loading="lazy" decoding="async" class="img-default" src="../images/Vishal%20John%20Headshot.jpg" alt="Vishal John">
+                <img loading="lazy" decoding="async" class="img-fun" src="../images/vishal-john-2.jpg" alt="Vishal John fun">
+            </div>
+
+            <div class="description-section">
+                <p>I'm Vishal John, a second-year medical student at the University of Louisville School of Medicine. My interest in medicine is rooted in years of hands-on research — most notably at the Koschmann Lab at the University of Michigan, where I worked as a Clinical Research Technician studying pediatric brain cancer. There, I co-authored publications on liquid biopsy techniques, presented first-author research at the BioInnovation in Brain Cancer Symposium, and developed methods for simulating the tumor microenvironment using stem cell-derived organoids.</p>
+                <p>Before medical school, I served as Project Lead at miRcore, a nonprofit dedicated to democratizing STEM education through bioinformatics training and the Citizen Scientist Sequencing Initiative — an effort to give students direct ownership of their own genomic data.</p>
+                <p>My commitment to medicine extends beyond the laboratory. I serve on the leadership team of Rock Cancer, a program providing free rock climbing experiences to young patients with cancer, and have volunteered since 2021 at Saint Andrew's Breakfast Program in Ann Arbor, which provides meals and essential services to the city's unhoused population.</p>
+                <p>I believe that becoming a good physician requires equal parts scientific rigor and genuine investment in people — and I try to bring both to everything I do.</p>
+            <div class="cv-section">
+                <a href="../assets/VishalJohnCV.pdf" class="cv-button" target="_blank">View My CV</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div>
+            <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
+            <a href="https://github.com/vishaljjohn" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+            <a href="https://medium.com/@vishaljjohn" target="_blank"><i class="fab fa-medium fa-2x"></i></a>
+        </div>
+        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('hamburger');
+        const navUl = document.querySelector('nav ul');
+        if (btn && navUl) {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('open');
+                navUl.classList.toggle('open');
+            });
+        }
+    </script>
+    <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
+    <script src="../assets/site.js"></script>
+</body>
+
+</html>

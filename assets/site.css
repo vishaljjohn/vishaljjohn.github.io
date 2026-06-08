@@ -1,0 +1,81 @@
+/* ===========================================================
+   Vishal John — shared design system
+   Loaded after each page's inline <style> so tokens win.
+   =========================================================== */
+:root {
+  /* Color */
+  --ink:        #232529;
+  --ink-soft:   #555a61;
+  --muted:      #8a9099;
+  --line:       #e8eaed;
+  --bg:         #f5f6f8;
+  --card:       #ffffff;
+  --accent:     #0a6db0;
+  --accent-dark:#075488;
+  --accent-soft:#eaf3fa;
+
+  /* Form */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow:    0 4px 20px rgba(18,24,33,0.06);
+  --shadow-lg: 0 10px 34px rgba(18,24,33,0.10);
+}
+
+/* ---- Base typography (overrides inline Arial via load order) ---- */
+html { scroll-behavior: smooth; }
+body {
+  color: var(--ink);
+  background-color: var(--bg);
+}
+
+/* gentle, non-corny ambient background (replaces particles) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(1100px 520px at 78% -8%, rgba(10,109,176,0.06), transparent 60%),
+    radial-gradient(900px 480px at 8% 4%, rgba(10,109,176,0.04), transparent 55%);
+  pointer-events: none;
+}
+
+/* nicer links */
+a { transition: color .2s ease; }
+
+/* card / shadow refinement applied to existing components */
+.main-content,
+.spotify-section,
+.contact-form,
+.publication-item { box-shadow: var(--shadow); }
+
+/* project gallery: subtle lift on hover */
+.project-item { box-shadow: var(--shadow); transition: transform .25s ease, box-shadow .25s ease; }
+.project-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+/* ---- Download CV button ---- */
+.cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease, transform .1s ease;
+}
+.cv-btn:hover { background: var(--accent); color: #fff; }
+.cv-btn:active { transform: scale(.97); }
+
+/* ---- Scroll reveal (JS adds .reveal then .in-view) ---- */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; will-change: opacity, transform; }
+.reveal.in-view { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}

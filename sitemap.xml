@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.vishaljohn.com/</loc><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/about.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/publications.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/blog.html</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/contact.html</loc><priority>0.7</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/koschmannlab.html</loc><priority>0.8</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/mircore.html</loc><priority>0.8</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/rockcancer.html</loc><priority>0.8</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/standrews.html</loc><priority>0.7</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/HELP.html</loc><priority>0.7</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/japan.html</loc><priority>0.7</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/childrensbook.html</loc><priority>0.8</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/balloonanimals.html</loc><priority>0.7</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.vishaljohn.com/pages/bluegrassbiodesign.html</loc><priority>0.8</priority><changefreq>yearly</changefreq></url>
+</urlset>

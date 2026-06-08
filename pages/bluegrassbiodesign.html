@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vishal John — Bluegrass Biodesign</title>
+    <meta name="description" content="Vishal John's work with Bluegrass Biodesign, a healthcare innovation and medical device design program identifying unmet clinical needs.">
+    <meta name="author" content="Vishal John">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.vishaljohn.com/pages/bluegrassbiodesign.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Vishal John — Bluegrass Biodesign">
+    <meta property="og:description" content="Vishal John's work with Bluegrass Biodesign, a healthcare innovation and medical device design program identifying unmet clinical needs.">
+    <meta property="og:url" content="https://www.vishaljohn.com/pages/bluegrassbiodesign.html">
+    <meta property="og:image" content="https://www.vishaljohn.com/images/biodesign_team.jpg">
+    <meta property="og:site_name" content="Vishal John">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vishal John — Bluegrass Biodesign">
+    <meta name="twitter:description" content="Vishal John's work with Bluegrass Biodesign, a healthcare innovation and medical device design program identifying unmet clinical needs.">
+    <meta name="twitter:image" content="https://www.vishaljohn.com/images/biodesign_team.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
+        #particles-js { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+        header { position: relative; background-color: #fff; padding: 16px 24px; box-shadow: 0px 3px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; z-index: 10; }
+        header h1 { margin: 0; font-size: 22px; }
+        header a { text-decoration: none; color: inherit; }
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 4px; }
+        nav a { text-decoration: none; color: #333; padding: 5px 10px; border-radius: 3px; transition: background-color 0.3s; font-size: 14px; }
+        nav a:hover { background-color: #f8f8f8; }
+
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .container { width: 80%; margin: auto; padding: 50px 0; position: relative; z-index: 1; }
+        .main-content { background-color: #fff; padding: 50px; box-shadow: 0px 3px 10px rgba(0,0,0,0.1); }
+        .main-content h2 { border-bottom: 2px solid #333; padding-bottom: 10px; margin: 36px 0 20px; }
+        .main-content h2:first-of-type { margin-top: 0; }
+        .main-content p { margin: 16px 0; line-height: 1.7; }
+
+        footer { text-align: center; padding: 20px 0; background-color: #333; color: #fff; position: relative; z-index: 1; margin-top: 0; }
+        footer i { color: #ff5733; }
+        footer a:hover i { color: #ff9966; }
+
+        /* Program header */
+        .program-header { display: flex; gap: 28px; align-items: flex-start; margin-bottom: 36px; }
+        .program-logo { flex-shrink: 0; width: 110px; height: 110px; background: linear-gradient(135deg, #AD0000, #c41230); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 11px; text-align: center; padding: 10px; line-height: 1.4; }
+        .program-logo .logo-icon { font-size: 26px; margin-bottom: 6px; }
+        .program-meta h3 { font-size: 22px; margin: 0 0 4px; }
+        .program-meta .subtitle { color: #888; font-size: 13px; margin: 0 0 14px; }
+        .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+        .tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #f0f4ff; color: #0077b6; font-weight: bold; }
+        .tag-red { background: #fff0f0; color: #AD0000; }
+        .news-link { display: inline-flex; align-items: center; gap: 6px; color: #0077b6; font-size: 13px; text-decoration: none; }
+        .news-link:hover { text-decoration: underline; }
+
+        /* Gallery */
+        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 20px 0; }
+        .photo-grid img { width: 100%; height: 240px; object-fit: cover; object-position: center; border-radius: 6px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; display: block; }
+        .photo-grid img:hover { transform: scale(1.02); }
+        .photo-grid .full-width { grid-column: 1 / -1; }
+        .photo-grid .full-width img { height: 320px; }
+        figcaption { font-size: 12px; color: #888; text-align: center; margin-top: 6px; }
+
+        /* Process steps */
+        .process-steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; margin: 20px 0; }
+        .step-card { background: #f9f9f9; border: 1px solid #eee; border-top: 3px solid #AD0000; border-radius: 6px; padding: 16px 12px; text-align: center; }
+        .step-number { font-size: 20px; font-weight: bold; color: #AD0000; margin-bottom: 6px; }
+        .step-title { font-size: 13px; font-weight: bold; color: #222; margin-bottom: 4px; }
+        .step-desc { font-size: 12px; color: #888; line-height: 1.5; }
+
+        /* Lightbox */
+        .lightbox { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); padding-top: 40px; }
+        .lightbox img { display: block; max-width: 85%; max-height: 82vh; margin: auto; border-radius: 4px; object-fit: contain; }
+        .lightbox-close { position: absolute; top: 14px; right: 24px; color: #fff; font-size: 40px; cursor: pointer; font-weight: bold; }
+        .lightbox-close:hover { color: #ccc; }
+
+        .btn-red { display: inline-block; padding: 10px 22px; background-color: #AD0000; color: #fff; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: bold; transition: background-color 0.2s; }
+        .btn-red:hover { background-color: #8a0000; }
+        .btn-dark { display: inline-block; padding: 10px 22px; background-color: #333; color: #fff; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: bold; margin-left: 12px; transition: background-color 0.2s; }
+        .btn-dark:hover { background-color: #111; }
+
+        @media screen and (max-width: 768px) {
+            .hamburger { display: flex; }
+            nav ul { display: none; flex-direction: column; gap: 0; position: absolute; top: 60px; right: 0; left: 0; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; padding: 8px 0; }
+            nav ul.open { display: flex; }
+            nav a { padding: 12px 24px; border-radius: 0; display: block; }
+            .container { width: 95%; }
+            .main-content { padding: 28px; }
+            .program-header { flex-direction: column; }
+            .photo-grid { grid-template-columns: 1fr; }
+            .photo-grid .full-width { grid-column: 1; }
+            .btn-dark { margin-left: 0; margin-top: 10px; display: inline-block; }
+        }
+    </style>
+    <link rel="stylesheet" href="../assets/site.css">
+</head>
+
+<body>
+
+    <header>
+        <h1><a href="../index.html">Vishal John</a></h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="about.html">About Me</a></li>
+                <li><a href="blog.html">Newsletter</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+
+            <div class="program-header">
+                <div class="program-logo">
+                    <div class="logo-icon"></div>
+                    Bluegrass<br>Biodesign
+                </div>
+                <div class="program-meta">
+                    <h3>Bluegrass Biodesign — Cardiology / Cardiothoracic Surgery Team</h3>
+                    <p class="subtitle">University of Louisville · 2025–2026 Cohort</p>
+                    <div class="tag-row">
+                        <span class="tag tag-red">Medical Device</span>
+                        <span class="tag tag-red">Cardiology / CT Surgery</span>
+                        <span class="tag">UofL School of Medicine</span>
+                        <span class="tag">J.B. Speed School of Engineering</span>
+                        <span class="tag">NSF I-Corps</span>
+                    </div>
+                    <a class="news-link" href="https://www.uoflnews.com/post/uofltoday/uofl-launches-new-program-aimed-at-helping-biomedical-students-innovate/" target="_blank">
+                        <i class="fas fa-newspaper"></i> Read the UofL News feature
+                    </a>
+                </div>
+            </div>
+
+            <h2>What is Bluegrass Biodesign</h2>
+            <p>Bluegrass Biodesign is a nine-month interdisciplinary innovation program at the University of Louisville that trains the next generation of medical device developers. Students from the School of Medicine, College of Business, and J.B. Speed School of Engineering work in multidisciplinary teams to identify unmet clinical needs, design solutions, prototype devices, and validate them against real-world constraints.</p>
+            <p>The program is grounded in the Stanford Biodesign framework — a structured methodology moving from clinical need-finding through prototyping and market validation. All teams complete business training through UofL's NSF-funded I-Corps program, receiving funding and mentorship to bring their ideas to life.</p>
+
+            <h2>Our Device</h2>
+            <p>Our team worked in the Cardiology and Cardiothoracic Surgery space, identifying an unmet clinical need through direct observation and physician interviews with our mentors Dr. Shahab Ghafghazi, MD and Dr. Guruprasad Giridharan, PhD. Working alongside medical students Amos Flomo, Ellen Oskoui, Caleb He, and Nikita Nair, and our engineering teammates, we designed, prototyped, and tested a device aimed at improving outcomes in the CT surgery setting.</p>
+            <p>Prototyping involved everything from late-night study sessions with circuit boards to using each other as test subjects — all in the spirit of actually making something that works.</p>
+
+            <h2>Gallery</h2>
+
+            <div class="photo-grid">
+                <figure class="full-width">
+                    <img loading="lazy" decoding="async" src="../images/biodesign_team.jpg" alt="Cardiology/CT Surgery Team — Deliverable 1 presentation" data-caption="The CT Surgery Team after our first deliverable presentation, October 2025">
+                    <figcaption>The team after our first deliverable presentation — October 2025</figcaption>
+                </figure>
+                <figure>
+                    <img loading="lazy" decoding="async" src="../images/biodesign_testing1.JPG" alt="Device prototyping and testing session" data-caption="Early prototype testing — engineering and medicine colliding">
+                    <figcaption>Early prototype testing session</figcaption>
+                </figure>
+                <figure>
+                    <img loading="lazy" decoding="async" src="../images/biodesign_testing2.jpg" alt="Testing the device on a teammate" data-caption="Using each other as test subjects — the true Biodesign experience">
+                    <figcaption>Using teammates as test subjects</figcaption>
+                </figure>
+                <figure>
+                    <img loading="lazy" decoding="async" src="../images/biodesign_testing3.jpg" alt="Device prototype with sensors" data-caption="Late night prototyping with Arduino sensors and circuit boards">
+                    <figcaption>Late night prototyping</figcaption>
+                </figure>
+                <figure>
+                    <img loading="lazy" decoding="async" src="../images/biodesign_cert.JPG" alt="Certificate of Completion — Bluegrass Biodesign Program" data-caption="Certificates of Completion — February 2026">
+                    <figcaption>Certificates of Completion — February 2026</figcaption>
+                </figure>
+            </div>
+
+            <h2>The Biodesign Process</h2>
+            <div class="process-steps">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-title">Need-Finding</div>
+                    <div class="step-desc">Clinical observations and physician interviews to identify real unmet needs</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-title">Need Statement</div>
+                    <div class="step-desc">Define the problem with precision before proposing any solution</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-title">Ideation</div>
+                    <div class="step-desc">Generate and screen hundreds of concepts against clinical and technical criteria</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">04</div>
+                    <div class="step-title">Prototyping</div>
+                    <div class="step-desc">Rapid physical builds and iterative testing in collaboration with engineers</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">05</div>
+                    <div class="step-title">Validation</div>
+                    <div class="step-desc">Market discovery and user testing through UofL's NSF I-Corps program</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">06</div>
+                    <div class="step-title">Pitch</div>
+                    <div class="step-desc">Present the solution, business case, and regulatory pathway to stakeholders</div>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top: 40px;">
+                <a href="https://louisville.edu/medicine/healthprocessinnovation/opportunities/bluegrass-biodesign" target="_blank" class="btn-red">Bluegrass Biodesign Program</a>
+                <a href="https://www.uoflnews.com/post/uofltoday/uofl-launches-new-program-aimed-at-helping-biomedical-students-innovate/" target="_blank" class="btn-dark">Read the News Article</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close" id="lbClose">&times;</span>
+        <img loading="lazy" decoding="async" id="lbImg" src="" alt="">
+    </div>
+
+    <footer>
+        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
+        <a href="https://github.com/vishaljjohn" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+        <a href="https://medium.com/@vishaljjohn" target="_blank"><i class="fab fa-medium fa-2x"></i></a>
+        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Hamburger
+        document.getElementById('hamburger').addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.querySelector('nav ul').classList.toggle('open');
+        });
+
+        // Lightbox
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lbImg');
+        document.getElementById('lbClose').addEventListener('click', () => lb.style.display = 'none');
+        lb.addEventListener('click', e => { if (e.target !== lbImg) lb.style.display = 'none'; });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.style.display = 'none'; });
+        document.querySelectorAll('.photo-grid img').forEach(img => {
+            img.addEventListener('click', () => {
+                lb.style.display = 'block';
+                lbImg.src = img.src;
+            });
+        });
+    </script>
+    <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
+    <script src="../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{
+  "_instructions": {
+    "about": "Add your conference abstracts, posters, and talks here. The page renders this automatically — no HTML edits needed.",
+    "fields": {
+      "year": "Year of presentation (number, used for grouping)",
+      "title": "Full title of the abstract or poster",
+      "authors": "Author list. Wrap your name in **double stars** to bold it, e.g. **John V**",
+      "conference": "Full conference name",
+      "location": "City, State or Country",
+      "date": "e.g. March 2023",
+      "type": "One of: poster | abstract | talk",
+      "highlight": "true = green left border (use for first-author or featured work)",
+      "note": "Optional extra context, e.g. 'First-author poster presentation'",
+      "url": "Optional link to the abstract or poster PDF — omit the field if not available"
+    },
+    "example": {
+      "year": 2025,
+      "title": "Your poster title here",
+      "authors": "**John V**, Coauthor A, Coauthor B.",
+      "conference": "Conference Name",
+      "location": "City, State",
+      "date": "Month Year",
+      "type": "poster",
+      "highlight": false,
+      "note": "Optional note"
+    }
+  },
+  "data": [
+    {
+      "year": 2025,
+      "title": "Engaging citizen scientists through WES self-data analysis training",
+      "authors": "**Vishal John**, Veena Thamilsevan, Lucia Moscola, Inhan Lee.",
+      "conference": "American Society of Human Genetics (ASHG) Annual Meeting",
+      "location": "Boston, MA",
+      "date": "October 16, 2025",
+      "type": "abstract",
+      "highlight": true,
+      "note": "First-author abstract presentation"
+    },
+    {
+      "year": 2025,
+      "title": "From Blood Types to Base Pairs: High School Students Decode Their Own ABO Gene",
+      "authors": "**Vishal John**, Lucia Moscola, Ava Dornseif, Ziqi Guo, Inhan Lee.",
+      "conference": "Research!Louisville",
+      "location": "Louisville, KY",
+      "date": "October 14, 2025",
+      "type": "abstract",
+      "highlight": true,
+      "note": "First-author abstract presentation"
+    },
+    {
+      "year": 2022,
+      "title": "Use Of A Thalamic Organoid Co-culture Model To Determine Drivers Of Diffuse Midline Glioma Migration And Invasion",
+      "authors": "**Vishal John**, Rodrigo Cartaxo, Robert Doherty, Kallen Schwark, Jenna LaBelle, Tuo Ji, Mariella Filbin, Jack Parent, Carl Koschmann.",
+      "conference": "Inaugural Brain Cancer Symposium",
+      "location": "Ann Arbor, MI",
+      "date": "September 30 – October 1, 2022",
+      "type": "poster",
+      "highlight": true,
+      "note": "First-author poster presentation"
+    },
+    {
+      "year": 2022,
+      "title": "Zero-waste Molecular Diagnostics From Biopsy Needle Wash Water",
+      "authors": "Jack Wadden, **Vishal John**, Kait Verbal, Amy Bruzek, Wajd Al-Holou, Jason Heth, Hugh Garton, Carl Koschmann.",
+      "conference": "Pediatric Research Symposium",
+      "location": "Ann Arbor, MI",
+      "date": "May 24, 2022",
+      "type": "poster",
+      "highlight": false
+    },
+    {
+      "year": 2022,
+      "title": "Ultra-rapid Molecular Diagnosis of H3K27M Mutation from Biopsy Washings: A Feasibility Report",
+      "authors": "Amy Bruzek, Jack Wadden, **Vishal John**, Kait Verbal, Wajd Al-Holou, Jason Heth, Hugh Garton, Carl Koschmann.",
+      "conference": "AANS/CNS Pediatric Neurosurgery Section Meeting",
+      "location": "Washington, DC",
+      "date": "December 1–4, 2022",
+      "type": "poster",
+      "highlight": false
+    }
+  ]
+}
