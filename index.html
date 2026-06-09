@@ -4,276 +4,654 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- SEO -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Vishal John | Medical Student, Aspiring Coffee Shop Owner & Balloon Animal Artist</title>
     <meta name="description" content="Personal website of Vishal John — M2 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
     <meta name="author" content="Vishal John">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.vishaljohn.com/">
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Vishal John | Medical Student, Researcher & Author">
+    <meta property="og:title" content="Vishal John">
     <meta property="og:description" content="Personal website of Vishal John — M2 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
     <meta property="og:url" content="https://www.vishaljohn.com/">
     <meta property="og:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
     <meta property="og:site_name" content="Vishal John">
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Vishal John | Medical Student, Researcher & Author">
-    <meta name="twitter:description" content="Personal website of Vishal John — M2 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
-    <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <meta name="keywords" content="Vishal John, medicine, nonprofit, volunteer, Rock Cancer, miRcore">
 
     <style>
         * { box-sizing: border-box; }
-        html { background-color: #f4f4f4; }
-        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: transparent; color: #333; }
-
-        #particles-js { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-        header, .container, .projects-gallery, .spotify-section, footer { position: relative; z-index: 1; }
-
-        /* Header */
-        header { position: relative; background-color: #fff; padding: 16px 24px; box-shadow: 0px 3px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
-        header h1 { margin: 0; font-size: 22px; }
-        header a { text-decoration: none; color: inherit; }
-        nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 4px; }
-        nav a { text-decoration: none; color: #333; padding: 5px 10px; border-radius: 3px; transition: background-color 0.3s; font-size: 14px; }
-        nav a:hover { background-color: #f8f8f8; }
-
-        /* Hamburger */
-        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-        .hamburger span { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-        /* Hero */
-        .container { width: 80%; margin: auto; padding: 50px 0; }
-        .main-content { background-color: #fff; padding: 48px 52px; box-shadow: 0px 3px 10px rgba(0,0,0,0.1); }
-        .hero-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
-        .hero-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #888; margin: 0 0 10px; }
-        .hero-name { font-size: 42px; margin: 0 0 12px; letter-spacing: -1px; line-height: 1.1; }
-        .hero-bio { font-size: 15px; color: #555; margin: 0 0 20px; max-width: 480px; line-height: 1.6; }
-        .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
-        .btn-primary { padding: 9px 20px; background: #333; color: #fff; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: bold; }
-        .btn-secondary { padding: 9px 20px; background: transparent; color: #333; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: bold; border: 1.5px solid #ccc; }
-        .hero-emoji { font-size: 72px; line-height: 1; }
-
-        /* Projects */
-        .projects-gallery { background-color: #f4f4f4; padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
-        .project-item { position: relative; border-radius: 6px; overflow: hidden; height: 180px; background: #ddd; }
-        .project-item > a { display: block; width: 100%; height: 100%; text-decoration: none; }
-        .project-item img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform 0.3s ease; }
-        .project-item:hover img { transform: scale(1.05); }
-        .project-caption { position: absolute; bottom: 8px; left: 8px; right: 8px; color: #fff; background-color: rgba(0,0,0,0.58); padding: 4px 8px; border-radius: 3px; font-size: 12px; font-weight: bold; line-height: 1.3; pointer-events: none; }
-
-        /* Spotify */
-        .spotify-section { width: 80%; margin: 40px auto 0; padding: 32px 40px; background: #fff; box-shadow: 0px 3px 10px rgba(0,0,0,0.1); border-radius: 4px; }
-        .spotify-section h2 { margin: 0 0 4px; font-size: 22px; }
-        .spotify-sub { color: #888; font-size: 14px; margin: 0 0 24px; }
-        .spotify-layout { display: flex; gap: 40px; align-items: flex-start; }
-        .spotify-widget { flex-shrink: 0; }
-        .spotify-tracks { flex: 1; }
-        .spotify-tracks h3 { font-size: 15px; font-weight: bold; color: #333; margin: 0 0 16px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .track-list { list-style: none; padding: 0; margin: 0; }
-        .track-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f5f5f5; }
-        .track-item:last-child { border-bottom: none; }
-        .track-num { font-size: 12px; color: #bbb; width: 16px; text-align: center; flex-shrink: 0; }
-        .track-info { flex: 1; min-width: 0; }
-        .track-name { font-size: 14px; font-weight: bold; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .track-artist { font-size: 12px; color: #888; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .track-loading { color: #bbb; font-size: 13px; padding: 12px 0; list-style: none; }
-        .spotify-open { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-size: 13px; color: #1DB954; text-decoration: none; font-weight: bold; }
-        .spotify-open:hover { text-decoration: underline; }
-
-        /* Footer */
-        footer { text-align: center; padding: 20px 0; background-color: #333; color: #fff; margin-top: 40px; }
-        footer i { color: #ff5733; }
-        footer a:hover i { color: #ff9966; }
-
-        /* Mobile */
-        @media screen and (max-width: 768px) {
-            .hamburger { display: flex; }
-            nav ul { display: none; flex-direction: column; gap: 0; position: absolute; top: 60px; right: 0; left: 0; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; padding: 8px 0; }
-            nav ul.open { display: flex; }
-            nav a { padding: 12px 24px; border-radius: 0; display: block; }
-            .container { width: 95%; }
-            .main-content { padding: 30px; }
-            .hero-emoji { display: none; }
-            .spotify-section { width: 95%; padding: 24px; }
-            .spotify-layout { flex-direction: column; }
-            .spotify-widget { width: 100%; display: flex; justify-content: center; }
+        :root {
+            --panel: rgba(20,22,26,0.72);
+            --panel-solid: #15171b;
+            --stroke: rgba(255,255,255,0.14);
+            --accent: #0a6db0;
+            --green: #2ec27e;
+            --red: #e5484d;
+            --muted: #9aa0a8;
+            --kb: 0px; /* keyboard height on mobile */
         }
-        @media screen and (max-width: 480px) {
-            header h1 { font-size: 20px; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: #0b0c0e; color: #fff; overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ---------- Main "call" feed ---------- */
+        .stage { position: fixed; inset: 0; overflow: hidden; }
+        .feed-wrap {
+            position: absolute; inset: 0;
+            background: radial-gradient(120% 120% at 30% 20%, #2b3340 0%, #15181d 55%, #0b0c0e 100%);
+        }
+        .feed {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            object-fit: cover; object-position: center 28%; opacity: 0.96;
+        }
+        .stage::after {
+            content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.30) 0%, transparent 16%, transparent 58%, rgba(0,0,0,0.60) 100%);
+        }
+        .placeholder-note {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            z-index: 3; text-align: center; pointer-events: none;
+            color: rgba(255,255,255,0.55); font-size: 13px; letter-spacing: 1px;
+            text-transform: uppercase; display: none; padding: 0 20px;
+        }
+        body.no-video .placeholder-note { display: block; }
+        body.no-video .feed { display: none; }
+
+        /* ---------- Top bar ---------- */
+        .topbar {
+            position: absolute; top: 0; left: 0; right: 0; z-index: 6;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: calc(16px + env(safe-area-inset-top)) 22px 16px;
+        }
+        .logo {
+            display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 17px;
+            letter-spacing: 0.5px; color: #fff; text-decoration: none; text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+        }
+        .logo .heart { color: var(--red); font-size: 14px; }
+        .topbtn {
+            width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--stroke);
+            background: var(--panel); color: #fff; cursor: pointer; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+            display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background 0.2s;
+        }
+        .topbtn:hover { background: rgba(40,44,50,0.9); }
+
+        .menu {
+            position: absolute; top: 66px; right: 22px; z-index: 9; width: 210px;
+            background: var(--panel-solid); border: 1px solid var(--stroke); border-radius: 12px;
+            padding: 6px; box-shadow: 0 18px 50px rgba(0,0,0,0.5);
+            opacity: 0; transform: translateY(-8px) scale(0.98); pointer-events: none;
+            transition: opacity 0.18s, transform 0.18s;
+        }
+        .menu.open { opacity: 1; transform: none; pointer-events: auto; }
+        .menu a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; color: #e8e9eb; text-decoration: none; font-size: 14px; }
+        .menu a:hover { background: rgba(255,255,255,0.07); }
+        .menu a i { width: 18px; text-align: center; color: var(--muted); }
+
+        /* ---------- Self ("YOU") tile ---------- */
+        .self-tile {
+            position: absolute; right: 22px; bottom: 96px; z-index: 6;
+            width: 168px; height: 116px; border-radius: 14px;
+            background: linear-gradient(145deg, #1c1f24, #0d0f12);
+            border: 1px solid var(--stroke); box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden;
+        }
+        .self-tile #selfcam {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            object-fit: cover; transform: scaleX(-1); display: none; background: #000;
+        }
+        .self-tile.live #selfcam { display: block; }
+        .self-tile.live .noise, .self-tile.live .cam-off { display: none; }
+        .self-tile .you-label {
+            position: absolute; left: 10px; bottom: 8px; z-index: 2;
+            font-size: 12px; font-weight: 600; color: #d6d8db; text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+        .self-tile .mic {
+            position: absolute; right: 8px; top: 8px; z-index: 2; width: 24px; height: 24px; border-radius: 50%;
+            background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff;
+        }
+        .self-tile .noise { position: absolute; inset: 0; opacity: 0.5; background: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 4px); }
+        .self-tile .cam-off {
+            position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 6px; color: var(--muted); font-size: 11px; letter-spacing: 0.5px; text-align: center; padding: 6px;
+        }
+        .self-tile .cam-off i { font-size: 20px; }
+
+        /* ---------- Chat ---------- */
+        .chat {
+            position: absolute; left: 22px; bottom: 92px; z-index: 7; width: 360px; max-width: calc(100vw - 44px);
+            display: flex; flex-direction: column; gap: 10px; transition: opacity 0.25s, transform 0.25s, bottom 0.2s;
+        }
+        .chat.hidden { opacity: 0; transform: translateY(12px); pointer-events: none; }
+        .chat-head { display: flex; align-items: center; gap: 9px; margin-bottom: 2px; }
+        .chat-ava { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid var(--stroke); }
+        .chat-name { font-size: 13px; font-weight: 700; }
+        .chat-status { font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 5px; }
+        .chat-status .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); display: inline-block; }
+        #thread { display: flex; flex-direction: column; gap: 10px; max-height: 46vh; overflow-y: auto; padding-right: 4px; -webkit-overflow-scrolling: touch; }
+        #thread::-webkit-scrollbar { width: 6px; }
+        #thread::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 3px; }
+        .bubble {
+            background: var(--panel); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border: 1px solid var(--stroke);
+            padding: 11px 14px; border-radius: 16px 16px 16px 4px; font-size: 14px; line-height: 1.5;
+            max-width: 88%; align-self: flex-start; animation: pop 0.32s ease both; box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+            overflow-wrap: anywhere;
+        }
+        .bubble.me {
+            align-self: flex-end; background: var(--accent); border-color: transparent;
+            border-radius: 16px 16px 4px 16px; color: #fff;
+        }
+        .bubble a { color: #6cc0ff; }
+        .bubble.me a { color: #dff0ff; }
+        @keyframes pop { from { opacity: 0; transform: translateY(8px) scale(0.97); } to { opacity: 1; transform: none; } }
+        .typing { display: inline-flex; gap: 4px; padding: 14px; }
+        .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: blink 1.2s infinite both; }
+        .typing span:nth-child(2) { animation-delay: 0.2s; }
+        .typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes blink { 0%,80%,100% { opacity: 0.25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+        .replies { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; animation: pop 0.32s ease both; }
+        .reply {
+            background: rgba(255,255,255,0.10); border: 1px solid var(--stroke); color: #fff;
+            padding: 8px 13px; border-radius: 999px; font-size: 13px; cursor: pointer; text-decoration: none;
+            -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: background 0.18s, transform 0.18s;
+        }
+        .reply:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
+        .chat-input { display: flex; gap: 8px; margin-top: 4px; }
+        .chat-field {
+            flex: 1; min-width: 0; background: var(--panel); border: 1px solid var(--stroke); color: #fff;
+            border-radius: 999px; padding: 11px 16px; font-size: 16px; outline: none; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+        }
+        .chat-field::placeholder { color: rgba(255,255,255,0.5); }
+        .chat-field:focus { border-color: var(--accent); }
+        .chat-send {
+            width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; border: none; background: var(--accent);
+            color: #fff; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center;
+            transition: background 0.18s, transform 0.18s;
+        }
+        .chat-send:hover { background: #0a5c93; transform: translateY(-1px); }
+        .chat-send:disabled { opacity: 0.5; cursor: default; transform: none; }
+
+        /* ---------- Bottom bar ---------- */
+        .bottombar {
+            position: absolute; left: 0; right: 0; bottom: 0; z-index: 8;
+            display: flex; align-items: center; justify-content: space-between; gap: 16px;
+            padding: 16px 22px calc(16px + env(safe-area-inset-bottom));
+        }
+        .clockbox { display: flex; align-items: center; gap: 12px; font-size: 13px; }
+        .clockbox .time { font-weight: 700; font-variant-numeric: tabular-nums; }
+        .clockbox .sep { color: rgba(255,255,255,0.35); }
+        .clockbox .wm { font-weight: 800; letter-spacing: 1px; }
+        .clockbox a { color: rgba(255,255,255,0.7); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-size: 11px; }
+        .clockbox a:hover { color: #fff; }
+        .controls { display: flex; align-items: center; gap: 10px; }
+        .ctrl {
+            width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--stroke); background: var(--panel);
+            color: #fff; cursor: pointer; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); display: flex; align-items: center;
+            justify-content: center; font-size: 16px; transition: background 0.2s, transform 0.2s; position: relative; text-decoration: none;
+        }
+        .ctrl:hover { background: rgba(45,49,56,0.95); transform: translateY(-2px); }
+        .ctrl.leave { background: var(--red); border-color: var(--red); }
+        .ctrl.leave:hover { background: #c93b40; }
+        .ctrl .tip {
+            position: absolute; bottom: 56px; left: 50%; transform: translateX(-50%); background: #000; color: #fff;
+            font-size: 11px; padding: 4px 8px; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s;
+        }
+        .ctrl:hover .tip { opacity: 0.92; }
+
+        /* ---------- Overlays ---------- */
+        .overlay {
+            position: fixed; inset: 0; z-index: 20; background: rgba(6,7,9,0.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+            display: none; align-items: center; justify-content: center; padding: 24px;
+        }
+        .overlay.open { display: flex; animation: fade 0.2s ease; }
+        @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+        .sheet {
+            width: 100%; max-width: 720px; max-height: 86vh; overflow: auto; background: var(--panel-solid);
+            border: 1px solid var(--stroke); border-radius: 18px; padding: 26px; box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+        }
+        .sheet-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+        .sheet-head h2 { margin: 0; font-size: 20px; }
+        .sheet-close { background: none; border: none; color: #aaa; font-size: 26px; line-height: 1; cursor: pointer; padding: 0 4px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+        .card { position: relative; border-radius: 12px; overflow: hidden; height: 150px; background: #222; text-decoration: none; }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .card:hover img { transform: scale(1.06); }
+        .card span { position: absolute; left: 8px; right: 8px; bottom: 8px; font-size: 12px; font-weight: 700; color: #fff; background: rgba(0,0,0,0.6); padding: 4px 8px; border-radius: 6px; line-height: 1.3; }
+        .info-row { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 16px; }
+        .info-row img { width: 78px; height: 78px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
+        .info-body p { margin: 0 0 8px; color: #d3d6da; font-size: 14px; line-height: 1.6; }
+        .links { display: flex; flex-wrap: wrap; gap: 10px; }
+        .links a {
+            display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08);
+            border: 1px solid var(--stroke); color: #fff; text-decoration: none; padding: 10px 14px; border-radius: 10px; font-size: 14px;
+        }
+        .links a:hover { background: var(--accent); border-color: var(--accent); }
+
+        /* ---------- Mobile ---------- */
+        @media (max-width: 680px) {
+            .self-tile { width: 92px; height: 122px; right: 14px; bottom: auto; top: calc(70px + env(safe-area-inset-top)); }
+            .chat {
+                left: 12px; right: 12px; width: auto; max-width: none;
+                bottom: calc(118px + env(safe-area-inset-bottom) + var(--kb));
+            }
+            #thread { max-height: 42vh; }
+            .bottombar { flex-direction: column; gap: 10px; padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); }
+            .controls { order: 1; gap: 8px; }
+            .clockbox { order: 2; font-size: 12px; }
+            .topbar { padding: calc(12px + env(safe-area-inset-top)) 14px 12px; }
+            .menu { top: 60px; right: 14px; }
+            .sheet { padding: 18px; max-height: 80vh; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
+            .card { height: 118px; }
+            .ctrl .tip { display: none; }
+        }
+        @media (max-width: 360px) {
+            .ctrl { width: 42px; height: 42px; font-size: 15px; }
         }
     </style>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Vishal John",
-      "url": "https://www.vishaljohn.com",
-      "image": "https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg",
-      "jobTitle": "Medical Student",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "University of Louisville School of Medicine"
-      },
-      "alumniOf": {
-        "@type": "Organization",
-        "name": "University of Michigan"
-      },
-      "sameAs": [
-        "https://www.linkedin.com/in/vishaljjohn/",
-        "https://github.com/vishaljjohn",
-        "https://scholar.google.com/citations?user=QXyjTGgAAAAJ",
-        "https://www.researchgate.net/profile/Vishal-John",
-        "https://medium.com/@vishaljjohn"
-      ],
-      "description": "M2 medical student at the University of Louisville School of Medicine. Pediatric brain cancer researcher, children's book author, and community volunteer."
-    }
-    </script>
-    <link rel="stylesheet" href="assets/site.css">
 </head>
 
-<body>
+<body class="no-video">
 
-    <header>
-        <h1><a href="index.html">Vishal John</a></h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="pages/about.html">About Me</a></li>
-                <li><a href="pages/blog.html">Newsletter</a></li>
-                <li><a href="pages/publications.html">Publications</a></li>
-                <li><a href="pages/contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <button class="hamburger" id="hamburger" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-    </header>
+    <div class="stage">
+        <div class="feed-wrap">
+            <!-- Drop your video-call clip in as assets/call.mp4 and it will play here automatically -->
+            <video id="feed" class="feed" autoplay muted playsinline poster="images/Vishal%20John%20Headshot.jpg"></video>
+            <div class="placeholder-note">[ video placeholder — add clips to assets/videos/ ]</div>
+        </div>
+    </div>
 
-    <div class="container">
-        <div class="main-content">
-            <div class="hero-inner">
-                <div>
-                    <p class="hero-label">M2 · University of Louisville School of Medicine</p>
-                    <h1 class="hero-name">Vishal John</h1>
-                    <p class="hero-bio">Aspiring coffee shop owner, balloon animal artist, and 2nd year medical student at the University of Louisville School of Medicine.</p>
-                    <div class="hero-btns">
-                        <a href="pages/about.html" class="btn-primary">About Me</a>
-                        <a href="pages/publications.html" class="btn-secondary">Publications</a>
-                        <a href="pages/contact.html" class="btn-secondary">Contact</a>
-                    </div>
+    <!-- Top bar -->
+    <div class="topbar">
+        <a href="index.html" class="logo">V<span class="heart"><i class="fas fa-heart"></i></span>J</a>
+        <button class="topbtn" id="optBtn" aria-label="Options"><i class="fas fa-ellipsis-h"></i></button>
+    </div>
+    <div class="menu" id="optMenu">
+        <a href="pages/about.html"><i class="fas fa-user"></i> About me</a>
+        <a href="pages/publications.html"><i class="fas fa-book"></i> Publications</a>
+        <a href="pages/blog.html"><i class="fas fa-envelope-open-text"></i> Newsletter</a>
+        <a href="pages/contact.html"><i class="fas fa-paper-plane"></i> Contact</a>
+        <a href="index_classic.html"><i class="fas fa-th-large"></i> Classic site</a>
+    </div>
+
+    <!-- Self tile -->
+    <div class="self-tile" id="selfTile">
+        <video id="selfcam" autoplay muted playsinline></video>
+        <div class="noise"></div>
+        <div class="cam-off"><i class="fas fa-video-slash"></i><span>camera off</span></div>
+        <div class="mic"><i class="fas fa-microphone-slash"></i></div>
+        <div class="you-label">YOU</div>
+    </div>
+
+    <!-- Chat -->
+    <div class="chat" id="chat">
+        <div class="chat-head">
+            <img class="chat-ava" src="images/Vishal%20John%20Headshot.jpg" alt="Vishal">
+            <div>
+                <div class="chat-name">Vishal John</div>
+                <div class="chat-status"><span class="dot"></span> online</div>
+            </div>
+        </div>
+        <div id="thread"></div>
+        <div class="chat-input">
+            <input class="chat-field" id="chatField" type="text" autocomplete="off"
+                   placeholder="Ask me anything…" aria-label="Message Vishal">
+            <button class="chat-send" id="chatSend" aria-label="Send"><i class="fas fa-arrow-up"></i></button>
+        </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="bottombar">
+        <div class="clockbox">
+            <span class="time" id="clock">--:--</span>
+            <span class="sep">|</span>
+            <span class="wm">V<i class="fas fa-heart" style="color:var(--red);font-size:10px;"></i>J</span>
+            <span class="sep">|</span>
+            <a href="pages/contact.html">Contact</a>
+        </div>
+        <div class="controls">
+            <button class="ctrl" id="cInfo" aria-label="About"><i class="fas fa-info"></i><span class="tip">About</span></button>
+            <button class="ctrl" id="cWork" aria-label="My work"><i class="fas fa-th-large"></i><span class="tip">My work</span></button>
+            <button class="ctrl" id="cChat" aria-label="Toggle chat"><i class="fas fa-comment"></i><span class="tip">Chat</span></button>
+            <button class="ctrl" id="cLinks" aria-label="Links"><i class="fas fa-link"></i><span class="tip">Links</span></button>
+            <a class="ctrl leave" href="index_classic.html" aria-label="Classic site"><i class="fas fa-phone-slash"></i><span class="tip">Classic site</span></a>
+        </div>
+    </div>
+
+    <!-- Projects overlay -->
+    <div class="overlay" id="ovWork">
+        <div class="sheet">
+            <div class="sheet-head"><h2>Things I&rsquo;ve worked on</h2><button class="sheet-close" data-close aria-label="Close">&times;</button></div>
+            <div class="grid" id="workGrid"></div>
+        </div>
+    </div>
+
+    <!-- Info overlay -->
+    <div class="overlay" id="ovInfo">
+        <div class="sheet">
+            <div class="sheet-head"><h2>About Vishal</h2><button class="sheet-close" data-close aria-label="Close">&times;</button></div>
+            <div class="info-row">
+                <img src="images/Vishal%20John%20Headshot.jpg" alt="Vishal John">
+                <div class="info-body">
+                    <p>M2 medical student at the University of Louisville School of Medicine.</p>
+                    <p>Children&rsquo;s book author, balloon animal artist, and aspiring coffee shop owner.</p>
+                    <p><a href="pages/about.html" style="color:#6cc0ff;">Read the full about page &rarr;</a></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="projects-gallery">
-        <div class="project-item">
-            <a href="pages/balloonanimals.html"><img loading="lazy" decoding="async" src="images/balloon_clownnose1.jpg" alt="Balloon Animals"></a>
-            <div class="project-caption">Balloon Animals</div>
-        </div>
-        <div class="project-item">
-            <a href="pages/bluegrassbiodesign.html"><img loading="lazy" decoding="async" src="images/biodesign_team.jpg" alt="Bluegrass Biodesign"></a>
-            <div class="project-caption">Bluegrass Biodesign</div>
-        </div>
-        <div class="project-item">
-            <a href="pages/childrensbook.html"><img loading="lazy" decoding="async" src="images/Brave_Little_ImmuneTeam_Cover.jpg" alt="Children's Book Author"></a>
-            <div class="project-caption">Children's Book Author</div>
-        </div>
-        <div class="project-item">
-            <a href="pages/mircore.html"><img loading="lazy" decoding="async" src="images/mircorelogo.jpg" alt="miRcore"></a>
-            <div class="project-caption">miRcore</div>
-        </div>
-        <div class="project-item">
-            <a href="pages/rockcancer.html"><img loading="lazy" decoding="async" src="images/RockCancer.png" alt="Rock Cancer"></a>
-            <div class="project-caption">Rock Cancer</div>
-        </div>
-        <div class="project-item">
-            <a href="pages/koschmannlab.html"><img loading="lazy" decoding="async" src="images/lab.jpg" alt="Koschmann Lab"></a>
-            <div class="project-caption">Koschmann Lab for Pediatric Brain Cancer</div>
-        </div>
-        <div class="project-item">
-            <a href="pages/standrews.html"><img loading="lazy" decoding="async" src="images/andrew.jpg" alt="Saint Andrew's Breakfast Program"></a>
-            <div class="project-caption">Saint Andrew's Breakfast Program</div>
-        </div>
-        <div class="project-item">
-            <a href="pages/HELP.html"><img loading="lazy" decoding="async" src="images/help.jpg" alt="Hospital Elder Life Program"></a>
-            <div class="project-caption">Hospital Elder Life Program</div>
-        </div>
-        <div class="project-item">
-            <a href="pages/japan.html"><img loading="lazy" decoding="async" src="images/japan1.jpg" alt="Ishinomaki Community Revitalization"></a>
-            <div class="project-caption">Ishinomaki Community Revitalization (Japan)</div>
-        </div>
-    </div>
-
-    <div class="spotify-section">
-        <h2><i class="fab fa-spotify" style="color:#1DB954;"></i> What I'm Listening To</h2>
-        <p class="spotify-sub">My recent Spotify activity via Last.fm</p>
-        <div class="spotify-layout">
-            <div class="spotify-widget">
-                <a href="https://spotify-github-profile.kittinanx.com/api/view?uid=22enikmc36cjblojhfhekdvzq&redirect=true" target="_blank">
-                    <img loading="lazy" decoding="async" src="https://spotify-github-profile.kittinanx.com/api/view?uid=22enikmc36cjblojhfhekdvzq&cover_image=true&theme=default&show_offline=false&background_color=121212&interchange=false&profanity=true&bar_color_cover=false" alt="Spotify Now Playing" style="border-radius:8px; max-width:100%;">
-                </a>
-            </div>
-            <div class="spotify-tracks">
-                <h3>Recently Played</h3>
-                <ul class="track-list" id="track-list">
-                    <li class="track-loading">Loading tracks...</li>
-                </ul>
-                <a class="spotify-open" href="https://www.last.fm/user/vishaljjohn" target="_blank">
-                    <i class="fab fa-lastfm"></i> Last.fm Profile
-                </a>
+    <!-- Links overlay -->
+    <div class="overlay" id="ovLinks">
+        <div class="sheet">
+            <div class="sheet-head"><h2>Find me online</h2><button class="sheet-close" data-close aria-label="Close">&times;</button></div>
+            <div class="links">
+                <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener"><i class="fab fa-medium"></i> Medium</a>
+                <a href="https://scholar.google.com/citations?user=QXyjTGgAAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="https://www.researchgate.net/profile/Vishal-John" target="_blank" rel="noopener"><i class="fab fa-researchgate"></i> ResearchGate</a>
+                <a href="pages/blog.html"><i class="fas fa-envelope-open-text"></i> Newsletter</a>
             </div>
         </div>
     </div>
-
-    <footer>
-        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
-        <a href="https://github.com/vishaljjohn" target="_blank"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://medium.com/@vishaljjohn" target="_blank"><i class="fab fa-medium fa-2x"></i></a>
-        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
-    </footer>
 
     <script>
-        // Hamburger
-        const btn = document.getElementById('hamburger');
-        const navUl = document.querySelector('nav ul');
-        btn.addEventListener('click', () => {
-            btn.classList.toggle('open');
-            navUl.classList.toggle('open');
+    (function () {
+        "use strict";
+
+        /* ============================================================
+           AI ENDPOINT
+           Leave as "" to use the built-in offline answers.
+           After deploying the Cloudflare Worker (see DEPLOY_CHAT_AI.md),
+           paste its URL here, e.g.
+           var AI_ENDPOINT = "https://vishal-chat.yourname.workers.dev";
+           ============================================================ */
+        var AI_ENDPOINT = "https://vishal-chat.vishaljjohn.workers.dev";
+
+        /* ---- Rotating "call" videos ----
+           Drop any number of clips into assets/videos/ and list their names below.
+           Each visit STARTS on the next clip in the list (rotates over visits),
+           and within a visit it advances to the next clip when one ends.
+           Missing files are skipped automatically; if none load, the headshot
+           placeholder shows. To use just one, leave a single name in the list. */
+        var VIDEOS = ['call1.mp4', 'call2.mp4', 'call3.mp4', 'call4.mp4'];
+        var VIDEO_DIR = 'assets/videos/';
+
+        var feed = document.getElementById('feed');
+        var startIdx = 0;
+        try {
+            var saved = parseInt(localStorage.getItem('vj_vid_idx'), 10);
+            startIdx = (isNaN(saved) ? -1 : saved) + 1;
+            if (startIdx >= VIDEOS.length || startIdx < 0) startIdx = 0;
+            localStorage.setItem('vj_vid_idx', String(startIdx));
+        } catch (e) {
+            startIdx = VIDEOS.length ? Math.floor(Math.random() * VIDEOS.length) : 0;
+        }
+
+        /* play order: start at the rotated index, then continue through the rest */
+        var order = VIDEOS.slice(startIdx).concat(VIDEOS.slice(0, startIdx));
+        var pos = 0, failures = 0;
+
+        function loadVideo(name) {
+            feed.src = VIDEO_DIR + encodeURIComponent(name);
+            feed.load();
+            var p = feed.play();
+            if (p && p.catch) p.catch(function () {});
+        }
+        function nextVideo() {
+            pos = (pos + 1) % order.length;
+            loadVideo(order[pos]);
+        }
+        feed.addEventListener('loadeddata', function () {
+            if (feed.videoWidth > 0) { document.body.classList.remove('no-video'); failures = 0; }
+        });
+        feed.addEventListener('ended', function () {
+            if (order.length > 1) { nextVideo(); }
+            else { feed.currentTime = 0; var p = feed.play(); if (p && p.catch) p.catch(function () {}); }
+        });
+        feed.addEventListener('error', function () {
+            failures++;
+            if (failures >= order.length) { document.body.classList.add('no-video'); return; }
+            nextVideo();
+        });
+        if (order.length) { loadVideo(order[pos]); } else { document.body.classList.add('no-video'); }
+
+        /* ---- Live webcam in the YOU tile (graceful fallback) ---- */
+        var selfTile = document.getElementById('selfTile');
+        var selfcam = document.getElementById('selfcam');
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                .then(function (stream) { selfcam.srcObject = stream; selfTile.classList.add('live'); })
+                .catch(function () { /* denied / no camera: keep "camera off" */ });
+        }
+
+        /* ---- Live clock ---- */
+        function tick() {
+            var d = new Date(), h = d.getHours(), m = d.getMinutes();
+            var ap = h >= 12 ? 'PM' : 'AM'; h = h % 12; if (h === 0) h = 12;
+            document.getElementById('clock').textContent = h + ':' + (m < 10 ? '0' + m : m) + ' ' + ap;
+        }
+        tick(); setInterval(tick, 1000);
+
+        /* ---- Options menu ---- */
+        var optBtn = document.getElementById('optBtn'), optMenu = document.getElementById('optMenu');
+        optBtn.addEventListener('click', function (e) { e.stopPropagation(); optMenu.classList.toggle('open'); });
+        document.addEventListener('click', function () { optMenu.classList.remove('open'); });
+
+        /* ---- Overlays ---- */
+        function openOv(id) { document.getElementById(id).classList.add('open'); }
+        function closeAll() { document.querySelectorAll('.overlay').forEach(function (o) { o.classList.remove('open'); }); }
+        document.getElementById('cInfo').addEventListener('click', function () { openOv('ovInfo'); });
+        document.getElementById('cWork').addEventListener('click', function () { openOv('ovWork'); });
+        document.getElementById('cLinks').addEventListener('click', function () { openOv('ovLinks'); });
+        document.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', closeAll); });
+        document.querySelectorAll('.overlay').forEach(function (o) {
+            o.addEventListener('click', function (e) { if (e.target === o) closeAll(); });
+        });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+
+        /* ---- Projects grid ---- */
+        var projects = [
+            { t: 'Balloon Animals', img: 'images/balloon_clownnose1.jpg', url: 'pages/balloonanimals.html' },
+            { t: 'Bluegrass Biodesign', img: 'images/biodesign_team.jpg', url: 'pages/bluegrassbiodesign.html' },
+            { t: "Children's Book Author", img: 'images/Brave_Little_ImmuneTeam_Cover.jpg', url: 'pages/childrensbook.html' },
+            { t: 'miRcore', img: 'images/mircorelogo.jpg', url: 'pages/mircore.html' },
+            { t: 'Rock Cancer', img: 'images/RockCancer.png', url: 'pages/rockcancer.html' },
+            { t: 'Koschmann Lab', img: 'images/lab.jpg', url: 'pages/koschmannlab.html' },
+            { t: "Saint Andrew's Breakfast", img: 'images/andrew.jpg', url: 'pages/standrews.html' },
+            { t: 'Hospital Elder Life Program', img: 'images/help.jpg', url: 'pages/HELP.html' },
+            { t: 'Ishinomaki Revitalization (Japan)', img: 'images/japan1.jpg', url: 'pages/japan.html' }
+        ];
+        var grid = document.getElementById('workGrid');
+        projects.forEach(function (p) {
+            var a = document.createElement('a');
+            a.className = 'card'; a.href = p.url;
+            var img = document.createElement('img');
+            img.loading = 'lazy'; img.src = p.img; img.alt = p.t;
+            var sp = document.createElement('span'); sp.textContent = p.t;
+            a.appendChild(img); a.appendChild(sp); grid.appendChild(a);
         });
 
-        // Last.fm recent tracks
-        const list = document.getElementById('track-list');
-        fetch('https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=vishaljjohn&api_key=83c5b48d3d1c6dcc0591b439664a3ed0&limit=8&format=json')
-            .then(r => r.json())
-            .then(data => {
-                const tracks = data.recenttracks?.track;
-                if (!tracks || !tracks.length) throw new Error('no tracks');
-                list.innerHTML = '';
-                tracks.slice(0, 8).forEach((t, i) => {
-                    const isNow = t['@attr']?.nowplaying === 'true';
-                    list.innerHTML += `<li class="track-item">
-                        <span class="track-num" style="${isNow ? 'color:#1DB954;font-size:10px;' : ''}">${isNow ? '▶' : i + 1}</span>
-                        <div class="track-info">
-                            <div class="track-name">${t.name}</div>
-                            <div class="track-artist">${t.artist['#text']}</div>
-                        </div>
-                    </li>`;
-                });
-            })
-            .catch(() => {
-                list.innerHTML = `<li class="track-loading">Verify your Last.fm email to enable scrobbling.</li>`;
+        /* ---- Chat plumbing ---- */
+        var thread = document.getElementById('thread');
+        var chat = document.getElementById('chat');
+        var field = document.getElementById('chatField');
+        var sendBtn = document.getElementById('chatSend');
+        var hist = [];
+        document.getElementById('cChat').addEventListener('click', function () {
+            chat.classList.toggle('hidden');
+            if (!chat.classList.contains('hidden')) field.focus();
+        });
+
+        function scrollDown() { thread.scrollTop = thread.scrollHeight; }
+        function addTyping() {
+            var t = document.createElement('div');
+            t.className = 'bubble'; t.id = '__typing';
+            t.innerHTML = '<span class="typing"><span></span><span></span><span></span></span>';
+            thread.appendChild(t); scrollDown(); return t;
+        }
+        function removeTyping() { var t = document.getElementById('__typing'); if (t) t.remove(); }
+        function addBubble(html, me) {
+            var b = document.createElement('div');
+            b.className = 'bubble' + (me ? ' me' : '');
+            if (me) { b.textContent = html; } else { b.innerHTML = html; }
+            thread.appendChild(b); scrollDown();
+        }
+        function addReplies(opts) {
+            var wrap = document.createElement('div'); wrap.className = 'replies';
+            opts.forEach(function (o) {
+                var el = document.createElement(o.href ? 'a' : 'button');
+                el.className = 'reply'; el.textContent = o.label;
+                if (o.href) { el.href = o.href; }
+                else { el.type = 'button'; el.addEventListener('click', o.act); }
+                wrap.appendChild(el);
             });
+            thread.appendChild(wrap); scrollDown();
+        }
+        function stripTags(s) { return String(s).replace(/<[^>]*>/g, ''); }
+
+        /* ---- Offline knowledge base (fallback + used when AI_ENDPOINT is empty) ---- */
+        var KB = [
+            { k: ['who are you','about you','yourself','introduce','tell me about you','your name','what do you do'],
+              a: "i'm Vishal John, a 2nd-year (M2) medical student at the University of Louisville School of Medicine. outside of class i write children's books, twist balloon animals, and daydream about opening my own coffee shop one day." },
+            { k: ['school','med school','medical school','student','uofl','louisville','study','m2','classes','michigan'],
+              a: "i'm an M2 (second-year) medical student at the University of Louisville School of Medicine. before that i was at the University of Michigan." },
+            { k: ['book','children','author','immune','wrote','writing'],
+              a: "i wrote a children's book called \"The Brave Little ImmuneTeam\" to help kids understand how the immune system works. there's more on my <a href='pages/childrensbook.html'>Children's Book</a> page." },
+            { k: ['balloon','animals','twist'],
+              a: "balloon animals are my favorite party trick 🎈 dogs, monkeys, flowers, you name it. there's a whole gallery on my <a href='pages/balloonanimals.html'>Balloon Animals</a> page." },
+            { k: ['coffee','cafe','shop','espresso'],
+              a: "one day i'd love to open a cozy little coffee shop ☕ good espresso, comfy chairs, maybe a copy of my book on the shelf." },
+            { k: ['research','lab','koschmann','mircore','science'],
+              a: "i've done some research along the way — you can browse it all with the My work button on the bar, including the Koschmann Lab and miRcore." },
+            { k: ['publication','paper','papers','scholar'],
+              a: "you can see my publications on the <a href='pages/publications.html'>Publications</a> page, or my <a href='https://scholar.google.com/citations?user=QXyjTGgAAAAJ' target='_blank' rel='noopener'>Google Scholar</a>." },
+            { k: ['rock cancer'],
+              a: "Rock Cancer is a cause close to my heart — more on the <a href='pages/rockcancer.html'>Rock Cancer</a> page." },
+            { k: ['biodesign','bluegrass','device'],
+              a: "Bluegrass Biodesign is a medical-device innovation program i've been part of. more on the <a href='pages/bluegrassbiodesign.html'>Bluegrass Biodesign</a> page." },
+            { k: ['japan','ishinomaki','revitaliz'],
+              a: "i spent time on community revitalization in Ishinomaki, Japan. photos and the story are on the <a href='pages/japan.html'>Japan</a> page." },
+            { k: ['help','elder','hospital','older'],
+              a: "i volunteer with the Hospital Elder Life Program (HELP), supporting older patients. more on the <a href='pages/HELP.html'>HELP</a> page." },
+            { k: ['breakfast','andrew','saint','volunteer','service','community'],
+              a: "i help with Saint Andrew's Breakfast Program and a few other community efforts. there's a page on <a href='pages/standrews.html'>Saint Andrew's</a>, and you can see everything via the My work button." },
+            { k: ['contact','email','reach','get in touch','hire','message','connect'],
+              a: "the best way to reach me is my <a href='pages/contact.html'>Contact</a> page — i'd love to hear from you." },
+            { k: ['link','social','linkedin','github','online','find you','medium'],
+              a: "you can find me on <a href='https://www.linkedin.com/in/vishaljjohn/' target='_blank' rel='noopener'>LinkedIn</a>, <a href='https://github.com/vishaljjohn' target='_blank' rel='noopener'>GitHub</a>, and <a href='https://medium.com/@vishaljjohn' target='_blank' rel='noopener'>Medium</a> — or tap the link button on the bar." },
+            { k: ['newsletter','blog','substack','subscribe'],
+              a: "i write a newsletter — you can check it out on my <a href='pages/blog.html'>Newsletter</a> page." },
+            { k: ['music','spotify','listening','song','last.fm','lastfm'],
+              a: "music's a big part of my life — my classic site has a live feed of what i'm listening to. tap the red leave-call button to see it." },
+            { k: ['hello','hi','hey','yo','hiya','good morning','good evening','howdy','sup'],
+              a: "hey! great to see you 😊 ask me anything — the kids' book, balloon animals, my volunteering, or how to get in touch." },
+            { k: ['thank','thanks','appreciate','cool','awesome'],
+              a: "anytime! 😊 anything else you want to know?" },
+            { k: ['bye','goodbye','see you','later','cya'],
+              a: "take care — come back soon! 👋" }
+        ];
+        var FALLBACK = "great question! i don't have a quick answer for that one, but you can ask me about the children's book, balloon animals, my volunteering, or how to reach me. for anything else, my <a href='pages/contact.html'>Contact</a> page is the best bet.";
+
+        function kbReply(text) {
+            var q = ' ' + text.toLowerCase().replace(/[^a-z0-9.@ ]/g, ' ') + ' ';
+            for (var i = 0; i < KB.length; i++) {
+                for (var j = 0; j < KB[i].k.length; j++) {
+                    var kw = KB[i].k[j];
+                    if (q.indexOf(' ' + kw + ' ') !== -1 || q.indexOf(kw) !== -1) return KB[i].a;
+                }
+            }
+            return FALLBACK;
+        }
+
+        function aiReply(text) {
+            if (!AI_ENDPOINT) return Promise.resolve(null);
+            return fetch(AI_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text, history: hist.slice(-6) })
+            })
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (d) { return d && d.reply ? String(d.reply) : null; })
+            .catch(function () { return null; });
+        }
+
+        function escapeHtml(s) {
+            return s.replace(/[&<>]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]; });
+        }
+
+        var busy = false;
+        function send(text) {
+            text = (text || '').trim();
+            if (!text || busy) return;
+            busy = true; sendBtn.disabled = true;
+            if (chat.classList.contains('hidden')) chat.classList.remove('hidden');
+            addBubble(text, true);
+            hist.push({ role: 'user', content: text });
+            field.value = '';
+            addTyping();
+            var started = Date.now();
+            aiReply(text).then(function (reply) {
+                var fromAI = !!reply;
+                if (!reply) reply = kbReply(text);
+                var html = fromAI ? escapeHtml(reply) : reply; /* KB entries contain trusted links */
+                var wait = Math.max(0, 450 - (Date.now() - started));
+                setTimeout(function () {
+                    removeTyping();
+                    addBubble(html);
+                    hist.push({ role: 'assistant', content: stripTags(reply) });
+                    busy = false; sendBtn.disabled = false;
+                }, wait);
+            });
+        }
+
+        sendBtn.addEventListener('click', function () { send(field.value); });
+        field.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); send(field.value); } });
+
+        /* ---- Keyboard-aware chat on mobile ---- */
+        if (window.visualViewport) {
+            var vv = window.visualViewport;
+            var onVV = function () {
+                var kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+                document.documentElement.style.setProperty('--kb', (kb > 60 ? kb : 0) + 'px');
+            };
+            vv.addEventListener('resize', onVV);
+            vv.addEventListener('scroll', onVV);
+        }
+
+        /* ---- Intro sequence, then quick-reply chips ---- */
+        var steps = [
+            { delay: 700, type: 900, msg: "hey, you made it — welcome to my little corner of the internet 👋" },
+            { delay: 400, type: 1100, msg: "i'm Vishal: an M2 med student at UofL, children's book author, balloon animal artist, and aspiring coffee shop owner." },
+            { delay: 350, type: 900, msg: "ask me anything below, or pick a topic:", replies: true }
+        ];
+        var si = 0;
+        function run() {
+            if (si >= steps.length) return;
+            var s = steps[si++];
+            setTimeout(function () {
+                addTyping();
+                setTimeout(function () {
+                    removeTyping();
+                    addBubble(s.msg);
+                    hist.push({ role: 'assistant', content: s.msg });
+                    if (s.replies) addReplies([
+                        { label: 'About me', act: function () { openOv('ovInfo'); } },
+                        { label: 'My work', act: function () { openOv('ovWork'); } },
+                        { label: 'The book', href: 'pages/childrensbook.html' },
+                        { label: 'Balloon animals', href: 'pages/balloonanimals.html' },
+                        { label: 'Find me online', act: function () { openOv('ovLinks'); } }
+                    ]);
+                    run();
+                }, s.type);
+            }, s.delay);
+        }
+        run();
+    })();
     </script>
-    <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
-    <script src="assets/site.js"></script>
 </body>
 </html>

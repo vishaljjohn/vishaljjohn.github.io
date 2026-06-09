@@ -189,8 +189,9 @@
         padding: 30px; /* Reduced padding for smaller devices */
     }
 
-    .image-section img {
-        max-width: 80%; /* Images should take more width on mobile */
+    .image-section {
+        width: min(300px, 68vw);  /* scale the whole circle on mobile */
+        height: min(300px, 68vw); /* keeps a perfect circle the photo fills */
     }
 
     .cv-section {

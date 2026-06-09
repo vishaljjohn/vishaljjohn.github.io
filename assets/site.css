@@ -79,3 +79,39 @@ a { transition: color .2s ease; }
   html { scroll-behavior: auto; }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
+
+/* ===========================================================
+   Authoritative mobile navigation (overrides older inline
+   rules via load order). Applies to all classic pages that
+   use <header><nav><ul> + .hamburger.
+   =========================================================== */
+@media screen and (max-width: 768px) {
+  header {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    text-align: left;
+    position: relative;
+  }
+  header h1 { font-size: 22px; }
+  .hamburger { display: flex; }
+  nav { position: static; }
+  nav ul {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 6px 0;
+    background: #fff;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    border-top: 1px solid #eee;
+    z-index: 1000;
+  }
+  nav ul.open { display: flex; }
+  nav ul li { width: 100%; }
+  nav a { display: block; padding: 13px 22px; border-radius: 0; }
+}
