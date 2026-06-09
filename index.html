@@ -193,7 +193,8 @@
             justify-content: center; font-size: 16px; transition: background 0.2s, transform 0.2s; position: relative; text-decoration: none;
         }
         .ctrl:hover { background: rgba(45,49,56,0.95); transform: translateY(-2px); }
-        .ctrl.leave { background: var(--red); border-color: var(--red); }
+        .ctrl.leave { background: var(--red); border-color: var(--red); width: auto; border-radius: 24px; padding: 0 16px; gap: 8px; }
+        .leave-label { font-size: 13px; font-weight: 700; letter-spacing: 0.2px; }
         .ctrl.leave:hover { background: #c93b40; }
         .ctrl .tip {
             position: absolute; bottom: 56px; left: 50%; transform: translateX(-50%); background: #000; color: #fff;
@@ -251,10 +252,27 @@
         @media (max-width: 360px) {
             .ctrl { width: 42px; height: 42px; font-size: 15px; }
         }
+
+        /* Ending-call transition */
+        .ending-call { position: fixed; inset: 0; z-index: 50; background: #0b0c0e; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .ending-call.show { opacity: 1; pointer-events: auto; }
+        .ec-inner { text-align: center; padding: 20px; }
+        .ec-inner i { font-size: 42px; color: var(--red); }
+        .ec-title { font-size: 22px; font-weight: 700; margin-top: 14px; }
+        .ec-sub { color: var(--muted); margin-top: 6px; font-size: 14px; }
     </style>
 </head>
 
 <body class="no-video">
+
+    <div class="ending-call" id="endingCall">
+        <div class="ec-inner">
+            <i class="fas fa-phone-slash"></i>
+            <div class="ec-title">ending call…</div>
+            <div class="ec-sub">taking you to my classic site 👋</div>
+        </div>
+    </div>
+
 
     <div class="stage">
         <div class="feed-wrap">
@@ -317,7 +335,7 @@
             <button class="ctrl" id="cWork" aria-label="My work"><i class="fas fa-th-large"></i><span class="tip">My work</span></button>
             <button class="ctrl" id="cChat" aria-label="Toggle chat"><i class="fas fa-comment"></i><span class="tip">Chat</span></button>
             <button class="ctrl" id="cLinks" aria-label="Links"><i class="fas fa-link"></i><span class="tip">Links</span></button>
-            <a class="ctrl leave" href="index_classic.html" aria-label="Classic site"><i class="fas fa-phone-slash"></i><span class="tip">Classic site</span></a>
+            <button class="ctrl leave" id="endCall" aria-label="End call and go to my classic site"><i class="fas fa-phone-slash"></i><span class="leave-label">End call</span></button>
         </div>
     </div>
 
@@ -623,11 +641,22 @@
             vv.addEventListener('scroll', onVV);
         }
 
+        /* ---- "End call" -> classic site, with a friendly transition ---- */
+        var endBtn = document.getElementById('endCall');
+        if (endBtn) {
+            endBtn.addEventListener('click', function () {
+                var ec = document.getElementById('endingCall');
+                ec.classList.add('show');
+                setTimeout(function () { window.location.href = 'index_classic.html'; }, 1000);
+            });
+        }
+
         /* ---- Intro sequence, then quick-reply chips ---- */
         var steps = [
             { delay: 700, type: 900, msg: "hey, you made it — welcome to my little corner of the internet 👋" },
             { delay: 400, type: 1100, msg: "i'm Vishal: an M2 med student at UofL, children's book author, balloon animal artist, and aspiring coffee shop owner." },
-            { delay: 350, type: 900, msg: "ask me anything below, or pick a topic:", replies: true }
+            { delay: 350, type: 900, msg: "ask me anything below, or pick a topic:", replies: true },
+            { delay: 500, type: 800, msg: "p.s. — prefer a normal website? just tap the red “End call” button below anytime 👇" }
         ];
         var si = 0;
         function run() {

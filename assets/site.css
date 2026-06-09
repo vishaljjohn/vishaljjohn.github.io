@@ -92,6 +92,7 @@ a { transition: color .2s ease; }
     align-items: center;
     text-align: left;
     position: relative;
+    z-index: 1001; /* keep the dropdown above the page content */
   }
   header h1 { font-size: 22px; }
   .hamburger { display: flex; }
