@@ -260,6 +260,8 @@
         .ec-inner i { font-size: 42px; color: var(--red); }
         .ec-title { font-size: 22px; font-weight: 700; margin-top: 14px; }
         .ec-sub { color: var(--muted); margin-top: 6px; font-size: 14px; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+        .self-tile { cursor: pointer; }
     </style>
 </head>
 
@@ -273,6 +275,42 @@
         </div>
     </div>
 
+
+    <!-- Crawlable content for search engines & screen readers -->
+    <div class="sr-only">
+        <h1>Vishal John — medical student, children's book author &amp; balloon animal artist</h1>
+        <p>Vishal John is a second-year (M2) medical student at the University of Louisville School of Medicine, the author of the children's book "The Brave Little ImmuneTeam," a balloon animal artist, and an aspiring coffee shop owner.</p>
+        <nav aria-label="Main">
+            <a href="pages/about.html">About</a>
+            <a href="pages/publications.html">Publications</a>
+            <a href="pages/blog.html">Newsletter</a>
+            <a href="pages/contact.html">Contact</a>
+            <a href="index_classic.html">Classic site</a>
+        </nav>
+    </div>
+
+    <!-- Fallback shown only when JavaScript is disabled -->
+    <noscript>
+        <div style="position:fixed;inset:0;z-index:9999;background:#fff;color:#222;overflow:auto;padding:48px 20px;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;">
+            <div style="max-width:640px;margin:0 auto;line-height:1.6;">
+                <h1 style="margin:0 0 8px;">Vishal John</h1>
+                <p style="color:#555;margin:0 0 20px;">M2 medical student at the University of Louisville School of Medicine — children's book author, balloon animal artist, and aspiring coffee shop owner.</p>
+                <p style="margin:0 0 14px;">This homepage is interactive and works best with JavaScript on. In the meantime, here are the main pages:</p>
+                <ul style="line-height:2;">
+                    <li><a href="pages/about.html">About me</a></li>
+                    <li><a href="pages/publications.html">Publications</a></li>
+                    <li><a href="pages/blog.html">Newsletter</a></li>
+                    <li><a href="pages/contact.html">Contact</a></li>
+                    <li><a href="index_classic.html">Classic version of this site</a></li>
+                </ul>
+                <p style="margin-top:18px;">
+                    <a href="https://www.linkedin.com/in/vishaljjohn/">LinkedIn</a> ·
+                    <a href="https://github.com/vishaljjohn">GitHub</a> ·
+                    <a href="https://medium.com/@vishaljjohn">Medium</a>
+                </p>
+            </div>
+        </div>
+    </noscript>
 
     <div class="stage">
         <div class="feed-wrap">
@@ -299,7 +337,7 @@
     <div class="self-tile" id="selfTile">
         <video id="selfcam" autoplay muted playsinline></video>
         <div class="noise"></div>
-        <div class="cam-off"><i class="fas fa-video-slash"></i><span>camera off</span></div>
+        <div class="cam-off"><i class="fas fa-video"></i><span>tap for camera</span></div>
         <div class="mic"><i class="fas fa-microphone-slash"></i></div>
         <div class="you-label">YOU</div>
     </div>
@@ -438,14 +476,29 @@
         });
         if (order.length) { loadVideo(order[pos]); } else { document.body.classList.add('no-video'); }
 
-        /* ---- Live webcam in the YOU tile (graceful fallback) ---- */
+        /* ---- Webcam in the YOU tile: OPT-IN (tap to enable, no auto-prompt) ---- */
         var selfTile = document.getElementById('selfTile');
         var selfcam = document.getElementById('selfcam');
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-                .then(function (stream) { selfcam.srcObject = stream; selfTile.classList.add('live'); })
-                .catch(function () { /* denied / no camera: keep "camera off" */ });
+        var camStream = null;
+        function stopCam() {
+            if (camStream) { camStream.getTracks().forEach(function (t) { t.stop(); }); camStream = null; }
+            selfcam.srcObject = null; selfTile.classList.remove('live');
         }
+        function startCam() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
+            navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                .then(function (stream) { camStream = stream; selfcam.srcObject = stream; selfTile.classList.add('live'); })
+                .catch(function () { /* denied or no camera: stay off */ });
+        }
+        selfTile.setAttribute('role', 'button');
+        selfTile.setAttribute('tabindex', '0');
+        selfTile.setAttribute('aria-label', 'Turn your camera on or off');
+        selfTile.addEventListener('click', function () {
+            if (selfTile.classList.contains('live')) stopCam(); else startCam();
+        });
+        selfTile.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selfTile.click(); }
+        });
 
         /* ---- Live clock ---- */
         function tick() {
