@@ -91,7 +91,10 @@
    + '.vjw-field:focus{border-color:#0a6db0;}'
    + '.vjw-send{width:40px;height:40px;flex-shrink:0;border:none;border-radius:50%;background:#0a6db0;color:#fff;cursor:pointer;font-size:16px;}'
    + '.vjw-send:disabled{opacity:.5;}'
-   + '@media (max-width:480px){.vjw-panel{right:12px;bottom:80px;height:70vh;}.vjw-launch{right:14px;bottom:14px;}.vjw-tip{display:none;}}';
+   + '.vjw-call{position:fixed;right:88px;bottom:25px;z-index:2147483000;display:flex;align-items:center;gap:7px;background:#0a6db0;color:#fff;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-weight:700;font-size:13px;height:46px;padding:0 16px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,0.28);}'
+   + '.vjw-call:hover{background:#085a93;}'
+   + '.vjw-call svg{width:18px;height:18px;}'
+   + '@media (max-width:480px){.vjw-panel{right:12px;bottom:80px;height:70vh;}.vjw-launch{right:14px;bottom:14px;}.vjw-call{right:76px;bottom:18px;height:42px;font-size:12px;padding:0 12px;}.vjw-tip{display:none;}}';
   var style = document.createElement('style'); style.textContent = css; document.head.appendChild(style);
 
   /* ---- DOM ---- */
@@ -99,6 +102,12 @@
   launch.className = 'vjw-launch'; launch.setAttribute('aria-label', 'Chat with Vishal');
   launch.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>';
   document.body.appendChild(launch);
+
+  var vcUrl = location.pathname.indexOf('/pages/') !== -1 ? '../index.html' : 'index.html';
+  var vcBtn = document.createElement('a');
+  vcBtn.className = 'vjw-call'; vcBtn.href = vcUrl; vcBtn.setAttribute('aria-label', 'Back to video call');
+  vcBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="13" height="12" rx="2"></rect><path d="M22 8l-5 4 5 4V8z"></path></svg> Video call';
+  document.body.appendChild(vcBtn);
 
   var tip = document.createElement('div');
   tip.className = 'vjw-tip'; tip.textContent = 'Hi! Ask me anything 👋'; tip.style.display = 'none';
