@@ -151,3 +151,12 @@ nav a { font-size: 14px; }
   .spin-ring { width: 200px; height: 270px; margin: -135px 0 0 -100px; }
   .spin-card { width: 200px; height: 270px; }
 }
+
+/* Spin-gallery: click-to-enlarge cursor + shared lightbox */
+.spin-card:not(.dim) { cursor: zoom-in; }
+.spin-lightbox { position: fixed; inset: 0; z-index: 100000; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.92); padding: 24px; opacity: 0; transition: opacity 0.2s ease; }
+.spin-lightbox.open { display: flex; opacity: 1; }
+.spin-lb-img { max-width: 92vw; max-height: 84vh; object-fit: contain; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+.spin-lb-caption { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; color: #fff; font-size: 15px; padding: 0 24px; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+.spin-lb-close { position: absolute; top: 14px; right: 18px; width: 44px; height: 44px; border: none; border-radius: 50%; background: rgba(255,255,255,0.12); color: #fff; font-size: 28px; line-height: 1; cursor: pointer; transition: background 0.2s; }
+.spin-lb-close:hover { background: rgba(255,255,255,0.28); }
