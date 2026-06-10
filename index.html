@@ -370,7 +370,24 @@
             .ss-nav { padding: 10px; }
         }
         .vcount { color: rgba(255,255,255,0.7); font-size: 11px; }
-        @media (max-width: 560px) { .vc-sep, .vcount { display: none !important; } }
+        @media (max-width: 560px) { .clockbox { flex-wrap: wrap; justify-content: center; } .vcount { font-size: 10px; } }
+        .nowplaying { cursor: pointer; font: inherit; }
+        .np-caret { font-size: 9px; opacity: .7; margin-left: 2px; }
+        .sp-panel { position: fixed; left: 22px; top: 108px; z-index: 8; width: 280px; max-width: calc(100vw - 28px); background: var(--panel-solid); border: 1px solid var(--stroke); border-radius: 14px; padding: 10px; box-shadow: 0 18px 50px rgba(0,0,0,.5); display: none; }
+        .sp-panel.open { display: block; animation: vjwpop .18s ease; }
+        .sp-head { font-size: 12px; font-weight: 700; color: #fff; padding: 4px 6px 8px; display: flex; align-items: center; gap: 7px; }
+        .sp-head .fa-spotify { color: #1DB954; }
+        .sp-list { list-style: none; margin: 0; padding: 0; }
+        .sp-list a { display: flex; align-items: center; gap: 10px; padding: 7px 6px; border-radius: 8px; text-decoration: none; color: #fff; }
+        .sp-list a:hover { background: rgba(255,255,255,.08); }
+        .sp-list img, .sp-noart { width: 36px; height: 36px; border-radius: 5px; object-fit: cover; flex-shrink: 0; }
+        .sp-noart { background: #1DB954; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+        .sp-meta { min-width: 0; display: flex; flex-direction: column; }
+        .sp-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sp-artist { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sp-open { display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 8px; background: #1DB954; color: #fff; text-decoration: none; font-size: 13px; font-weight: 700; padding: 9px; border-radius: 9px; }
+        .sp-open:hover { background: #1aa34a; }
+        @media (max-width: 680px) { .sp-panel { left: 14px; top: 96px; } }
     </style>
 </head>
 
@@ -386,10 +403,16 @@
     </div>
 
     <!-- Now playing (Last.fm) -->
-    <a class="nowplaying" id="nowPlaying" href="https://www.last.fm/user/vishaljjohn" target="_blank" rel="noopener" style="display:none;">
+    <button class="nowplaying" id="nowPlaying" style="display:none;" aria-label="Recently played on Spotify">
         <span class="np-ico"><i class="fas fa-music"></i></span>
         <span class="np-text" id="npText"></span>
-    </a>
+        <i class="fas fa-chevron-down np-caret"></i>
+    </button>
+    <div class="sp-panel" id="spPanel">
+        <div class="sp-head"><i class="fab fa-spotify"></i> Recently played</div>
+        <ul class="sp-list" id="spList"></ul>
+        <a class="sp-open" href="https://open.spotify.com/user/22enikmc36cjblojhfhekdvzq" target="_blank" rel="noopener"><i class="fab fa-spotify"></i> Open Spotify</a>
+    </div>
 
     <!-- floating reactions + shutter flash -->
     <div class="react-layer" id="reactLayer"></div>
@@ -495,10 +518,10 @@
             <span class="time" id="clock">--:--</span>
             <span class="sep">|</span>
             <span class="wm">V<i class="fas fa-heart" style="color:var(--red);font-size:10px;"></i>J</span>
-            <span class="sep">|</span>
-            <a href="pages/contact.html">Contact</a>
             <span class="sep vc-sep" id="vcSep" style="display:none;">|</span>
             <span class="vcount" id="visitorCount" style="display:none;"></span>
+            <span class="sep">|</span>
+            <a href="pages/contact.html">Contact</a>
         </div>
         <div class="controls">
             <button class="ctrl pulse-hint" id="cFilters" aria-label="Filters and face effects"><i class="fas fa-magic"></i><span class="tip">Filters</span></button>
@@ -1256,7 +1279,7 @@
         /* ---- Visitor counter ("you're visitor #N", all-time, via Worker+KV) ---- */
         (function () {
             var el = document.getElementById('visitorCount'), sep = document.getElementById('vcSep');
-            function show(n) { try { n = Number(n).toLocaleString(); } catch (e) {} el.textContent = "you're visitor #" + n; el.style.display = ''; if (sep) sep.style.display = ''; }
+            function show(n) { try { n = Number(n).toLocaleString(); } catch (e) {} el.textContent = "visitor #" + n; el.style.display = ''; if (sep) sep.style.display = ''; }
             var cached = null; try { cached = sessionStorage.getItem('vj_calln'); } catch (e) {}
             if (cached) { show(cached); return; }
             if (!AI_ENDPOINT) return;
@@ -1293,19 +1316,34 @@
             if (reactBar.classList.contains('open') && !reactBar.contains(e.target) && !cReactBtn.contains(e.target)) reactBar.classList.remove('open');
         });
 
-        /* ---- Now playing (Last.fm) ---- */
+        /* ---- Recently played (Last.fm -> Spotify) ---- */
         (function () {
             var np = document.getElementById('nowPlaying'), npt = document.getElementById('npText');
-            fetch('https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=vishaljjohn&api_key=83c5b48d3d1c6dcc0591b439664a3ed0&limit=1&format=json')
+            var panel = document.getElementById('spPanel'), list = document.getElementById('spList');
+            function spUrl(name, artist) { return 'https://open.spotify.com/search/' + encodeURIComponent(((name || '') + ' ' + (artist || '')).trim()); }
+            fetch('https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=vishaljjohn&api_key=83c5b48d3d1c6dcc0591b439664a3ed0&limit=5&format=json')
                 .then(function (r) { return r.json(); })
                 .then(function (d) {
                     var tr = d && d.recenttracks && d.recenttracks.track;
-                    if (tr && tr.length) {
-                        var t = tr[0], now = t['@attr'] && t['@attr'].nowplaying === 'true';
-                        npt.textContent = (now ? 'Now playing: ' : 'Last played: ') + t.name + ' · ' + ((t.artist && t.artist['#text']) || '');
-                        np.style.display = 'flex';
-                    }
+                    if (!tr) return; if (!Array.isArray(tr)) tr = [tr]; if (!tr.length) return;
+                    var t0 = tr[0], now = t0['@attr'] && t0['@attr'].nowplaying === 'true';
+                    npt.textContent = (now ? 'Now playing: ' : 'Last played: ') + t0.name + ' · ' + ((t0.artist && t0.artist['#text']) || '');
+                    np.style.display = 'flex';
+                    tr.slice(0, 5).forEach(function (t) {
+                        var artist = (t.artist && t.artist['#text']) || '';
+                        var img = ''; if (t.image && t.image.length) { img = (t.image[2] && t.image[2]['#text']) || (t.image[1] && t.image[1]['#text']) || ''; }
+                        var li = document.createElement('li');
+                        var a = document.createElement('a'); a.href = spUrl(t.name, artist); a.target = '_blank'; a.rel = 'noopener';
+                        if (img) { var im = document.createElement('img'); im.src = img; im.alt = ''; a.appendChild(im); }
+                        else { var no = document.createElement('span'); no.className = 'sp-noart'; no.innerHTML = '<i class="fas fa-music"></i>'; a.appendChild(no); }
+                        var meta = document.createElement('span'); meta.className = 'sp-meta';
+                        var nm = document.createElement('span'); nm.className = 'sp-name'; nm.textContent = t.name;
+                        var ar = document.createElement('span'); ar.className = 'sp-artist'; ar.textContent = artist;
+                        meta.appendChild(nm); meta.appendChild(ar); a.appendChild(meta); li.appendChild(a); list.appendChild(li);
+                    });
                 }).catch(function () {});
+            np.addEventListener('click', function (e) { e.stopPropagation(); panel.classList.toggle('open'); });
+            document.addEventListener('click', function (e) { if (!panel.contains(e.target) && !np.contains(e.target)) panel.classList.remove('open'); });
         })();
 
         /* ---- "Share screen" project tour ---- */
