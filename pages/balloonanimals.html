@@ -237,6 +237,7 @@
 
             <h2>The Gallery</h2>
 
+            <div class="spin-gallery">
             <div class="spin-stage" id="spinStage">
                 <div class="spin-ring" id="spinRing">
                     <div class="spin-card" data-caption="The crew — clown noses required"><img loading="lazy" decoding="async" src="../images/balloon_clownnose1.jpg" alt="The crew — clown noses required"></div>
@@ -251,8 +252,9 @@
             <div class="spin-caption" id="spinCaption"></div>
             <p class="spin-hint">Drag to spin &middot; or use the arrows</p>
             <div class="spin-controls">
-                <button class="spin-btn" id="prevBtn" aria-label="Previous">&#8249;</button>
-                <button class="spin-btn" id="nextBtn" aria-label="Next">&#8250;</button>
+                <button class="spin-btn spin-prev" id="prevBtn" aria-label="Previous">&#8249;</button>
+                <button class="spin-btn spin-next" id="nextBtn" aria-label="Next">&#8250;</button>
+            </div>
             </div>
 
             <h2>Why This Matters</h2>
@@ -269,62 +271,6 @@
         <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
     </footer>
 
-
-    <script>
-        const ring = document.getElementById('spinRing');
-        const stage = document.getElementById('spinStage');
-        const cards = Array.prototype.slice.call(ring.querySelectorAll('.spin-card'));
-        const captionEl = document.getElementById('spinCaption');
-        const n = cards.length;
-        const theta = 360 / n;
-        const radius = Math.round((120) / Math.tan(Math.PI / n)) + 40; // fit card half-width 120
-        let angle = 0;          // current ring rotation (deg)
-        let dragging = false, lastX = 0, moved = false;
-        let autoTimer = null, idleTimer = null;
-
-        // place cards around the ring
-        cards.forEach(function(card, i){
-            card.style.transform = 'rotateY(' + (i * theta) + 'deg) translateZ(' + radius + 'px)';
-        });
-
-        function frontIndex(){
-            let idx = Math.round(-angle / theta) % n;
-            if (idx < 0) idx += n;
-            return idx;
-        }
-        function update(){
-            ring.style.transform = 'translateZ(-' + radius + 'px) rotateY(' + angle + 'deg)';
-            const fi = frontIndex();
-            cards.forEach(function(c, i){ c.classList.toggle('dim', i !== fi); });
-            captionEl.textContent = cards[fi].getAttribute('data-caption') || '';
-        }
-        function snap(){ angle = Math.round(angle / theta) * theta; ring.style.transition = 'transform 0.5s ease-out'; update(); }
-        function step(dir){ stopAuto(); ring.style.transition = 'transform 0.5s ease-out'; angle += -dir * theta; update(); restartIdle(); }
-
-        // auto-rotate when idle
-        function startAuto(){ if (autoTimer) return; autoTimer = setInterval(function(){ ring.style.transition = 'transform 0.9s linear'; angle -= theta; update(); }, 2600); }
-        function stopAuto(){ clearInterval(autoTimer); autoTimer = null; }
-        function restartIdle(){ clearTimeout(idleTimer); idleTimer = setTimeout(startAuto, 4000); }
-
-        // drag to spin (pointer = mouse + touch)
-        function onDown(e){ dragging = true; moved = false; lastX = (e.touches ? e.touches[0].clientX : e.clientX); ring.style.transition = 'none'; stopAuto(); stage.classList.add('grabbing'); }
-        function onMove(e){ if (!dragging) return; const x = (e.touches ? e.touches[0].clientX : e.clientX); const dx = x - lastX; if (Math.abs(dx) > 2) moved = true; lastX = x; angle += dx * 0.4; update(); }
-        function onUp(){ if (!dragging) return; dragging = false; stage.classList.remove('grabbing'); snap(); restartIdle(); }
-
-        stage.addEventListener('mousedown', onDown);
-        window.addEventListener('mousemove', onMove);
-        window.addEventListener('mouseup', onUp);
-        stage.addEventListener('touchstart', onDown, {passive:true});
-        stage.addEventListener('touchmove', onMove, {passive:true});
-        stage.addEventListener('touchend', onUp);
-
-        document.getElementById('prevBtn').addEventListener('click', function(){ step(-1); });
-        document.getElementById('nextBtn').addEventListener('click', function(){ step(1); });
-
-        update();
-        restartIdle();
-    </script>
-
     <script>
     (function(){
       var btn = document.getElementById('hamburger');
@@ -340,5 +286,6 @@
     <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
     <script src="../assets/site.js"></script>
     <script src="../assets/chat-widget.js" defer></script>
+    <script src="../assets/gallery.js"></script>
 </body>
 </html>
