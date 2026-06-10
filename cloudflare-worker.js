@@ -109,6 +109,17 @@ export default {
     const cors = corsHeaders(origin);
 
     if (request.method === "OPTIONS") return new Response(null, { headers: cors });
+
+    // ---- Visitor counter (all-time) via KV binding "VISITS" ----
+    const _url = new URL(request.url);
+    if (request.method === "GET" && _url.pathname === "/count") {
+      if (origin && !ALLOWED_ORIGINS.includes(origin)) return json({ error: "forbidden" }, 403, cors);
+      if (!env.VISITS) return json({ count: null }, 200, cors);
+      let n = parseInt((await env.VISITS.get("calls")) || "0", 10) + 1;
+      ctx.waitUntil(env.VISITS.put("calls", String(n)));
+      return json({ count: n }, 200, cors);
+    }
+
     if (request.method !== "POST") return json({ error: "POST only" }, 405, cors);
     if (origin && !ALLOWED_ORIGINS.includes(origin)) {
       return json({ error: "forbidden origin" }, 403, cors);

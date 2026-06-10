@@ -356,11 +356,12 @@
         .ss-cap { position: relative; z-index: 1; width: 100%; padding: 22px; background: linear-gradient(to top, rgba(0,0,0,.8), transparent); }
         .ss-cap h3 { margin: 0 0 8px; font-size: 22px; }
         .ss-cap a { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 8px; }
-        .ss-nav { display: flex; align-items: center; gap: 14px; justify-content: center; padding: 12px; background: #15181d; }
-        .ss-nav button { background: rgba(255,255,255,.08); border: 1px solid var(--stroke); color: #fff; width: 38px; height: 38px; border-radius: 50%; font-size: 20px; cursor: pointer; }
-        .ss-dots { display: flex; gap: 6px; }
-        .ss-dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.3); display: block; cursor: pointer; }
-        .ss-dots i.on { background: var(--accent); }
+        .ss-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.25); color: #fff; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .2s; }
+        .screen-share:hover .ss-arrow { opacity: 1; }
+        .ss-prev { left: 12px; } .ss-next { right: 12px; }
+        .ss-count { position: absolute; right: 12px; bottom: 12px; z-index: 3; background: rgba(0,0,0,.55); color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 999px; }
+        .ss-prog { position: absolute; top: 0; left: 0; height: 3px; width: 0; background: var(--accent); z-index: 3; }
+        @media (max-width: 680px) { .ss-arrow { opacity: 1; } }
 
         @media (max-width: 680px) {
             .nowplaying { top: 62px; left: 14px; max-width: 60vw; font-size: 11px; }
@@ -368,6 +369,8 @@
             .ss-cap h3 { font-size: 17px; }
             .ss-nav { padding: 10px; }
         }
+        .vcount { color: rgba(255,255,255,0.7); font-size: 11px; }
+        @media (max-width: 560px) { .vc-sep, .vcount { display: none !important; } }
     </style>
 </head>
 
@@ -494,6 +497,8 @@
             <span class="wm">V<i class="fas fa-heart" style="color:var(--red);font-size:10px;"></i>J</span>
             <span class="sep">|</span>
             <a href="pages/contact.html">Contact</a>
+            <span class="sep vc-sep" id="vcSep" style="display:none;">|</span>
+            <span class="vcount" id="visitorCount" style="display:none;"></span>
         </div>
         <div class="controls">
             <button class="ctrl pulse-hint" id="cFilters" aria-label="Filters and face effects"><i class="fas fa-magic"></i><span class="tip">Filters</span></button>
@@ -586,8 +591,12 @@
     <div class="overlay" id="ovScreen">
         <div class="screen-share">
             <div class="ss-bar"><span class="ss-livedot"></span> Vishal is sharing their screen <button class="sheet-close" data-close aria-label="Close" style="margin-left:auto;">&times;</button></div>
-            <div class="ss-stage" id="ssStage"></div>
-            <div class="ss-nav"><button type="button" id="ssPrev" aria-label="Previous">&#8249;</button><div class="ss-dots" id="ssDots"></div><button type="button" id="ssNext" aria-label="Next">&#8250;</button></div>
+            <div class="ss-stage" id="ssStage">
+                <div class="ss-prog" id="ssProg"></div>
+                <button type="button" class="ss-arrow ss-prev" id="ssPrev" aria-label="Previous">&#8249;</button>
+                <button type="button" class="ss-arrow ss-next" id="ssNext" aria-label="Next">&#8250;</button>
+                <div class="ss-count" id="ssCount"></div>
+            </div>
         </div>
     </div>
 
@@ -969,9 +978,20 @@
             { id:'halo',    label:'Halo',      slot:'top',  preview:'😇', emoji:'😇' },
             { id:'fire',    label:'Fire',      slot:'top',  preview:'🔥', emoji:'🔥' },
             { id:'sparkle', label:'Sparkle',   slot:'top',  preview:'✨', emoji:'✨' },
-            { id:'rainbow', label:'Rainbow',   slot:'top',  preview:'🌈', emoji:'🌈' }
+            { id:'rainbow', label:'Rainbow',   slot:'top',  preview:'🌈', emoji:'🌈' },
+            { id:'wigrainbow', label:'Rainbow wig', slot:'hair', preview:'🌈', draw:function(c,g){ drawWig(c,g,'rainbow'); } },
+            { id:'wigpink',   label:'Pink wig',   slot:'hair', preview:'🎀', draw:function(c,g){ drawWig(c,g,'#ff5fa2'); } },
+            { id:'wigblue',   label:'Blue wig',   slot:'hair', preview:'🟦', draw:function(c,g){ drawWig(c,g,'#3aa0ff'); } },
+            { id:'wiggreen',  label:'Green wig',  slot:'hair', preview:'🟢', draw:function(c,g){ drawWig(c,g,'#2ec16b'); } },
+            { id:'wigpurple', label:'Purple wig', slot:'hair', preview:'🟣', draw:function(c,g){ drawWig(c,g,'#9b5cff'); } },
+            { id:'wigblonde', label:'Blonde wig', slot:'hair', preview:'👱', draw:function(c,g){ drawWig(c,g,'#e9c46a'); } },
+            { id:'big',  label:'Big head',  slot:'distort', preview:'😳', distort:'big' },
+            { id:'tiny', label:'Tiny head', slot:'distort', preview:'🤏', distort:'tiny' },
+            { id:'wide', label:'Wide',      slot:'distort', preview:'😬', distort:'wide' },
+            { id:'long', label:'Long face', slot:'distort', preview:'🫤', distort:'long' }
         ];
         var assetById = {}; ASSETS.forEach(function (a) { assetById[a.id] = a; });
+        var SLOT_ORDER = ['distort','hair','head','face','eyes','mouth','top'];
         var arSlots = {};
 
         var stickerGrid = document.getElementById('stickerGrid');
@@ -1051,9 +1071,41 @@
         }
         function drawAsset(a, g) {
             if (!a) return;
+            if (a.distort) { drawDistort(a.distort, g); return; }
             var c = anchor(a.slot, g);
             if (a.emoji) drawEmojiAt(a.emoji, c, emojiSize(a.slot, g), g.roll);
             else if (a.draw) a.draw(c, g);
+        }
+        function drawDistort(kind, g) {
+            if (!(feed.readyState >= 2 && feed.videoWidth > 0)) return;
+            var cx = g.faceCenter.x, cy = g.faceCenter.y;
+            var sw = g.faceW * 1.7, sh = g.faceH * 1.8, sx = cx - sw / 2, sy = cy - sh / 2;
+            var vx = (sx - moffX) / mscale, vy = (sy - moffY) / mscale, vw_ = sw / mscale, vh_ = sh / mscale;
+            var fx = 1, fy = 1;
+            if (kind === 'big') { fx = 1.55; fy = 1.55; }
+            else if (kind === 'tiny') { fx = 0.6; fy = 0.6; }
+            else if (kind === 'wide') { fx = 1.75; fy = 0.95; }
+            else if (kind === 'long') { fx = 0.9; fy = 1.6; }
+            var dw = sw * fx, dh = sh * fy, dx = cx - dw / 2, dy = cy - dh / 2;
+            arCtx.save();
+            arCtx.beginPath(); arCtx.ellipse(cx, cy, dw / 2, dh / 2, 0, 0, 2 * Math.PI); arCtx.clip();
+            try { arCtx.drawImage(feed, vx, vy, vw_, vh_, dx, dy, dw, dh); } catch (e) {}
+            arCtx.restore();
+        }
+        function drawWig(c, g, color) {
+            var ctx = arCtx, cx = g.faceCenter.x, cy = g.faceCenter.y;
+            ctx.save(); ctx.translate(cx, cy); ctx.rotate(g.roll);
+            var ow = g.faceW * 1.78, oh = g.faceH * 1.9, iw = g.faceW * 1.12, ih = g.faceH * 1.3;
+            if (color === 'rainbow') {
+                var grd = ctx.createLinearGradient(-ow / 2, 0, ow / 2, 0);
+                ['#e5484d', '#f2a154', '#f2d14e', '#2ec16b', '#3aa0ff', '#9b5cff'].forEach(function (col, i, arr) { grd.addColorStop(i / (arr.length - 1), col); });
+                ctx.fillStyle = grd;
+            } else { ctx.fillStyle = color; }
+            ctx.beginPath();
+            ctx.ellipse(0, -g.faceH * 0.15, ow / 2, oh / 2, 0, 0, 2 * Math.PI);
+            ctx.ellipse(0, g.faceH * 0.08, iw / 2, ih / 2, 0, 0, 2 * Math.PI);
+            ctx.fill('evenodd');
+            ctx.restore();
         }
 
         function drawEyewear(c, g, dark) {
@@ -1137,14 +1189,14 @@
                 try { res = faceLandmarker.detectForVideo(feed, performance.now()); } catch (e) {}
                 if (res && res.faceLandmarks && res.faceLandmarks[0]) {
                     var g = geom(res.faceLandmarks[0]);
-                    for (var slot in arSlots) drawAsset(assetById[arSlots[slot]], g);
+                    SLOT_ORDER.forEach(function (slot) { if (arSlots[slot]) drawAsset(assetById[arSlots[slot]], g); });
                 }
             } else if (arFailed) {
                 var W = stage.clientWidth, H = stage.clientHeight;
                 var fg = { faceW: W * 0.16, faceH: W * 0.22, roll: 0, up: { x: 0, y: -1 },
                     eyes: { x: W / 2, y: H * 0.40 }, top: { x: W / 2, y: H * 0.28 }, chin: { x: W / 2, y: H * 0.52 },
                     mouth: { x: W / 2, y: H * 0.47 }, faceCenter: { x: W / 2, y: H * 0.40 } };
-                for (var s in arSlots) drawAsset(assetById[arSlots[s]], fg);
+                SLOT_ORDER.forEach(function (slot) { if (slot !== 'distort' && arSlots[slot]) drawAsset(assetById[arSlots[slot]], fg); });
             }
             rafId = requestAnimationFrame(loop);
         }
@@ -1201,6 +1253,19 @@
             }, dur);
         })();
 
+        /* ---- Visitor counter ("you're visitor #N", all-time, via Worker+KV) ---- */
+        (function () {
+            var el = document.getElementById('visitorCount'), sep = document.getElementById('vcSep');
+            function show(n) { try { n = Number(n).toLocaleString(); } catch (e) {} el.textContent = "you're visitor #" + n; el.style.display = ''; if (sep) sep.style.display = ''; }
+            var cached = null; try { cached = sessionStorage.getItem('vj_calln'); } catch (e) {}
+            if (cached) { show(cached); return; }
+            if (!AI_ENDPOINT) return;
+            fetch(AI_ENDPOINT.replace(/\/$/, '') + '/count')
+                .then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (d) { if (d && d.count) { try { sessionStorage.setItem('vj_calln', d.count); } catch (e) {} show(d.count); } })
+                .catch(function () {});
+        })();
+
         /* ---- Floating reactions + easter eggs ---- */
         var reactLayer = document.getElementById('reactLayer');
         function floatEmoji(emoji, x) {
@@ -1245,7 +1310,8 @@
 
         /* ---- "Share screen" project tour ---- */
         (function () {
-            var ovScreen = document.getElementById('ovScreen'), ssStage = document.getElementById('ssStage'), ssDots = document.getElementById('ssDots');
+            var ovScreen = document.getElementById('ovScreen'), ssStage = document.getElementById('ssStage');
+            var ssCount = document.getElementById('ssCount'), ssProg = document.getElementById('ssProg');
             var si = 0, timer = null;
             projects.forEach(function (p, idx) {
                 var sl = document.createElement('div'); sl.className = 'ss-slide' + (idx === 0 ? ' on' : '');
@@ -1254,16 +1320,16 @@
                 var h = document.createElement('h3'); h.textContent = p.t;
                 var a = document.createElement('a'); a.href = p.url; a.textContent = 'Open page →';
                 cap.appendChild(h); cap.appendChild(a); sl.appendChild(im); sl.appendChild(cap); ssStage.appendChild(sl);
-                var dot = document.createElement('i'); if (idx === 0) dot.className = 'on';
-                dot.addEventListener('click', function () { go(idx); start(); }); ssDots.appendChild(dot);
             });
-            var slides = ssStage.children, dots = ssDots.children;
-            function go(n) { si = (n + slides.length) % slides.length; for (var i = 0; i < slides.length; i++) { slides[i].classList.toggle('on', i === si); dots[i].classList.toggle('on', i === si); } }
+            var slides = ssStage.querySelectorAll('.ss-slide');
+            function progress() { if (!ssProg) return; ssProg.style.transition = 'none'; ssProg.style.width = '0'; void ssProg.offsetWidth; ssProg.style.transition = 'width 4s linear'; ssProg.style.width = '100%'; }
+            function go(n) { si = (n + slides.length) % slides.length; for (var i = 0; i < slides.length; i++) slides[i].classList.toggle('on', i === si); if (ssCount) ssCount.textContent = (si + 1) + ' / ' + slides.length; progress(); }
             function start() { stop(); timer = setInterval(function () { go(si + 1); }, 4000); }
             function stop() { if (timer) { clearInterval(timer); timer = null; } }
             document.getElementById('cScreen').addEventListener('click', function () { openOv('ovScreen'); go(0); start(); });
             document.getElementById('ssNext').addEventListener('click', function () { go(si + 1); start(); });
             document.getElementById('ssPrev').addEventListener('click', function () { go(si - 1); start(); });
+            ovScreen.addEventListener('mouseenter', stop); ovScreen.addEventListener('mouseleave', function () { if (ovScreen.classList.contains('open')) start(); });
             ovScreen.addEventListener('click', function (e) { if (e.target === ovScreen) stop(); });
             Array.prototype.forEach.call(document.querySelectorAll('#ovScreen [data-close]'), function (b) { b.addEventListener('click', stop); });
         })();
