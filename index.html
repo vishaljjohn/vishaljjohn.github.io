@@ -774,10 +774,10 @@
         /* ---- Projects grid ---- */
         var projects = [
             { t: 'Balloon Animals', img: 'images/balloon_clownnose1.jpg', url: 'pages/balloonanimals.html' },
+            { t: 'Rock Cancer', img: 'images/RockCancer.png', url: 'pages/rockcancer.html' },
             { t: 'Bluegrass Biodesign', img: 'images/biodesign_team.jpg', url: 'pages/bluegrassbiodesign.html' },
             { t: "Children's Book Author", img: 'images/Brave_Little_ImmuneTeam_Cover.jpg', url: 'pages/childrensbook.html' },
             { t: 'miRcore', img: 'images/mircorelogo.jpg', url: 'pages/mircore.html' },
-            { t: 'Rock Cancer', img: 'images/RockCancer.png', url: 'pages/rockcancer.html' },
             { t: 'Koschmann Lab', img: 'images/lab.jpg', url: 'pages/koschmannlab.html' },
             { t: "Saint Andrew's Breakfast", img: 'images/andrew.jpg', url: 'pages/standrews.html' },
             { t: 'Hospital Elder Life Program', img: 'images/help.jpg', url: 'pages/HELP.html' },
@@ -1159,21 +1159,36 @@
         function drawWig(c, g, color) {
             var ctx = dctx, W = g.faceW, H = g.faceH;
             ctx.save(); ctx.translate(g.faceCenter.x, g.faceCenter.y); ctx.rotate(g.roll);
-            var oRx = W * 0.96, oRy = H * 1.06, oCy = -H * 0.26, iRx = W * 0.5, iRy = H * 0.6, iCy = H * 0.16;
+            var base = color, fill;
             if (color === 'rainbow') {
-                var grd = ctx.createLinearGradient(-oRx, 0, oRx, 0);
-                ['#e5484d', '#f2a154', '#f2d14e', '#2ec16b', '#3aa0ff', '#9b5cff'].forEach(function (col, i, arr) { grd.addColorStop(i / (arr.length - 1), col); });
-                ctx.fillStyle = grd;
+                fill = ctx.createLinearGradient(-W * 0.8, 0, W * 0.8, 0);
+                ['#e5484d', '#f2a154', '#f2d14e', '#2ec16b', '#3aa0ff', '#9b5cff'].forEach(function (col, i, arr) { fill.addColorStop(i / (arr.length - 1), col); });
+                base = '#9b5cff';
             } else {
-                var vg = ctx.createLinearGradient(0, oCy - oRy, 0, oCy + oRy);
-                vg.addColorStop(0, shade(color, 0.14)); vg.addColorStop(0.55, color); vg.addColorStop(1, shade(color, -0.3));
-                ctx.fillStyle = vg;
+                fill = ctx.createLinearGradient(0, -H * 0.95, 0, H * 0.5);
+                fill.addColorStop(0, shade(color, 0.18)); fill.addColorStop(0.5, color); fill.addColorStop(1, shade(color, -0.32));
             }
+            ctx.fillStyle = fill;
             ctx.beginPath();
-            ctx.ellipse(0, oCy, oRx, oRy, 0, 0, Math.PI * 2, false);
-            ctx.moveTo(iRx, iCy);
-            ctx.ellipse(0, iCy, iRx, iRy, 0, 0, Math.PI * 2, true);
+            ctx.moveTo(-W * 0.6, H * 0.45);
+            ctx.quadraticCurveTo(-W * 0.82, -H * 0.05, -W * 0.62, -H * 0.55);
+            ctx.quadraticCurveTo(-W * 0.45, -H * 0.98, 0, -H * 0.94);
+            ctx.quadraticCurveTo(W * 0.45, -H * 0.98, W * 0.62, -H * 0.55);
+            ctx.quadraticCurveTo(W * 0.82, -H * 0.05, W * 0.6, H * 0.45);
+            ctx.quadraticCurveTo(W * 0.5, H * 0.05, W * 0.45, -H * 0.32);
+            ctx.quadraticCurveTo(W * 0.24, -H * 0.5, 0, -H * 0.45);
+            ctx.quadraticCurveTo(-W * 0.24, -H * 0.5, -W * 0.45, -H * 0.32);
+            ctx.quadraticCurveTo(-W * 0.5, H * 0.05, -W * 0.6, H * 0.45);
+            ctx.closePath();
             ctx.fill();
+            ctx.strokeStyle = shade(base, -0.35); ctx.lineWidth = W * 0.02; ctx.globalAlpha = 0.5;
+            ctx.beginPath(); ctx.moveTo(0, -H * 0.9); ctx.quadraticCurveTo(W * 0.03, -H * 0.7, 0, -H * 0.46); ctx.stroke();
+            ctx.lineWidth = W * 0.012; ctx.globalAlpha = 0.28; ctx.strokeStyle = shade(base, -0.28);
+            [-0.5, -0.32, 0.32, 0.5].forEach(function (k) {
+                ctx.beginPath(); ctx.moveTo(k * W, -H * 0.7);
+                ctx.quadraticCurveTo(k * W * 1.25, -H * 0.1, k * W * 1.02, H * 0.4); ctx.stroke();
+            });
+            ctx.globalAlpha = 1;
             ctx.restore();
         }
         function drawCrazyEyes(c, g) {
