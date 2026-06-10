@@ -128,3 +128,26 @@ header h1 { font-size: 24px; margin: 0; line-height: 1.2; }
 header h1 a { font-size: inherit; font-weight: 700; }
 nav a { font-size: 14px; }
 @media (max-width: 480px) { header h1 { font-size: 20px; } }
+
+/* ===========================================================
+   Spin-carousel photo gallery (shared component)
+   Used by .spin-gallery on project pages. Driven by assets/gallery.js
+   =========================================================== */
+.spin-gallery { margin: 24px 0; }
+.spin-stage { position: relative; height: 440px; perspective: 1300px; margin: 0 0 8px; background: radial-gradient(circle at 50% 35%, #232323, #050505); border-radius: 12px; overflow: hidden; cursor: grab; -webkit-user-select: none; user-select: none; touch-action: pan-y; }
+.spin-stage.grabbing { cursor: grabbing; }
+.spin-ring { position: absolute; top: 50%; left: 50%; width: 240px; height: 320px; margin: -160px 0 0 -120px; transform-style: preserve-3d; }
+.spin-card { position: absolute; left: 0; top: 0; width: 240px; height: 320px; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 36px rgba(0,0,0,0.55); transition: opacity 0.3s, filter 0.3s; }
+.spin-card img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.spin-card.dim { opacity: 0.45; filter: brightness(0.6); }
+.spin-caption { text-align: center; color: #333; font-size: 14px; min-height: 20px; margin: 4px 0 2px; transition: opacity 0.2s; }
+.spin-hint { text-align: center; color: #888; font-size: 12px; letter-spacing: 0.5px; margin: 2px 0 10px; }
+.spin-controls { display: flex; justify-content: center; gap: 14px; margin-bottom: 4px; }
+.spin-btn { background: #0077b6; color: #fff; border: none; border-radius: 50%; width: 42px; height: 42px; font-size: 20px; line-height: 1; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; }
+.spin-btn:hover { background: #023e8a; }
+.spin-btn:active { transform: scale(0.92); }
+@media screen and (max-width: 480px) {
+  .spin-stage { height: 400px; }
+  .spin-ring { width: 200px; height: 270px; margin: -135px 0 0 -100px; }
+  .spin-card { width: 200px; height: 270px; }
+}
