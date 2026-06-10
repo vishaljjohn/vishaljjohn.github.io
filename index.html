@@ -299,6 +299,17 @@
         .share-url input { flex: 1; min-width: 0; background: rgba(255,255,255,0.06); border: 1px solid var(--stroke); color: #fff; border-radius: 10px; padding: 11px 14px; font-size: 14px; }
         .share-copy { background: var(--accent); border: none; color: #fff; border-radius: 10px; padding: 0 16px; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; }
         .share-copy:hover { background: #0a5c93; }
+        .sticker-layer { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+        .sticker { position: absolute; pointer-events: auto; cursor: grab; user-select: none; font-size: 60px; line-height: 1; touch-action: none; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.45)); }
+        .sticker .x { position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; border-radius: 50%; border: none; background: var(--red); color: #fff; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; padding: 0; }
+        .fsec { font-size: 13px; color: #fff; margin: 2px 0 10px; font-weight: 700; letter-spacing: 0.3px; }
+        .fgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); gap: 10px; }
+        .fcell { background: rgba(255,255,255,0.06); border: 1px solid var(--stroke); border-radius: 12px; padding: 12px 6px; text-align: center; cursor: pointer; color: #fff; font-size: 12px; transition: background 0.15s; }
+        .fcell:hover { background: rgba(255,255,255,0.13); }
+        .fcell.active { background: var(--accent); border-color: var(--accent); }
+        .fcell .emoji { font-size: 30px; display: block; margin-bottom: 5px; line-height: 1; }
+        .fclear { margin-top: 16px; background: rgba(255,255,255,0.08); border: 1px solid var(--stroke); color: #fff; padding: 10px 16px; border-radius: 10px; cursor: pointer; font-size: 13px; }
+        .fclear:hover { background: rgba(255,255,255,0.14); }
     </style>
 </head>
 
@@ -355,6 +366,7 @@
             <video id="feed" class="feed" autoplay muted playsinline poster="images/Vishal%20John%20Headshot.jpg"></video>
             <div class="placeholder-note">[ video placeholder — add clips to assets/videos/ ]</div>
         </div>
+        <div class="sticker-layer" id="stickerLayer"></div>
     </div>
 
     <!-- Top bar -->
@@ -411,6 +423,7 @@
             <button class="ctrl" id="cChat" aria-label="Toggle chat"><i class="fas fa-comment"></i><span class="tip">Chat</span></button>
             <button class="ctrl" id="cLinks" aria-label="Links"><i class="fas fa-link"></i><span class="tip">Links</span></button>
             <button class="ctrl" id="cShare" aria-label="Share this site"><i class="fas fa-share-alt"></i><span class="tip">Share</span></button>
+            <button class="ctrl" id="cFilters" aria-label="Filters and stickers"><i class="fas fa-magic"></i><span class="tip">Filters</span></button>
             <button class="ctrl leave" id="endCall" aria-label="End call and go to my classic site"><i class="fas fa-phone-slash"></i><span class="leave-label">End call</span></button>
         </div>
     </div>
@@ -467,6 +480,18 @@
                 <a id="shareFb" href="#" target="_blank" rel="noopener"><i class="fab fa-facebook"></i> Facebook</a>
                 <a id="shareEm" href="#"><i class="fas fa-envelope"></i> Email</a>
             </div>
+        </div>
+    </div>
+
+    <!-- Filters & stickers overlay -->
+    <div class="overlay" id="ovFilters">
+        <div class="sheet">
+            <div class="sheet-head"><h2>Filters &amp; stickers</h2><button class="sheet-close" data-close aria-label="Close">&times;</button></div>
+            <div class="fsec">Vibe</div>
+            <div class="fgrid" id="vibeGrid"></div>
+            <div class="fsec" style="margin-top:18px;">Stickers <span style="font-weight:400;color:var(--muted);">— tap to add, then drag onto Vishal</span></div>
+            <div class="fgrid" id="stickerGrid"></div>
+            <button class="fclear" id="clearStickers">Clear all stickers</button>
         </div>
     </div>
 
@@ -750,6 +775,84 @@
             vv.addEventListener('resize', onVV);
             vv.addEventListener('scroll', onVV);
         }
+
+        /* ---- Filters & stickers (applied to the main video / "me") ---- */
+        var stage = document.querySelector('.stage');
+        var stickerLayer = document.getElementById('stickerLayer');
+        document.getElementById('cFilters').addEventListener('click', function () { openOv('ovFilters'); });
+
+        var VIBES = [
+            { label: 'Normal',  emoji: '🎬', f: '' },
+            { label: 'B&W',     emoji: '⬜', f: 'grayscale(1) contrast(1.05)' },
+            { label: 'Sepia',   emoji: '🟤', f: 'sepia(0.85)' },
+            { label: 'Warm',    emoji: '🔥', f: 'saturate(1.35) hue-rotate(-12deg) brightness(1.05)' },
+            { label: 'Cool',    emoji: '🧊', f: 'saturate(1.15) hue-rotate(16deg) brightness(1.02)' },
+            { label: 'Dreamy',  emoji: '💭', f: 'contrast(0.92) brightness(1.12) saturate(1.25) blur(0.5px)' },
+            { label: 'Vintage', emoji: '📽️', f: 'sepia(0.4) contrast(1.1) saturate(0.85) brightness(1.05)' },
+            { label: 'Pop',     emoji: '🌈', f: 'saturate(1.8) contrast(1.1)' },
+            { label: 'Invert',  emoji: '🔄', f: 'invert(1) hue-rotate(180deg)' }
+        ];
+        var STICKERS = [
+            { label: 'Top hat', e: '🎩' }, { label: 'Cap', e: '🧢' }, { label: 'Crown', e: '👑' },
+            { label: 'Party', e: '🥳' }, { label: 'Halo', e: '😇' }, { label: 'Shades', e: '🕶️' },
+            { label: 'Glasses', e: '👓' }, { label: "'Stache", e: '🥸' }, { label: 'Cool', e: '😎' },
+            { label: 'Dog', e: '🐶' }, { label: 'Cat', e: '🐱' }, { label: 'Unicorn', e: '🦄' },
+            { label: 'Heart', e: '❤️' }, { label: 'Star', e: '⭐' }, { label: 'Fire', e: '🔥' },
+            { label: 'Sparkle', e: '✨' }, { label: 'Clown', e: '🤡' }, { label: 'Alien', e: '👽' }
+        ];
+
+        var vibeGrid = document.getElementById('vibeGrid');
+        VIBES.forEach(function (v) {
+            var c = document.createElement('div');
+            c.className = 'fcell' + (v.f === '' ? ' active' : '');
+            c.innerHTML = '<span class="emoji">' + v.emoji + '</span>' + v.label;
+            c.addEventListener('click', function () {
+                feed.style.filter = v.f;
+                document.querySelectorAll('#vibeGrid .fcell').forEach(function (n) { n.classList.remove('active'); });
+                c.classList.add('active');
+            });
+            vibeGrid.appendChild(c);
+        });
+
+        var stickerGrid = document.getElementById('stickerGrid');
+        STICKERS.forEach(function (st) {
+            var c = document.createElement('div');
+            c.className = 'fcell';
+            c.innerHTML = '<span class="emoji">' + st.e + '</span>' + st.label;
+            c.addEventListener('click', function () { addSticker(st.e); });
+            stickerGrid.appendChild(c);
+        });
+
+        function makeDraggable(el) {
+            var drag = false, sx = 0, sy = 0, ox = 0, oy = 0;
+            el.addEventListener('pointerdown', function (e) {
+                if (e.target.classList.contains('x')) return;
+                drag = true; el.setPointerCapture(e.pointerId);
+                sx = e.clientX; sy = e.clientY; ox = el.offsetLeft; oy = el.offsetTop;
+                el.style.cursor = 'grabbing'; e.preventDefault();
+            });
+            el.addEventListener('pointermove', function (e) {
+                if (!drag) return;
+                el.style.left = (ox + (e.clientX - sx)) + 'px';
+                el.style.top = (oy + (e.clientY - sy)) + 'px';
+            });
+            function end() { drag = false; el.style.cursor = 'grab'; }
+            el.addEventListener('pointerup', end);
+            el.addEventListener('pointercancel', end);
+        }
+        function addSticker(emoji) {
+            var s = document.createElement('div');
+            s.className = 'sticker';
+            s.style.left = (stage.clientWidth * 0.44 + (Math.random() * 60 - 30)) + 'px';
+            s.style.top = (stage.clientHeight * 0.26 + (Math.random() * 40 - 20)) + 'px';
+            var span = document.createElement('span'); span.textContent = emoji; s.appendChild(span);
+            var x = document.createElement('button'); x.className = 'x'; x.innerHTML = '&times;'; x.setAttribute('aria-label', 'remove sticker');
+            x.addEventListener('click', function (ev) { ev.stopPropagation(); s.remove(); });
+            s.appendChild(x);
+            stickerLayer.appendChild(s); makeDraggable(s);
+            closeAll(); /* close panel so they can place it */
+        }
+        document.getElementById('clearStickers').addEventListener('click', function () { stickerLayer.innerHTML = ''; });
 
         /* ---- Share this site (Web Share API + fallback overlay) ---- */
         var SHARE_URL = "https://www.vishaljohn.com/";
