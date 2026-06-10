@@ -1426,7 +1426,7 @@
         (function () {
             var c = document.getElementById('connecting');
             if (!c) return;
-            var dur = reduceMotion ? 300 : 2500;
+            var dur = reduceMotion ? 300 : 2000;
             setTimeout(function () {
                 c.classList.add('gone');
                 setTimeout(function () { if (c.parentNode) c.parentNode.removeChild(c); }, 600);

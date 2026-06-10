@@ -116,3 +116,7 @@ a { transition: color .2s ease; }
   nav ul li { width: 100%; }
   nav a { display: block; padding: 13px 22px; border-radius: 0; }
 }
+
+/* "Video Call" link in the classic-site nav */
+nav a.nav-call { color: #0a6db0; font-weight: 700; }
+nav a.nav-call:hover { color: #075488; }
