@@ -24,7 +24,6 @@
     <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og-image.jpg">
     <meta name="theme-color" content="#0b0c0e">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-    <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
     <script type="application/ld+json">
@@ -296,6 +295,10 @@
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
         }
+        .share-url { display: flex; gap: 8px; }
+        .share-url input { flex: 1; min-width: 0; background: rgba(255,255,255,0.06); border: 1px solid var(--stroke); color: #fff; border-radius: 10px; padding: 11px 14px; font-size: 14px; }
+        .share-copy { background: var(--accent); border: none; color: #fff; border-radius: 10px; padding: 0 16px; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .share-copy:hover { background: #0a5c93; }
     </style>
 </head>
 
@@ -407,6 +410,7 @@
             <button class="ctrl" id="cWork" aria-label="My work"><i class="fas fa-th-large"></i><span class="tip">My work</span></button>
             <button class="ctrl" id="cChat" aria-label="Toggle chat"><i class="fas fa-comment"></i><span class="tip">Chat</span></button>
             <button class="ctrl" id="cLinks" aria-label="Links"><i class="fas fa-link"></i><span class="tip">Links</span></button>
+            <button class="ctrl" id="cShare" aria-label="Share this site"><i class="fas fa-share-alt"></i><span class="tip">Share</span></button>
             <button class="ctrl leave" id="endCall" aria-label="End call and go to my classic site"><i class="fas fa-phone-slash"></i><span class="leave-label">End call</span></button>
         </div>
     </div>
@@ -445,6 +449,23 @@
                 <a href="https://scholar.google.com/citations?user=QXyjTGgAAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
                 <a href="https://www.researchgate.net/profile/Vishal-John" target="_blank" rel="noopener"><i class="fab fa-researchgate"></i> ResearchGate</a>
                 <a href="pages/blog.html"><i class="fas fa-envelope-open-text"></i> Newsletter</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share overlay -->
+    <div class="overlay" id="ovShare">
+        <div class="sheet">
+            <div class="sheet-head"><h2>Share this site</h2><button class="sheet-close" data-close aria-label="Close">&times;</button></div>
+            <div class="share-url">
+                <input id="shareUrl" type="text" readonly value="https://www.vishaljohn.com/">
+                <button id="copyBtn" class="share-copy"><i class="fas fa-copy"></i> <span>Copy</span></button>
+            </div>
+            <div class="links" style="margin-top:16px;">
+                <a id="shareX" href="#" target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i> X</a>
+                <a id="shareLn" href="#" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a id="shareFb" href="#" target="_blank" rel="noopener"><i class="fab fa-facebook"></i> Facebook</a>
+                <a id="shareEm" href="#"><i class="fas fa-envelope"></i> Email</a>
             </div>
         </div>
     </div>
@@ -728,6 +749,37 @@
             };
             vv.addEventListener('resize', onVV);
             vv.addEventListener('scroll', onVV);
+        }
+
+        /* ---- Share this site (Web Share API + fallback overlay) ---- */
+        var SHARE_URL = "https://www.vishaljohn.com/";
+        var SHARE_TEXT = "Check out Vishal John \u2014 medical student, children's book author & balloon animal artist:";
+        (function () {
+            var x = document.getElementById('shareX'), ln = document.getElementById('shareLn'),
+                fb = document.getElementById('shareFb'), em = document.getElementById('shareEm');
+            var u = encodeURIComponent(SHARE_URL), t = encodeURIComponent(SHARE_TEXT);
+            x.href = 'https://twitter.com/intent/tweet?text=' + t + '&url=' + u;
+            ln.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + u;
+            fb.href = 'https://www.facebook.com/sharer/sharer.php?u=' + u;
+            em.href = 'mailto:?subject=' + encodeURIComponent('Vishal John') + '&body=' + t + '%20' + u;
+        })();
+        document.getElementById('cShare').addEventListener('click', function () {
+            if (navigator.share) {
+                navigator.share({ title: 'Vishal John', text: SHARE_TEXT, url: SHARE_URL }).catch(function () {});
+            } else {
+                openOv('ovShare');
+            }
+        });
+        var copyBtn = document.getElementById('copyBtn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', function () {
+                var done = function () {
+                    copyBtn.querySelector('span').textContent = 'Copied!';
+                    setTimeout(function () { copyBtn.querySelector('span').textContent = 'Copy'; }, 1600);
+                };
+                if (navigator.clipboard) { navigator.clipboard.writeText(SHARE_URL).then(done).catch(done); }
+                else { var i = document.getElementById('shareUrl'); i.select(); document.execCommand('copy'); done(); }
+            });
         }
 
         /* ---- "End call" -> classic site, with a friendly transition ---- */

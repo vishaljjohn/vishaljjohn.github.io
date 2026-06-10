@@ -1,14 +1,16 @@
 /*
  * Vishal John — chat AI endpoint (Cloudflare Worker)
- * Free on Cloudflare Workers + Workers AI (10,000 Neurons/day free).
- * Model: Llama 3.1 8B (free-budget friendly). Locked to vishaljohn.com.
- * After deploying, the URL goes in index.html -> var AI_ENDPOINT = "...".
+ * Model: Llama 3.3 70B (fp8-fast) — smarter answers. Locked to vishaljohn.com.
+ * Caches first-turn questions (Cache API) so repeats are instant & free.
  */
 
 const ALLOWED_ORIGINS = [
   "https://www.vishaljohn.com",
   "https://vishaljohn.com",
 ];
+
+const MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
+const CACHE_TTL = 86400; // seconds (1 day) for repeated identical questions
 
 const SYSTEM_PROMPT = `You are a friendly chatbot that speaks in the FIRST PERSON as Vishal John, on Vishal's own personal website. Visitors are chatting with "you" (Vishal).
 
@@ -43,6 +45,7 @@ PUBLICATIONS (5 total; mention if asked about research/papers — point to the P
 
 CHILDREN'S BOOK
 - "The Brave Little ImmuneTeam" — a kids' story that explains the immune system as a team of cells (like little superheroes) keeping the body healthy. He wrote it to make immunology fun and approachable for children.
+- WHERE TO BUY: it's available on Amazon — https://www.amazon.com/Brave-Little-Immune-Team/dp/B0GVC5R915 . Share that exact link if someone asks where to get or buy the book.
 
 COMMUNITY & SERVICE
 - On the leadership team of Rock Cancer, which provides free rock climbing experiences to young patients with cancer.
@@ -57,6 +60,15 @@ INTERESTS
 ONLINE & LINKS
 - LinkedIn: linkedin.com/in/vishaljjohn  |  GitHub: github.com/vishaljjohn  |  Medium (his newsletter/blog): medium.com/@vishaljjohn  |  Google Scholar and ResearchGate for publications.
 - The website also has pages for About, Publications, Newsletter, Contact, and his projects (reachable from the "My work" button).`;
+
+const FEWSHOT = [
+  { role: "user", content: "what do you do for fun?" },
+  { role: "assistant", content: "balloon animals are my go-to — i'll twist you a dog or a monkey on the spot 🎈 outside that, rock climbing and chasing a good cup of coffee." },
+  { role: "user", content: "where can i buy your book?" },
+  { role: "assistant", content: "you can grab \"the brave little immuneteam\" on amazon here: https://www.amazon.com/Brave-Little-Immune-Team/dp/B0GVC5R915 — hope the kids in your life enjoy it!" },
+  { role: "user", content: "can we work together / collaborate?" },
+  { role: "assistant", content: "maybe! the best way is to reach out through my contact page and tell me what you're thinking — i read everything." }
+];
 
 function corsHeaders(origin) {
   const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
@@ -76,7 +88,7 @@ function json(obj, status, cors) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const origin = request.headers.get("Origin") || "";
     const cors = corsHeaders(origin);
 
@@ -94,7 +106,24 @@ export default {
     if (!userMsg) return json({ reply: "ask me anything about me!" }, 200, cors);
 
     const history = Array.isArray(body.history) ? body.history.slice(-6) : [];
-    const messages = [{ role: "system", content: SYSTEM_PROMPT }];
+
+    // ---- Cache: only for first-turn questions (no conversation context) ----
+    const cache = caches.default;
+    let cacheKey = null;
+    if (history.length === 0) {
+      const norm = userMsg.toLowerCase().replace(/\s+/g, " ").trim().slice(0, 200);
+      const url = new URL(request.url);
+      url.pathname = "/__cache/q";
+      url.search = "?k=" + encodeURIComponent(norm);
+      cacheKey = new Request(url.toString(), { method: "GET" });
+      const hit = await cache.match(cacheKey);
+      if (hit) {
+        const data = await hit.json();
+        return json({ reply: data.reply, cached: true }, 200, cors);
+      }
+    }
+
+    const messages = [{ role: "system", content: SYSTEM_PROMPT }].concat(FEWSHOT);
     for (const h of history) {
       if (h && h.role && h.content) {
         messages.push({
@@ -106,13 +135,16 @@ export default {
     messages.push({ role: "user", content: userMsg });
 
     try {
-      const out = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
-        messages,
-        max_tokens: 256,
-        temperature: 0.4,
-      });
+      const out = await env.AI.run(MODEL, { messages, max_tokens: 340, temperature: 0.4 });
       const reply = String(out && out.response || "").trim();
       if (!reply) return json({ reply: null }, 200, cors);
+
+      if (cacheKey) {
+        const toCache = new Response(JSON.stringify({ reply }), {
+          headers: { "Content-Type": "application/json", "Cache-Control": "max-age=" + CACHE_TTL },
+        });
+        ctx.waitUntil(cache.put(cacheKey, toCache));
+      }
       return json({ reply }, 200, cors);
     } catch (e) {
       return json({ reply: null, error: "ai_unavailable" }, 200, cors);
