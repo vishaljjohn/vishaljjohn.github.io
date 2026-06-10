@@ -388,6 +388,8 @@
         .sp-open { display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 8px; background: #1DB954; color: #fff; text-decoration: none; font-size: 13px; font-weight: 700; padding: 9px; border-radius: 9px; }
         .sp-open:hover { background: #1aa34a; }
         @media (max-width: 680px) { .sp-panel { left: 14px; top: 96px; } }
+        .self-ar { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; display: none; }
+        .self-tile.live .self-ar { display: block; }
     </style>
 </head>
 
@@ -489,6 +491,7 @@
     <!-- Self tile -->
     <div class="self-tile" id="selfTile">
         <video id="selfcam" autoplay muted playsinline></video>
+        <canvas id="selfArCanvas" class="self-ar"></canvas>
         <div class="noise"></div>
         <div class="cam-off"><i class="fas fa-video"></i><span>tap for camera</span></div>
         <div class="mic"><i class="fas fa-microphone-slash"></i></div>
@@ -940,6 +943,9 @@
         var stage = document.querySelector('.stage');
         var arCanvas = document.getElementById('arCanvas');
         var arCtx = arCanvas.getContext('2d');
+        var selfArCanvas = document.getElementById('selfArCanvas');
+        var selfArCtx = selfArCanvas ? selfArCanvas.getContext('2d') : null;
+        var dctx = arCtx;
         var arStatusEl = document.getElementById('arStatus');
         document.getElementById('cFilters').addEventListener('click', function () { openOv('ovFilters'); });
 
@@ -1057,6 +1063,17 @@
             arCanvas.width = W * dpr; arCanvas.height = H * dpr;
             arCanvas.style.width = W + 'px'; arCanvas.style.height = H + 'px';
             arCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            sizeSelfCanvas();
+        }
+        function sizeSelfCanvas() {
+            if (!selfArCanvas || !selfArCtx) return;
+            var dpr = window.devicePixelRatio || 1, W = selfTile.clientWidth, H = selfTile.clientHeight;
+            if (!W || !H) return;
+            if (selfArCanvas.width !== Math.round(W * dpr) || selfArCanvas.height !== Math.round(H * dpr)) {
+                selfArCanvas.width = Math.round(W * dpr); selfArCanvas.height = Math.round(H * dpr);
+                selfArCanvas.style.width = W + 'px'; selfArCanvas.style.height = H + 'px';
+            }
+            selfArCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
         }
         function clearCanvas() { arCtx.clearRect(0, 0, stage.clientWidth, stage.clientHeight); }
         window.addEventListener('resize', function () { sizeCanvas(); });
@@ -1101,9 +1118,9 @@
             return g.faceW * 0.6;
         }
         function drawEmojiAt(e, c, size, roll) {
-            arCtx.save(); arCtx.translate(c.x, c.y); arCtx.rotate(roll);
-            arCtx.font = size + 'px serif'; arCtx.textAlign = 'center'; arCtx.textBaseline = 'middle';
-            arCtx.fillText(e, 0, 0); arCtx.restore();
+            dctx.save(); dctx.translate(c.x, c.y); dctx.rotate(roll);
+            dctx.font = size + 'px serif'; dctx.textAlign = 'center'; dctx.textBaseline = 'middle';
+            dctx.fillText(e, 0, 0); dctx.restore();
         }
         function drawAsset(a, g) {
             if (!a) return;
@@ -1134,7 +1151,7 @@
             return 'rgb(' + cl(r * (1 + amt)) + ',' + cl(gg * (1 + amt)) + ',' + cl(b * (1 + amt)) + ')';
         }
         function drawWig(c, g, color) {
-            var ctx = arCtx, W = g.faceW, H = g.faceH;
+            var ctx = dctx, W = g.faceW, H = g.faceH;
             ctx.save(); ctx.translate(g.faceCenter.x, g.faceCenter.y); ctx.rotate(g.roll);
             var oRx = W * 0.96, oRy = H * 1.06, oCy = -H * 0.26, iRx = W * 0.5, iRy = H * 0.6, iCy = H * 0.16;
             if (color === 'rainbow') {
@@ -1154,7 +1171,7 @@
             ctx.restore();
         }
         function drawCrazyEyes(c, g) {
-            var ctx = arCtx, r = g.faceW * 0.14;
+            var ctx = dctx, r = g.faceW * 0.14;
             [g.eyeR, g.eyeL].forEach(function (e) {
                 if (!e) return;
                 ctx.beginPath(); ctx.arc(e.x, e.y, r, 0, Math.PI * 2); ctx.fillStyle = '#fff'; ctx.fill();
@@ -1164,7 +1181,7 @@
             });
         }
         function drawBeard(c, g) {
-            var ctx = arCtx, W = g.faceW, H = g.faceH;
+            var ctx = dctx, W = g.faceW, H = g.faceH;
             ctx.save(); ctx.translate(g.faceCenter.x, g.faceCenter.y); ctx.rotate(g.roll);
             ctx.fillStyle = '#8b8b8b';
             ctx.beginPath();
@@ -1180,7 +1197,7 @@
         }
 
         function drawEyewear(c, g, dark) {
-            var ctx = arCtx, w = g.faceW, r = w * 0.17, ry = w * 0.14, dx = w * 0.24;
+            var ctx = dctx, w = g.faceW, r = w * 0.17, ry = w * 0.14, dx = w * 0.24;
             ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(g.roll);
             ctx.lineWidth = w * 0.03; ctx.strokeStyle = '#0d0d0f';
             ctx.fillStyle = dark ? 'rgba(12,12,16,0.9)' : 'rgba(255,255,255,0.10)';
@@ -1191,7 +1208,7 @@
             ctx.restore();
         }
         function drawMustache(c, g) {
-            var ctx = arCtx, w = g.faceW * 0.55, h = g.faceW * 0.22;
+            var ctx = dctx, w = g.faceW * 0.55, h = g.faceW * 0.22;
             ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(g.roll); ctx.fillStyle = '#1b1b1b';
             ctx.beginPath();
             ctx.moveTo(0, -h * 0.15);
@@ -1205,7 +1222,7 @@
             ctx.fill(); ctx.restore();
         }
         function drawTopHat(c, g) {
-            var ctx = arCtx, w = g.faceW;
+            var ctx = dctx, w = g.faceW;
             ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(g.roll); ctx.fillStyle = '#15151a';
             var bw = w * 1.05, bh = w * 0.14, cw = w * 0.62, ch = w * 0.62;
             ctx.beginPath(); ctx.ellipse(0, 0, bw / 2, bh / 2, 0, 0, 2 * Math.PI); ctx.fill();
@@ -1215,7 +1232,7 @@
             ctx.restore();
         }
         function drawCrown(c, g) {
-            var ctx = arCtx, w = g.faceW * 0.85, h = g.faceW * 0.5;
+            var ctx = dctx, w = g.faceW * 0.85, h = g.faceW * 0.5;
             ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(g.roll); ctx.fillStyle = '#f2c14e';
             ctx.fillRect(-w / 2, -h * 0.32, w, h * 0.32);
             ctx.beginPath();
@@ -1227,9 +1244,19 @@
             ctx.restore();
         }
 
-        /* MediaPipe FaceLandmarker, lazy-loaded on first use */
-        var faceLandmarker = null, arLoading = false, arFailed = false, rafId = null;
+        /* MediaPipe FaceLandmarker (lazy) — main video + caller webcam, throttled */
+        var MODEL_URL = 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task';
+        var visionMod = null, visionFileset = null;
+        var faceLandmarker = null, faceLandmarker2 = null, arLoading = false, ar2Loading = false, arFailed = false, rafId = null;
+        var DET_MS = 66, tMain = 0, t2 = 0, lastLmMain = null, lastLm2 = null;
         function setStatus(t) { if (arStatusEl) arStatusEl.textContent = t || ''; }
+        function hasNonDistort() { for (var k in arSlots) { if (k !== 'distort' && arSlots[k]) return true; } return false; }
+        function makeLandmarker() { return visionMod.FaceLandmarker.createFromOptions(visionFileset, { baseOptions: { modelAssetPath: MODEL_URL }, runningMode: 'VIDEO', numFaces: 1 }); }
+        function ensureAR2() {
+            if (faceLandmarker2 || ar2Loading || !visionMod || !visionFileset || arFailed) return;
+            ar2Loading = true;
+            makeLandmarker().then(function (fl) { faceLandmarker2 = fl; ar2Loading = false; }).catch(function () { ar2Loading = false; });
+        }
         function ensureAR() {
             sizeCanvas();
             if (faceLandmarker || arFailed) { startLoop(); return; }
@@ -1237,12 +1264,9 @@
             arLoading = true; setStatus('loading face tracker…');
             (async function () {
                 try {
-                    var vision = await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.18');
-                    var fileset = await vision.FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.18/wasm');
-                    faceLandmarker = await vision.FaceLandmarker.createFromOptions(fileset, {
-                        baseOptions: { modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task' },
-                        runningMode: 'VIDEO', numFaces: 1
-                    });
+                    visionMod = await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.18');
+                    visionFileset = await visionMod.FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.18/wasm');
+                    faceLandmarker = await makeLandmarker();
                     setStatus('');
                 } catch (e) { arFailed = true; setStatus('face tracking unavailable — showing centered'); }
                 arLoading = false; startLoop();
@@ -1250,27 +1274,51 @@
         }
         function startLoop() { if (rafId == null) rafId = requestAnimationFrame(loop); }
         function stopLoop() { if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; } }
+        function computeTileMap() {
+            var W = selfTile.clientWidth, H = selfTile.clientHeight, vw = selfcam.videoWidth || 640, vh = selfcam.videoHeight || 480;
+            var sc = Math.max(W / vw, H / vh);
+            return { W: W, H: H, vw: vw, vh: vh, sc: sc, offX: (W - vw * sc) / 2, offY: (H - vh * sc) / 2 };
+        }
+        function Ptile(lm, m) { return { x: m.W - (m.offX + lm.x * m.vw * m.sc), y: m.offY + lm.y * m.vh * m.sc }; }
+        function geomTile(lm, m) {
+            var pe1 = Ptile(lm[33], m), pe2 = Ptile(lm[263], m), ir = Ptile(lm[133] || lm[33], m), il = Ptile(lm[362] || lm[263], m),
+                top = Ptile(lm[10], m), chin = Ptile(lm[152], m), cR = Ptile(lm[234], m), cL = Ptile(lm[454], m), mouth = Ptile(lm[164] || lm[2] || lm[13], m);
+            var faceW = Math.hypot(cL.x - cR.x, cL.y - cR.y), faceH = Math.hypot(chin.x - top.x, chin.y - top.y) || faceW * 1.3;
+            var roll = Math.atan2(pe2.y - pe1.y, pe2.x - pe1.x), ux = top.x - chin.x, uy = top.y - chin.y, ul = Math.hypot(ux, uy) || 1;
+            return { faceW: faceW, faceH: faceH, roll: roll, up: { x: ux / ul, y: uy / ul }, eyes: { x: (pe1.x + pe2.x) / 2, y: (pe1.y + pe2.y) / 2 }, eyeR: { x: (pe1.x + ir.x) / 2, y: (pe1.y + ir.y) / 2 }, eyeL: { x: (pe2.x + il.x) / 2, y: (pe2.y + il.y) / 2 }, top: top, chin: chin, mouth: mouth, faceCenter: { x: (top.x + chin.x) / 2, y: (top.y + chin.y) / 2 } };
+        }
         function loop() {
             rafId = null;
-            if (!anyActive()) { clearCanvas(); return; }
-            clearCanvas();
+            if (!anyActive()) { clearCanvas(); if (selfArCtx) selfArCtx.clearRect(0, 0, selfTile.clientWidth, selfTile.clientHeight); return; }
+            if (document.hidden) { rafId = requestAnimationFrame(loop); return; }
+            var now = performance.now();
+            dctx = arCtx; clearCanvas();
             if (faceLandmarker && !arFailed && feed.readyState >= 2 && feed.videoWidth > 0) {
                 computeMap();
-                var res = null;
-                try { res = faceLandmarker.detectForVideo(feed, performance.now()); } catch (e) {}
-                if (res && res.faceLandmarks && res.faceLandmarks[0]) {
-                    var g = geom(res.faceLandmarks[0]);
-                    SLOT_ORDER.forEach(function (slot) { if (arSlots[slot]) drawAsset(assetById[arSlots[slot]], g); });
-                }
+                if (now - tMain >= DET_MS) { tMain = now; try { var r = faceLandmarker.detectForVideo(feed, now); lastLmMain = (r && r.faceLandmarks && r.faceLandmarks[0]) || lastLmMain; } catch (e) {} }
+                if (lastLmMain) { var g = geom(lastLmMain); SLOT_ORDER.forEach(function (slot) { if (arSlots[slot]) drawAsset(assetById[arSlots[slot]], g); }); }
             } else if (arFailed) {
                 var W = stage.clientWidth, H = stage.clientHeight;
-                var fg = { faceW: W * 0.16, faceH: W * 0.22, roll: 0, up: { x: 0, y: -1 },
-                    eyes: { x: W / 2, y: H * 0.40 }, top: { x: W / 2, y: H * 0.28 }, chin: { x: W / 2, y: H * 0.52 },
-                    mouth: { x: W / 2, y: H * 0.47 }, faceCenter: { x: W / 2, y: H * 0.40 } };
+                var fg = { faceW: W * 0.16, faceH: W * 0.22, roll: 0, up: { x: 0, y: -1 }, eyes: { x: W / 2, y: H * 0.40 }, top: { x: W / 2, y: H * 0.28 }, chin: { x: W / 2, y: H * 0.52 }, mouth: { x: W / 2, y: H * 0.47 }, faceCenter: { x: W / 2, y: H * 0.40 } };
                 SLOT_ORDER.forEach(function (slot) { if (slot !== 'distort' && arSlots[slot]) drawAsset(assetById[arSlots[slot]], fg); });
+            }
+            if (selfArCtx) {
+                selfArCtx.clearRect(0, 0, selfTile.clientWidth, selfTile.clientHeight);
+                if (!arFailed && selfTile.classList.contains('live') && selfcam.readyState >= 2 && selfcam.videoWidth > 0 && hasNonDistort()) {
+                    if (!faceLandmarker2) ensureAR2();
+                    if (faceLandmarker2) {
+                        sizeSelfCanvas();
+                        if (now - t2 >= DET_MS) { t2 = now; try { var r2 = faceLandmarker2.detectForVideo(selfcam, now); lastLm2 = (r2 && r2.faceLandmarks && r2.faceLandmarks[0]) || lastLm2; } catch (e) {} }
+                        if (lastLm2) { dctx = selfArCtx; var m = computeTileMap(); var g2 = geomTile(lastLm2, m); SLOT_ORDER.forEach(function (slot) { if (slot !== 'distort' && arSlots[slot]) drawAsset(assetById[arSlots[slot]], g2); }); }
+                    }
+                }
             }
             rafId = requestAnimationFrame(loop);
         }
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) { try { feed.pause(); } catch (e) {} }
+            else if (!reduceMotion && !document.body.classList.contains('no-video')) { var pp = feed.play(); if (pp && pp.catch) pp.catch(function () {}); }
+        });
 
         /* ---- Share this site (Web Share API + fallback overlay) ---- */
         var SHARE_URL = "https://www.vishaljohn.com/";
