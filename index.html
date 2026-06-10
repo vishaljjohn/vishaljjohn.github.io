@@ -14,10 +14,38 @@
     <meta property="og:title" content="Vishal John">
     <meta property="og:description" content="Personal website of Vishal John — M2 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
     <meta property="og:url" content="https://www.vishaljohn.com/">
-    <meta property="og:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <meta property="og:image" content="https://www.vishaljohn.com/assets/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Vishal John">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vishal John">
+    <meta name="twitter:description" content="M2 medical student at UofL — children's book author, balloon animal artist, and aspiring coffee shop owner.">
+    <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og-image.jpg">
+    <meta name="theme-color" content="#0b0c0e">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Vishal John",
+      "url": "https://www.vishaljohn.com",
+      "image": "https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg",
+      "jobTitle": "Medical Student",
+      "worksFor": { "@type": "Organization", "name": "University of Louisville School of Medicine" },
+      "alumniOf": { "@type": "Organization", "name": "University of Michigan" },
+      "sameAs": [
+        "https://www.linkedin.com/in/vishaljjohn/",
+        "https://github.com/vishaljjohn",
+        "https://scholar.google.com/citations?user=QXyjTGgAAAAJ",
+        "https://medium.com/@vishaljjohn"
+      ],
+      "description": "M2 medical student at the University of Louisville School of Medicine, children's book author, balloon animal artist, and aspiring coffee shop owner."
+    }
+    </script>
 
     <style>
         * { box-sizing: border-box; }
@@ -262,6 +290,12 @@
         .ec-sub { color: var(--muted); margin-top: 6px; font-size: 14px; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
         .self-tile { cursor: pointer; }
+        a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+            outline: 3px solid #6cc0ff; outline-offset: 2px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+        }
     </style>
 </head>
 
@@ -351,7 +385,7 @@
                 <div class="chat-status"><span class="dot"></span> online</div>
             </div>
         </div>
-        <div id="thread"></div>
+        <div id="thread" role="log" aria-live="polite" aria-atomic="false"></div>
         <div class="chat-input">
             <input class="chat-field" id="chatField" type="text" autocomplete="off"
                    placeholder="Ask me anything…" aria-label="Message Vishal">
@@ -419,6 +453,8 @@
     (function () {
         "use strict";
 
+        var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
         /* ============================================================
            AI ENDPOINT
            Leave as "" to use the built-in offline answers.
@@ -474,7 +510,7 @@
             if (failures >= order.length) { document.body.classList.add('no-video'); return; }
             nextVideo();
         });
-        if (order.length) { loadVideo(order[pos]); } else { document.body.classList.add('no-video'); }
+        if (order.length && !reduceMotion) { loadVideo(order[pos]); } else { document.body.classList.add('no-video'); }
 
         /* ---- Webcam in the YOU tile: OPT-IN (tap to enable, no auto-prompt) ---- */
         var selfTile = document.getElementById('selfTile');
