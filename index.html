@@ -1330,7 +1330,7 @@
             var pe1 = Ptile(lm[33], m), pe2 = Ptile(lm[263], m), ir = Ptile(lm[133] || lm[33], m), il = Ptile(lm[362] || lm[263], m),
                 top = Ptile(lm[10], m), chin = Ptile(lm[152], m), cR = Ptile(lm[234], m), cL = Ptile(lm[454], m), mouth = Ptile(lm[164] || lm[2] || lm[13], m);
             var faceW = Math.hypot(cL.x - cR.x, cL.y - cR.y), faceH = Math.hypot(chin.x - top.x, chin.y - top.y) || faceW * 1.3;
-            var roll = Math.atan2(pe2.y - pe1.y, pe2.x - pe1.x), ux = top.x - chin.x, uy = top.y - chin.y, ul = Math.hypot(ux, uy) || 1;
+            var _dx = pe2.x - pe1.x, _dy = pe2.y - pe1.y; if (_dx < 0) { _dx = -_dx; _dy = -_dy; } var roll = Math.atan2(_dy, _dx), ux = top.x - chin.x, uy = top.y - chin.y, ul = Math.hypot(ux, uy) || 1;
             return { faceW: faceW, faceH: faceH, roll: roll, up: { x: ux / ul, y: uy / ul }, eyes: { x: (pe1.x + pe2.x) / 2, y: (pe1.y + pe2.y) / 2 }, eyeR: { x: (pe1.x + ir.x) / 2, y: (pe1.y + ir.y) / 2 }, eyeL: { x: (pe2.x + il.x) / 2, y: (pe2.y + il.y) / 2 }, top: top, chin: chin, mouth: mouth, faceCenter: { x: (top.x + chin.x) / 2, y: (top.y + chin.y) / 2 } };
         }
         function loop() {
