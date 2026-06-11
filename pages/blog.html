@@ -265,7 +265,7 @@
                 const pubDate = item.querySelector('pubDate')?.textContent;
                 const date = pubDate ? new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
                 list.innerHTML += `<li style="display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid #eee;">
-                    <a href="${link}" target="_blank">${title}</a>
+                    <a href="${link}" target="_blank" rel="noopener noreferrer">${title}</a>
                     <span style="font-size:13px;color:#888;margin-left:16px;white-space:nowrap;">${date}</span>
                 </li>`;
             });
@@ -285,7 +285,7 @@
                     json.items.forEach(item => {
                         const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
                         list.innerHTML += `<li style="display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid #eee;">
-                            <a href="${item.link}" target="_blank">${item.title}</a>
+                            <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a>
                             <span style="font-size:13px;color:#888;margin-left:16px;white-space:nowrap;">${date}</span>
                         </li>`;
                     });
