@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>(function(){try{var t=localStorage.getItem("vj-theme");if(t==="dark"||(!t&&window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches))document.documentElement.classList.add("dark");}catch(e){}})();</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 — page not found | Vishal John</title>
@@ -9,36 +10,93 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         * { box-sizing: border-box; }
-        body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
-            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
-            background:radial-gradient(120% 120% at 30% 20%, #2b3340 0%, #15181d 55%, #0b0c0e 100%);
-            color:#fff; text-align:center; padding:24px; }
-        .card { max-width:460px; }
-        .logo { font-weight:700; font-size:20px; letter-spacing:.5px; margin-bottom:28px; }
-        .logo .h { color:#e5484d; font-size:15px; }
-        .icon { width:84px; height:84px; border-radius:50%; background:#e5484d; display:flex; align-items:center;
-            justify-content:center; margin:0 auto 22px; font-size:34px; box-shadow:0 10px 30px rgba(0,0,0,.45); }
-        h1 { font-size:64px; margin:0; letter-spacing:-2px; }
-        h2 { font-size:20px; font-weight:600; margin:6px 0 10px; }
-        p { color:#9aa0a8; font-size:15px; line-height:1.6; margin:0 0 26px; }
-        .btns { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
-        a.btn { text-decoration:none; font-size:14px; font-weight:700; padding:11px 20px; border-radius:24px; }
-        .primary { background:#0a6db0; color:#fff; }
-        .secondary { background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,.25); }
-        a.btn:hover { opacity:.9; }
+        html { background-color: #f4f4f4; }
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+
+        header { position: relative; background-color: #fff; padding: 16px 24px; box-shadow: 0px 3px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        header h1 { margin: 0; font-size: 22px; }
+        header a { text-decoration: none; color: inherit; }
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 4px; }
+        nav a { text-decoration: none; color: #333; padding: 5px 10px; border-radius: 3px; transition: background-color 0.3s; font-size: 14px; }
+        nav a:hover { background-color: #f8f8f8; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .container { flex: 1; width: 80%; margin: auto; padding: 50px 0; display: flex; align-items: center; justify-content: center; }
+        .main-content { background-color: #fff; padding: 56px 52px; box-shadow: 0px 3px 10px rgba(0,0,0,0.1); border-radius: 6px; text-align: center; max-width: 520px; }
+        .icon { width: 84px; height: 84px; border-radius: 50%; background: #e5484d; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; font-size: 34px; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+        .main-content h2 { font-size: 64px; margin: 0; letter-spacing: -2px; }
+        .main-content h3 { font-size: 20px; font-weight: 600; margin: 6px 0 10px; }
+        .main-content p { color: #666; font-size: 15px; line-height: 1.6; margin: 0 0 26px; }
+        .btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        a.btn { text-decoration: none; font-size: 14px; font-weight: 700; padding: 11px 20px; border-radius: 24px; }
+        .primary { background: #0a6db0; color: #fff; }
+        .secondary { background: transparent; color: #333; border: 1.5px solid rgba(0,0,0,.2); }
+        a.btn:hover { opacity: .9; }
+
+        footer { text-align: center; padding: 20px 0; background-color: #333; color: #fff; }
+        footer a { color: #fff; margin: 0 8px; }
+        footer i { color: #ff5733; }
+        footer a:hover i { color: #ff9966; }
+
+        @media screen and (max-width: 768px) {
+            .hamburger { display: flex; }
+            nav ul { display: none; flex-direction: column; gap: 0; position: absolute; top: 60px; right: 0; left: 0; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; padding: 8px 0; }
+            nav ul.open { display: flex; }
+            nav a { padding: 12px 24px; border-radius: 0; display: block; text-align: center; }
+            .container { width: 95%; }
+            .main-content { padding: 36px 24px; }
+            .main-content h2 { font-size: 52px; }
+        }
     </style>
+    <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
-    <div class="card">
-        <div class="logo">V<span class="h"><i class="fas fa-heart"></i></span>J</div>
-        <div class="icon"><i class="fas fa-phone-slash"></i></div>
-        <h1>404</h1>
-        <h2>looks like this call dropped</h2>
-        <p>The page you're looking for doesn't exist or has moved. Let's get you back on the line.</p>
-        <div class="btns">
-            <a class="btn primary" href="/">Back to home</a>
-            <a class="btn secondary" href="/index_classic.html">Classic site</a>
+    <header>
+        <h1><a href="/index_classic.html">Vishal John</a></h1>
+        <nav>
+            <ul>
+                <li><a href="/index_classic.html">Home</a></li>
+                <li><a href="/pages/about.html">About Me</a></li>
+                <li><a href="/pages/blog.html">Newsletter</a></li>
+                <li><a href="/pages/publications.html">Publications</a></li>
+                <li><a href="/pages/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="icon"><i class="fas fa-phone-slash"></i></div>
+            <h2>404</h2>
+            <h3>looks like this call dropped</h3>
+            <p>The page you're looking for doesn't exist or has moved. Let's get you back on the line.</p>
+            <div class="btns">
+                <a class="btn primary" href="/">Back to home</a>
+                <a class="btn secondary" href="/index_classic.html">Classic site</a>
+            </div>
         </div>
     </div>
+
+    <footer>
+        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-2x"></i></a>
+        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener"><i class="fab fa-github fa-2x"></i></a>
+        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener"><i class="fab fa-medium fa-2x"></i></a>
+        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+      (function(){ var b=document.getElementById('hamburger'), u=document.querySelector('nav ul');
+        if(b&&u) b.addEventListener('click', function(){ b.classList.toggle('open'); u.classList.toggle('open'); }); })();
+      document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});
+    </script>
+    <script src="/assets/chat-widget.js"></script>
+    <script src="/assets/theme.js"></script>
 </body>
 </html>

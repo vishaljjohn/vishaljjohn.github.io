@@ -103,6 +103,24 @@ function json(obj, status, cors) {
   });
 }
 
+function sse(streamBody, cors) {
+  return new Response(streamBody, {
+    headers: { ...cors, "Content-Type": "text/event-stream; charset=utf-8", "Cache-Control": "no-cache", "X-Accel-Buffering": "no" },
+  });
+}
+
+function sseOnce(text, cors) {
+  const enc = new TextEncoder();
+  const stream = new ReadableStream({
+    start(c) {
+      c.enqueue(enc.encode("data: " + JSON.stringify({ response: text || "" }) + "\n\n"));
+      c.enqueue(enc.encode("data: [DONE]\n\n"));
+      c.close();
+    },
+  });
+  return sse(stream, cors);
+}
+
 
 // ---- Visitor question log (stored in the VISITS KV under "qlog") ----
 // Change ASK_LOG_KEY to your own secret. View the log at:
@@ -168,6 +186,7 @@ export default {
     if (!userMsg) return json({ reply: "ask me anything about me!" }, 200, cors);
 
     const history = Array.isArray(body.history) ? body.history.slice(-6) : [];
+    const wantStream = !!(body && body.stream === true);
 
     const cache = caches.default;
     let cacheKey = null;
@@ -181,7 +200,7 @@ export default {
       if (hit) {
         const data = await hit.json();
         logAsk(env, ctx, userMsg, data.reply);
-        return json({ reply: data.reply, cached: true }, 200, cors);
+        return wantStream ? sseOnce(data.reply, cors) : json({ reply: data.reply, cached: true }, 200, cors);
       }
     }
 
@@ -195,6 +214,41 @@ export default {
       }
     }
     messages.push({ role: "user", content: userMsg });
+
+    // ---- Streaming path (Server-Sent Events) ----
+    if (wantStream) {
+      try {
+        const aiStream = await env.AI.run(MODEL, { messages, max_tokens: 360, temperature: 0.4, stream: true });
+        let full = "";
+        const dec = new TextDecoder();
+        const ts = new TransformStream({
+          transform(chunk, controller) {
+            controller.enqueue(chunk); // forward token to the browser immediately
+            const txt = dec.decode(chunk, { stream: true });
+            txt.split("\n").forEach(function (line) {
+              line = line.trim();
+              if (line.indexOf("data:") !== 0) return;
+              const d = line.slice(5).trim();
+              if (!d || d === "[DONE]") return;
+              try { const ob = JSON.parse(d); if (ob.response) full += ob.response; } catch (e) {}
+            });
+          },
+          flush() {
+            const reply = full.trim();
+            logAsk(env, ctx, userMsg, reply);
+            if (cacheKey && reply && !UNANSWERED_RE.test(reply)) {
+              const toCache = new Response(JSON.stringify({ reply }), {
+                headers: { "Content-Type": "application/json", "Cache-Control": "max-age=" + CACHE_TTL },
+              });
+              ctx.waitUntil(cache.put(cacheKey, toCache));
+            }
+          },
+        });
+        return sse(aiStream.pipeThrough(ts), cors);
+      } catch (e) {
+        return sseOnce("", cors); // browser falls back to its local knowledge base
+      }
+    }
 
     try {
       const out = await env.AI.run(MODEL, { messages, max_tokens: 360, temperature: 0.4 });
