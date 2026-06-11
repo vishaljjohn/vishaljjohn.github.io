@@ -1,7 +1,7 @@
 /* Dark-mode toggle. Pairs with the early no-flash snippet in each page <head>:
-   <script>(function(){try{var t=localStorage.getItem('vj-theme');
-   if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))
+   <script>(function(){try{if(localStorage.getItem('vj-theme')==='dark')
    document.documentElement.classList.add('dark');}catch(e){}})();</script>
+   Light is the default; dark only applies when the visitor has toggled it.
    This file adds the floating toggle button and handles clicks. */
 (function () {
   var SUN = '☀︎';   // shown when in dark mode (click -> go light)

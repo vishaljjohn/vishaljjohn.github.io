@@ -145,27 +145,60 @@
   function strip(s){ return String(s).replace(/<[^>]*>/g, ''); }
   function esc(s){ return s.replace(/[&<>]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;'})[c]; }); }
 
-  function aiReply(text){
-    if (!AI_ENDPOINT) return Promise.resolve(null);
+  function linkify(s){ return esc(s).replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>'); }
+
+  // Streamed reply (Server-Sent Events). Calls onToken(text) as tokens arrive.
+  // Resolves to { ok:true, full } on success, { ok:false } to trigger the local fallback.
+  function aiReplyStream(text, onToken){
+    if (!AI_ENDPOINT) return Promise.resolve({ ok:false });
     return fetch(AI_ENDPOINT, { method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ message:text, history: hist.slice(-6) }) })
-      .then(function(r){ return r.ok ? r.json() : null; })
-      .then(function(d){ return d && d.reply ? String(d.reply) : null; })
-      .catch(function(){ return null; });
+        body: JSON.stringify({ message:text, history: hist.slice(-6), stream:true }) })
+      .then(function(r){
+        if (!r.ok || !r.body || !r.body.getReader) return { ok:false };
+        var reader = r.body.getReader(), dec = new TextDecoder(), buf = '', full = '';
+        function pump(){
+          return reader.read().then(function(res){
+            if (res.done) return { ok:true, full:full };
+            buf += dec.decode(res.value, { stream:true });
+            var lines = buf.split('\n'); buf = lines.pop();
+            lines.forEach(function(line){
+              line = line.trim();
+              if (line.indexOf('data:') !== 0) return;
+              var d = line.slice(5).trim();
+              if (!d || d === '[DONE]') return;
+              try { var ob = JSON.parse(d); if (ob.response){ full += ob.response; onToken(ob.response); } } catch(e){}
+            });
+            return pump();
+          });
+        }
+        return pump();
+      })
+      .catch(function(){ return { ok:false }; });
   }
   function send(text){
     text = (text||'').trim(); if (!text || busy) return;
     busy = true; sendBtn.disabled = true;
     addBubble(text, true); hist.push({role:'user', content:text}); field.value = '';
-    addTyping(); var t0 = Date.now();
-    aiReply(text).then(function(reply){
-      var fromAI = !!reply; if (!reply) reply = kbReply(text);
-      var html = fromAI ? esc(reply).replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>') : reply;
-      setTimeout(function(){
-        rmTyping(); addBubble(html); hist.push({role:'assistant', content:strip(reply)});
+    addTyping();
+    var bubble = null, shown = '';
+    function ensureBubble(){ if (!bubble){ rmTyping(); bubble = document.createElement('div'); bubble.className = 'vjw-b bot'; thread.appendChild(bubble); } }
+    function onToken(tok){ shown += tok; ensureBubble(); bubble.textContent = shown; scrollDown(); }
+    function fallback(){
+      rmTyping(); var kb = kbReply(text);
+      if (bubble){ bubble.innerHTML = kb; } else { addBubble(kb); }
+      scrollDown(); hist.push({role:'assistant', content:strip(kb)});
+      busy = false; sendBtn.disabled = false;
+    }
+    aiReplyStream(text, onToken).then(function(res){
+      if (res && res.ok && res.full && res.full.trim()){
+        var reply = res.full.trim();
+        ensureBubble(); bubble.innerHTML = linkify(reply); scrollDown();
+        hist.push({role:'assistant', content:strip(reply)});
         busy = false; sendBtn.disabled = false;
-      }, Math.max(0, 400 - (Date.now()-t0)));
-    });
+      } else {
+        fallback();
+      }
+    }).catch(fallback);
   }
 
   function openPanel(){
