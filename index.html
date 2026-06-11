@@ -220,7 +220,7 @@
             justify-content: center; font-size: 16px; transition: background 0.2s, transform 0.2s; position: relative; text-decoration: none;
         }
         .ctrl:hover { background: rgba(45,49,56,0.95); transform: translateY(-2px); }
-        .ctrl.leave { background: var(--red); border-color: var(--red); width: auto; border-radius: 24px; padding: 0 16px; gap: 8px; }
+        .ctrl.leave { background: var(--red); border-color: var(--red); width: auto; border-radius: 24px; padding: 0 16px; gap: 8px; white-space: nowrap; }
         .leave-label { font-size: 13px; font-weight: 700; letter-spacing: 0.2px; }
         .ctrl.leave:hover { background: #c93b40; }
         .ctrl .tip {
@@ -267,7 +267,15 @@
             }
             #thread { max-height: 42vh; }
             .bottombar { flex-direction: column; gap: 10px; padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); }
-            .controls { order: 1; gap: 8px; }
+            .controls {
+                order: 1; gap: 8px; width: 100%; max-width: 100%;
+                flex-wrap: nowrap; justify-content: flex-start;
+                overflow-x: auto; overflow-y: hidden;
+                -webkit-overflow-scrolling: touch; scrollbar-width: none;
+                padding: 4px 2px; scroll-padding: 0 8px;
+            }
+            .controls::-webkit-scrollbar { display: none; }
+            .controls .ctrl { flex: 0 0 auto; }
             .clockbox { order: 2; font-size: 12px; }
             .topbar { padding: calc(12px + env(safe-area-inset-top)) 14px 12px; }
             .menu { top: 60px; right: 14px; }
