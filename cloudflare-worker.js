@@ -90,7 +90,7 @@ function corsHeaders(origin) {
   const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
     "Access-Control-Allow-Origin": allow,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Vary": "Origin",
   };
@@ -109,7 +109,7 @@ function json(obj, status, cors) {
 //   https://vishal-chat.vishaljjohn.workers.dev/questions?key=YOUR_SECRET
 // Clear it with &clear=1
 const ASK_LOG_KEY = "ask-log-7Qx2v9";
-const UNANSWERED_RE = /not sure|don't have that|do not have that|don't have details|contact page|reach out through my contact|can't help with that|i do not have|i don't have|i'm not certain/i;
+const UNANSWERED_RE = /not sure|not certain|don't have|do not have|can't help with that|i don't know|i do not know|outside what i know|couldn't find/i;
 
 function logAsk(env, ctx, q, reply) {
   if (!env.VISITS || !q) return;
@@ -202,7 +202,8 @@ export default {
       if (!reply) { logAsk(env, ctx, userMsg, ""); return json({ reply: null }, 200, cors); }
 
       logAsk(env, ctx, userMsg, reply);
-      if (cacheKey) {
+      const unsure = UNANSWERED_RE.test(reply);
+      if (cacheKey && !unsure) {
         const toCache = new Response(JSON.stringify({ reply }), {
           headers: { "Content-Type": "application/json", "Cache-Control": "max-age=" + CACHE_TTL },
         });
