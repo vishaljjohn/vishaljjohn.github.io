@@ -103,6 +103,27 @@ function json(obj, status, cors) {
   });
 }
 
+
+// ---- Visitor question log (stored in the VISITS KV under "qlog") ----
+// Change ASK_LOG_KEY to your own secret. View the log at:
+//   https://vishal-chat.vishaljjohn.workers.dev/questions?key=YOUR_SECRET
+// Clear it with &clear=1
+const ASK_LOG_KEY = "ask-log-7Qx2v9";
+const UNANSWERED_RE = /not sure|don't have that|do not have that|don't have details|contact page|reach out through my contact|can't help with that|i do not have|i don't have|i'm not certain/i;
+
+function logAsk(env, ctx, q, reply) {
+  if (!env.VISITS || !q) return;
+  const unanswered = !reply || UNANSWERED_RE.test(reply);
+  ctx.waitUntil((async () => {
+    try {
+      const arr = JSON.parse((await env.VISITS.get("qlog")) || "[]");
+      arr.push({ q: String(q).slice(0, 300), t: Date.now(), u: unanswered });
+      if (arr.length > 300) arr.splice(0, arr.length - 300);
+      await env.VISITS.put("qlog", JSON.stringify(arr));
+    } catch (e) {}
+  })());
+}
+
 export default {
   async fetch(request, env, ctx) {
     const origin = request.headers.get("Origin") || "";
@@ -118,6 +139,20 @@ export default {
       let n = parseInt((await env.VISITS.get("calls")) || "0", 10) + 1;
       ctx.waitUntil(env.VISITS.put("calls", String(n)));
       return json({ count: n }, 200, cors);
+    }
+
+    // ---- View logged visitor questions (protected) ----
+    if (request.method === "GET" && _url.pathname === "/questions") {
+      if (_url.searchParams.get("key") !== ASK_LOG_KEY) return json({ error: "unauthorized" }, 401, cors);
+      if (!env.VISITS) return json({ error: "no KV bound" }, 200, cors);
+      if (_url.searchParams.get("clear") === "1") {
+        ctx.waitUntil(env.VISITS.put("qlog", "[]"));
+        return json({ cleared: true }, 200, cors);
+      }
+      const log = JSON.parse((await env.VISITS.get("qlog")) || "[]");
+      const onlyUnanswered = _url.searchParams.get("unanswered") === "1";
+      const out = onlyUnanswered ? log.filter(function (e) { return e.u; }) : log;
+      return json({ total: log.length, unanswered: log.filter(function (e) { return e.u; }).length, questions: out.reverse() }, 200, cors);
     }
 
     if (request.method !== "POST") return json({ error: "POST only" }, 405, cors);
@@ -145,6 +180,7 @@ export default {
       const hit = await cache.match(cacheKey);
       if (hit) {
         const data = await hit.json();
+        logAsk(env, ctx, userMsg, data.reply);
         return json({ reply: data.reply, cached: true }, 200, cors);
       }
     }
@@ -163,8 +199,9 @@ export default {
     try {
       const out = await env.AI.run(MODEL, { messages, max_tokens: 360, temperature: 0.4 });
       const reply = String(out && out.response || "").trim();
-      if (!reply) return json({ reply: null }, 200, cors);
+      if (!reply) { logAsk(env, ctx, userMsg, ""); return json({ reply: null }, 200, cors); }
 
+      logAsk(env, ctx, userMsg, reply);
       if (cacheKey) {
         const toCache = new Response(JSON.stringify({ reply }), {
           headers: { "Content-Type": "application/json", "Cache-Control": "max-age=" + CACHE_TTL },
