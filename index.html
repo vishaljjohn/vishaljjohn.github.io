@@ -1362,13 +1362,21 @@
             if (document.hidden) { rafId = requestAnimationFrame(loop); return; }
             var now = performance.now();
             dctx = arCtx; clearCanvas();
+            var drewMain = false;
             if (faceLandmarker && !arFailed && feed.readyState >= 2 && feed.videoWidth > 0) {
                 computeMap();
                 if (now - tMain >= DET_MS) { tMain = now; try { var r = faceLandmarker.detectForVideo(feed, now); lastLmMain = (r && r.faceLandmarks && r.faceLandmarks[0]) || lastLmMain; } catch (e) {} }
-                if (lastLmMain) { var g = geom(lastLmMain); SLOT_ORDER.forEach(function (slot) { if (arSlots[slot]) drawAsset(assetById[arSlots[slot]], g); }); }
-            } else if (arFailed) {
-                var W = stage.clientWidth, H = stage.clientHeight;
-                var fg = { faceW: W * 0.16, faceH: W * 0.22, roll: 0, up: { x: 0, y: -1 }, eyes: { x: W / 2, y: H * 0.40 }, top: { x: W / 2, y: H * 0.28 }, chin: { x: W / 2, y: H * 0.52 }, mouth: { x: W / 2, y: H * 0.47 }, faceCenter: { x: W / 2, y: H * 0.40 } };
+                if (lastLmMain) { var g = geom(lastLmMain); SLOT_ORDER.forEach(function (slot) { if (arSlots[slot]) drawAsset(assetById[arSlots[slot]], g); }); drewMain = true; }
+            }
+            // Always show my filters on the main video — even before a face is detected,
+            // while the background clip is still loading, or if face tracking is unavailable.
+            // (Distortions need real landmarks, so they're the only effect skipped here.)
+            if (!drewMain) {
+                var fW = stage.clientWidth, fH = stage.clientHeight, fcx = fW / 2, ey = fH * 0.40;
+                var fg = { faceW: fW * 0.16, faceH: fW * 0.22, roll: 0, up: { x: 0, y: -1 },
+                    eyes: { x: fcx, y: ey }, eyeR: { x: fcx - fW * 0.05, y: ey }, eyeL: { x: fcx + fW * 0.05, y: ey },
+                    top: { x: fcx, y: fH * 0.28 }, chin: { x: fcx, y: fH * 0.52 }, mouth: { x: fcx, y: fH * 0.47 }, faceCenter: { x: fcx, y: ey } };
+                dctx = arCtx;
                 SLOT_ORDER.forEach(function (slot) { if (slot !== 'distort' && arSlots[slot]) drawAsset(assetById[arSlots[slot]], fg); });
             }
             if (selfArCtx) {

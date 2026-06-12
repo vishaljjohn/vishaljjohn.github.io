@@ -207,3 +207,17 @@ html.dark .image-section, html.dark img { } /* leave photos untouched */
 .vj-theme-toggle:hover { transform: scale(1.08); }
 html:not(.dark) .vj-theme-toggle { background: #fff; color: #444; }
 @media (max-width: 480px) { .vj-theme-toggle { left: 14px; bottom: 14px; width: 42px; height: 42px; font-size: 18px; } }
+
+/* Dark mode — forms (contact page) and generic inputs */
+html.dark .contact-form { background-color: #161a20; box-shadow: 0 3px 10px rgba(0,0,0,0.5); }
+html.dark .form-group label { color: #cdd4de; }
+html.dark input[type="text"], html.dark input[type="email"], html.dark input[type="search"],
+html.dark input[type="url"], html.dark input[type="tel"], html.dark input[type="number"],
+html.dark textarea, html.dark select {
+  background-color: #0f1318; color: #e8ecf1; border-color: #2a313c;
+}
+html.dark input::placeholder, html.dark textarea::placeholder { color: #7e8896; }
+html.dark .contact-form button, html.dark form button[type="submit"] { background-color: #6cb6ff; color: #0f1115; }
+html.dark .contact-form button:hover, html.dark form button[type="submit"]:hover { background-color: #4f9fe8; }
+/* Blog/newsletter list separators in dark */
+html.dark .articles-list li { border-bottom-color: #2a313c !important; }
