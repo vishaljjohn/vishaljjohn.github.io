@@ -1,6 +1,6 @@
 {
   "_instructions": {
-    "about": "Your CV. The About page renders this file automatically, so edit text here and push; no HTML changes needed. Publications and Presentations are pulled from publications.json and presentations.json, so add papers there and they show up on the CV too. To refresh the downloadable PDF, run ./tools/build-cv-pdf.sh and commit assets/VishalJohnCV.pdf.",
+    "about": "Your CV. The About page renders this file automatically, so edit text here and push; no HTML changes needed. Publications and Presentations are pulled from publications.json and presentations.json, so add papers there and they show up on the CV too. To refresh the downloadable PDF and the \"Last updated\" date, run ./tools/build-cv-pdf.sh and commit both files.",
     "section types": {
       "entries": "A list of positions. Each item: title, org, location (optional), dates, note (optional, one line in italics), bullets (optional list).",
       "list": "A simple list of lines. Each item: text, and optionally dates.",
@@ -16,6 +16,7 @@
   "name": "Vishal John",
   "headline": "M.D. Candidate, Class of 2028 · University of Louisville School of Medicine",
   "location": "Louisville, KY",
+  "updated": "2026-10-29",
   "contact": [
     {
       "label": "vishal.john@louisville.edu",
@@ -205,7 +206,7 @@
           "title": "Volunteer",
           "org": "Hospital Elder Life Program (HELP), Michigan Medicine",
           "location": "Ann Arbor, MI",
-          "dates": "Feb 2022 – Present",
+          "dates": "Feb 2022 – May 2024",
           "bullets": [
             "Supported hospitalized older adults with orientation, mobility, feeding, and sleep protocols to prevent delirium."
           ]
@@ -214,9 +215,9 @@
           "title": "Food Server",
           "org": "The Breakfast Program at Saint Andrew's",
           "location": "Ann Arbor, MI",
-          "dates": "Dec 2021 – Present",
+          "dates": "Dec 2021 – May 2024",
           "bullets": [
-            "Serve hot breakfasts, bagged lunches, and clothing to Ann Arbor's unhoused and food-insecure community."
+            "Served hot breakfasts, bagged lunches, and clothing to Ann Arbor's unhoused and food-insecure community."
           ]
         }
       ]

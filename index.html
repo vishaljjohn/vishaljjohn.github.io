@@ -6,13 +6,13 @@
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Vishal John | Medical Student, Aspiring Coffee Shop Owner & Balloon Animal Artist</title>
-    <meta name="description" content="Personal website of Vishal John — M3 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
+    <meta name="description" content="Vishal John is a third-year medical student at the University of Louisville. Say hi on a playful video-call homepage and explore his research, writing, and volunteering.">
     <meta name="author" content="Vishal John">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.vishaljohn.com/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Vishal John">
-    <meta property="og:description" content="Personal website of Vishal John — M3 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
+    <meta property="og:description" content="Vishal John is a third-year medical student at the University of Louisville. Say hi on a playful video-call homepage and explore his research, writing, and volunteering.">
     <meta property="og:url" content="https://www.vishaljohn.com/">
     <meta property="og:image" content="https://www.vishaljohn.com/assets/og-image.jpg">
     <meta property="og:image:width" content="1200">
@@ -20,7 +20,7 @@
     <meta property="og:site_name" content="Vishal John">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Vishal John">
-    <meta name="twitter:description" content="M3 medical student at UofL — children's book author, balloon animal artist, and aspiring coffee shop owner.">
+    <meta name="twitter:description" content="Vishal John is a third-year medical student at the University of Louisville. Say hi on a playful video-call homepage and explore his research, writing, and volunteering.">
     <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og-image.jpg">
     <meta name="theme-color" content="#0b0c0e">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
@@ -322,6 +322,8 @@
         .ec-inner i { font-size: 42px; color: var(--red); }
         .ec-title { font-size: 22px; font-weight: 700; margin-top: 14px; }
         .ec-sub { color: var(--muted); margin-top: 6px; font-size: 14px; }
+        .skip-link { position: fixed; left: 12px; top: -60px; z-index: 100; background: #fff; color: #15171b; font-weight: 700; font-size: 14px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: top .15s; }
+        .skip-link:focus { top: 12px; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
         .self-tile { cursor: pointer; }
         a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
@@ -431,6 +433,7 @@
 </head>
 
 <body class="no-video">
+    <a class="skip-link" href="#chatField">Skip to chat</a>
 
     <!-- "Connecting…" intro -->
     <div class="connecting" id="connecting">
@@ -907,9 +910,9 @@
             { k: ['japan','ishinomaki','revitaliz'],
               a: "i spent time on community revitalization in Ishinomaki, Japan. photos and the story are on the <a href='pages/japan.html'>Japan</a> page." },
             { k: ['help','elder','hospital','older'],
-              a: "i volunteer with the Hospital Elder Life Program (HELP), supporting older patients. more on the <a href='pages/HELP.html'>HELP</a> page." },
+              a: "i volunteered with the Hospital Elder Life Program (HELP) from 2022 to 2024, supporting older patients. more on the <a href='pages/HELP.html'>HELP</a> page." },
             { k: ['breakfast','andrew','saint','volunteer','service','community'],
-              a: "i help with Saint Andrew's Breakfast Program and a few other community efforts. there's a page on <a href='pages/standrews.html'>Saint Andrew's</a>, and you can see everything via 'My work' in the chat." },
+              a: "i served at Saint Andrew's Breakfast Program from 2021 to 2024, and i'm on the board of Rock Cancer. there's a page on <a href='pages/standrews.html'>Saint Andrew's</a>, and you can see everything via 'My work' in the chat." },
             { k: ['contact','email','reach','get in touch','hire','message','connect'],
               a: "the best way to reach me is my <a href='pages/contact.html'>Contact</a> page — i'd love to hear from you." },
             { k: ['link','social','linkedin','github','online','find you','medium'],

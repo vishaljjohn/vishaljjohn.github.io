@@ -10,19 +10,19 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Vishal John</title>
-    <meta name="description" content="Get in touch with Vishal John — medical student, children's book author, and balloon animal artist.">
+    <meta name="description" content="Send Vishal John a message about research, his children's book, Rock Cancer, speaking, or anything else. He reads every note.">
     <meta name="author" content="Vishal John">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.vishaljohn.com/pages/contact.html">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Contact | Vishal John">
-    <meta property="og:description" content="Get in touch with Vishal John — medical student, children's book author, and balloon animal artist.">
+    <meta property="og:description" content="Send Vishal John a message about research, his children's book, Rock Cancer, speaking, or anything else. He reads every note.">
     <meta property="og:url" content="https://www.vishaljohn.com/pages/contact.html">
     <meta property="og:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
     <meta property="og:site_name" content="Vishal John">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Contact | Vishal John">
-    <meta name="twitter:description" content="Get in touch with Vishal John — medical student, children's book author, and balloon animal artist.">
+    <meta name="twitter:description" content="Send Vishal John a message about research, his children's book, Rock Cancer, speaking, or anything else. He reads every note.">
     <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
@@ -229,11 +229,46 @@ button:hover {
       nav ul.open { display: flex; }
       nav a { padding: 12px 24px; border-radius: 0; display: block; text-align: center; margin: 0; }
     }
+        /* Form status + voicemail */
+        .form-status { margin: 12px 0 0; font-size: 14px; color: #1e7b34; min-height: 1px; }
+        .form-status.error { color: #b42318; }
+        .contact-form button[type="submit"]:disabled, .vm-btn:disabled { opacity: .6; cursor: default; }
+        .vm-divider { display: flex; align-items: center; gap: 14px; margin: 34px 0 22px; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+        .vm-divider::before, .vm-divider::after { content: ""; flex: 1; height: 1px; background: #e8eaed; }
+        .vm h3 { margin: 0 0 6px; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+        .vm h3 i { color: #0a6db0; }
+        .vm-sub { margin: 0 0 16px; color: #6b7280; font-size: 14px; }
+        .vm-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+        .vm-fields input { width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid #d5d9de; border-radius: 8px; font-size: 15px; }
+        .vm-fields input:focus { outline: none; border-color: #0a6db0; box-shadow: 0 0 0 3px #eaf3fa; }
+        .vm-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .vm-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 8px; font: 600 14px/1.2 var(--font, sans-serif); cursor: pointer; border: 1.5px solid #0a6db0; background: transparent; color: #0a6db0; }
+        .vm-btn:hover { background: #0a6db0; color: #fff; }
+        .vm-send { background: #0a6db0; color: #fff; }
+        .vm-send:hover { background: #075488; border-color: #075488; }
+        .vm-dot { width: 10px; height: 10px; border-radius: 50%; background: #e5484d; }
+        .vm.recording .vm-record { border-color: #e5484d; color: #b42318; background: #fff5f5; }
+        .vm.recording .vm-dot { animation: vmpulse 1s ease-in-out infinite; }
+        @keyframes vmpulse { 50% { opacity: .25; } }
+        .vm-timer { font-variant-numeric: tabular-nums; color: #6b7280; font-size: 14px; }
+        .vm-review audio { width: 100%; margin: 4px 0 12px; }
+        .vm-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        @media (max-width: 640px) { .vm-fields { grid-template-columns: 1fr; } .vm-btn { padding: 13px 18px; } }
+        html.dark .vm-divider::before, html.dark .vm-divider::after { background: #2a313c; }
+        html.dark .vm-sub, html.dark .vm-timer, html.dark .vm-divider { color: #9aa4b2; }
+        html.dark .vm-fields input { background: #0f1318; color: #e8ecf1; border-color: #2a313c; }
+        html.dark .vm-btn { color: #6cb6ff; border-color: #6cb6ff; }
+        html.dark .vm-btn:hover, html.dark .vm-send { background: #0a6db0; border-color: #0a6db0; color: #fff; }
+        html.dark .vm.recording .vm-record { background: #2a1416; color: #ff8a8f; border-color: #e5484d; }
+        html.dark .form-status { color: #6fd38b; }
+        html.dark .form-status.error { color: #ff8a8f; }
+        [hidden] { display: none !important; }
     </style>
     <link rel="stylesheet" href="../assets/site.css">
 </head>
 
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 
     <header>
@@ -255,17 +290,17 @@ button:hover {
 
         
 
-<div class="contact-form">
+<div class="contact-form" id="main" tabindex="-1">
     <h2>Send Me A Message</h2>
-    <form action="https://formspree.io/f/mbjvgonb" method="POST">
+    <form id="contactForm" action="https://formspree.io/f/mbjvgonb" method="POST">
         <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" autocomplete="name" required>
         </div>
 
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="_replyto" required>
+            <input type="email" id="email" name="_replyto" autocomplete="email" required>
         </div>
 
         <div class="form-group">
@@ -278,10 +313,34 @@ button:hover {
             <textarea id="message" name="message" rows="6" required></textarea>
         </div>
 
-        <input type="text" name="_gotcha" style="display:none" />
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-        <button type="submit">Submit</button>
+        <button type="submit">Send message</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
     </form>
+
+    <!-- Voicemail: only shown when the browser can record and the voicemail service is up -->
+    <section class="vm" id="voicemail" hidden aria-labelledby="vmTitle">
+        <div class="vm-divider"><span>or</span></div>
+        <h3 id="vmTitle"><i class="fas fa-microphone" aria-hidden="true"></i> Leave a voicemail</h3>
+        <p class="vm-sub">Record up to 60 seconds. You can listen back before sending.</p>
+        <div class="vm-fields">
+            <input type="text" id="vmName" autocomplete="name" placeholder="Your name (optional)" aria-label="Your name (optional)">
+            <input type="email" id="vmEmail" autocomplete="email" placeholder="Email, so I can reply (optional)" aria-label="Your email (optional)">
+        </div>
+        <div class="vm-controls">
+            <button type="button" class="vm-btn vm-record" id="vmRecord"><span class="vm-dot" aria-hidden="true"></span> <span class="vm-label">Start recording</span></button>
+            <span class="vm-timer" id="vmTimer" aria-live="off">0:00 / 1:00</span>
+        </div>
+        <div class="vm-review" id="vmReview" hidden>
+            <audio id="vmAudio" controls preload="metadata"></audio>
+            <div class="vm-actions">
+                <button type="button" class="vm-btn vm-send" id="vmSend"><i class="fas fa-paper-plane" aria-hidden="true"></i> Send voicemail</button>
+                <button type="button" class="vm-btn vm-redo" id="vmRedo">Record again</button>
+            </div>
+        </div>
+        <p class="form-status" id="vmStatus" role="status" aria-live="polite"></p>
+    </section>
 </div><footer>
         <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
         <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
@@ -299,6 +358,127 @@ button:hover {
           navUl.classList.toggle('open');
         });
       }
+    })();
+    </script>
+    <script>
+    /* Contact form: send in the background, clear it, then show our own thank-you page.
+       Without JavaScript the form still posts to Formspree normally. */
+    (function () {
+        var form = document.getElementById('contactForm');
+        var status = document.getElementById('formStatus');
+        var btn = form.querySelector('button[type="submit"]');
+        if (!window.fetch || !window.FormData) return;
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            btn.disabled = true; btn.textContent = 'Sending…';
+            status.textContent = ''; status.className = 'form-status';
+            fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+                .then(function (r) {
+                    if (!r.ok) throw new Error('send failed');
+                    form.reset();
+                    window.location.href = 'thanks.html';
+                })
+                .catch(function () {
+                    status.textContent = "Sorry, that didn't send. Please try again, or email me at vishal.john@louisville.edu.";
+                    status.className = 'form-status error';
+                    btn.disabled = false; btn.textContent = 'Send message';
+                });
+        });
+        // coming Back from the thank-you page can restore a stale page; make sure it's empty and usable
+        window.addEventListener('pageshow', function (e) {
+            if (e.persisted) { form.reset(); btn.disabled = false; btn.textContent = 'Send message'; status.textContent = ''; }
+        });
+    })();
+
+    /* Voicemail recorder (stored by the site's Cloudflare worker; Vishal gets an email with a link) */
+    (function () {
+        var VM_API = 'https://vishal-chat.vishaljjohn.workers.dev';
+        var MAX_SECONDS = 60, MAX_BYTES = 3 * 1024 * 1024;
+        var box = document.getElementById('voicemail');
+        if (!box || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) return;
+
+        // only show the recorder when the service answers
+        var ctrl = window.AbortController ? new AbortController() : null;
+        if (ctrl) setTimeout(function () { ctrl.abort(); }, 5000);
+        fetch(VM_API + '/voicemail/ping', { signal: ctrl ? ctrl.signal : undefined })
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (j) { if (j && j.ok) box.hidden = false; })
+            .catch(function () {});
+
+        var recBtn = document.getElementById('vmRecord'), recLabel = recBtn.querySelector('.vm-label');
+        var timer = document.getElementById('vmTimer'), review = document.getElementById('vmReview');
+        var audioEl = document.getElementById('vmAudio'), sendBtn = document.getElementById('vmSend');
+        var redoBtn = document.getElementById('vmRedo'), status = document.getElementById('vmStatus');
+        var recorder = null, stream = null, chunks = [], blob = null, started = 0, tick = null, url = null;
+
+        function pickType() {
+            var types = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'];
+            for (var i = 0; i < types.length; i++) if (MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(types[i])) return types[i];
+            return '';
+        }
+        function fmt(s) { return Math.floor(s / 60) + ':' + ('0' + Math.floor(s % 60)).slice(-2); }
+        function say(msg, isError) { status.textContent = msg || ''; status.className = 'form-status' + (isError ? ' error' : ''); }
+        function stopStream() { if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; } }
+
+        function start() {
+            say('');
+            navigator.mediaDevices.getUserMedia({ audio: true }).then(function (s) {
+                stream = s; chunks = [];
+                var type = pickType();
+                try { recorder = type ? new MediaRecorder(s, { mimeType: type }) : new MediaRecorder(s); }
+                catch (e) { recorder = new MediaRecorder(s); }
+                recorder.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+                recorder.onstop = function () {
+                    stopStream(); clearInterval(tick);
+                    box.classList.remove('recording'); recLabel.textContent = 'Start recording';
+                    blob = new Blob(chunks, { type: (recorder.mimeType || 'audio/webm') });
+                    if (!blob.size) { say("I couldn't hear anything. Please try again.", true); return; }
+                    if (url) URL.revokeObjectURL(url);
+                    url = URL.createObjectURL(blob); audioEl.src = url;
+                    review.hidden = false; recBtn.hidden = true; timer.hidden = true;
+                };
+                recorder.start(1000);
+                started = Date.now(); timer.textContent = '0:00 / ' + fmt(MAX_SECONDS);
+                box.classList.add('recording'); recLabel.textContent = 'Stop recording';
+                tick = setInterval(function () {
+                    var sec = (Date.now() - started) / 1000;
+                    timer.textContent = fmt(sec) + ' / ' + fmt(MAX_SECONDS);
+                    if (sec >= MAX_SECONDS) stop();
+                }, 250);
+            }).catch(function (err) {
+                say(err && err.name === 'NotAllowedError'
+                    ? 'Microphone access was blocked. Allow it in your browser settings to leave a voicemail.'
+                    : "Couldn't find a microphone to record with.", true);
+            });
+        }
+        function stop() { if (recorder && recorder.state !== 'inactive') recorder.stop(); }
+        function reset() {
+            blob = null; review.hidden = true; recBtn.hidden = false; timer.hidden = false;
+            timer.textContent = '0:00 / ' + fmt(MAX_SECONDS); audioEl.removeAttribute('src'); say('');
+        }
+
+        recBtn.addEventListener('click', function () { (recorder && recorder.state === 'recording') ? stop() : start(); });
+        redoBtn.addEventListener('click', function () { reset(); start(); });
+        sendBtn.addEventListener('click', function () {
+            if (!blob) return;
+            if (blob.size > MAX_BYTES) { say('That recording is too long. Please keep it under a minute.', true); return; }
+            sendBtn.disabled = true; redoBtn.disabled = true; say('Sending…');
+            fetch(VM_API + '/voicemail', {
+                method: 'POST', body: blob,
+                headers: {
+                    'Content-Type': blob.type.split(';')[0] || 'audio/webm',
+                    'X-VM-Name': encodeURIComponent(document.getElementById('vmName').value.trim()),
+                    'X-VM-Email': encodeURIComponent(document.getElementById('vmEmail').value.trim())
+                }
+            }).then(function (r) {
+                if (!r.ok) throw new Error('failed');
+                document.getElementById('vmName').value = ''; document.getElementById('vmEmail').value = '';
+                reset(); window.location.href = 'thanks.html?voicemail=1';
+            }).catch(function () {
+                say("Sorry, the voicemail didn't send. Please try again, or use the form above.", true);
+            }).then(function () { sendBtn.disabled = false; redoBtn.disabled = false; });
+        });
+        window.addEventListener('pagehide', stopStream);
     })();
     </script>
     <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>

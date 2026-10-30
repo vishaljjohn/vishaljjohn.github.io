@@ -11,21 +11,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO -->
     <title>About Vishal John | UofL Medical Student & Researcher</title>
-    <meta name="description" content="Learn about Vishal John — a third-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
+    <meta name="description" content="About Vishal John, a third-year medical student at the University of Louisville: his background, pediatric brain cancer research, leadership, and full CV.">
     <meta name="author" content="Vishal John">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.vishaljohn.com/pages/about.html">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="About Vishal John | UofL Medical Student & Researcher">
-    <meta property="og:description" content="Learn about Vishal John — a third-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
+    <meta property="og:description" content="About Vishal John, a third-year medical student at the University of Louisville: his background, pediatric brain cancer research, leadership, and full CV.">
     <meta property="og:url" content="https://www.vishaljohn.com/pages/about.html">
     <meta property="og:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
     <meta property="og:site_name" content="Vishal John">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="About Vishal John | UofL Medical Student & Researcher">
-    <meta name="twitter:description" content="Learn about Vishal John — a third-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
+    <meta name="twitter:description" content="About Vishal John, a third-year medical student at the University of Louisville: his background, pediatric brain cancer research, leadership, and full CV.">
     <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
@@ -276,9 +276,48 @@
         </style>
     <link rel="stylesheet" href="../assets/site.css">
     <style>
+        /* ---------- Timeline ---------- */
+        .tl-card { margin-top: 28px; padding: 36px 48px; }
+        .tl-heading { margin: 0 0 22px !important; font-size: 13px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent); }
+        .timeline { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: relative; }
+        .timeline::before { content: ""; position: absolute; left: 10%; right: 10%; top: 9px; height: 2px; background: var(--line); }
+        .timeline li { position: relative; text-align: center; }
+        .timeline a { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 0 8px 4px; text-decoration: none; color: inherit; border-radius: 10px; }
+        .tl-dot { width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 3px solid var(--accent); margin-bottom: 10px; position: relative; z-index: 1; transition: background .2s ease, transform .2s ease; }
+        .timeline a:hover .tl-dot, .timeline a:focus-visible .tl-dot { background: var(--accent); transform: scale(1.15); }
+        .tl-year { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+        .tl-name { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+        .timeline a:hover .tl-name { color: var(--accent); }
+        .tl-what { font-size: 13px; color: var(--ink-soft); line-height: 1.4; }
+        @media (max-width: 760px) {
+            .tl-card { padding: 26px 20px; }
+            .timeline { grid-template-columns: 1fr; gap: 4px; }
+            .timeline::before { left: 17px; right: auto; top: 12px; bottom: 12px; width: 2px; height: auto; }
+            .timeline li { text-align: left; }
+            .timeline a { display: grid; grid-template-columns: 26px 1fr; column-gap: 12px; align-items: start; padding: 8px 4px; }
+            .tl-dot { grid-row: 1 / span 3; margin: 2px 0 0 4px; }
+            .tl-year, .tl-name, .tl-what { grid-column: 2; }
+        }
+        html.dark .tl-dot { background: #161a20; }
+        html.dark .timeline::before { background: #2a313c; }
+        html.dark .tl-name { color: #f0f3f7; }
+        html.dark .tl-what { color: #cdd4de; }
+        html.dark .tl-year { color: #9aa4b2; }
+        html.dark .tl-heading { color: #6cb6ff; }
+
+        /* Photo swap: hover with a mouse, tap on phones (hover would "stick" on touch) */
+        @media (hover: none) {
+            .image-section:hover .img-default { opacity: 1; }
+            .image-section:hover .img-fun { opacity: 0; }
+        }
+        .image-section.swapped .img-default { opacity: 0; }
+        .image-section.swapped .img-fun { opacity: 1; }
+
         /* ---------- CV (rendered from assets/cv.json) ---------- */
         .cv { margin-top: 28px; padding: 48px 56px; line-height: 1.5; }
         .cv-loading { color: var(--muted); text-align: center; }
+        .cv-updated { margin: 12px 0 0 !important; font-size: 12px; color: var(--muted); }
+        html.dark .cv-updated { color: #9aa4b2; }
         .cv-head { text-align: center; padding-bottom: 22px; margin-bottom: 8px; border-bottom: 2px solid var(--accent); }
         .cv-head h2 { margin: 0 0 4px; font-size: 30px; letter-spacing: .5px; }
         .cv-headline { margin: 0 0 12px !important; color: var(--ink-soft); font-size: 15px; }
@@ -332,7 +371,7 @@
             @page { margin: 0.6in 0.65in; }
             html, body { background: #fff !important; }
             body::before, header, footer, .vj-theme-toggle, .vjw-launch, .vjw-call, .vjw-tip, .vjw-panel,
-            .container > .main-content:not(.cv) { display: none !important; }
+            .container > .main-content:not(.cv), .skip-link { display: none !important; }
             .container { width: auto; padding: 0; margin: 0; }
             .cv { box-shadow: none !important; padding: 0; margin: 0; font-size: 12px; }
             .cv-head h2 { font-size: 24px; }
@@ -350,6 +389,7 @@
 </head>
 
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
     <header>
         <h1><a href="../index_classic.html">Vishal John</a></h1>
@@ -367,11 +407,11 @@
         </button>
     </header>
 
-    <main class="container">
+    <main class="container" id="main" tabindex="-1">
         <section class="main-content">
             <h2>About Me</h2>
 
-            <div class="image-section">
+            <div class="image-section" role="button" tabindex="0" aria-label="Tap to switch photos" aria-pressed="false">
                 <img decoding="async" fetchpriority="high" class="img-default" src="../images/Vishal%20John%20Headshot.jpg" alt="Vishal John">
                 <img loading="lazy" decoding="async" class="img-fun" src="../images/vishal-john-2.jpg" alt="Vishal John, smiling">
             </div>
@@ -379,7 +419,7 @@
             <div class="description-section">
                 <p>I'm Vishal John, a third-year medical student at the University of Louisville School of Medicine. My interest in medicine is rooted in years of hands-on research — most notably at the Koschmann Lab at the University of Michigan, where I worked as a Clinical Research Technician studying pediatric brain cancer. There, I co-authored publications on liquid biopsy techniques, presented first-author research at the BioInnovation in Brain Cancer Symposium, and developed methods for simulating the tumor microenvironment using stem cell-derived organoids.</p>
                 <p>Before medical school, I served as Project Lead at miRcore, a nonprofit dedicated to democratizing STEM education through bioinformatics training and the Citizen Scientist Sequencing Initiative — an effort to give students direct ownership of their own genomic data. At UofL, I lead the Oncology Interest Group and worked on a cardiothoracic surgery device team through Bluegrass Biodesign.</p>
-                <p>My commitment to medicine extends beyond the laboratory. I serve on the board of Rock Cancer, a program providing free rock climbing experiences to young patients with cancer, and have volunteered since 2021 at Saint Andrew's Breakfast Program in Ann Arbor, which provides meals and essential services to the city's unhoused population.</p>
+                <p>My commitment to medicine extends beyond the laboratory. I serve on the board of Rock Cancer, a program providing free rock climbing experiences to young patients with cancer, and from 2021 to 2024 I volunteered at Saint Andrew's Breakfast Program in Ann Arbor, which provides meals and essential services to the city's unhoused population.</p>
                 <p>I believe that becoming a good physician requires equal parts scientific rigor and genuine investment in people — and I try to bring both to everything I do.</p>
             </div>
 
@@ -387,6 +427,18 @@
                 <a href="#cv" class="cv-button">View My CV</a>
                 <a href="../assets/VishalJohnCV.pdf" class="cv-btn" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i> Download PDF</a>
             </div>
+        </section>
+
+        <!-- Timeline: each stop links to its page (or the CV for school) -->
+        <section class="main-content tl-card" aria-label="My path so far">
+            <h2 class="tl-heading">My path so far</h2>
+            <ol class="timeline">
+                <li><a href="#cv"><span class="tl-dot"></span><span class="tl-year">2017 – 2021</span><span class="tl-name">University of Michigan</span><span class="tl-what">B.S., Biopsychology, Cognition &amp; Neuroscience</span></a></li>
+                <li><a href="koschmannlab.html"><span class="tl-dot"></span><span class="tl-year">2021 – 2023</span><span class="tl-name">Koschmann Lab</span><span class="tl-what">Pediatric brain cancer research</span></a></li>
+                <li><a href="mircore.html"><span class="tl-dot"></span><span class="tl-year">2023 – 2024</span><span class="tl-name">miRcore</span><span class="tl-what">Project Lead, genomics education</span></a></li>
+                <li><a href="#cv"><span class="tl-dot"></span><span class="tl-year">2024 – 2028</span><span class="tl-name">UofL School of Medicine</span><span class="tl-what">M.D. candidate</span></a></li>
+                <li><a href="bluegrassbiodesign.html"><span class="tl-dot"></span><span class="tl-year">2025 – 2026</span><span class="tl-name">Bluegrass Biodesign</span><span class="tl-what">Cardiothoracic device team</span></a></li>
+            </ol>
         </section>
 
         <!-- CV: content lives in assets/cv.json (+ publications.json / presentations.json) -->
@@ -411,6 +463,16 @@
                 navUl.classList.toggle('open');
             });
         }
+    </script>
+    <script>
+    /* Tap (or Enter) swaps the photo; on desktop the hover still works too */
+    (function () {
+        var box = document.querySelector('.image-section');
+        if (!box) return;
+        function toggle() { var on = box.classList.toggle('swapped'); box.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+        box.addEventListener('click', toggle);
+        box.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    })();
     </script>
     <script>
     /* Renders the CV from assets/cv.json. Publications/presentations come from their own files. */
@@ -464,6 +526,11 @@
             }).join('') + '</ul>';
         }
         function byYearDesc(a, b) { return (b.year || 0) - (a.year || 0); }
+        // "2026-10-29" -> "October 29, 2026" (parsed as a local date, not UTC midnight)
+        function fmtDate(iso) {
+            var p = String(iso).split('-'); var d = new Date(+p[0], (+p[1] || 1) - 1, +p[2] || 1);
+            return isNaN(d) ? iso : d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
 
         Promise.all([
             getJSON('../assets/cv.json'),
@@ -475,7 +542,9 @@
                 + '<p class="cv-headline">' + esc(cv.headline) + (cv.location ? ' · ' + esc(cv.location) : '') + '</p>'
                 + '<div class="cv-contact">' + (cv.contact || []).map(function (c) {
                     return '<a href="' + esc(c.url) + '"' + (/^https?:/.test(c.url) ? ' target="_blank" rel="noopener"' : '') + '><i class="' + esc(c.icon) + '"></i>' + esc(c.label) + '</a>';
-                }).join('') + '</div></div>';
+                }).join('') + '</div>'
+                + (cv.updated ? '<p class="cv-updated">Last updated ' + esc(fmtDate(cv.updated)) + '</p>' : '')
+                + '</div>';
             (cv.sections || []).forEach(function (sec) {
                 if (sec.hidden) return;
                 var items = (sec.items || []).filter(function (it) { return !it.hidden; });

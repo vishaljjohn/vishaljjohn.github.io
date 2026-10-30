@@ -61,8 +61,8 @@ GROUND RULES
 
 === COMMUNITY & VOLUNTEERING ===
 - Rock Cancer — free adaptive rock climbing for young cancer survivors (ages 4-25). He's on the leadership team: built the website and merch store and helped grow it to national recognition (featured on NBC Nightly News with Lester Holt and mlive). He helped launch the Louisville program with classmates Paige Oldfield and Liam Scott in partnership with Norton Children's Cancer Institute (at RockSport Climbing Gym); the original program runs at Planet Rock in Ann Arbor, third Fridays. He also volunteers as a belayer.
-- Saint Andrew's Breakfast Program (Ann Arbor) — food server since 2021; serves 90-150 hot breakfasts daily plus bagged lunches and clothing for the community.
-- Hospital Elder Life Program (HELP), Michigan Medicine — volunteer since 2022 supporting older hospitalized patients (orientation, mobility, companionship, preventing delirium).
+- Saint Andrew's Breakfast Program (Ann Arbor) — food server 2021–2024; the program serves 90-150 hot breakfasts daily plus bagged lunches and clothing for the community.
+- Hospital Elder Life Program (HELP), Michigan Medicine — volunteer 2022–2024 supporting older hospitalized patients (orientation, mobility, companionship, preventing delirium).
 - Lab on Wheels — mentor (2019–2021) who traveled to high schools teaching gel electrophoresis, PCR, and micro-pipetting.
 - God's Love We Deliver / Ginsberg Center Alternative Spring Break Leader — meals for people medically unable to get food themselves.
 - Balloon animals — twists them at community events; notably at an APAMSA Louisville health fair at a local Buddhist temple, entertaining kids while families got free screenings.
@@ -93,7 +93,7 @@ function corsHeaders(origin) {
   return {
     "Access-Control-Allow-Origin": allow,
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, X-VM-Name, X-VM-Email",
     "Vary": "Origin",
   };
 }
@@ -145,6 +145,62 @@ function logAsk(env, ctx, q, reply) {
   })());
 }
 
+// ---- Voicemail (Contact page) ----
+// Visitors record a short message in the browser; it's stored in the VISITS KV and you
+// get an email (through the site's Formspree form) with a private link to listen.
+const FORMSPREE = "https://formspree.io/f/mbjvgonb";
+const VM_MAX_BYTES = 3 * 1024 * 1024;   // ~60 seconds of compressed audio
+const VM_TTL = 60 * 60 * 24 * 90;       // keep recordings for 90 days
+
+async function handleVoicemail(request, env, ctx, url, cors, origin) {
+  const path = url.pathname;
+  if (request.method === "GET" && path === "/voicemail/ping") {
+    // the Contact page only shows the recorder when this answers ok
+    return json({ ok: !!env.VISITS }, env.VISITS ? 200 : 503, cors);
+  }
+  if (request.method === "POST" && path === "/voicemail") {
+    if (!origin || !ALLOWED_ORIGINS.includes(origin)) return json({ error: "forbidden" }, 403, cors);
+    if (!env.VISITS) return json({ error: "voicemail unavailable" }, 503, cors);
+    const type = (request.headers.get("Content-Type") || "").split(";")[0].trim();
+    if (!/^audio\/(webm|mp4|ogg|mpeg|aac|x-m4a)$/.test(type)) return json({ error: "unsupported audio type" }, 415, cors);
+    const audio = await request.arrayBuffer();
+    if (!audio.byteLength) return json({ error: "empty recording" }, 400, cors);
+    if (audio.byteLength > VM_MAX_BYTES) return json({ error: "recording too long" }, 413, cors);
+    // the page URI-encodes these (headers can't carry accented letters like "José")
+    const dec = function (v) { try { return decodeURIComponent(v || ""); } catch (e) { return v || ""; } };
+    const name = dec(request.headers.get("X-VM-Name")).slice(0, 80);
+    const email = dec(request.headers.get("X-VM-Email")).slice(0, 120);
+    const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    await env.VISITS.put("vm:" + id, audio, { expirationTtl: VM_TTL, metadata: { name, email, type, t: Date.now(), bytes: audio.byteLength } });
+    const listen = url.origin + "/voicemail/" + id + (env.ASK_LOG_KEY ? "?key=" + encodeURIComponent(env.ASK_LOG_KEY) : "");
+    ctx.waitUntil(fetch(FORMSPREE, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json", "Origin": ALLOWED_ORIGINS[0], "Referer": ALLOWED_ORIGINS[0] + "/pages/contact.html" },
+      body: JSON.stringify({
+        name: name || "(no name)", _replyto: email || undefined, subject: "New voicemail on vishaljohn.com",
+        message: "New voicemail (" + Math.round(audio.byteLength / 1024) + " KB) from " + (name || "someone") + (email ? " <" + email + ">" : "") + ".\n\nListen: " + listen + "\n\nAll voicemails: " + url.origin + "/voicemails?key=YOUR_ASK_LOG_KEY"
+      })
+    }).catch(function () {}));
+    return json({ ok: true }, 200, cors);
+  }
+  // listening requires the same secret as the question log
+  if (request.method === "GET" && (path === "/voicemails" || path.indexOf("/voicemail/") === 0)) {
+    if (!env.ASK_LOG_KEY || url.searchParams.get("key") !== env.ASK_LOG_KEY) return json({ error: "unauthorized" }, 401, cors);
+    if (!env.VISITS) return json({ error: "no KV bound" }, 200, cors);
+    if (path === "/voicemails") {
+      const list = await env.VISITS.list({ prefix: "vm:" });
+      const k = encodeURIComponent(env.ASK_LOG_KEY);
+      return json({ voicemails: list.keys.map(function (e) {
+        return Object.assign({ listen: url.origin + "/voicemail/" + e.name.slice(3) + "?key=" + k }, e.metadata || {});
+      }).sort(function (a, b) { return (b.t || 0) - (a.t || 0); }) }, 200, cors);
+    }
+    const got = await env.VISITS.getWithMetadata("vm:" + path.slice("/voicemail/".length), { type: "arrayBuffer" });
+    if (!got || !got.value) return json({ error: "not found" }, 404, cors);
+    return new Response(got.value, { headers: Object.assign({ "Content-Type": (got.metadata && got.metadata.type) || "audio/webm", "Cache-Control": "private, no-store" }, cors) });
+  }
+  return null;
+}
+
 export default {
   async fetch(request, env, ctx) {
     const origin = request.headers.get("Origin") || "";
@@ -160,6 +216,11 @@ export default {
       let n = parseInt((await env.VISITS.get("calls")) || "0", 10) + 1;
       ctx.waitUntil(env.VISITS.put("calls", String(n)));
       return json({ count: n }, 200, cors);
+    }
+
+    if (_url.pathname === "/voicemail" || _url.pathname === "/voicemails" || _url.pathname.indexOf("/voicemail/") === 0) {
+      const vm = await handleVoicemail(request, env, ctx, _url, cors, origin);
+      if (vm) return vm;
     }
 
     // ---- View logged visitor questions (protected) ----

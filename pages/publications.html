@@ -11,21 +11,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO -->
     <title>Publications | Vishal John</title>
-    <meta name="description" content="Peer-reviewed publications and conference presentations by Vishal John, including research on pediatric brain cancer, liquid biopsy, and diffuse midline glioma.">
+    <meta name="description" content="Vishal John's peer-reviewed papers and conference posters on pediatric brain cancer, liquid biopsy, and genomics education, with links to read each one.">
     <meta name="author" content="Vishal John">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.vishaljohn.com/pages/publications.html">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Publications | Vishal John">
-    <meta property="og:description" content="Peer-reviewed publications and conference presentations by Vishal John, including research on pediatric brain cancer, liquid biopsy, and diffuse midline glioma.">
+    <meta property="og:description" content="Vishal John's peer-reviewed papers and conference posters on pediatric brain cancer, liquid biopsy, and genomics education, with links to read each one.">
     <meta property="og:url" content="https://www.vishaljohn.com/pages/publications.html">
     <meta property="og:image" content="https://www.vishaljohn.com/images/Photo1.jpg">
     <meta property="og:site_name" content="Vishal John">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Publications | Vishal John">
-    <meta name="twitter:description" content="Peer-reviewed publications and conference presentations by Vishal John, including research on pediatric brain cancer, liquid biopsy, and diffuse midline glioma.">
+    <meta name="twitter:description" content="Vishal John's peer-reviewed papers and conference posters on pediatric brain cancer, liquid biopsy, and genomics education, with links to read each one.">
     <meta name="twitter:image" content="https://www.vishaljohn.com/images/Photo1.jpg">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
@@ -200,6 +200,34 @@
             font-weight: bold;
         }
 
+        /* Filters, search, actions */
+        .pub-toolbar { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; justify-content: space-between; margin: 22px 0 6px; }
+        .pub-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+        .pub-filter { border: 1.5px solid var(--line, #e8eaed); background: #fff; color: var(--ink-soft, #555a61); border-radius: 999px; padding: 9px 16px; font: 600 13px/1 var(--font, inherit); cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+        .pub-filter:hover { border-color: var(--accent, #0a6db0); color: var(--accent, #0a6db0); }
+        .pub-filter.active { background: var(--accent, #0a6db0); border-color: var(--accent, #0a6db0); color: #fff; }
+        .pub-search { position: relative; flex: 1 1 260px; max-width: 360px; }
+        .pub-search i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--muted, #6b7280); font-size: 13px; pointer-events: none; }
+        .pub-search input { width: 100%; box-sizing: border-box; padding: 10px 14px 10px 36px; border: 1.5px solid var(--line, #e8eaed); border-radius: 999px; font: 14px var(--font, inherit); background: #fff; color: var(--ink, #232529); }
+        .pub-search input:focus { outline: none; border-color: var(--accent, #0a6db0); box-shadow: 0 0 0 3px var(--accent-soft, #eaf3fa); }
+        .pub-empty { color: var(--muted, #6b7280); font-size: 14px; margin: 24px 0; }
+        .pub-reset { background: none; border: 0; padding: 0; color: var(--accent, #0a6db0); font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
+        .pub-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .pub-copy { display: inline-flex; align-items: center; gap: 6px; background: transparent; border: 1.5px solid var(--line, #e8eaed); color: var(--ink-soft, #555a61); border-radius: 8px; padding: 7px 14px; font: 600 13px/1.2 var(--font, inherit); cursor: pointer; transition: border-color .15s, color .15s; }
+        .pub-copy:hover { border-color: var(--accent, #0a6db0); color: var(--accent, #0a6db0); }
+        .pub-copy.done { border-color: #28a745; color: #1e7b34; }
+        .badge-cites { background: #eef6ee; color: #1e6b33; }
+        [hidden] { display: none !important; }
+        @media (max-width: 768px) {
+            .pub-toolbar { flex-direction: column; align-items: stretch; }
+            .pub-search { max-width: none; flex-basis: auto; }
+            .pub-filter { padding: 12px 16px; }
+            .pub-search input { padding: 12px 14px 12px 36px; font-size: 16px; }
+            .pub-copy { padding: 11px 14px; }
+        }
+        html.dark .pub-filter, html.dark .pub-search input, html.dark .pub-copy { background: #1b2028; border-color: #2a313c; color: #cdd4de; }
+        html.dark .pub-filter.active { background: #6cb6ff; border-color: #6cb6ff; color: #0f1115; }
+        html.dark .badge-cites { background: #17251d; color: #8fdca4; }
         .scholar-link {
             display: inline-flex;
             align-items: center;
@@ -331,6 +359,7 @@
 </head>
 
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 
     <header>
@@ -351,7 +380,7 @@
     </header>
 
     
-      <div class="container">
+      <div class="container" id="main" tabindex="-1">
     <div class="main-content">
 
         <img loading="lazy" decoding="async" src="../images/Photo1.jpg" alt="Pipetting" style="width:50%;display:block;margin:0 auto 12px;border-radius:4px;">
@@ -365,11 +394,29 @@
         <a class="scholar-link" href="https://www.researchgate.net/profile/Vishal-John" target="_blank" rel="noopener" style="margin-left:16px;">
             <i class="fab fa-researchgate"></i> View on ResearchGate
         </a>
-        <div id="publications-container" style="margin-top:24px;"></div>
+        <div class="pub-toolbar" role="search">
+            <div class="pub-filters" role="group" aria-label="Filter">
+                <button type="button" class="pub-filter active" data-filter="all" aria-pressed="true">All</button>
+                <button type="button" class="pub-filter" data-filter="first" aria-pressed="false">First author</button>
+                <button type="button" class="pub-filter" data-filter="papers" aria-pressed="false">Papers</button>
+                <button type="button" class="pub-filter" data-filter="posters" aria-pressed="false">Posters &amp; talks</button>
+            </div>
+            <label class="pub-search">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <input type="search" id="pubSearch" placeholder="Search titles, authors, journals" aria-label="Search publications and presentations">
+            </label>
+        </div>
+        <p class="pub-empty" id="pubEmpty" hidden>Nothing matches that search. <button type="button" class="pub-reset" id="pubReset">Show everything</button></p>
 
+        <section id="pubSection">
+        <div id="publications-container" style="margin-top:24px;"></div>
+        </section>
+
+        <section id="presSection">
         <h2 style="margin-top:48px;">Conference Abstracts &amp; Posters</h2>
         <p style="color:#666;font-size:14px;margin-bottom:4px;" id="pres-count">Loading presentations...</p>
         <div id="presentations-container" style="margin-top:24px;"></div>
+        </section>
 
         </div>
     </div>
@@ -394,59 +441,152 @@
     };
 
     function fmt(raw) { return raw.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); }
+    function plainText(s) { return String(s || '').replace(/\*\*/g, '').replace(/†/g, '').replace(/\s+/g, ' ').trim(); }
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]); }
 
-    function renderPublications(pubs) {
-        document.getElementById('pub-count').textContent =
-            pubs.length + ' peer-reviewed publication' + (pubs.length !== 1 ? 's' : '') + ' · Koschmann Lab, University of Michigan';
-        const byYear = {};
-        pubs.forEach(p => { (byYear[p.year] = byYear[p.year] || []).push(p); });
-        let html = '';
-        Object.keys(byYear).sort((a,b)=>b-a).forEach(year => {
-            html += '<div class="pub-section-label">' + year + '</div>';
-            byYear[year].forEach(p => {
-                const role = ROLE_CONFIG[p.role] || ROLE_CONFIG['co-author'];
-                html += '<div class="publication-item" style="' + (p.highlight ? 'border-left-color:#28a745;' : '') + '">'
-                    + '<div class="pub-badges"><span class="badge ' + role.cls + '">' + role.label + '</span>'
-                    + '<span class="badge badge-year">' + p.journal + ' &middot; ' + p.year + '</span></div>'
-                    + '<div class="pub-title">' + p.title + '</div>'
-                    + '<div class="pub-authors">' + fmt(p.authors) + '</div>'
-                    + '<div class="pub-journal">' + p.journal + ', ' + p.year_detail + '. DOI: ' + p.doi + '</div>'
-                    + '<div class="pub-abstract">' + p.abstract + '</div>'
-                    + (p.plain ? '<div class="pub-plain"><span class="pub-plain-label">In plain English</span>' + p.plain + '</div>' : '')
-                    + '<a href="' + p.url + '" target="_blank" rel="noopener" class="pub-link">Read Paper</a></div>';
-            });
-        });
-        document.getElementById('publications-container').innerHTML = html;
+    // AMA-style citation for "Copy citation" (first 3 authors + et al. when there are more than 6)
+    // "Rebecca W. Gao" -> "Gao RW"; names already written "Wadden J" are left alone
+    function amaName(n) {
+        const parts = n.replace(/\./g, ' ').trim().split(/\s+/);
+        if (parts.length < 2 || /^[A-Z]{1,3}$/.test(parts[parts.length - 1])) return n;
+        return parts[parts.length - 1] + ' ' + parts.slice(0, -1).map(w => w[0].toUpperCase()).join('');
+    }
+    function amaAuthors(raw) {
+        const list = plainText(raw).replace(/\.\s*$/, '').replace(/\s*\(\d+ authors\)/, '')
+            .split(/,\s*/).filter(a => a && a !== '…' && a !== 'et al').map(amaName);
+        return (list.length > 6 ? list.slice(0, 3).concat('et al') : list).join(', ');
+    }
+    function citePaper(p) {
+        return amaAuthors(p.authors) + '. ' + plainText(p.title) + '. ' + p.journal.replace(/\s*\(Nature\)$/, '') + '. '
+            + p.year_detail + '.' + (p.doi ? ' doi:' + p.doi : '');
+    }
+    function citeTalk(p) {
+        const lead = { poster: 'Poster presented at: ', abstract: 'Abstract presented at: ', talk: 'Presented at: ' }[p.type] || 'Presented at: ';
+        return amaAuthors(p.authors) + '. ' + plainText(p.title) + '. ' + lead + p.conference + '; ' + p.date + '; ' + p.location + '.' + (p.doi ? ' doi:' + p.doi : '');
     }
 
-    function renderPresentations(pres) {
-        document.getElementById('pres-count').textContent =
-            pres.length + ' conference presentation' + (pres.length !== 1 ? 's' : '');
-        const byYear = {};
-        pres.forEach(p => { (byYear[p.year] = byYear[p.year] || []).push(p); });
-        let html = '';
-        Object.keys(byYear).sort((a,b)=>b-a).forEach(year => {
-            html += '<div class="pub-section-label">' + year + '</div>';
-            byYear[year].forEach(p => {
-                const type = TYPE_CONFIG[p.type] || TYPE_CONFIG['poster'];
-                html += '<div class="publication-item" style="' + (p.highlight ? 'border-left-color:#28a745;' : '') + '">'
-                    + '<div class="pub-badges"><span class="badge ' + type.cls + '">' + type.label + '</span>'
-                    + '<span class="badge badge-year">' + p.conference + ' &middot; ' + p.year + '</span></div>'
-                    + '<div class="pub-title">' + p.title + '</div>'
-                    + '<div class="pub-authors">' + fmt(p.authors) + '</div>'
-                    + '<div class="pub-journal">' + p.conference + ' &middot; ' + p.location + ' &middot; ' + p.date + '</div>'
-                    + (p.note ? '<div class="pub-abstract">' + p.note + '</div>' : '')
-                    + (p.url ? '<a href="' + p.url + '" target="_blank" rel="noopener" class="pub-link">View</a>' : '')
-                    + '</div>';
-            });
-        });
-        document.getElementById('presentations-container').innerHTML = html;
+    let PUBS = [], PRES = [];
+
+    function card(p, kind) {
+        const isPaper = kind === 'paper';
+        const badge = isPaper ? (ROLE_CONFIG[p.role] || ROLE_CONFIG['co-author']) : (TYPE_CONFIG[p.type] || TYPE_CONFIG.poster);
+        const venue = isPaper ? p.journal : p.conference;
+        const idx = (isPaper ? PUBS : PRES).indexOf(p);
+        return '<div class="publication-item" style="' + (p.highlight ? 'border-left-color:#28a745;' : '') + '">'
+            + '<div class="pub-badges"><span class="badge ' + badge.cls + '">' + badge.label + '</span>'
+            + '<span class="badge badge-year">' + venue + ' &middot; ' + p.year + '</span>'
+            + (isPaper && p.doi ? '<span class="badge badge-cites" data-doi="' + esc(p.doi.toLowerCase()) + '" hidden></span>' : '')
+            + '</div>'
+            + '<div class="pub-title">' + p.title + '</div>'
+            + '<div class="pub-authors">' + fmt(p.authors) + '</div>'
+            + (isPaper
+                ? '<div class="pub-journal">' + p.journal + ', ' + p.year_detail + '. DOI: ' + p.doi + '</div><div class="pub-abstract">' + p.abstract + '</div>'
+                  + (p.plain ? '<div class="pub-plain"><span class="pub-plain-label">In plain English</span>' + p.plain + '</div>' : '')
+                : '<div class="pub-journal">' + p.conference + ' &middot; ' + p.location + ' &middot; ' + p.date + '</div>'
+                  + (p.note ? '<div class="pub-abstract">' + p.note + '</div>' : ''))
+            + '<div class="pub-actions">'
+            + (p.url ? '<a href="' + p.url + '" target="_blank" rel="noopener" class="pub-link">' + (isPaper ? 'Read Paper' : 'View') + '</a>' : '')
+            + '<button type="button" class="pub-copy" data-kind="' + kind + '" data-i="' + idx + '"><i class="far fa-copy" aria-hidden="true"></i> <span>Copy citation</span></button>'
+            + '</div></div>';
     }
 
-    fetch('../assets/publications.json').then(r=>r.json()).then(j=>renderPublications(j.data))
-        .catch(()=>{ document.getElementById('pub-count').textContent = 'Could not load publications.'; });
-    fetch('../assets/presentations.json').then(r=>r.json()).then(j=>renderPresentations(j.data))
-        .catch(()=>{ document.getElementById('pres-count').textContent = 'Could not load presentations.'; });
+    function renderList(list, kind, el) {
+        const byYear = {};
+        list.forEach(p => { (byYear[p.year] = byYear[p.year] || []).push(p); });
+        el.innerHTML = Object.keys(byYear).sort((a, b) => b - a).map(year =>
+            '<div class="pub-section-label">' + year + '</div>' + byYear[year].map(p => card(p, kind)).join('')).join('');
+    }
+
+    // ---- filters + search ----
+    let filter = 'all', query = '';
+    const isFirst = p => p.role === 'first' || p.role === 'co-first' || p.highlight === true || /^\*\*/.test(p.authors || '');
+    const matches = p => !query || [p.title, plainText(p.authors), p.journal, p.conference, p.location, p.abstract, p.note, String(p.year)]
+        .join(' ').toLowerCase().includes(query);
+
+    function render() {
+        const pubs = PUBS.filter(p => (filter === 'all' || filter === 'papers' || (filter === 'first' && isFirst(p))) && matches(p));
+        const pres = PRES.filter(p => (filter === 'all' || filter === 'posters' || (filter === 'first' && isFirst(p))) && matches(p));
+        const showPubs = filter !== 'posters' && pubs.length > 0, showPres = filter !== 'papers' && pres.length > 0;
+        document.getElementById('pubSection').hidden = !showPubs;
+        document.getElementById('presSection').hidden = !showPres;
+        document.getElementById('pubEmpty').hidden = showPubs || showPres;
+        renderList(pubs, 'paper', document.getElementById('publications-container'));
+        renderList(pres, 'talk', document.getElementById('presentations-container'));
+        const filtered = filter !== 'all' || query;
+        document.getElementById('pub-count').textContent = filtered
+            ? pubs.length + ' of ' + PUBS.length + ' papers · ' + pres.length + ' of ' + PRES.length + ' presentations shown'
+            : PUBS.length + ' peer-reviewed publication' + (PUBS.length !== 1 ? 's' : '') + ' · Koschmann Lab, University of Michigan';
+        document.getElementById('pres-count').textContent = pres.length + ' conference presentation' + (pres.length !== 1 ? 's' : '');
+        applyCites();
+    }
+
+    document.querySelectorAll('.pub-filter').forEach(b => b.addEventListener('click', () => {
+        filter = b.dataset.filter;
+        document.querySelectorAll('.pub-filter').forEach(x => { const on = x === b; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+        render();
+    }));
+    const searchBox = document.getElementById('pubSearch');
+    searchBox.addEventListener('input', () => { query = searchBox.value.trim().toLowerCase(); render(); });
+    document.getElementById('pubReset').addEventListener('click', () => {
+        searchBox.value = ''; query = ''; document.querySelector('.pub-filter[data-filter="all"]').click();
+    });
+
+    // ---- Copy citation ----
+    function legacyCopy(t) {
+        return new Promise((res, rej) => {
+            const ta = document.createElement('textarea'); ta.value = t; ta.setAttribute('readonly', '');
+            ta.style.cssText = 'position:fixed;left:-9999px;top:0'; document.body.appendChild(ta);
+            ta.select(); ta.setSelectionRange(0, t.length);   // setSelectionRange for iOS Safari
+            try { document.execCommand('copy') ? res() : rej(); } catch (e) { rej(e); } finally { ta.remove(); }
+        });
+    }
+    // modern clipboard first; if the browser refuses, fall back to the older copy command
+    function copyText(t) {
+        if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t).catch(() => legacyCopy(t));
+        return legacyCopy(t);
+    }
+    document.addEventListener('click', e => {
+        const b = e.target.closest('.pub-copy'); if (!b) return;
+        const p = (b.dataset.kind === 'paper' ? PUBS : PRES)[+b.dataset.i];
+        const label = b.querySelector('span');
+        copyText(b.dataset.kind === 'paper' ? citePaper(p) : citeTalk(p))
+            .then(() => { label.textContent = 'Copied!'; b.classList.add('done'); })
+            .catch(() => { label.textContent = 'Copy failed'; })
+            .finally(() => setTimeout(() => { label.textContent = 'Copy citation'; b.classList.remove('done'); }, 1800));
+    });
+
+    // ---- Citation counts (OpenAlex; Google Scholar has no public API) ----
+    let CITES = {};
+    function applyCites() {
+        document.querySelectorAll('.badge-cites').forEach(el => {
+            const n = CITES[el.dataset.doi];
+            if (n > 0) { el.textContent = 'Cited by ' + n.toLocaleString(); el.title = 'Citation count from OpenAlex'; el.hidden = false; }
+        });
+    }
+    function loadCites() {
+        const dois = PUBS.map(p => p.doi).filter(Boolean);
+        if (!dois.length) return;
+        const ctrl = new AbortController(); setTimeout(() => ctrl.abort(), 8000);
+        fetch('https://api.openalex.org/works?per-page=50&select=doi,cited_by_count&filter=doi:' + dois.map(encodeURIComponent).join('|'), { signal: ctrl.signal })
+            .then(r => r.ok ? r.json() : null)
+            .then(j => {
+                if (!j || !j.results) return;
+                j.results.forEach(w => { if (w.doi) CITES[w.doi.replace('https://doi.org/', '').toLowerCase()] = w.cited_by_count; });
+                applyCites();
+            }).catch(() => {});
+    }
+
+    Promise.all([
+        fetch('../assets/publications.json').then(r => r.json()).then(j => j.data),
+        fetch('../assets/presentations.json').then(r => r.json()).then(j => j.data)
+    ]).then(([pubs, pres]) => {
+        PUBS = pubs.slice().sort((a, b) => b.year - a.year);
+        PRES = pres.slice().sort((a, b) => b.year - a.year);
+        render(); loadCites();
+    }).catch(() => {
+        document.getElementById('pub-count').textContent = 'Could not load publications right now. Please refresh the page.';
+        document.getElementById('pres-count').textContent = '';
+    });
     </script>
 
     <script>

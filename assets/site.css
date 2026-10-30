@@ -383,3 +383,36 @@ html.dark body.project-page .main-content .project-hero .ph-role { color: #9aa4b
   .scholar-link, .news-link { padding: 12px 0 !important; }
   .spotify-open { padding: 13px 0 !important; }
 }
+
+/* ---- Accessibility: skip link + clear keyboard focus ---- */
+.skip-link {
+  position: fixed; left: 12px; top: -60px; z-index: 100000;
+  background: var(--accent); color: #fff !important; font-weight: 700; font-size: 14px;
+  padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: top .15s ease;
+}
+.skip-link:focus { top: 12px; }
+#main:focus { outline: none; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible,
+select:focus-visible, [tabindex]:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px;
+}
+html.dark a:focus-visible, html.dark button:focus-visible, html.dark [tabindex]:focus-visible { outline-color: #6cb6ff; }
+footer a:focus-visible, .vj-theme-toggle:focus-visible { outline-color: #fff; }
+
+/* ---- Previous / next project links (bottom of project pages) ---- */
+.project-nav { width: 80%; margin: -18px auto 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.project-nav a {
+  display: flex; flex-direction: column; gap: 4px; padding: 18px 22px; background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); text-decoration: none; color: var(--ink); border: 1.5px solid transparent;
+  transition: border-color .2s ease, transform .2s ease;
+}
+.project-nav a:hover { border-color: var(--accent); transform: translateY(-2px); }
+.project-nav .pn-next { text-align: right; align-items: flex-end; }
+.pn-dir { font-size: 12.5px; font-weight: 600; color: var(--accent); letter-spacing: .3px; }
+.pn-name { font-size: 16px; font-weight: 700; }
+@media (max-width: 768px) {
+  .project-nav { width: 95%; margin: -6px auto 32px; grid-template-columns: 1fr; gap: 10px; }
+  .project-nav .pn-next { text-align: left; align-items: flex-start; }
+}
+html.dark .project-nav a { background: #161a20; color: #f0f3f7; box-shadow: 0 3px 10px rgba(0,0,0,.5); }
+html.dark .pn-dir { color: #6cb6ff; }

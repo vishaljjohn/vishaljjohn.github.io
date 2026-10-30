@@ -30,7 +30,7 @@
     { k: ['rock cancer','climb'],
       a: "i'm on the leadership team of Rock Cancer — free rock climbing for young cancer survivors." },
     { k: ['volunteer','service','community','help','breakfast','andrew'],
-      a: "i volunteer with Rock Cancer, Saint Andrew's Breakfast Program, and the Hospital Elder Life Program (HELP)." },
+      a: "i'm on the board of Rock Cancer, and in Ann Arbor i volunteered with Saint Andrew's Breakfast Program and the Hospital Elder Life Program (HELP) until 2024." },
     { k: ['contact','email','reach','hire','message','collaborat','work together'],
       a: "the best way to reach me is my Contact page — i'd love to hear from you." },
     { k: ['link','social','linkedin','github','medium','online'],

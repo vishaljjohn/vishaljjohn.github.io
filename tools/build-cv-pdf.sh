@@ -4,6 +4,15 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+# stamp today's date as the CV's "Last updated" (shown on the page and in the PDF)
+python3 - <<'PY'
+import json, datetime
+f = "assets/cv.json"
+cv = json.load(open(f))
+cv["updated"] = datetime.date.today().isoformat()
+open(f, "w").write(json.dumps(cv, indent=2, ensure_ascii=False) + "\n")
+PY
+
 PORT=8799
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
