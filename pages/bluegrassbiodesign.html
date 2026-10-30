@@ -191,34 +191,18 @@
 </div>
 </div>
 </div>
-<div class="lightbox" id="lightbox">
-<span class="lightbox-close" id="lbClose">×</span>
-<img alt="" decoding="async" id="lbImg" loading="lazy" src=""/>
-</div>
+
 <footer>
-<a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
-<a href="https://github.com/vishaljjohn" target="_blank"><i class="fab fa-github fa-2x"></i></a>
-<a href="https://medium.com/@vishaljjohn" target="_blank"><i class="fab fa-medium fa-2x"></i></a>
-<p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
-</footer>
+        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+    </footer>
 <script>
         // Hamburger
         document.getElementById('hamburger').addEventListener('click', function() {
             this.classList.toggle('open');
             document.querySelector('nav ul').classList.toggle('open');
-        });
-
-        // Lightbox
-        const lb = document.getElementById('lightbox');
-        const lbImg = document.getElementById('lbImg');
-        document.getElementById('lbClose').addEventListener('click', () => lb.style.display = 'none');
-        lb.addEventListener('click', e => { if (e.target !== lbImg) lb.style.display = 'none'; });
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.style.display = 'none'; });
-        document.querySelectorAll('.photo-grid img').forEach(img => {
-            img.addEventListener('click', () => {
-                lb.style.display = 'block';
-                lbImg.src = img.src;
-            });
         });
     </script>
 <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>

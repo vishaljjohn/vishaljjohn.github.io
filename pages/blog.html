@@ -252,46 +252,50 @@
             list.innerHTML = '<li style="color:#888;">Could not load articles right now. <a href="https://medium.com/@' + mediumUser + '" target="_blank" style="color:#0077b6;">Read on Medium directly →</a></li>';
         }
 
-        function renderRSS(xmlText) {
-            const parser = new DOMParser();
-            const xml = parser.parseFromString(xmlText, 'text/xml');
-            const items = xml.querySelectorAll('item');
+        // Build rows with DOM APIs: titles/links come from third-party proxies, so never inject them as HTML.
+        function fmtDate(d) {
+            return d ? new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+        }
+        function renderItems(items) {
             if (!items.length) { showError(); return; }
-            list.innerHTML = '';
-            items.forEach(item => {
-                const title = item.querySelector('title')?.textContent || 'Untitled';
-                const link = item.querySelector('link')?.textContent ||
-                             item.querySelector('guid')?.textContent || '#';
-                const pubDate = item.querySelector('pubDate')?.textContent;
-                const date = pubDate ? new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
-                list.innerHTML += `<li style="display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid #eee;">
-                    <a href="${link}" target="_blank" rel="noopener noreferrer">${title}</a>
-                    <span style="font-size:13px;color:#888;margin-left:16px;white-space:nowrap;">${date}</span>
-                </li>`;
+            list.textContent = '';
+            items.forEach(it => {
+                const li = document.createElement('li');
+                li.style.cssText = 'display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid #eee;';
+                const a = document.createElement('a');
+                a.href = /^https:\/\//.test(it.link || '') ? it.link : 'https://medium.com/@' + mediumUser;
+                a.target = '_blank'; a.rel = 'noopener noreferrer';
+                a.textContent = it.title || 'Untitled';
+                const date = document.createElement('span');
+                date.style.cssText = 'font-size:13px;color:#888;margin-left:16px;white-space:nowrap;';
+                date.textContent = fmtDate(it.pubDate);
+                li.appendChild(a); li.appendChild(date); list.appendChild(li);
             });
+        }
+
+        function renderRSS(xmlText) {
+            const xml = new DOMParser().parseFromString(xmlText, 'text/xml');
+            renderItems(Array.from(xml.querySelectorAll('item')).map(item => ({
+                title: item.querySelector('title')?.textContent,
+                link: item.querySelector('link')?.textContent || item.querySelector('guid')?.textContent,
+                pubDate: item.querySelector('pubDate')?.textContent
+            })));
         }
 
         async function tryProxy(index) {
             if (index >= proxies.length) { showError(); return; }
+            const url = proxies[index](feedUrl);
             try {
-                const res = await fetch(proxies[index](feedUrl));
+                const res = await fetch(url);
                 if (!res.ok) throw new Error('bad response');
                 // rss2json returns JSON, others return raw XML or wrapped
                 const text = await res.text();
-                if (proxies[index](feedUrl).includes('rss2json')) {
+                if (url.includes('rss2json')) {
                     const json = JSON.parse(text);
                     if (json.status !== 'ok') throw new Error('rss2json error');
-                    list.innerHTML = '';
-                    json.items.forEach(item => {
-                        const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
-                        list.innerHTML += `<li style="display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid #eee;">
-                            <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a>
-                            <span style="font-size:13px;color:#888;margin-left:16px;white-space:nowrap;">${date}</span>
-                        </li>`;
-                    });
+                    renderItems(json.items || []);
                 } else if (text.includes('"contents"')) {
-                    const json = JSON.parse(text);
-                    renderRSS(json.contents);
+                    renderRSS(JSON.parse(text).contents);
                 } else {
                     renderRSS(text);
                 }
@@ -306,10 +310,10 @@
 
 
   <footer>
-      <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"> <i class="fab fa-linkedin fa-2x"> </i>
-       <a href="https://github.com/vishaljjohn" target="_blank"> <i class="fab fa-github fa-2x"> </i> 
-        <a href="https://medium.com/@vishaljjohn" target="_blank"> <i class="fab fa-medium fa-2x"> </i> 
-       </a>  <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
     </footer>
 
     <script>

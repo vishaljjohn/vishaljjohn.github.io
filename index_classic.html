@@ -8,21 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO -->
     <title>Vishal John | Medical Student, Aspiring Coffee Shop Owner & Balloon Animal Artist</title>
-    <meta name="description" content="Personal website of Vishal John — M2 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
+    <meta name="description" content="Personal website of Vishal John — M3 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
     <meta name="author" content="Vishal John">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.vishaljohn.com/index_classic.html">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Vishal John | Medical Student, Researcher & Author">
-    <meta property="og:description" content="Personal website of Vishal John — M2 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
+    <meta property="og:description" content="Personal website of Vishal John — M3 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
     <meta property="og:url" content="https://www.vishaljohn.com/index_classic.html">
     <meta property="og:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
     <meta property="og:site_name" content="Vishal John">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Vishal John | Medical Student, Researcher & Author">
-    <meta name="twitter:description" content="Personal website of Vishal John — M2 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
+    <meta name="twitter:description" content="Personal website of Vishal John — M3 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
     <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <meta name="keywords" content="Vishal John, medicine, nonprofit, volunteer, Rock Cancer, miRcore">
@@ -134,7 +134,7 @@
         "https://www.researchgate.net/profile/Vishal-John",
         "https://medium.com/@vishaljjohn"
       ],
-      "description": "M2 medical student at the University of Louisville School of Medicine. Pediatric brain cancer researcher, children's book author, and community volunteer."
+      "description": "M3 medical student at the University of Louisville School of Medicine. Pediatric brain cancer researcher, children's book author, and community volunteer."
     }
     </script>
     <link rel="stylesheet" href="assets/site.css">
@@ -162,9 +162,9 @@
         <div class="main-content">
             <div class="hero-inner">
                 <div>
-                    <p class="hero-label">M2 · University of Louisville School of Medicine</p>
+                    <p class="hero-label">M3 · University of Louisville School of Medicine</p>
                     <h1 class="hero-name">Vishal John</h1>
-                    <p class="hero-bio">Aspiring coffee shop owner, balloon animal artist, and 2nd year medical student at the University of Louisville School of Medicine.</p>
+                    <p class="hero-bio">Aspiring coffee shop owner, balloon animal artist, and 3rd year medical student at the University of Louisville School of Medicine.</p>
                     <div class="hero-btns">
                         <a href="pages/about.html" class="btn-primary">About Me</a>
                         <a href="pages/publications.html" class="btn-secondary">Publications</a>
@@ -181,7 +181,7 @@
             <div class="project-caption">Balloon Animals</div>
         </div>
         <div class="project-item">
-            <a href="pages/rockcancer.html"><img loading="lazy" decoding="async" src="images/RockCancer.png" alt="Rock Cancer"></a>
+            <a href="pages/rockcancer.html"><img loading="lazy" decoding="async" src="images/RockCancer.jpg" alt="Rock Cancer"></a>
             <div class="project-caption">Rock Cancer</div>
         </div>
         <div class="project-item">
@@ -236,9 +236,9 @@
     </div>
 
     <footer>
-        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
-        <a href="https://github.com/vishaljjohn" target="_blank"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://medium.com/@vishaljjohn" target="_blank"><i class="fab fa-medium fa-2x"></i></a>
+        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
         <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
     </footer>
 
@@ -258,20 +258,21 @@
             .then(data => {
                 const tracks = data.recenttracks?.track;
                 if (!tracks || !tracks.length) throw new Error('no tracks');
-                list.innerHTML = '';
-                tracks.slice(0, 8).forEach((t, i) => {
+                // escape track/artist names so titles with < or & can't break the list
+                const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+                list.innerHTML = tracks.slice(0, 8).map((t, i) => {
                     const isNow = t['@attr']?.nowplaying === 'true';
-                    list.innerHTML += `<li class="track-item">
+                    return `<li class="track-item">
                         <span class="track-num" style="${isNow ? 'color:#1DB954;font-size:10px;' : ''}">${isNow ? '▶' : i + 1}</span>
                         <div class="track-info">
-                            <div class="track-name">${t.name}</div>
-                            <div class="track-artist">${t.artist['#text']}</div>
+                            <div class="track-name">${esc(t.name)}</div>
+                            <div class="track-artist">${esc(t.artist?.['#text'])}</div>
                         </div>
                     </li>`;
-                });
+                }).join('');
             })
             .catch(() => {
-                list.innerHTML = `<li class="track-loading">Verify your Last.fm email to enable scrobbling.</li>`;
+                list.innerHTML = `<li class="track-loading">Couldn't load recent tracks right now.</li>`;
             });
     </script>
     <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>

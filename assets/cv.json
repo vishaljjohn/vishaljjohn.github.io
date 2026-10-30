@@ -1,0 +1,202 @@
+{
+  "_instructions": {
+    "about": "Your CV. The About page renders this file automatically, so edit text here and push; no HTML changes needed. Publications and Presentations are pulled from publications.json and presentations.json, so add papers there and they show up on the CV too. To refresh the downloadable PDF, run ./tools/build-cv-pdf.sh and commit assets/VishalJohnCV.pdf.",
+    "section types": {
+      "entries": "A list of positions. Each item: title, org, location (optional), dates, note (optional, one line in italics), bullets (optional list).",
+      "list": "A simple list of lines. Each item: text, and optionally dates.",
+      "skills": "Labeled groups. Each item: label, text.",
+      "source": "Set \"source\": \"publications\" or \"presentations\" to pull from those JSON files."
+    },
+    "tips": [
+      "Reorder sections by moving them in the sections list.",
+      "Delete a whole item to hide it; set \"hidden\": true on an item or section to keep it in the file but not show it.",
+      "Wrap text in **double stars** to make it bold."
+    ]
+  },
+  "name": "Vishal John",
+  "headline": "M.D. Candidate, Class of 2028 · University of Louisville School of Medicine",
+  "location": "Louisville, KY",
+  "contact": [
+    { "label": "vishal.john@louisville.edu", "url": "mailto:vishal.john@louisville.edu", "icon": "fas fa-envelope" },
+    { "label": "vishaljohn.com", "url": "https://www.vishaljohn.com", "icon": "fas fa-globe" },
+    { "label": "linkedin.com/in/vishaljjohn", "url": "https://www.linkedin.com/in/vishaljjohn/", "icon": "fab fa-linkedin" },
+    { "label": "Google Scholar", "url": "https://scholar.google.com/citations?user=QXyjTGgAAAAJ", "icon": "fas fa-graduation-cap" }
+  ],
+  "sections": [
+    {
+      "title": "Education",
+      "type": "entries",
+      "items": [
+        {
+          "title": "Doctor of Medicine (M.D.) Candidate",
+          "org": "University of Louisville School of Medicine",
+          "location": "Louisville, KY",
+          "dates": "Jul 2024 – May 2028 (expected)"
+        },
+        {
+          "title": "B.S., Biopsychology, Cognition, and Neuroscience",
+          "org": "University of Michigan",
+          "location": "Ann Arbor, MI",
+          "dates": "Sep 2017 – May 2021",
+          "note": "Minor in Business Administration, Ross School of Business"
+        }
+      ]
+    },
+    {
+      "title": "Research Experience",
+      "type": "entries",
+      "items": [
+        {
+          "title": "Clinical Research Technician",
+          "org": "Koschmann Lab for Pediatric Brain Cancer, Michigan Medicine, Pediatric Hematology/Oncology",
+          "location": "Ann Arbor, MI",
+          "dates": "May 2021 – Jan 2023",
+          "bullets": [
+            "Quantified circulating tumor DNA in CSF, plasma, and tissue from pediatric brain tumor patients by ddPCR to track response during ONC201 clinical trials.",
+            "Developed a stem cell-derived thalamic and cortical organoid co-culture model of diffuse midline glioma invasion; presented as first author at the BioInnovation in Brain Cancer Symposium.",
+            "Coordinated autopsy tissue and biofluid collection and built a barcoded tracking system for the lab's biorepository.",
+            "Maintained IRB approval for human subjects studies and trained lab members in ddPCR, qPCR, western blot, organoid culture, cryosectioning, confocal microscopy, IHC, and ELISA."
+          ]
+        },
+        {
+          "title": "Project Lead",
+          "org": "miRcore (501(c)(3) nonprofit)",
+          "location": "Ann Arbor, MI",
+          "dates": "Jul 2023 – May 2024",
+          "bullets": [
+            "Led the Citizen Scientist Sequencing Initiative, in which high school students sequence their own DNA and analyze variants of interest; presented this work at ASHG 2025.",
+            "Directed a small RNA-seq research pipeline on Alzheimer's disease and mentored students in R, Linux, cutadapt, bowtie, samtools, and DESeq.",
+            "Wrote and secured grant funding and managed partner and vendor relationships."
+          ]
+        },
+        {
+          "title": "Research & Teaching Assistant",
+          "org": "miRcore",
+          "location": "Ann Arbor, MI",
+          "dates": "Sep 2015 – May 2021",
+          "bullets": [
+            "Taught high school students computational biology (GEO2R, STRING, R); mentored 68 students to publish research abstracts.",
+            "Ran a 4-hour computational biology contest for 164 students from across the Midwest and California."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Innovation",
+      "type": "entries",
+      "items": [
+        {
+          "title": "Bluegrass Biodesign, Cardiology / Cardiothoracic Surgery Team",
+          "org": "University of Louisville School of Medicine & J.B. Speed School of Engineering",
+          "location": "Louisville, KY",
+          "dates": "2025 – 2026",
+          "bullets": [
+            "Identified an unmet clinical need through clinical observation and physician interviews, then designed, prototyped, and tested a device with an engineering team.",
+            "Completed customer discovery and business training through UofL's NSF I-Corps program."
+          ]
+        }
+      ]
+    },
+    { "title": "Publications", "source": "publications" },
+    { "title": "Presentations", "source": "presentations" },
+    {
+      "title": "Other Publications",
+      "type": "list",
+      "items": [
+        { "text": "**John V**, Patel N. *The Brave Little Immune Team*. Children's book introducing the immune system to ages 4–8. 2025. Available on Amazon." }
+      ]
+    },
+    {
+      "title": "Leadership",
+      "type": "entries",
+      "items": [
+        {
+          "title": "President",
+          "org": "Oncology Interest Group, University of Louisville School of Medicine",
+          "location": "Louisville, KY",
+          "dates": "Jul 2025 – Present"
+        },
+        {
+          "title": "Leadership Team",
+          "org": "Rock Cancer",
+          "location": "Ann Arbor, MI & Louisville, KY",
+          "dates": "Feb 2022 – Present",
+          "bullets": [
+            "Free rock climbing for children and young adults with cancer. Built the program's website and merchandise shop and helped grow it to national coverage on NBC Nightly News and mlive.",
+            "Helped launch the Louisville program in partnership with Norton Children's Cancer Institute; volunteer belayer."
+          ]
+        },
+        {
+          "title": "President",
+          "org": "Genes in Diseases and Symptoms (GIDAS), University of Michigan",
+          "location": "Ann Arbor, MI",
+          "dates": "2018 – 2021",
+          "bullets": [
+            "Raised over $27,000 for disease research microgrants and organized a monthly speaker series with physicians and scientists."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Clinical & Community Service",
+      "type": "entries",
+      "items": [
+        {
+          "title": "Volunteer",
+          "org": "APAMSA Louisville Community Health Fair",
+          "location": "Louisville, KY",
+          "dates": "2025",
+          "bullets": [
+            "Supported a free screening fair (blood pressure, diabetes, vision) for Louisville's Asian Pacific community, entertaining children with balloon art so families could be screened."
+          ]
+        },
+        {
+          "title": "Volunteer",
+          "org": "Hospital Elder Life Program (HELP), Michigan Medicine",
+          "location": "Ann Arbor, MI",
+          "dates": "Feb 2022 – Present",
+          "bullets": [
+            "Supported hospitalized older adults with orientation, mobility, feeding, and sleep protocols to prevent delirium."
+          ]
+        },
+        {
+          "title": "Food Server",
+          "org": "The Breakfast Program at Saint Andrew's",
+          "location": "Ann Arbor, MI",
+          "dates": "Dec 2021 – Present",
+          "bullets": [
+            "Serve hot breakfasts, bagged lunches, and clothing to Ann Arbor's unhoused and food-insecure community."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Honors & Awards",
+      "type": "list",
+      "items": [
+        { "text": "James B. Angell Scholar, University of Michigan", "dates": "2020" },
+        { "text": "South Asian Studies Fellow, U-M Center for South Asian Studies", "dates": "2019" },
+        { "text": "Center for Japanese Studies Scholarship, University of Michigan" },
+        { "text": "University High Honors (5x), University of Michigan" },
+        { "text": "Health Sciences Scholars Program, University of Michigan", "dates": "2017 – 2018" }
+      ]
+    },
+    {
+      "title": "Certifications",
+      "type": "list",
+      "items": [
+        { "text": "Stop the Bleed, American College of Surgeons", "dates": "2025" }
+      ]
+    },
+    {
+      "title": "Skills & Interests",
+      "type": "skills",
+      "items": [
+        { "label": "Laboratory", "text": "ddPCR, qPCR, western blot, 2D and organoid cell culture, cryosectioning, confocal microscopy, immunohistochemistry, ELISA, primer/assay design" },
+        { "label": "Computational", "text": "R, Linux/bash, RNA-seq analysis (cutadapt, bowtie, samtools, DESeq), high-performance computing" },
+        { "label": "Languages", "text": "English (native), Malayalam (fluent)" },
+        { "label": "Interests", "text": "Rock climbing, balloon art, coffee, children's science writing" }
+      ]
+    }
+  ]
+}

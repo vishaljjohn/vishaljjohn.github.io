@@ -14,9 +14,9 @@
   /* ---- Offline fallback knowledge (used if the AI is unreachable) ---- */
   var KB = [
     { k: ['who are you','about you','yourself','your name','what do you do'],
-      a: "i'm Vishal John — an M2 medical student at the University of Louisville, plus a children's book author, balloon animal artist, and aspiring coffee shop owner." },
+      a: "i'm Vishal John — an M3 medical student at the University of Louisville, plus a children's book author, balloon animal artist, and aspiring coffee shop owner." },
     { k: ['school','med','student','uofl','louisville','michigan','study'],
-      a: "i'm a 2nd-year (M2) med student at the University of Louisville School of Medicine; i did my undergrad at the University of Michigan." },
+      a: "i'm a 3rd-year (M3) med student at the University of Louisville School of Medicine; i did my undergrad at the University of Michigan." },
     { k: ['book','children','author','immune','buy','amazon'],
       a: "i co-wrote a kids' book, \"The Brave Little Immune Team,\" for ages 4-8. you can grab it on <a href='https://www.amazon.com/Brave-Little-Immune-Team/dp/B0GVC5R915' target='_blank' rel='noopener'>Amazon</a>." },
     { k: ['balloon','animals','twist'],
@@ -26,7 +26,7 @@
     { k: ['research','lab','koschmann','mircore','science','rna','organoid'],
       a: "i've done research in the Koschmann Lab (pediatric brain cancer) and led bioinformatics work at miRcore. ask me about either!" },
     { k: ['publication','paper','scholar'],
-      a: "i've contributed to 5 publications — see them on my <a href='https://scholar.google.com/citations?user=QXyjTGgAAAAJ' target='_blank' rel='noopener'>Google Scholar</a>." },
+      a: "i've contributed to 6 publications — see them on my <a href='https://scholar.google.com/citations?user=QXyjTGgAAAAJ' target='_blank' rel='noopener'>Google Scholar</a>." },
     { k: ['rock cancer','climb'],
       a: "i'm on the leadership team of Rock Cancer — free rock climbing for young cancer survivors." },
     { k: ['volunteer','service','community','help','breakfast','andrew'],
@@ -48,7 +48,7 @@
     var q = ' ' + text.toLowerCase().replace(/[^a-z0-9.@ ]/g, ' ') + ' ';
     for (var i = 0; i < KB.length; i++)
       for (var j = 0; j < KB[i].k.length; j++)
-        if (q.indexOf(KB[i].k[j]) !== -1) return KB[i].a;
+        if (KB[i].k[j].length <= 3 ? q.indexOf(' ' + KB[i].k[j] + ' ') !== -1 : q.indexOf(KB[i].k[j]) !== -1) return KB[i].a;
     return FALLBACK;
   }
 
@@ -145,15 +145,21 @@
   function strip(s){ return String(s).replace(/<[^>]*>/g, ''); }
   function esc(s){ return s.replace(/[&<>]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;'})[c]; }); }
 
-  function linkify(s){ return esc(s).replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>'); }
+  // keep trailing punctuation ("…here: https://x.com.") out of the link
+  function linkify(s){ return esc(s).replace(/(https?:\/\/[^\s<]*[^\s<.,;:!?)'"])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>'); }
 
   // Streamed reply (Server-Sent Events). Calls onToken(text) as tokens arrive.
   // Resolves to { ok:true, full } on success, { ok:false } to trigger the local fallback.
   function aiReplyStream(text, onToken){
     if (!AI_ENDPOINT) return Promise.resolve({ ok:false });
+    // give up (and use the offline answers) if the first byte takes too long
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, 15000) : null;
     return fetch(AI_ENDPOINT, { method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ message:text, history: hist.slice(-6), stream:true }) })
+        body: JSON.stringify({ message:text, history: hist.slice(-6), stream:true }),
+        signal: ctrl ? ctrl.signal : undefined })
       .then(function(r){
+        clearTimeout(timer);
         if (!r.ok || !r.body || !r.body.getReader) return { ok:false };
         var reader = r.body.getReader(), dec = new TextDecoder(), buf = '', full = '';
         function pump(){

@@ -294,11 +294,7 @@
 <h2>Some Pictures from Ishinomaki</h2>
 <div class="spin-gallery"><div class="spin-stage"><div class="spin-ring"><div class="spin-card" data-caption="Demolition of house for remodeling"><img alt="Demolition of house for remodeling" decoding="async" loading="lazy" src="../images/japan2.JPG"/></div><div class="spin-card" data-caption="Building a table at Ishinomaki Lab"><img alt="Building a table at Ishinomaki Lab" decoding="async" loading="lazy" src="../images/japan3.JPG"/></div><div class="spin-card" data-caption="Putting together a Japanese bench"><img alt="Putting together a Japanese bench" decoding="async" loading="lazy" src="../images/japan9.JPG"/></div><div class="spin-card" data-caption="Workshop at Detroit Public School (BRIGHTMOOR MAKER SPACE)"><img alt="Workshop at Detroit Public School (BRIGHTMOOR MAKER SPACE)" decoding="async" loading="lazy" src="../images/japan5.JPG"/></div><div class="spin-card" data-caption="Getting Interviewed by Local Japanese News"><img alt="Getting Interviewed by Local Japanese News" decoding="async" loading="lazy" src="../images/japan6.JPG"/></div><div class="spin-card" data-caption="Working in the paddy field"><img alt="Working in the paddy field" decoding="async" loading="lazy" src="../images/japan8.JPG"/></div><div class="spin-card" data-caption='"House of Chairs"'><img alt='"House of Chairs"' decoding="async" loading="lazy" src="../images/japan7.JPG"/></div></div></div><div class="spin-caption"></div><p class="spin-hint">Drag to spin · click a photo to enlarge</p><div class="spin-controls"><button aria-label="Previous" class="spin-btn spin-prev">‹</button><button aria-label="Next" class="spin-btn spin-next">›</button></div></div>
 <!-- Lightbox structure -->
-<div id="lightbox">
-<span id="lightboxClose">×</span>
-<img alt="Enlarged Image" decoding="async" id="lightboxImage" loading="lazy" src=""/>
-<p id="lightboxCaption"></p>
-</div>
+
 <div class="center-content">
 <h2>Check Out Ishinomaki Laboratory</h2>
 <a class="donate-button" href="https://ishinomaki-lab.org/about/" rel="noopener noreferrer" target="_blank">Ishinomaki Laboratory</a>
@@ -306,47 +302,11 @@
 </div>
 </div>
 <footer>
-<a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"> <i class="fab fa-linkedin fa-2x"> </i>
-<a href="https://github.com/vishaljjohn" target="_blank"> <i class="fab fa-github fa-2x"> </i>
-<a href="https://medium.com/@vishaljjohn" target="_blank"> <i class="fab fa-medium fa-2x"> </i>
-</a> <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
-</a></a></footer>
-<script>
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImage = document.getElementById('lightboxImage');
-        const lightboxCaption = document.getElementById('lightboxCaption');
-        const closeLightbox = document.getElementById('lightboxClose');
-        const galleryImages = document.querySelectorAll('.image-container img');
-
-        galleryImages.forEach((image, index) => {
-            image.addEventListener('click', () => {
-                lightbox.style.display = 'block';
-                lightboxImage.src = image.src;
-                lightboxCaption.innerHTML = image.nextElementSibling.textContent;
-            });
-        });
-
-        closeLightbox.addEventListener('click', () => {
-            lightbox.style.display = 'none';
-        });
-
-// Close the lightbox with the 'Esc' key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape" && lightbox.style.display === 'block') {
-                lightbox.style.display = 'none';
-            }
-        });
-     
-        // Close lightbox when clicked anywhere besides the image
-        lightbox.addEventListener('click', (event) => {
-            if (event.target !== lightboxImage) {
-                lightbox.style.display = 'none';
-            }
-        });
-
-
-     
-    </script>
+        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+    </footer>
 <script>
     (function(){
       var btn = document.getElementById('hamburger');

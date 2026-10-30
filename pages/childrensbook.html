@@ -343,9 +343,9 @@
     </div>
 
     <footer>
-        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
-        <a href="https://github.com/vishaljjohn" target="_blank"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://medium.com/@vishaljjohn" target="_blank"><i class="fab fa-medium fa-2x"></i></a>
+        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
         <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
     </footer>
 
@@ -381,8 +381,9 @@
         var next = document.getElementById('bookNext');
         var counter = document.getElementById('bookCounter');
         if(!img) return;
-        // preload
-        for(var i=1;i<=total;i++){ var pre=new Image(); pre.src='../images/book/page'+i+'.jpg'; }
+        // preload only the next page instead of the whole book up front
+        function preload(n){ if(n>=1 && n<=total){ var pre=new Image(); pre.src='../images/book/page'+n+'.jpg'; } }
+        preload(2);
         var animating=false;
         function go(n, dir){
             if(animating || n<1 || n>total) return;
@@ -400,6 +401,7 @@
                     img.style.transform='rotateY(0deg)'; img.style.opacity='1';
                 });
                 counter.textContent='Page '+cur+' of '+total;
+                preload(cur+1);
                 prev.disabled = cur===1; next.disabled = cur===total;
                 setTimeout(function(){ animating=false; }, 290);
             }, 280);

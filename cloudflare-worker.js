@@ -26,11 +26,12 @@ GROUND RULES
 - Contact: point people to the Contact page. You may share his school email vishal.john@louisville.edu (it's on his public CV). Never share his phone number.
 
 === ABOUT ===
-- Second-year (M2) medical student at the University of Louisville School of Medicine; M.D. expected May 2028. Based in Louisville, KY. Pronouns he/him.
+- Third-year (M3) medical student at the University of Louisville School of Medicine; M.D. expected May 2028. Based in Louisville, KY. Pronouns he/him.
 - Undergrad at the University of Michigan (2017–2021): B.S. in Biopsychology, Cognition & Neuroscience (GPA 3.78) with a minor in Business Administration from the Ross School of Business.
 - Also a children's book author, balloon animal artist, and (jokingly) "aspiring coffee shop owner."
 - Languages: English and Malayalam (fluent/bilingual).
 - Certifications: Basic Life Support (BLS, AHA) and Stop the Bleed (American College of Surgeons).
+- President of the Oncology Interest Group at UofL School of Medicine (2025–present).
 - Member of Phi Chi pre-medical fraternity and the Michigan Climbing Club; former President of GIDAS at the University of Michigan.
 - Honors: 5x University High Honors, James B. Angell Scholar, South Asian Studies Fellow, Center for Japanese Studies Scholarship, Health Sciences Scholar.
 
@@ -40,7 +41,8 @@ GROUND RULES
 - Developed a novel method to model brain-cancer invasion using stem cell-derived thalamic and cortical organoids co-cultured with cancer cells (first-author poster at the BioInnovation in Brain Cancer Symposium).
 - Earlier: Research Assistant in the Food Addiction & Science Treatment (FAST) Lab (UMich Psychology), 2019–2020, studying environment's effect on eating behavior.
 
-=== PUBLICATIONS (5; point to the Publications page / Google Scholar for the full list) ===
+=== PUBLICATIONS (6; point to the Publications page / Google Scholar for the full list) ===
+- "Surgical waste from stereotactic glioma biopsies contains clinically relevant tumor DNA" — Scientific Reports / Nature (2026)
 - "Clinical efficacy of ONC201 in H3K27M-mutant diffuse midline gliomas" — Cancer Discovery (2023)
 - "Liquid biopsy in pediatric brain tumors" — Frontiers in Genetics (2022)
 - "Cell-Free Tumor DNA (cf-tDNA) Liquid Biopsy: Current Methods and Use in Brain Tumor Immunotherapy" — Frontiers in Immunology (2022)
@@ -123,10 +125,11 @@ function sseOnce(text, cors) {
 
 
 // ---- Visitor question log (stored in the VISITS KV under "qlog") ----
-// Change ASK_LOG_KEY to your own secret. View the log at:
+// The key lives in a Worker secret, not in this public file:
+//   Worker -> Settings -> Variables and Secrets -> add secret ASK_LOG_KEY
+// View the log at:
 //   https://vishal-chat.vishaljjohn.workers.dev/questions?key=YOUR_SECRET
-// Clear it with &clear=1
-const ASK_LOG_KEY = "ask-log-7Qx2v9";
+// Clear it with &clear=1. Without the secret set, /questions is disabled.
 const UNANSWERED_RE = /not sure|not certain|don't have|do not have|can't help with that|i don't know|i do not know|outside what i know|couldn't find/i;
 
 function logAsk(env, ctx, q, reply) {
@@ -161,7 +164,7 @@ export default {
 
     // ---- View logged visitor questions (protected) ----
     if (request.method === "GET" && _url.pathname === "/questions") {
-      if (_url.searchParams.get("key") !== ASK_LOG_KEY) return json({ error: "unauthorized" }, 401, cors);
+      if (!env.ASK_LOG_KEY || _url.searchParams.get("key") !== env.ASK_LOG_KEY) return json({ error: "unauthorized" }, 401, cors);
       if (!env.VISITS) return json({ error: "no KV bound" }, 200, cors);
       if (_url.searchParams.get("clear") === "1") {
         ctx.waitUntil(env.VISITS.put("qlog", "[]"));

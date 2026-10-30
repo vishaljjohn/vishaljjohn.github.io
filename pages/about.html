@@ -8,21 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO -->
     <title>About Vishal John | UofL Medical Student & Researcher</title>
-    <meta name="description" content="Learn about Vishal John — a second-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
+    <meta name="description" content="Learn about Vishal John — a third-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
     <meta name="author" content="Vishal John">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.vishaljohn.com/pages/about.html">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="About Vishal John | UofL Medical Student & Researcher">
-    <meta property="og:description" content="Learn about Vishal John — a second-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
+    <meta property="og:description" content="Learn about Vishal John — a third-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
     <meta property="og:url" content="https://www.vishaljohn.com/pages/about.html">
     <meta property="og:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
     <meta property="og:site_name" content="Vishal John">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="About Vishal John | UofL Medical Student & Researcher">
-    <meta name="twitter:description" content="Learn about Vishal John — a second-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
+    <meta name="twitter:description" content="Learn about Vishal John — a third-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
     <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
@@ -271,6 +271,75 @@
         }
         </style>
     <link rel="stylesheet" href="../assets/site.css">
+    <style>
+        /* ---------- CV (rendered from assets/cv.json) ---------- */
+        .cv { margin-top: 28px; padding: 48px 56px; line-height: 1.5; }
+        .cv-loading { color: var(--muted); text-align: center; }
+        .cv-head { text-align: center; padding-bottom: 22px; margin-bottom: 8px; border-bottom: 2px solid var(--accent); }
+        .cv-head h2 { margin: 0 0 4px; font-size: 30px; letter-spacing: .5px; }
+        .cv-headline { margin: 0 0 12px !important; color: var(--ink-soft); font-size: 15px; }
+        .cv-contact { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-size: 13.5px; }
+        .cv-contact a { color: var(--ink-soft); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+        .cv-contact a:hover { color: var(--accent); }
+        .cv-contact i { color: var(--accent); font-size: 12px; }
+        .cv-sec { margin-top: 30px; }
+        .cv-sec > h3 { font-size: 13px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+        .cv-item { display: grid; grid-template-columns: 1fr auto; column-gap: 20px; margin-bottom: 16px; break-inside: avoid; }
+        .cv-title { font-weight: 700; color: var(--ink); font-size: 15px; }
+        .cv-org { color: var(--ink-soft); font-size: 14px; }
+        .cv-dates { color: var(--muted); font-size: 13px; white-space: nowrap; text-align: right; }
+        .cv-loc { color: var(--muted); font-size: 12.5px; text-align: right; }
+        .cv-note { grid-column: 1 / -1; font-style: italic; color: var(--ink-soft); font-size: 13.5px; }
+        .cv-item ul { grid-column: 1 / -1; margin: 6px 0 0; padding-left: 18px; }
+        .cv-item li { font-size: 14px; color: var(--ink-soft); margin-bottom: 3px; }
+        .cv-list { list-style: none; margin: 0; padding: 0; }
+        .cv-list li { display: flex; justify-content: space-between; gap: 20px; font-size: 14px; color: var(--ink-soft); margin-bottom: 8px; break-inside: avoid; }
+        .cv-list li .cv-dates { flex-shrink: 0; }
+        .cv-cite { counter-increment: cite; padding-left: 28px; position: relative; display: block !important; }
+        .cv-cite::before { content: counter(cite) "."; position: absolute; left: 0; color: var(--muted); }
+        .cv-cites { counter-reset: cite; }
+        .cv-cite a { color: var(--accent); text-decoration: none; }
+        .cv-cite a:hover { text-decoration: underline; }
+        .cv-skills { display: grid; grid-template-columns: 130px 1fr; gap: 6px 16px; font-size: 14px; }
+        .cv-skills dt { font-weight: 700; color: var(--ink); }
+        .cv-skills dd { margin: 0; color: var(--ink-soft); }
+        .cv strong { color: var(--ink); }
+        .cv-section .cv-btn { margin-left: 10px; vertical-align: middle; }
+        @media (max-width: 640px) {
+            .cv { padding: 28px 20px; }
+            .cv-item { grid-template-columns: 1fr; }
+            .cv-dates, .cv-loc { text-align: left; }
+            .cv-dates { order: -1; }
+            .cv-list li { flex-direction: column; gap: 0; }
+            .cv-skills { grid-template-columns: 1fr; gap: 2px; }
+            .cv-skills dd { margin-bottom: 8px; }
+            .cv-section .cv-btn { margin: 14px 0 0; }
+        }
+        html.dark .cv-title, html.dark .cv-skills dt, html.dark .cv strong { color: #f0f3f7; }
+        html.dark .cv-org, html.dark .cv-item li, html.dark .cv-list li, html.dark .cv-skills dd, html.dark .cv-note, html.dark .cv-contact a, html.dark .cv-headline { color: #cdd4de; }
+        html.dark .cv-sec > h3 { color: #6cb6ff; border-color: #2a313c; }
+        html.dark .cv-head { border-color: #6cb6ff; }
+
+        /* Print / "Save as PDF": just the CV, on white */
+        @media print {
+            @page { margin: 0.6in 0.65in; }
+            html, body { background: #fff !important; }
+            body::before, header, footer, .vj-theme-toggle, .vjw-launch, .vjw-call, .vjw-tip, .vjw-panel,
+            .container > .main-content:not(.cv) { display: none !important; }
+            .container { width: auto; padding: 0; margin: 0; }
+            .cv { box-shadow: none !important; padding: 0; margin: 0; font-size: 12px; }
+            .cv-head h2 { font-size: 24px; }
+            .cv-sec { margin-top: 18px; }
+            .cv-item { margin-bottom: 10px; }
+            .cv-item li, .cv-list li, .cv-skills { font-size: 12px; }
+            .cv-title { font-size: 13px; }
+            .cv-org, .cv-note, .cv-headline, .cv-contact { font-size: 12px; }
+            .cv-dates, .cv-loc { font-size: 11px; }
+            .cv-item li { margin-bottom: 1px; }
+            .cv a { color: inherit !important; }
+            .cv-sec > h3 { break-after: avoid; }
+        }
+    </style>
 </head>
 
 <body>
@@ -296,27 +365,33 @@
             <h2>About Me</h2>
 
             <div class="image-section">
-                <img loading="lazy" decoding="async" class="img-default" src="../images/Vishal%20John%20Headshot.jpg" alt="Vishal John">
-                <img loading="lazy" decoding="async" class="img-fun" src="../images/vishal-john-2.jpg" alt="Vishal John fun">
+                <img decoding="async" fetchpriority="high" class="img-default" src="../images/Vishal%20John%20Headshot.jpg" alt="Vishal John">
+                <img loading="lazy" decoding="async" class="img-fun" src="../images/vishal-john-2.jpg" alt="Vishal John, smiling">
             </div>
 
             <div class="description-section">
-                <p>I'm Vishal John, a second-year medical student at the University of Louisville School of Medicine. My interest in medicine is rooted in years of hands-on research — most notably at the Koschmann Lab at the University of Michigan, where I worked as a Clinical Research Technician studying pediatric brain cancer. There, I co-authored publications on liquid biopsy techniques, presented first-author research at the BioInnovation in Brain Cancer Symposium, and developed methods for simulating the tumor microenvironment using stem cell-derived organoids.</p>
-                <p>Before medical school, I served as Project Lead at miRcore, a nonprofit dedicated to democratizing STEM education through bioinformatics training and the Citizen Scientist Sequencing Initiative — an effort to give students direct ownership of their own genomic data.</p>
+                <p>I'm Vishal John, a third-year medical student at the University of Louisville School of Medicine. My interest in medicine is rooted in years of hands-on research — most notably at the Koschmann Lab at the University of Michigan, where I worked as a Clinical Research Technician studying pediatric brain cancer. There, I co-authored publications on liquid biopsy techniques, presented first-author research at the BioInnovation in Brain Cancer Symposium, and developed methods for simulating the tumor microenvironment using stem cell-derived organoids.</p>
+                <p>Before medical school, I served as Project Lead at miRcore, a nonprofit dedicated to democratizing STEM education through bioinformatics training and the Citizen Scientist Sequencing Initiative — an effort to give students direct ownership of their own genomic data. At UofL, I lead the Oncology Interest Group and worked on a cardiothoracic surgery device team through Bluegrass Biodesign.</p>
                 <p>My commitment to medicine extends beyond the laboratory. I serve on the leadership team of Rock Cancer, a program providing free rock climbing experiences to young patients with cancer, and have volunteered since 2021 at Saint Andrew's Breakfast Program in Ann Arbor, which provides meals and essential services to the city's unhoused population.</p>
                 <p>I believe that becoming a good physician requires equal parts scientific rigor and genuine investment in people — and I try to bring both to everything I do.</p>
-            <div class="cv-section">
-                <a href="../assets/VishalJohnCV.pdf" class="cv-button" target="_blank">View My CV</a>
             </div>
+
+            <div class="cv-section">
+                <a href="#cv" class="cv-button">View My CV</a>
+                <a href="../assets/VishalJohnCV.pdf" class="cv-btn" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i> Download PDF</a>
+            </div>
+        </section>
+
+        <!-- CV: content lives in assets/cv.json (+ publications.json / presentations.json) -->
+        <section class="main-content cv" id="cv" aria-label="Curriculum vitae">
+            <p class="cv-loading">Loading CV…</p>
         </section>
     </main>
 
     <footer>
-        <div>
-            <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
-            <a href="https://github.com/vishaljjohn" target="_blank"><i class="fab fa-github fa-2x"></i></a>
-            <a href="https://medium.com/@vishaljjohn" target="_blank"><i class="fab fa-medium fa-2x"></i></a>
-        </div>
+        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
         <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
     </footer>
 
@@ -329,6 +404,86 @@
                 navUl.classList.toggle('open');
             });
         }
+    </script>
+    <script>
+    /* Renders the CV from assets/cv.json. Publications/presentations come from their own files. */
+    (function () {
+        var root = document.getElementById('cv');
+        function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+        function fmt(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>'); }
+        function getJSON(u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error(u); return r.json(); }); }
+
+        // Long author lists: keep first three, my name, and the senior author.
+        function shortAuthors(raw) {
+            var list = raw.replace(/\.\s*$/, '').split(/,\s*/).filter(function (a) { return a && a !== 'et al'; });
+            if (list.length <= 8) return list.join(', ');
+            var me = -1; list.forEach(function (a, i) { if (a.indexOf('**') !== -1) me = i; });
+            var keep = [0, 1, 2, me, list.length - 1].filter(function (i, k, arr) { return i >= 0 && arr.indexOf(i) === k; }).sort(function (a, b) { return a - b; });
+            var out = [], prev = -1;
+            keep.forEach(function (i) { if (i - prev > 1) out.push('…'); out.push(list[i]); prev = i; });
+            return out.join(', ');
+        }
+
+        function entries(items) {
+            return items.map(function (it) {
+                return '<div class="cv-item"><div><div class="cv-title">' + fmt(it.title) + '</div>'
+                    + (it.org ? '<div class="cv-org">' + fmt(it.org) + '</div>' : '') + '</div>'
+                    + '<div><div class="cv-dates">' + esc(it.dates) + '</div>'
+                    + (it.location ? '<div class="cv-loc">' + esc(it.location) + '</div>' : '') + '</div>'
+                    + (it.note ? '<div class="cv-note">' + fmt(it.note) + '</div>' : '')
+                    + (it.bullets && it.bullets.length ? '<ul>' + it.bullets.map(function (b) { return '<li>' + fmt(b) + '</li>'; }).join('') + '</ul>' : '')
+                    + '</div>';
+            }).join('');
+        }
+        function list(items) {
+            return '<ul class="cv-list">' + items.map(function (it) {
+                return '<li><span>' + fmt(it.text) + '</span>' + (it.dates ? '<span class="cv-dates">' + esc(it.dates) + '</span>' : '') + '</li>';
+            }).join('') + '</ul>';
+        }
+        function skills(items) {
+            return '<dl class="cv-skills">' + items.map(function (it) { return '<dt>' + esc(it.label) + '</dt><dd>' + fmt(it.text) + '</dd>'; }).join('') + '</dl>';
+        }
+        function pubs(data) {
+            return '<ul class="cv-list cv-cites">' + data.map(function (p) {
+                var doi = p.doi ? ' doi:<a href="https://doi.org/' + esc(p.doi) + '" target="_blank" rel="noopener">' + esc(p.doi) + '</a>' : '';
+                return '<li class="cv-cite">' + fmt(shortAuthors(p.authors)) + '. ' + esc(p.title) + '. <em>' + esc(p.journal) + '</em>. ' + esc(p.year_detail || p.year) + '.' + doi + '</li>';
+            }).join('') + '</ul>';
+        }
+        function pres(data) {
+            var label = { poster: 'Poster', abstract: 'Abstract', talk: 'Oral presentation' };
+            return '<ul class="cv-list cv-cites">' + data.map(function (p) {
+                return '<li class="cv-cite">' + fmt(shortAuthors(p.authors)) + '. ' + esc(p.title) + '. ' + esc(label[p.type] || 'Presentation') + ', <em>' + esc(p.conference) + '</em>, ' + esc(p.location) + '. ' + esc(p.date) + '.</li>';
+            }).join('') + '</ul>';
+        }
+        function byYearDesc(a, b) { return (b.year || 0) - (a.year || 0); }
+
+        Promise.all([
+            getJSON('../assets/cv.json'),
+            getJSON('../assets/publications.json').catch(function () { return { data: [] }; }),
+            getJSON('../assets/presentations.json').catch(function () { return { data: [] }; })
+        ]).then(function (r) {
+            var cv = r[0], src = { publications: r[1].data.slice().sort(byYearDesc), presentations: r[2].data.slice().sort(byYearDesc) };
+            var html = '<div class="cv-head"><h2>' + esc(cv.name) + '</h2>'
+                + '<p class="cv-headline">' + esc(cv.headline) + (cv.location ? ' · ' + esc(cv.location) : '') + '</p>'
+                + '<div class="cv-contact">' + (cv.contact || []).map(function (c) {
+                    return '<a href="' + esc(c.url) + '"' + (/^https?:/.test(c.url) ? ' target="_blank" rel="noopener"' : '') + '><i class="' + esc(c.icon) + '"></i>' + esc(c.label) + '</a>';
+                }).join('') + '</div></div>';
+            (cv.sections || []).forEach(function (sec) {
+                if (sec.hidden) return;
+                var items = (sec.items || []).filter(function (it) { return !it.hidden; });
+                var body = sec.source === 'publications' ? pubs(src.publications)
+                    : sec.source === 'presentations' ? pres(src.presentations)
+                    : sec.type === 'list' ? list(items)
+                    : sec.type === 'skills' ? skills(items)
+                    : entries(items);
+                html += '<section class="cv-sec"><h3>' + esc(sec.title) + '</h3>' + body + '</section>';
+            });
+            root.innerHTML = html;
+            document.documentElement.setAttribute('data-cv-ready', '1');
+        }).catch(function () {
+            root.innerHTML = '<p class="cv-loading">Couldn\'t load the CV right now. <a href="../assets/VishalJohnCV.pdf">Download the PDF instead.</a></p>';
+        });
+    })();
     </script>
     <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
     <script src="../assets/site.js"></script>

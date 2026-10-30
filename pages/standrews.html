@@ -352,11 +352,7 @@ figure img {
 <!-- Image Gallery -->
 <div class="spin-gallery"><div class="spin-stage"><div class="spin-ring"><div class="spin-card" data-caption="Typical Day at The Breakfast Program"><img alt="Typical Day at The Breakfast Program" decoding="async" loading="lazy" src="../images/andrew1.JPG"/></div><div class="spin-card" data-caption="Our Team Mascot"><img alt="Our Team Mascot" decoding="async" loading="lazy" src="../images/andrew2.JPG"/></div></div></div><div class="spin-caption"></div><p class="spin-hint">Drag to spin · click a photo to enlarge</p><div class="spin-controls"><button aria-label="Previous" class="spin-btn spin-prev">‹</button><button aria-label="Next" class="spin-btn spin-next">›</button></div></div>
 <!-- Lightbox Modal -->
-<div class="lightbox" id="lightbox">
-<span class="lightbox-close" id="lightboxClose">×</span>
-<img alt="Expanded image" class="lightbox-content" decoding="async" id="lightboxImage" loading="lazy"/>
-<div class="lightbox-caption" id="lightboxCaption"></div>
-</div>
+
 <div class="center-content">
 <h2>Check Out the Breakfast Program!</h2>
 <a class="donate-button" href="https://breakfastatstandrews.org/" rel="noopener noreferrer" target="_blank">St. Andrew's Breakfast Program</a>
@@ -364,45 +360,11 @@ figure img {
 </div>
 </div>
 <footer>
-<a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank"> <i class="fab fa-linkedin fa-2x"> </i>
-<a href="https://github.com/vishaljjohn" target="_blank"> <i class="fab fa-github fa-2x"> </i>
-<a href="https://medium.com/@vishaljjohn" target="_blank"> <i class="fab fa-medium fa-2x"> </i>
-</a> <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
-</a></a></footer>
-<script>
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxCaption = document.getElementById('lightboxCaption');
-    const closeLightbox = document.getElementById('lightboxClose');
-    const galleryImages = document.querySelectorAll('.gallery-image');
-
-    galleryImages.forEach((image, index) => {
-        image.addEventListener('click', () => {
-            lightbox.style.display = 'block';
-            lightboxImage.src = image.src;
-            lightboxCaption.innerHTML = image.nextElementSibling.textContent;
-        });
-    });
-
-    closeLightbox.addEventListener('click', () => {
-        lightbox.style.display = 'none';
-    });
-
-// Close the lightbox with the 'Esc' key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape" && lightbox.style.display === 'block') {
-                lightbox.style.display = 'none';
-            }
-        });
-    
-    // Close lightbox when clicked anywhere besides the image
-    lightbox.addEventListener('click', (event) => {
-        if(event.target !== lightboxImage) {
-            lightbox.style.display = 'none';
-        }
-    });
-
-</script>
+        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+    </footer>
 <script>
     (function(){
       var btn = document.getElementById('hamburger');

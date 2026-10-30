@@ -6,13 +6,13 @@
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Vishal John | Medical Student, Aspiring Coffee Shop Owner & Balloon Animal Artist</title>
-    <meta name="description" content="Personal website of Vishal John — M2 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
+    <meta name="description" content="Personal website of Vishal John — M3 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
     <meta name="author" content="Vishal John">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.vishaljohn.com/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Vishal John">
-    <meta property="og:description" content="Personal website of Vishal John — M2 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
+    <meta property="og:description" content="Personal website of Vishal John — M3 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
     <meta property="og:url" content="https://www.vishaljohn.com/">
     <meta property="og:image" content="https://www.vishaljohn.com/assets/og-image.jpg">
     <meta property="og:image:width" content="1200">
@@ -20,7 +20,7 @@
     <meta property="og:site_name" content="Vishal John">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Vishal John">
-    <meta name="twitter:description" content="M2 medical student at UofL — children's book author, balloon animal artist, and aspiring coffee shop owner.">
+    <meta name="twitter:description" content="M3 medical student at UofL — children's book author, balloon animal artist, and aspiring coffee shop owner.">
     <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og-image.jpg">
     <meta name="theme-color" content="#0b0c0e">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
@@ -42,7 +42,7 @@
         "https://scholar.google.com/citations?user=QXyjTGgAAAAJ",
         "https://medium.com/@vishaljjohn"
       ],
-      "description": "M2 medical student at the University of Louisville School of Medicine, children's book author, balloon animal artist, and aspiring coffee shop owner."
+      "description": "M3 medical student at the University of Louisville School of Medicine, children's book author, balloon animal artist, and aspiring coffee shop owner."
     }
     </script>
 
@@ -455,7 +455,7 @@
     <!-- Crawlable content for search engines & screen readers -->
     <div class="sr-only">
         <h1>Vishal John — medical student, children's book author &amp; balloon animal artist</h1>
-        <p>Vishal John is a second-year (M2) medical student at the University of Louisville School of Medicine, the author of the children's book "The Brave Little ImmuneTeam," a balloon animal artist, and an aspiring coffee shop owner.</p>
+        <p>Vishal John is a third-year (M3) medical student at the University of Louisville School of Medicine, the author of the children's book "The Brave Little Immune Team," a balloon animal artist, and an aspiring coffee shop owner.</p>
         <nav aria-label="Main">
             <a href="pages/about.html">About</a>
             <a href="pages/publications.html">Publications</a>
@@ -470,7 +470,7 @@
         <div style="position:fixed;inset:0;z-index:9999;background:#fff;color:#222;overflow:auto;padding:48px 20px;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;">
             <div style="max-width:640px;margin:0 auto;line-height:1.6;">
                 <h1 style="margin:0 0 8px;">Vishal John</h1>
-                <p style="color:#555;margin:0 0 20px;">M2 medical student at the University of Louisville School of Medicine — children's book author, balloon animal artist, and aspiring coffee shop owner.</p>
+                <p style="color:#555;margin:0 0 20px;">M3 medical student at the University of Louisville School of Medicine — children's book author, balloon animal artist, and aspiring coffee shop owner.</p>
                 <p style="margin:0 0 14px;">This homepage is interactive and works best with JavaScript on. In the meantime, here are the main pages:</p>
                 <ul style="line-height:2;">
                     <li><a href="pages/about.html">About me</a></li>
@@ -584,7 +584,7 @@
             <div class="info-row">
                 <img src="images/Vishal%20John%20Headshot.jpg" alt="Vishal John">
                 <div class="info-body">
-                    <p>M2 medical student at the University of Louisville School of Medicine.</p>
+                    <p>M3 medical student at the University of Louisville School of Medicine.</p>
                     <p>Children&rsquo;s book author, balloon animal artist, and aspiring coffee shop owner.</p>
                     <p><a href="pages/about.html" style="color:#6cc0ff;">Read the full about page &rarr;</a></p>
                 </div>
@@ -671,13 +671,20 @@
            and within a visit it advances to the next clip when one ends.
            Missing files are skipped automatically; if none load, the headshot
            placeholder shows. To use just one, leave a single name in the list. */
-        var VIDEOS = ['call1.mp4', 'call2.mp4', 'call3.mp4', 'call4.mp4'];
+        var VIDEOS = ['call1.mp4'];
         var VIDEO_DIR = 'assets/videos/';
         var LOOPS_BEFORE_SWITCH = 4;   // within a visit, switch clip after this many loops
 
         var feed = document.getElementById('feed');
         var feedBg = document.getElementById('feedBg');
         var order = [], pos = 0, loopCount = 0;
+        var bgQuery = window.matchMedia ? window.matchMedia('(max-width: 820px) and (orientation: portrait)') : null;
+        function bgVisible() { return !bgQuery || bgQuery.matches; }
+        if (bgQuery && bgQuery.addEventListener) bgQuery.addEventListener('change', function () {
+            if (!feedBg || !order.length) return;
+            if (bgQuery.matches) { if (feedBg.getAttribute('src')) { var pb = feedBg.play(); if (pb && pb.catch) pb.catch(function () {}); } else loadBg(order[pos]); }
+            else if (!bgQuery.matches) { try { feedBg.pause(); } catch (e) {} }
+        });
 
         var _tapPlayArmed = false;
         function armTapPlay() {
@@ -686,6 +693,14 @@
             document.addEventListener('touchstart', go, { passive: true });
             document.addEventListener('click', go);
         }
+        function loadBg(name) {
+            if (!feedBg) return;
+            feedBg.muted = true; feedBg.defaultMuted = true; feedBg.loop = true; feedBg.playsInline = true;
+            feedBg.setAttribute('playsinline', ''); feedBg.setAttribute('webkit-playsinline', '');
+            feedBg.src = VIDEO_DIR + encodeURIComponent(name); feedBg.load();
+            var pb = feedBg.play(); if (pb && pb.catch) pb.catch(function () {});
+            if (reduceMotion) { try { feedBg.pause(); } catch (e) {} }
+        }
         function loadVideo(name) {
             feed.loop = false;
             feed.muted = true; feed.defaultMuted = true; feed.playsInline = true;
@@ -693,13 +708,7 @@
             feed.src = VIDEO_DIR + encodeURIComponent(name);
             feed.load();
             var p = feed.play(); if (p && p.catch) p.catch(function () {});
-            if (feedBg) {
-                feedBg.muted = true; feedBg.defaultMuted = true; feedBg.loop = true; feedBg.playsInline = true;
-                feedBg.setAttribute('playsinline', ''); feedBg.setAttribute('webkit-playsinline', '');
-                feedBg.src = VIDEO_DIR + encodeURIComponent(name); feedBg.load();
-                var pb = feedBg.play(); if (pb && pb.catch) pb.catch(function () {});
-                if (reduceMotion) { try { feedBg.pause(); } catch (e) {} }
-            }
+            if (bgVisible()) loadBg(name);
             if (reduceMotion) { var pz = function () { feed.pause(); feed.removeEventListener('loadeddata', pz); }; feed.addEventListener('loadeddata', pz); }
             armTapPlay();
         }
@@ -804,7 +813,7 @@
         /* ---- Projects grid ---- */
         var projects = [
             { t: 'Balloon Animals', img: 'images/balloon_clownnose1.jpg', url: 'pages/balloonanimals.html' },
-            { t: 'Rock Cancer', img: 'images/RockCancer.png', url: 'pages/rockcancer.html' },
+            { t: 'Rock Cancer', img: 'images/RockCancer.jpg', url: 'pages/rockcancer.html' },
             { t: 'Bluegrass Biodesign', img: 'images/biodesign_team.jpg', url: 'pages/bluegrassbiodesign.html' },
             { t: "Children's Book Author", img: 'images/Brave_Little_ImmuneTeam_Cover.jpg', url: 'pages/childrensbook.html' },
             { t: 'miRcore', img: 'images/mircorelogo.jpg', url: 'pages/mircore.html' },
@@ -864,17 +873,17 @@
         /* ---- Offline knowledge base (fallback + used when AI_ENDPOINT is empty) ---- */
         var KB = [
             { k: ['who are you','about you','yourself','introduce','tell me about you','your name','what do you do'],
-              a: "i'm Vishal John, a 2nd-year (M2) medical student at the University of Louisville School of Medicine. outside of class i write children's books, twist balloon animals, and daydream about opening my own coffee shop one day." },
-            { k: ['school','med school','medical school','student','uofl','louisville','study','m2','classes','michigan'],
-              a: "i'm an M2 (second-year) medical student at the University of Louisville School of Medicine. before that i was at the University of Michigan." },
+              a: "i'm Vishal John, a 3rd-year (M3) medical student at the University of Louisville School of Medicine. outside of class i write children's books, twist balloon animals, and daydream about opening my own coffee shop one day." },
+            { k: ['school','med school','medical school','student','uofl','louisville','study','m2','m3','classes','michigan'],
+              a: "i'm an M3 (third-year) medical student at the University of Louisville School of Medicine. before that i was at the University of Michigan." },
             { k: ['book','children','author','immune','wrote','writing'],
-              a: "i wrote a children's book called \"The Brave Little ImmuneTeam\" to help kids understand how the immune system works. there's more on my <a href='pages/childrensbook.html'>Children's Book</a> page." },
+              a: "i wrote a children's book called \"The Brave Little Immune Team\" to help kids understand how the immune system works. there's more on my <a href='pages/childrensbook.html'>Children's Book</a> page." },
             { k: ['balloon','animals','twist'],
               a: "balloon animals are my favorite party trick 🎈 dogs, monkeys, flowers, you name it. there's a whole gallery on my <a href='pages/balloonanimals.html'>Balloon Animals</a> page." },
             { k: ['coffee','cafe','shop','espresso'],
               a: "one day i'd love to open a cozy little coffee shop ☕ good espresso, comfy chairs, maybe a copy of my book on the shelf." },
             { k: ['research','lab','koschmann','mircore','science'],
-              a: "i've done some research along the way — you can browse it all with the My work button on the bar, including the Koschmann Lab and miRcore." },
+              a: "i've done some research along the way — tap 'My work' in the chat or the share-screen button for a tour, including the Koschmann Lab and miRcore." },
             { k: ['publication','paper','papers','scholar'],
               a: "you can see my publications on the <a href='pages/publications.html'>Publications</a> page, or my <a href='https://scholar.google.com/citations?user=QXyjTGgAAAAJ' target='_blank' rel='noopener'>Google Scholar</a>." },
             { k: ['rock cancer'],
@@ -886,7 +895,7 @@
             { k: ['help','elder','hospital','older'],
               a: "i volunteer with the Hospital Elder Life Program (HELP), supporting older patients. more on the <a href='pages/HELP.html'>HELP</a> page." },
             { k: ['breakfast','andrew','saint','volunteer','service','community'],
-              a: "i help with Saint Andrew's Breakfast Program and a few other community efforts. there's a page on <a href='pages/standrews.html'>Saint Andrew's</a>, and you can see everything via the My work button." },
+              a: "i help with Saint Andrew's Breakfast Program and a few other community efforts. there's a page on <a href='pages/standrews.html'>Saint Andrew's</a>, and you can see everything via 'My work' in the chat." },
             { k: ['contact','email','reach','get in touch','hire','message','connect'],
               a: "the best way to reach me is my <a href='pages/contact.html'>Contact</a> page — i'd love to hear from you." },
             { k: ['link','social','linkedin','github','online','find you','medium'],
@@ -894,7 +903,7 @@
             { k: ['newsletter','blog','substack','subscribe'],
               a: "i write a newsletter — you can check it out on my <a href='pages/blog.html'>Newsletter</a> page." },
             { k: ['music','spotify','listening','song','last.fm','lastfm'],
-              a: "music's a big part of my life — my classic site has a live feed of what i'm listening to. tap the red leave-call button to see it." },
+              a: "music's a big part of my life — tap the music pill at the top-left to see what i've been listening to, or hit the red End call button for my classic site." },
             { k: ['hello','hi','hey','yo','hiya','good morning','good evening','howdy','sup'],
               a: "hey! great to see you 😊 ask me anything — the kids' book, balloon animals, my volunteering, or how to get in touch." },
             { k: ['thank','thanks','appreciate','cool','awesome'],
@@ -909,7 +918,7 @@
             for (var i = 0; i < KB.length; i++) {
                 for (var j = 0; j < KB[i].k.length; j++) {
                     var kw = KB[i].k[j];
-                    if (q.indexOf(' ' + kw + ' ') !== -1 || q.indexOf(kw) !== -1) return KB[i].a;
+                    if (kw.length <= 3 ? q.indexOf(' ' + kw + ' ') !== -1 : q.indexOf(kw) !== -1) return KB[i].a;
                 }
             }
             return FALLBACK;
@@ -917,10 +926,13 @@
 
         function aiReply(text) {
             if (!AI_ENDPOINT) return Promise.resolve(null);
+            var ctrl = window.AbortController ? new AbortController() : null;
+            if (ctrl) setTimeout(function () { ctrl.abort(); }, 15000);
             return fetch(AI_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text, history: hist.slice(-6) })
+                body: JSON.stringify({ message: text, history: hist.slice(-6) }),
+                signal: ctrl ? ctrl.signal : undefined
             })
             .then(function (r) { return r.ok ? r.json() : null; })
             .then(function (d) { return d && d.reply ? String(d.reply) : null; })
@@ -1419,7 +1431,7 @@
             if (document.hidden) { try { feed.pause(); } catch (e) {} try { if (feedBg) feedBg.pause(); } catch (e) {} }
             else if (!reduceMotion && !document.body.classList.contains('no-video')) {
                 var pp = feed.play(); if (pp && pp.catch) pp.catch(function () {});
-                if (feedBg) { var pbg = feedBg.play(); if (pbg && pbg.catch) pbg.catch(function () {}); }
+                if (feedBg && bgVisible() && feedBg.getAttribute('src')) { var pbg = feedBg.play(); if (pbg && pbg.catch) pbg.catch(function () {}); }
             }
         });
 
@@ -1581,6 +1593,7 @@
             ovScreen.addEventListener('mouseenter', stop); ovScreen.addEventListener('mouseleave', function () { if (ovScreen.classList.contains('open')) start(); });
             ovScreen.addEventListener('click', function (e) { if (e.target === ovScreen) stop(); });
             Array.prototype.forEach.call(document.querySelectorAll('#ovScreen [data-close]'), function (b) { b.addEventListener('click', stop); });
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') stop(); });
         })();
 
         /* ---- Capture a photo of the call (video + filters + you) ---- */
@@ -1635,7 +1648,7 @@
         var greet = (function () { var h = new Date().getHours(); return h < 12 ? 'good morning' : (h < 18 ? 'good afternoon' : 'good evening'); })();
         var steps = [
             { delay: 700, type: 900, msg: greet + ", you made it 👋 welcome to my little corner of the internet." },
-            { delay: 400, type: 1100, msg: "i'm Vishal: an M2 med student at UofL, children's book author, balloon animal artist, and aspiring coffee shop owner." },
+            { delay: 400, type: 1100, msg: "i'm Vishal: an M3 med student at UofL, children's book author, balloon animal artist, and aspiring coffee shop owner." },
             { delay: 350, type: 900, msg: "ask me anything below, or pick a topic:", replies: true },
             { delay: 500, type: 800, msg: "p.s. — prefer a normal website? just tap the red “End call” button below anytime 👇" }
         ];
