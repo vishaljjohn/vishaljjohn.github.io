@@ -452,7 +452,8 @@
         function pres(data) {
             var label = { poster: 'Poster', abstract: 'Abstract', talk: 'Oral presentation' };
             return '<ul class="cv-list cv-cites">' + data.map(function (p) {
-                return '<li class="cv-cite">' + fmt(shortAuthors(p.authors)) + '. ' + esc(p.title) + '. ' + esc(label[p.type] || 'Presentation') + ', <em>' + esc(p.conference) + '</em>, ' + esc(p.location) + '. ' + esc(p.date) + '.</li>';
+                return '<li class="cv-cite">' + fmt(shortAuthors(p.authors)) + '. ' + esc(p.title) + '. ' + esc(label[p.type] || 'Presentation') + ', <em>' + esc(p.conference) + '</em>, ' + esc(p.location) + '. ' + esc(p.date) + '.'
+                    + (p.doi ? ' doi:<a href="https://doi.org/' + esc(p.doi) + '" target="_blank" rel="noopener">' + esc(p.doi) + '</a>' : '') + '</li>';
             }).join('') + '</ul>';
         }
         function byYearDesc(a, b) { return (b.year || 0) - (a.year || 0); }

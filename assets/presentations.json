@@ -11,7 +11,8 @@
       "type": "One of: poster | abstract | talk",
       "highlight": "true = green left border (use for first-author or featured work)",
       "note": "Optional extra context, e.g. 'First-author poster presentation'",
-      "url": "Optional link to the abstract or poster PDF — omit the field if not available"
+      "url": "Optional link to the abstract or poster PDF — omit the field if not available",
+      "doi": "Optional DOI if the abstract was published in a journal; shown on the CV"
     },
     "example": {
       "year": 2025,
@@ -47,6 +48,19 @@
       "type": "abstract",
       "highlight": true,
       "note": "First-author abstract presentation"
+    },
+    {
+      "year": 2023,
+      "title": "Nanopore Sequencing for the Real-time Detection of Melanoma-Involved Lymph Nodes",
+      "authors": "Rebecca W. Gao, Jack Wadden, Robert Dickson, Rayan Aittaleb, **Vishal John**, Carl Koschmann, Steven Chinn.",
+      "conference": "AAO-HNSF 2023 Annual Meeting & OTO Experience",
+      "location": "Nashville, TN",
+      "date": "September 30 – October 4, 2023",
+      "type": "talk",
+      "highlight": false,
+      "note": "Co-author. Abstract published in Otolaryngology–Head and Neck Surgery, 169(S1), 2023.",
+      "doi": "10.1002/ohn.435",
+      "url": "https://doi.org/10.1002/ohn.435"
     },
     {
       "year": 2022,
