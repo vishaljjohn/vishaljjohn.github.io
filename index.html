@@ -1567,7 +1567,12 @@
                 remember(); buzz([30, 40, 30]);
                 var ec = document.getElementById('endingCall');
                 ec.querySelector('.ec-title').textContent = 'call declined';
-                ec.querySelector('.ec-sub').textContent = "no hard feelings. i'll leave a voicemail on your heart.";
+                var sayings = [
+                    "fair enough. this could have been an email anyway.",
+                    "no hard feelings. the website will see you now.",
+                    "no worries. i'll tell my attending you were in surgery."
+                ];
+                ec.querySelector('.ec-sub').textContent = sayings[Math.floor(Math.random() * sayings.length)];
                 ec.classList.add('show');
                 hide();
                 setTimeout(function () { window.location.href = 'index_classic.html'; }, 1800);
