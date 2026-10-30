@@ -368,6 +368,24 @@
         .accept .ring-ico { background: var(--green); animation: ringshake 1.2s ease-in-out infinite; }
         @keyframes ringshake { 0%, 60%, 100% { transform: none; } 70% { transform: rotate(-12deg); } 80% { transform: rotate(12deg); } 90% { transform: rotate(-8deg); } }
 
+        @media (max-height: 480px) {
+            .ring-photo, .ring-photo img { width: 72px; height: 72px; }
+            .ring-photo { margin-bottom: 10px; }
+            .ring-name { font-size: 20px; }
+            .ring-sub { margin-top: 2px; font-size: 13px; }
+            .ring-btns { margin-top: 16px; gap: 44px; }
+            .ring-ico { width: 54px; height: 54px; font-size: 20px; }
+        }
+        /* landscape phones: keep the chat on screen and clear of the top bar */
+        @media (max-height: 500px) {
+            #thread { max-height: calc(100vh - 240px); }
+            .chat-head { display: none; }
+            .nowplaying { display: none !important; }
+        }
+        @media (max-height: 500px) and (max-width: 680px) {
+            .chat { right: auto; width: min(54vw, 340px); }
+        }
+
         /* Now playing */
         .nowplaying { position: fixed; left: 22px; top: 70px; z-index: 6; display: flex; align-items: center; gap: 8px; background: var(--panel); border: 1px solid var(--stroke); border-radius: 999px; padding: 6px 13px 6px 7px; color: #fff; text-decoration: none; font-size: 12px; max-width: 250px; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
         .np-ico { width: 22px; height: 22px; border-radius: 50%; background: #1DB954; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
@@ -990,6 +1008,7 @@
                 setTimeout(function () {
                     removeTyping();
                     addBubble(html);
+                    showChips();   // a visitor who typed during the intro still gets the topic buttons
                     hist.push({ role: 'assistant', content: stripTags(reply) });
                     busy = false; sendBtn.disabled = false;
                 }, wait);
@@ -1518,7 +1537,7 @@
             // coming Back from the classic site restores this page from the cache with the
             // "ending call…" screen still up; take it down again
             window.addEventListener('pageshow', function (e) {
-                if (e.persisted) document.getElementById('endingCall').classList.remove('show');
+                if (e.persisted) { document.getElementById('endingCall').classList.remove('show'); if (typeof startCall === 'function') startCall(); }
             });
         }
 
@@ -1728,6 +1747,18 @@
         // The intro stops as soon as the visitor sends something, so it never
         // keeps talking over (or out of order with) their conversation.
         var introStopped = false;
+        var chipsShown = false;
+        function showChips() {
+            if (chipsShown) return;
+            chipsShown = true;
+            addReplies([
+                { label: 'About me', act: function () { openOv('ovInfo'); } },
+                { label: 'My work', act: function () { openOv('ovWork'); } },
+                { label: 'The book', href: 'pages/childrensbook.html' },
+                { label: 'Balloon animals', href: 'pages/balloonanimals.html' },
+                { label: 'Find me online', act: function () { openOv('ovLinks'); } }
+            ]);
+        }
         function stopIntro() {
             introStopped = true;
             var t = document.getElementById('__introTyping'); if (t) t.remove();
@@ -1743,13 +1774,7 @@
                     if (introStopped) return;
                     addBubble(s.msg);
                     hist.push({ role: 'assistant', content: s.msg });
-                    if (s.replies) addReplies([
-                        { label: 'About me', act: function () { openOv('ovInfo'); } },
-                        { label: 'My work', act: function () { openOv('ovWork'); } },
-                        { label: 'The book', href: 'pages/childrensbook.html' },
-                        { label: 'Balloon animals', href: 'pages/balloonanimals.html' },
-                        { label: 'Find me online', act: function () { openOv('ovLinks'); } }
-                    ]);
+                    if (s.replies) showChips();
                     run();
                 }, s.type);
             }, s.delay);

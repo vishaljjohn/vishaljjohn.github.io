@@ -5,11 +5,16 @@
   // Mobile menu button + footer year (shared by every classic page)
   function shell() {
     var btn = document.getElementById("hamburger"), list = document.querySelector("nav ul");
-    if (btn && list) btn.addEventListener("click", function () {
-      var open = list.classList.toggle("open");
+    function setMenu(open) {
+      list.classList.toggle("open", open);
       btn.classList.toggle("open", open);
       btn.setAttribute("aria-expanded", open ? "true" : "false");
-    });
+    }
+    if (btn && list) {
+      btn.addEventListener("click", function (e) { e.stopPropagation(); setMenu(!list.classList.contains("open")); });
+      document.addEventListener("click", function (e) { if (list.classList.contains("open") && (!list.contains(e.target) || e.target.tagName === "A")) setMenu(false); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
+    }
     Array.prototype.forEach.call(document.querySelectorAll(".cur-year"), function (e) { e.textContent = new Date().getFullYear(); });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", shell); else shell();

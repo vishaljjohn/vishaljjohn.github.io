@@ -56,7 +56,12 @@
       nextB.style.display = many ? '' : 'none';
     }
     function go(d) { if (!items.length) return; idx = (idx + d + items.length) % items.length; render(); }
-    function close() { overlay.classList.remove('open'); }
+    var lastFocus = null;
+    function close() {
+      overlay.classList.remove('open');
+      document.documentElement.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
 
     overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
     closeBtn.addEventListener('click', close);
@@ -81,6 +86,9 @@
         items = list || []; idx = Math.max(0, Math.min(start || 0, items.length - 1));
         render();
         overlay.classList.add('open');
+        document.documentElement.style.overflow = 'hidden';
+        lastFocus = document.activeElement;
+        closeBtn.focus({ preventScroll: true });
       }
     };
     return lb;
@@ -173,7 +181,10 @@
 
     // Pause auto-rotate when the page/tab is hidden or motion is reduced.
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    document.addEventListener('visibilitychange', function () { if (document.hidden) stopAuto(); });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { stopAuto(); clearTimeout(idleTimer); }
+      else if (!reduceMotion) restartIdle();
+    });
 
     update();
     if (!reduceMotion) restartIdle();

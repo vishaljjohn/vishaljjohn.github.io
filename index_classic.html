@@ -236,7 +236,8 @@
         fetch('https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=vishaljjohn&api_key=83c5b48d3d1c6dcc0591b439664a3ed0&limit=8&format=json')
             .then(r => r.json())
             .then(data => {
-                const tracks = data.recenttracks?.track;
+                const raw = data.recenttracks?.track;
+                const tracks = Array.isArray(raw) ? raw : (raw ? [raw] : []);
                 if (!tracks || !tracks.length) throw new Error('no tracks');
                 // escape track/artist names so titles with < or & can't break the list
                 const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);

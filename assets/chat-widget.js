@@ -88,7 +88,7 @@
    + '.vjw-typing span:nth-child(2){animation-delay:.2s;}.vjw-typing span:nth-child(3){animation-delay:.4s;}'
    + '@keyframes vjwblink{0%,80%,100%{opacity:.25;}40%{opacity:1;}}'
    + '.vjw-input{display:flex;gap:8px;padding:12px;border-top:1px solid #eee;background:#fff;}'
-   + '.vjw-field{flex:1;min-width:0;border:1px solid #d8dadf;border-radius:22px;padding:10px 14px;font-size:15px;outline:none;}'
+   + '.vjw-field{flex:1;min-width:0;border:1px solid #d8dadf;border-radius:22px;padding:10px 14px;font-size:16px;outline:none;}'
    + '.vjw-field:focus{border-color:#0a6db0;}'
    + '.vjw-send{width:40px;height:40px;flex-shrink:0;border:none;border-radius:50%;background:#0a6db0;color:#fff;cursor:pointer;font-size:16px;}'
    + '.vjw-send:disabled{opacity:.5;}'

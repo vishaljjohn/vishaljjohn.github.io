@@ -57,7 +57,7 @@
     b.type = "button";
     b.className = "gg-thing" + (own ? " own" : "");
     b.setAttribute("aria-label", own ? "Your own healthy cell, leave it alone" : "Germ, tap to catch it");
-    b.style.left = (4 + Math.random() * 78) + "%";
+    b.style.left = "calc((100% - 74px) * " + Math.random() + ")";
     b.style.top = (6 + Math.random() * 70) + "%";
     b.innerHTML = '<svg viewBox="0 0 120 120" aria-hidden="true"><use href="' + SPRITE + kind + '"/></svg>';
     b.dataset.id = ++id;

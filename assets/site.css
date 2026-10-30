@@ -476,3 +476,7 @@ html.dark .paper-page .ph-role { color: #cdd4de; }
 @media (max-width: 480px) { .doodle-corner { width: 58px; height: 58px; top: -24px; right: 14px; } }
 @media print { .doodle, .doodle-corner { display: none !important; } }
 @media (max-width: 768px) { .paper-page .ph-link { padding: 12px 0; } }
+
+/* Phone fixes: iPhones zoom in on fields under 16px; 100vh is taller than the visible screen */
+@media (max-width: 768px) { .form-group input, .form-group textarea { font-size: 16px; } }
+@supports (min-height: 100dvh) { body { min-height: 100dvh; } }
