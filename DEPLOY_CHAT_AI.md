@@ -1,73 +1,56 @@
-# Free AI chat — deploy guide
+# AI chat backend — update and deploy guide
 
-Your site runs on GitHub Pages, which only serves static files, so the AI lives in a tiny
-**Cloudflare Worker** (free). The page already works *without* this — until you finish these
-steps it uses built-in keyword answers. Once you paste in your Worker URL, the chat becomes
-a real AI that answers questions about you.
+The site runs on GitHub Pages, which only serves static files, so the chat AI lives in a
+**Cloudflare Worker** called `vishal-chat` (free tier). The code is `cloudflare-worker.js`
+in this repo. **Pushing to GitHub does not update it** — after editing that file, paste it
+into Cloudflare and deploy (step 2 below).
 
-**Cost:** Cloudflare's free plan includes **10,000 "Neurons"/day** of Workers AI, which resets
-daily. For a personal site that's roughly dozens–to–hundreds of replies per day at no charge,
-and no credit card is required for the free tier.
+If the Worker is unreachable, the chat silently falls back to the built-in keyword answers in
+`index.html` and `assets/chat-widget.js`, so it never looks broken.
+
+**Cost:** Cloudflare's free plan includes 10,000 "Neurons"/day of Workers AI, which resets
+daily; plenty for a personal site, no credit card needed.
 
 ---
 
-## 1. Make a free Cloudflare account
-Go to https://dash.cloudflare.com/sign-up and create an account (free). You do **not** need to
-move your domain to Cloudflare for this.
+## 1. Open the Worker
+https://dash.cloudflare.com → **Compute (Workers)** → **Workers & Pages** → `vishal-chat`.
 
-## 2. Create the Worker
-1. In the dashboard sidebar: **Compute (Workers)** → **Workers & Pages** → **Create** → **Create Worker**.
-2. Give it a name like `vishal-chat`. Click **Deploy** (it deploys a hello-world first).
-3. Click **Edit code**. Delete the sample code, then paste in the entire contents of
-   `cloudflare-worker.js` from this folder. Click **Deploy**.
+## 2. Deploy new code
+1. Click **Edit code**.
+2. Select everything, delete it, and paste the full contents of `cloudflare-worker.js`.
+3. Click **Deploy**.
 
-## 3. Turn on Workers AI for the Worker
-The code uses an `AI` binding. Add it:
-1. Open your Worker → **Settings** → **Bindings** (older dashboards: **Settings → Variables**).
-2. **Add binding** → choose **Workers AI**.
-3. Set the **Variable name** to exactly `AI` → **Save / Deploy**.
+## 3. Bindings and secrets (one-time; check they exist)
+Worker → **Settings** → **Bindings** / **Variables and Secrets**:
 
-## 4. Copy your Worker URL
-On the Worker's page you'll see a URL like:
+| Name | Type | What it's for |
+|---|---|---|
+| `AI` | Workers AI binding | Runs the model |
+| `VISITS` | KV namespace binding | Visitor counter and the question log |
+| `ASK_LOG_KEY` | Secret (text) | Password for viewing the question log |
+
+Without `ASK_LOG_KEY`, the question log is simply turned off. Don't reuse the old key that
+used to be written in this repo.
+
+## 4. View what visitors ask
 ```
-https://vishal-chat.YOURNAME.workers.dev
+https://vishal-chat.vishaljjohn.workers.dev/questions?key=YOUR_ASK_LOG_KEY
 ```
-
-## 5. Plug it into the site
-1. Open `index.html`.
-2. Near the top of the `<script>` find this line:
-   ```js
-   var AI_ENDPOINT = "";
-   ```
-3. Put your Worker URL between the quotes:
-   ```js
-   var AI_ENDPOINT = "https://vishal-chat.YOURNAME.workers.dev";
-   ```
-4. Save, commit, and push to GitHub. Done — the chat now uses AI.
-
-## 6. (Recommended) Lock it to your domain
-By default the Worker accepts requests from anywhere. To restrict it to your site, open
-`cloudflare-worker.js` and change:
-```js
-"Access-Control-Allow-Origin": "*",
-```
-to
-```js
-"Access-Control-Allow-Origin": "https://www.vishaljohn.com",
-```
-then re-deploy. (Keep `*` while testing locally, since `file://` pages send a `null` origin.)
+Add `&unanswered=1` to see only questions the AI couldn't answer, or `&clear=1` to empty
+the log.
 
 ---
 
 ## How it behaves
-- **AI reachable:** visitor messages go to your Worker, which runs Llama 3.1 (8B) with a
-  system prompt grounded on your bio and guardrails (only talks about you, stays appropriate,
-  won't invent facts, and won't use the "researcher" label).
-- **AI unset, rate-limited, or offline:** the page silently falls back to the built-in
-  keyword answers, so the chat never looks broken.
+- Answers only questions about Vishal, using the facts in `SYSTEM_PROMPT`; it won't invent
+  facts, give medical advice, or use emojis.
+- Only answers requests from `vishaljohn.com` / `www.vishaljohn.com` (see `ALLOWED_ORIGINS`),
+  so it won't respond from a local preview.
+- Repeated first questions are cached for a day, so after changing facts some old answers can
+  linger for up to 24 hours.
 
 ## Tuning
-- Edit the `SYSTEM_PROMPT` text in `cloudflare-worker.js` to add or correct facts about you.
-- Want a different/cheaper model? Change the model id in
-  `env.AI.run("@cf/meta/llama-3.1-8b-instruct", …)`. See
-  https://developers.cloudflare.com/workers-ai/models/ for the current free-tier models.
+- Edit `SYSTEM_PROMPT` in `cloudflare-worker.js` to add or correct facts, then redeploy.
+- The model is set by `MODEL` (currently Llama 3.3 70B). See
+  https://developers.cloudflare.com/workers-ai/models/ for other free-tier models.

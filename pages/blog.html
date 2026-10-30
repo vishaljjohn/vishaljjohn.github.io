@@ -244,10 +244,13 @@
     <script>
         const mediumUser = 'vishaljjohn';
         const feedUrl = `https://medium.com/feed/@${mediumUser}`;
-        const proxies = [
-            url => `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`,
-            url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
-            url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+        // Browsers can't read Medium's feed directly, so a daily GitHub Action
+        // (tools/fetch-medium.py) saves it to assets/medium.json. The public proxies
+        // are only a fallback and each gets a short timeout so the page never hangs.
+        const sources = [
+            { url: () => '../assets/medium.json', kind: 'local' },
+            { url: u => `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(u)}`, kind: 'rss2json' },
+            { url: u => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`, kind: 'wrapped' },
         ];
 
         const list = document.getElementById('medium-articles');
@@ -286,30 +289,32 @@
             })));
         }
 
-        async function tryProxy(index) {
-            if (index >= proxies.length) { showError(); return; }
-            const url = proxies[index](feedUrl);
+        async function trySource(index) {
+            if (index >= sources.length) { showError(); return; }
+            const src = sources[index];
+            const ctrl = new AbortController();
+            const timer = setTimeout(() => ctrl.abort(), 6000);
             try {
-                const res = await fetch(url);
+                const res = await fetch(src.url(feedUrl), { signal: ctrl.signal, cache: 'no-cache' });
                 if (!res.ok) throw new Error('bad response');
-                // rss2json returns JSON, others return raw XML or wrapped
                 const text = await res.text();
-                if (url.includes('rss2json')) {
+                if (src.kind === 'local' || src.kind === 'rss2json') {
                     const json = JSON.parse(text);
-                    if (json.status !== 'ok') throw new Error('rss2json error');
-                    renderItems(json.items || []);
-                } else if (text.includes('"contents"')) {
-                    renderRSS(JSON.parse(text).contents);
+                    if (src.kind === 'rss2json' && json.status !== 'ok') throw new Error('rss2json error');
+                    if (!json.items || !json.items.length) throw new Error('empty');
+                    renderItems(json.items);
                 } else {
-                    renderRSS(text);
+                    renderRSS(JSON.parse(text).contents);
                 }
-            } catch(e) {
-                tryProxy(index + 1);
+            } catch (e) {
+                trySource(index + 1);
+            } finally {
+                clearTimeout(timer);
             }
         }
 
         list.innerHTML = '<li style="color:#888;">Loading articles...</li>';
-        tryProxy(0);
+        trySource(0);
     </script>
 
 

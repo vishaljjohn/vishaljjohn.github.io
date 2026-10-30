@@ -67,7 +67,11 @@
         .hero-emoji { font-size: 72px; line-height: 1; }
 
         /* Projects */
-        .projects-gallery { background-color: #f4f4f4; padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+        /* same width as the hero card above (80%, 95% on phones) */
+        .projects-gallery { width: 80%; margin: 0 auto; padding: 0; background: transparent; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+        /* keep the 9 tiles in balanced rows: 9 on wide screens, 5+4 on laptops, 3x3 on tablets, 2 per row on phones */
+        @media (min-width: 1800px) { .projects-gallery { grid-template-columns: repeat(9, minmax(0, 1fr)); } }
+        @media (max-width: 1099px) { .projects-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
         .project-item { position: relative; border-radius: 6px; overflow: hidden; height: 180px; background: #ddd; }
         .project-item > a { display: block; width: 100%; height: 100%; text-decoration: none; }
         .project-item img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform 0.3s ease; }
@@ -108,6 +112,7 @@
             .main-content { padding: 30px; }
             .hero-emoji { display: none; }
             .spotify-section { width: 95%; padding: 24px; }
+            .projects-gallery { width: 95%; }
             .spotify-layout { flex-direction: column; }
             .spotify-widget { width: 100%; display: flex; justify-content: center; }
             .spotify-layout { align-items: stretch; gap: 28px; }
@@ -117,7 +122,8 @@
         }
         @media screen and (max-width: 480px) {
             header h1 { font-size: 20px; }
-            .projects-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 16px 12px; }
+            .projects-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+            .project-item:last-child:nth-child(odd) { grid-column: span 2; }
             .project-item { height: 150px; }
             .hero-btns a { padding: 11px 18px; }
         }

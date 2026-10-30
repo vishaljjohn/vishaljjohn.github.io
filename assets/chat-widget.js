@@ -20,9 +20,9 @@
     { k: ['book','children','author','immune','buy','amazon'],
       a: "i co-wrote a kids' book, \"The Brave Little Immune Team,\" for ages 4-8. you can grab it on <a href='https://www.amazon.com/Brave-Little-Immune-Team/dp/B0GVC5R915' target='_blank' rel='noopener'>Amazon</a>." },
     { k: ['balloon','animals','twist'],
-      a: "balloon animals are my favorite party trick 🎈 dogs, monkeys, flowers — you name it." },
+      a: "balloon animals are my favorite party trick: dogs, monkeys, flowers, you name it." },
     { k: ['coffee','cafe','shop'],
-      a: "one day i'd love to open a cozy little coffee shop ☕" },
+      a: "one day i'd love to open a cozy little coffee shop." },
     { k: ['research','lab','koschmann','mircore','science','rna','organoid'],
       a: "i've done research in the Koschmann Lab (pediatric brain cancer) and led bioinformatics work at miRcore. ask me about either!" },
     { k: ['publication','paper','scholar'],
@@ -36,11 +36,11 @@
     { k: ['link','social','linkedin','github','medium','online'],
       a: "you can find me on <a href='https://www.linkedin.com/in/vishaljjohn/' target='_blank' rel='noopener'>LinkedIn</a>, <a href='https://github.com/vishaljjohn' target='_blank' rel='noopener'>GitHub</a>, and <a href='https://medium.com/@vishaljjohn' target='_blank' rel='noopener'>Medium</a>." },
     { k: ['hi','hey','hello','yo','howdy'],
-      a: "hey! great to see you 😊 ask me anything — my research, the kids' book, balloon animals, or how to reach me." },
+      a: "hey! great to see you. ask me anything: my research, the kids' book, balloon animals, or how to reach me." },
     { k: ['thank','thanks'],
-      a: "anytime! 😊" },
+      a: "anytime!" },
     { k: ['bye','goodbye','later'],
-      a: "take care — come back soon! 👋" }
+      a: "take care, come back soon!" }
   ];
   var FALLBACK = "great question! i'm not sure about that one — try my Contact page and i'll get back to you. you can also ask about my research, the book, balloon animals, or volunteering.";
 
@@ -112,7 +112,7 @@
   document.body.appendChild(vcBtn);
 
   var tip = document.createElement('div');
-  tip.className = 'vjw-tip'; tip.textContent = 'Hi! Ask me anything 👋'; tip.style.display = 'none';
+  tip.className = 'vjw-tip'; tip.textContent = 'Hi! Ask me anything'; tip.style.display = 'none';
   document.body.appendChild(tip);
 
   var panel = document.createElement('div');
@@ -211,7 +211,7 @@
 
   function openPanel(){
     panel.classList.add('open'); tip.style.display = 'none';
-    if (!greeted){ greeted = true; setTimeout(function(){ var ty=addTyping(); setTimeout(function(){ rmTyping(); addBubble("hey! i'm vishal (well, an ai version 😄). ask me anything about my work, the kids' book, balloon animals, or how to get in touch."); }, 700); }, 150); }
+    if (!greeted){ greeted = true; setTimeout(function(){ var ty=addTyping(); setTimeout(function(){ rmTyping(); addBubble("hey! i'm vishal (well, an ai version of me). ask me anything about my work, the kids' book, balloon animals, or how to get in touch."); }, 700); }, 150); }
     setTimeout(function(){ field.focus(); }, 200);
   }
   function closePanel(){ panel.classList.remove('open'); }

@@ -1,0 +1,28 @@
+name: Refresh Medium posts
+
+on:
+  schedule:
+    - cron: "17 11 * * *"   # daily
+  workflow_dispatch:         # "Run workflow" button for an instant refresh
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/fetch-medium.py
+      - name: Commit if changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet assets/medium.json; then echo "no new posts"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Refresh Medium posts"
+          git push
+          # pushes made with the workflow token don't always start a Pages build; ask for one
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" || true

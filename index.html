@@ -307,7 +307,7 @@
             .ctrl { width: 42px; height: 42px; font-size: 15px; }
             .ctrl.leave { width: 42px; padding: 0; border-radius: 50%; }
             .leave-label { display: none; }
-            .clockbox a { padding: 10px 4px; }
+            .clockbox a { padding: 14px 6px; }
             .logo { padding: 10px 0; }
         }
         @media (max-width: 350px) {
@@ -461,7 +461,7 @@
         <div class="ec-inner">
             <i class="fas fa-phone-slash"></i>
             <div class="ec-title">ending call…</div>
-            <div class="ec-sub">taking you to my classic site 👋</div>
+            <div class="ec-sub">taking you to my classic site</div>
         </div>
     </div>
 
@@ -891,11 +891,11 @@
             { k: ['school','med school','medical school','student','uofl','louisville','study','m2','m3','classes','michigan'],
               a: "i'm an M3 (third-year) medical student at the University of Louisville School of Medicine. before that i was at the University of Michigan." },
             { k: ['book','children','author','immune','wrote','writing'],
-              a: "i wrote a children's book called \"The Brave Little Immune Team\" to help kids understand how the immune system works. there's more on my <a href='pages/childrensbook.html'>Children's Book</a> page." },
+              a: "i co-wrote a children's book with Neel Patel called \"The Brave Little Immune Team\" to help kids (ages 4-8) understand how the immune system works. you can get it on <a href='https://www.amazon.com/Brave-Little-Immune-Team/dp/B0GVC5R915' target='_blank' rel='noopener'>Amazon</a>, and there's more on my <a href='pages/childrensbook.html'>Children's Book</a> page." },
             { k: ['balloon','animals','twist'],
-              a: "balloon animals are my favorite party trick 🎈 dogs, monkeys, flowers, you name it. there's a whole gallery on my <a href='pages/balloonanimals.html'>Balloon Animals</a> page." },
+              a: "balloon animals are my favorite party trick: dogs, monkeys, flowers, you name it. there's a whole gallery on my <a href='pages/balloonanimals.html'>Balloon Animals</a> page." },
             { k: ['coffee','cafe','shop','espresso'],
-              a: "one day i'd love to open a cozy little coffee shop ☕ good espresso, comfy chairs, maybe a copy of my book on the shelf." },
+              a: "one day i'd love to open a cozy little coffee shop. good espresso, comfy chairs, maybe a copy of my book on the shelf." },
             { k: ['research','lab','koschmann','mircore','science'],
               a: "i've done some research along the way — tap 'My work' in the chat or the share-screen button for a tour, including the Koschmann Lab and miRcore." },
             { k: ['publication','paper','papers','scholar'],
@@ -919,11 +919,11 @@
             { k: ['music','spotify','listening','song','last.fm','lastfm'],
               a: "music's a big part of my life — tap the music pill at the top-left to see what i've been listening to, or hit the red hang-up button for my classic site." },
             { k: ['hello','hi','hey','yo','hiya','good morning','good evening','howdy','sup'],
-              a: "hey! great to see you 😊 ask me anything — the kids' book, balloon animals, my volunteering, or how to get in touch." },
+              a: "hey! great to see you. ask me anything: the kids' book, balloon animals, my volunteering, or how to get in touch." },
             { k: ['thank','thanks','appreciate','cool','awesome'],
-              a: "anytime! 😊 anything else you want to know?" },
+              a: "anytime! anything else you want to know?" },
             { k: ['bye','goodbye','see you','later','cya'],
-              a: "take care — come back soon! 👋" }
+              a: "take care, come back soon!" }
         ];
         var FALLBACK = "great question! i don't have a quick answer for that one, but you can ask me about the children's book, balloon animals, my volunteering, or how to reach me. for anything else, my <a href='pages/contact.html'>Contact</a> page is the best bet.";
 
@@ -962,6 +962,7 @@
             text = (text || '').trim();
             if (!text || busy) return;
             busy = true; sendBtn.disabled = true;
+            stopIntro();
             if (chat.classList.contains('hidden')) chat.classList.remove('hidden');
             addBubble(text, true);
             checkEasterEggs(text);
@@ -1012,7 +1013,7 @@
             var btn = document.getElementById('cFilters');
             var fhint = document.createElement('div');
             fhint.className = 'filter-hint';
-            fhint.textContent = '👆 tap to put a filter on me!';
+            fhint.textContent = 'tap to put a filter on me!';
             document.body.appendChild(fhint);
             function place() {
                 var r = btn.getBoundingClientRect();
@@ -1681,19 +1682,28 @@
         /* ---- Intro sequence, then quick-reply chips ---- */
         var greet = (function () { var h = new Date().getHours(); return h < 12 ? 'good morning' : (h < 18 ? 'good afternoon' : 'good evening'); })();
         var steps = [
-            { delay: 700, type: 900, msg: greet + ", you made it 👋 welcome to my little corner of the internet." },
+            { delay: 700, type: 900, msg: greet + ", you made it. welcome to my little corner of the internet." },
             { delay: 400, type: 1100, msg: "i'm Vishal: an M3 med student at UofL, children's book author, balloon animal artist, and aspiring coffee shop owner." },
             { delay: 350, type: 900, msg: "ask me anything below, or pick a topic:", replies: true },
-            { delay: 500, type: 800, msg: "p.s. — prefer a normal website? just tap the red hang-up button below anytime 👇" }
+            { delay: 500, type: 800, msg: "p.s. — prefer a normal website? just tap the red hang-up button below anytime." }
         ];
         var si = 0;
+        // The intro stops as soon as the visitor sends something, so it never
+        // keeps talking over (or out of order with) their conversation.
+        var introStopped = false;
+        function stopIntro() {
+            introStopped = true;
+            var t = document.getElementById('__introTyping'); if (t) t.remove();
+        }
         function run() {
-            if (si >= steps.length) return;
+            if (introStopped || si >= steps.length) return;
             var s = steps[si++];
             setTimeout(function () {
-                addTyping();
+                if (introStopped) return;
+                addTyping().id = '__introTyping';   // its own indicator, separate from reply typing
                 setTimeout(function () {
-                    removeTyping();
+                    var t = document.getElementById('__introTyping'); if (t) t.remove();
+                    if (introStopped) return;
                     addBubble(s.msg);
                     hist.push({ role: 'assistant', content: s.msg });
                     if (s.replies) addReplies([

@@ -242,3 +242,144 @@ html.dark .articles-list li { border-bottom-color: #2a313c !important; }
   /* form fields: padding inside the 100% width, not on top of it */
   .form-group input, .form-group textarea { box-sizing: border-box; max-width: 100%; }
 }
+
+/* ===========================================================
+   Unified look (fonts, colors, buttons, project pages)
+   Applies to every classic page; the video-call homepage has
+   its own dark design and doesn't load this file.
+   =========================================================== */
+:root {
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --muted: #6b7280;          /* was #8a9099; now passes contrast on white */
+}
+
+/* one font everywhere (pages used Arial, the homepage the system font) */
+body, button, input, textarea, select { font-family: var(--font); }
+body { -webkit-font-smoothing: antialiased; }
+
+/* ---- Buttons: one primary (solid blue) and one secondary (outline) style ---- */
+.cv-button, .pub-link, .donate-button, .amazon-button, .btn-primary, .btn-red,
+.contact-form button[type="submit"], a.btn.primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 20px; margin: 0;
+  background: var(--accent); color: #fff; border: 1.5px solid var(--accent);
+  border-radius: 8px; font: 600 14px/1.2 var(--font); text-decoration: none; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(10,109,176,0.18);
+  transition: background-color .2s ease, border-color .2s ease, transform .1s ease;
+}
+.cv-button:hover, .pub-link:hover, .donate-button:hover, .amazon-button:hover, .btn-primary:hover, .btn-red:hover,
+.contact-form button[type="submit"]:hover, a.btn.primary:hover {
+  background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; opacity: 1;
+}
+.cv-button:active, .pub-link:active, .donate-button:active, .amazon-button:active, .btn-primary:active,
+.btn-red:active, .contact-form button[type="submit"]:active { transform: scale(.97); }
+.amazon-button i { margin-right: 0; }
+
+.btn-secondary, .btn-dark, a.btn.secondary, .cv-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 20px; margin: 0;
+  background: transparent; color: var(--accent); border: 1.5px solid var(--accent);
+  border-radius: 8px; font: 600 14px/1.2 var(--font); text-decoration: none;
+  transition: background-color .2s ease, color .2s ease;
+}
+.btn-secondary:hover, .btn-dark:hover, a.btn.secondary:hover, .cv-btn:hover { background: var(--accent); color: #fff; }
+.btn-dark { margin-left: 10px; }
+.pub-link { padding: 8px 16px; font-size: 13px; }
+
+/* gallery arrows and accents in the shared blue */
+.spin-btn { background: var(--accent); }
+.spin-btn:hover { background: var(--accent-dark); }
+.scholar-link, .news-link, .pub-authors strong { color: var(--accent); }
+.publication-item { border-left-color: var(--accent); border-radius: 8px; }
+.tag:not(.tag-red) { background: var(--accent-soft); color: var(--accent); }
+
+/* ---- Readable gray text ---- */
+.pub-section-label, .pub-journal, .spin-hint, .flip-hint, .flip-caption, figcaption,
+.spotify-sub, .step-desc, .program-meta .subtitle { color: var(--muted) !important; }
+.spotify-open { color: #138a43; }
+
+/* ---- Footer: neutral icons instead of orange ---- */
+footer { background-color: #1f2328; }
+footer i { color: #c9d1d9 !important; transition: color .2s ease; }
+footer a:hover i { color: #fff !important; }
+
+/* ---- Contact form as a centered card ---- */
+.contact-form { max-width: 640px; margin: 40px auto !important; padding: 36px 40px !important; border-radius: var(--radius); }
+.contact-form h2 { margin-top: 0; }
+.form-group label { font-weight: 600; font-size: 14px; color: var(--ink); }
+.form-group input, .form-group textarea { border: 1px solid #d5d9de; border-radius: 8px; padding: 11px 12px; font-size: 15px; transition: border-color .2s ease, box-shadow .2s ease; }
+.form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+/* ---- Project pages ---- */
+body.project-page .main-content { border-radius: var(--radius); }
+body.project-page .main-content h2 {
+  border-bottom: 0; padding-bottom: 0; margin: 40px 0 16px; font-size: 24px; letter-spacing: -.2px;
+}
+body.project-page .main-content h2::after {
+  content: ""; display: block; width: 44px; height: 3px; margin-top: 10px; border-radius: 2px; background: var(--accent);
+}
+body.project-page .main-content p { line-height: 1.75; color: #3a3f45; }
+body.project-page iframe { border-radius: 10px; }
+
+/* header card at the top of each project page (matches Bluegrass / book pages) */
+.project-hero { display: flex; gap: 26px; align-items: center; margin: 0 0 12px; padding-bottom: 30px; border-bottom: 1px solid var(--line); }
+.project-hero img { flex-shrink: 0; width: 120px; height: 120px; object-fit: cover; border-radius: 14px; box-shadow: var(--shadow); background: #fff; }
+.project-hero .ph-title { font-size: 26px; font-weight: 700; margin: 0 0 4px; line-height: 1.25; color: var(--ink); }
+.project-hero .ph-role { margin: 0 0 12px !important; color: var(--muted); font-size: 14px; line-height: 1.5 !important; }
+.project-hero .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 14px; }
+.project-hero .tag { font-size: 12px; padding: 4px 11px; border-radius: 999px; font-weight: 600; background: var(--accent-soft); color: var(--accent); }
+.project-hero .ph-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none; }
+.project-hero .ph-link:hover { text-decoration: underline; }
+
+/* "Learn more" box at the bottom (was a nearly full-screen empty block) */
+.center-content {
+  height: auto !important; display: flex; flex-direction: column; align-items: center; text-align: center;
+  margin: 44px 0 4px; padding: 32px 24px; border-radius: var(--radius); background: var(--accent-soft);
+}
+body.project-page .center-content h2 { margin: 0 0 18px; font-size: 20px; }
+body.project-page .center-content h2::after { margin: 10px auto 0; }
+
+@media (max-width: 640px) {
+  .project-hero { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .project-hero img { width: 88px; height: 88px; }
+  .project-hero .ph-title { font-size: 22px; }
+  .contact-form { margin: 20px 12px !important; padding: 24px 20px !important; }
+  .btn-dark { margin: 10px 0 0; }
+}
+
+/* ---- Dark mode for the above ---- */
+html.dark a.btn-secondary, html.dark a.btn-dark, html.dark a.btn.secondary, html.dark a.cv-btn { color: #6cb6ff; border-color: #6cb6ff; background: transparent; }
+html.dark a.btn-secondary:hover, html.dark a.btn-dark:hover, html.dark a.cv-btn:hover { background: #6cb6ff; color: #0f1115; }
+html.dark a.btn-primary, html.dark a.btn-red, html.dark .contact-form button[type="submit"] { color: #fff; background: var(--accent); border-color: var(--accent); }
+html.dark .center-content { background: #1d2430; }
+html.dark .project-hero { border-color: #2a313c; }
+html.dark .project-hero .ph-title { color: #f0f3f7; }
+html.dark .project-hero .tag, html.dark .tag:not(.tag-red) { background: #1d2a3a; color: #8cc4ff; }
+html.dark body.project-page .main-content p { color: #cdd4de; }
+html.dark .pub-section-label, html.dark .pub-journal, html.dark .spin-hint, html.dark figcaption, html.dark .spotify-sub { color: #9aa4b2 !important; }
+html.dark .form-group input:focus, html.dark .form-group textarea:focus { box-shadow: 0 0 0 3px #1d2a3a; }
+html.dark footer { background-color: #0a0c0f; }
+
+/* Publications: readable "In plain English" label; dark cards in dark mode */
+.pub-plain-label { color: #1e7b34 !important; }
+html.dark .publication-item { background: #1b2028; border-color: #2a313c; }
+html.dark .publication-item .pub-title { color: #f0f3f7; }
+html.dark .publication-item .pub-authors, html.dark .publication-item .pub-abstract { color: #cdd4de; }
+html.dark .publication-item .pub-authors strong { color: #8cc4ff; }
+html.dark .badge-year { background: #232a34; color: #cdd4de; border-color: #2a313c; }
+html.dark .pub-plain { background: #17251d; color: #cfe8d6; border-left-color: #3fb763; }
+html.dark .pub-plain-label { color: #6fd38b !important; }
+/* the card title is a <p>; keep page paragraph spacing off it */
+body.project-page .main-content .project-hero .ph-title { line-height: 1.25; margin: 0 0 6px; color: var(--ink); }
+body.project-page .main-content .project-hero .ph-role { line-height: 1.5; margin: 0 0 12px; color: var(--muted); }
+html.dark body.project-page .main-content .project-hero .ph-title { color: #f0f3f7; }
+html.dark body.project-page .main-content .project-hero .ph-role { color: #9aa4b2; }
+/* phone tap targets for the restyled links */
+@media (max-width: 768px) {
+  .pub-link { padding: 12px 18px; }
+  .project-hero .ph-link { padding: 12px 0; }
+}
+@media (max-width: 768px) {
+  .scholar-link, .news-link { padding: 12px 0 !important; }
+  .spotify-open { padding: 13px 0 !important; }
+}

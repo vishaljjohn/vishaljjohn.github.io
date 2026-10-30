@@ -1,10 +1,10 @@
-Put your video-call background clips in this folder.
+Video-call background clips for the homepage live in this folder.
 
-Name them: call1.mp4, call2.mp4, call3.mp4, call4.mp4
-(MP4 / H.264, muted, ideally 8-20s and under ~15 MB each.)
+Name them call1.mp4, call2.mp4, ... (MP4 / H.264, muted, ideally 8-20s and
+under ~15 MB each), then list them in the VIDEOS array near the top of the
+script in index.html, e.g.
 
-The homepage rotates to a different clip on each visit and moves to the
-next one when a clip ends. Missing names are skipped automatically, so
-you can start with just call1.mp4 and add more later.
+    var VIDEOS = ['call1.mp4', 'call2.mp4'];
 
-To use more or fewer than four, edit the VIDEOS list in index.html.
+Each visit starts on the next clip in the list. Only list files that exist:
+every name is checked on each visit.
