@@ -9,10 +9,12 @@
       "year_detail": "e.g. Jan 2023 or Aug 2022, Vol 24(8), pp 1366-1374",
       "doi": "DOI string only, e.g. 10.1038/s42003-022-03657-6",
       "url": "Full URL to the paper",
-      "abstract": "1-3 sentence summary of the paper",
+      "abstract": "1-3 sentence technical summary. Shows at the 'physician' stop of the slider.",
       "role": "One of: first | co-first | co-author",
       "highlight": "true = green left border (use for first or co-first author papers)",
-      "plain": "Optional 1-2 sentence plain-English summary for non-scientists. Shows as a green 'In plain English' callout."
+      "plain": "1-2 sentence summary for a general reader. Shows at the 'college student' stop of the Explain-it slider.",
+      "kid": "1-2 sentence summary a 5-year-old could follow. Shows at the '5-year-old' stop of the slider.",
+      "slug": "Short name for the paper's own page (pages/papers/<slug>.html). python3 tools/build.py fills it in if blank."
     },
     "example": {
       "year": 2025,
@@ -39,7 +41,9 @@
       "abstract": "Stereotactic needle biopsy is used to sample gliomas in deep or eloquent brain regions, but the tissue it yields is scarce. This study collected 32 waste samples (needle rinse fluid, expelled aspirate, and gauze debris) from 31 biopsy procedures and found tumor-associated alterations in all 27 successfully sequenced samples (96% overall detection), showing that routinely discarded biopsy material is a recoverable source of tumor DNA for molecular profiling.",
       "role": "co-author",
       "highlight": false,
-      "plain": "When surgeons take a tiny needle sample from a brain tumor, some material gets rinsed off and thrown away. This study showed that this \"waste\" still carries the tumor's DNA, so it can be tested to learn about the tumor without needing extra tissue from the patient."
+      "plain": "When surgeons take a tiny needle sample from a brain tumor, some material gets rinsed off and thrown away. This study showed that this \"waste\" still carries the tumor's DNA, so it can be tested to learn about the tumor without needing extra tissue from the patient.",
+      "slug": "surgical-waste-tumor-dna",
+      "kid": "When doctors take a tiny piece of a brain tumor with a needle, a little bit gets left behind on the needle and the gauze, and it usually goes in the trash. We checked those leftovers and found clues from the tumor in them, so nothing has to go to waste!"
     },
     {
       "year": 2023,
@@ -52,7 +56,9 @@
       "abstract": "H3K27M-mutant diffuse midline glioma (DMG) patients have no proven effective therapies. ONC201 is an imipridone compound with clinical activity in H3K27M-mutant DMG. This study investigates the integrated metabolic and epigenetic mechanisms underlying ONC201's clinical efficacy in this devastating pediatric brain cancer.",
       "role": "co-author",
       "highlight": false,
-      "plain": "A drug called ONC201 helps some children with an aggressive, hard-to-treat brain tumor. This study worked out how it helps — by simultaneously cutting off the tumor's energy supply and flipping the chemical switches that keep its cancer genes turned on."
+      "plain": "A drug called ONC201 helps some children with an aggressive, hard-to-treat brain tumor. This study worked out how it helps — by simultaneously cutting off the tumor's energy supply and flipping the chemical switches that keep its cancer genes turned on.",
+      "slug": "onc201-clinical-efficacy",
+      "kid": "Some kids get a very serious brain tumor. A medicine called ONC201 helps some of them. We helped figure out how it works: it messes with the tumor's food supply and flips switches that the tumor needs to keep growing."
     },
     {
       "year": 2023,
@@ -65,7 +71,9 @@
       "abstract": "Malignant primary brain tumors are the most common cancer in children aged 0-14 years and the leading cause of cancer death in pediatric patients. This review covers minimally invasive liquid biopsy approaches — including circulating tumor DNA in CSF and plasma — as tools for diagnosis, monitoring, and treatment guidance in pediatric brain tumors.",
       "role": "co-first",
       "highlight": true,
-      "plain": "Brain tumors are the deadliest cancer in young children. This review explains how a simple fluid sample — spinal fluid or blood — can pick up tumor DNA, letting doctors diagnose and monitor these tumors without risky brain surgery."
+      "plain": "Brain tumors are the deadliest cancer in young children. This review explains how a simple fluid sample — spinal fluid or blood — can pick up tumor DNA, letting doctors diagnose and monitor these tumors without risky brain surgery.",
+      "slug": "liquid-biopsy-pediatric-brain-tumors",
+      "kid": "Your brain is tucked safely inside your head, so brain tumors are hard to check on. But tumors leave tiny clues in your blood and in the water around your brain. This paper explains how doctors can look for those clues without a big operation."
     },
     {
       "year": 2022,
@@ -78,7 +86,9 @@
       "abstract": "Gliomas cause significant morbidity and mortality, and development of precision diagnostics and novel targeted immunotherapies is critically important. This review examines cf-tDNA liquid biopsy methods and their application in brain tumor immunotherapy, addressing how circulating tumor DNA from CSF and plasma can resolve pseudoprogression and guide targeted therapies.",
       "role": "co-author",
       "highlight": false,
-      "plain": "Tiny fragments of tumor DNA float in spinal fluid and blood. This review surveys the methods for reading that DNA and shows how it can guide immunotherapy and help doctors avoid mistaking treatment-related healing for the tumor coming back."
+      "plain": "Tiny fragments of tumor DNA float in spinal fluid and blood. This review surveys the methods for reading that DNA and shows how it can guide immunotherapy and help doctors avoid mistaking treatment-related healing for the tumor coming back.",
+      "slug": "cf-tdna-liquid-biopsy",
+      "kid": "Tumors drop tiny bits of themselves into your blood, like a trail of crumbs. This paper looks at the best ways to find those crumbs, so doctors can tell whether a medicine is working."
     },
     {
       "year": 2022,
@@ -91,7 +101,9 @@
       "abstract": "First demonstrated feasibility of serial CSF collection for cf-tDNA tracking in a multi-site Phase 1 trial of ONC201 in H3K27M-mutant diffuse midline glioma. Change in H3K27M variant allele fraction over time correlated with progression-free survival, enabling differentiation of pseudo-progression from true tumor progression.",
       "role": "co-author",
       "highlight": false,
-      "plain": "By repeatedly sampling spinal fluid during treatment, the team tracked a tumor's DNA over time. Falling levels matched patients doing better — and helped tell true tumor growth apart from harmless, treatment-related swelling."
+      "plain": "By repeatedly sampling spinal fluid during treatment, the team tracked a tumor's DNA over time. Falling levels matched patients doing better — and helped tell true tumor growth apart from harmless, treatment-related swelling.",
+      "slug": "serial-h3k27m-tracking",
+      "kid": "We checked a little bit of body fluid from kids with brain tumors again and again during treatment. When the tumor's clues went down, kids usually stayed healthier for longer. That helps doctors see how the medicine is doing."
     },
     {
       "year": 2022,
@@ -104,7 +116,9 @@
       "abstract": "Molecular markers are essential for cancer diagnosis, clinical trial enrollment, and intraoperative surgical decision-making. This work presents a proof-of-principle approach for sub-1-hour targeted variant detection using real-time DNA sequencers, demonstrating confirmation of a hotspot mutation from tumor tissue in approximately 52 minutes.",
       "role": "co-author",
       "highlight": false,
-      "plain": "Identifying a tumor's exact mutation normally takes hours. This proof-of-concept method reads the key mutation in about 52 minutes — potentially fast enough to guide decisions while the patient is still in the operating room."
+      "plain": "Identifying a tumor's exact mutation normally takes hours. This proof-of-concept method reads the key mutation in about 52 minutes — potentially fast enough to guide decisions while the patient is still in the operating room.",
+      "slug": "ultra-rapid-variant-detection",
+      "kid": "Finding out exactly what kind of tumor someone has can take a long time. We tested a super fast way to do it in under an hour, so someday doctors could know while they are still in the operating room."
     }
   ]
 }

@@ -20,187 +20,37 @@
     <meta property="og:title" content="Publications | Vishal John">
     <meta property="og:description" content="Vishal John's peer-reviewed papers and conference posters on pediatric brain cancer, liquid biopsy, and genomics education, with links to read each one.">
     <meta property="og:url" content="https://www.vishaljohn.com/pages/publications.html">
-    <meta property="og:image" content="https://www.vishaljohn.com/images/Photo1.jpg">
+    <meta property="og:image" content="https://www.vishaljohn.com/assets/og/publications.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Vishal John">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Publications | Vishal John">
     <meta name="twitter:description" content="Vishal John's peer-reviewed papers and conference posters on pediatric brain cancer, liquid biopsy, and genomics education, with links to read each one.">
-    <meta name="twitter:image" content="https://www.vishaljohn.com/images/Photo1.jpg">
+    <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og/publications.jpg">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   
-  <style>
-      
-      
-        
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-
-        header {
-            position: relative;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        nav li {
-            display: inline-block;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-
-        nav a:hover {
-            background-color: #f8f8f8;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 50px 0;
-        }
-
-        .main-content {
-            background-color: #fff;
-            padding: 50px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .main-content h2, .main-content p {
-            margin: 20px 0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #333;
-            color: #fff;
-        }
-
-       /* Styles for social media icons */
-        footer i {
-            color: #ff5733;  /* Change this color as you desire */
-        }
-
-        footer a:hover i {
-            color: #ff9966;  /* Change this color as you desire */
-        }
-
-  .publication-item {
-            background: #fff;
-            border: 1px solid #e8e8e8;
-            border-left: 4px solid #0a6db0;
-            border-radius: 4px;
-            padding: 20px 24px;
-            margin-bottom: 20px;
-            transition: box-shadow 0.2s;
-        }
-
-        .publication-item:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-        }
-
-        .pub-badges {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-        }
-
-        .badge {
-            font-size: 11px;
-            font-weight: bold;
-            padding: 3px 10px;
-            border-radius: 20px;
-            letter-spacing: 0.3px;
-        }
-
+  <link rel="stylesheet" href="../assets/base.css">
+    <style>
+        .main-content h2, .main-content p { margin: 20px 0; }
+        .publication-item { background: #fff; border: 1px solid #e8e8e8; border-left: 4px solid #0a6db0; border-radius: 4px; padding: 20px 24px; margin-bottom: 20px; transition: box-shadow 0.2s; }
+        .publication-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+        .pub-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+        .badge { font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.3px; }
         .badge-first { background: #fff3cd; color: #856404; }
         .badge-co-first { background: #d1ecf1; color: #0c5460; }
         .badge-co-author { background: #e2e3e5; color: #383d41; }
         .badge-year { background: #f4f4f4; color: #555; border: 1px solid #ddd; }
-
-        .pub-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #222;
-            margin-bottom: 6px;
-            line-height: 1.4;
-        }
-
-        .pub-authors {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 4px;
-        }
-
-        .pub-authors strong {
-            color: #0a6db0;
-        }
-
-        .pub-journal {
-            font-size: 13px;
-            color: #888;
-            font-style: italic;
-            margin-bottom: 12px;
-        }
-
-        .pub-abstract {
-            font-size: 13px;
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 14px;
-        }
-
-        .pub-link {
-            display: inline-block;
-            padding: 6px 16px;
-            background-color: #0a6db0;
-            color: #fff;
-            border-radius: 3px;
-            text-decoration: none;
-            font-size: 13px;
-            transition: background-color 0.2s;
-        }
-
+        .pub-title { font-size: 16px; font-weight: bold; color: #222; margin-bottom: 6px; line-height: 1.4; }
+        .pub-authors { font-size: 13px; color: #666; margin-bottom: 4px; }
+        .pub-authors strong { color: #0a6db0; }
+        .pub-journal { font-size: 13px; color: #888; font-style: italic; margin-bottom: 12px; }
+        .pub-abstract { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 14px; }
+        .pub-link { display: inline-block; padding: 6px 16px; background-color: #0a6db0; color: #fff; border-radius: 3px; text-decoration: none; font-size: 13px; transition: background-color 0.2s; }
         .pub-link:hover { background-color: #005885; }
-
-        .pub-section-label {
-            font-size: 12px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: #999;
-            margin: 32px 0 12px;
-            font-weight: bold;
-        }
-
-        /* Filters, search, actions */
+        .pub-section-label { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #999; margin: 32px 0 12px; font-weight: bold; }
         .pub-toolbar { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; justify-content: space-between; margin: 22px 0 6px; }
         .pub-filters { display: flex; flex-wrap: wrap; gap: 8px; }
         .pub-filter { border: 1.5px solid var(--line, #e8eaed); background: #fff; color: var(--ink-soft, #555a61); border-radius: 999px; padding: 9px 16px; font: 600 13px/1 var(--font, inherit); cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
@@ -217,6 +67,21 @@
         .pub-copy:hover { border-color: var(--accent, #0a6db0); color: var(--accent, #0a6db0); }
         .pub-copy.done { border-color: #28a745; color: #1e7b34; }
         .badge-cites { background: #eef6ee; color: #1e6b33; }
+        .explain { background: var(--accent-soft, #eaf3fa); border-radius: 10px; padding: 14px 16px; margin: 0 0 14px; }
+        .explain-label { display: block; font-size: 13px; color: var(--ink-soft, #555a61); margin-bottom: 8px; }
+        .explain-label strong { color: var(--accent, #0a6db0); }
+        .explain-range { width: 100%; margin: 0; accent-color: var(--accent, #0a6db0); cursor: pointer; display: block; }
+        .explain-stops { display: flex; justify-content: space-between; margin: 2px -6px 8px; }
+        .explain-stop { background: none; border: 0; padding: 6px; font: 600 12px/1.2 var(--font, sans-serif); color: var(--muted, #6b7280); cursor: pointer; border-radius: 6px; }
+        .explain-stop.on { color: var(--accent, #0a6db0); }
+        .explain-text { margin: 0; font-size: 14px; line-height: 1.6; color: var(--ink, #232529); }
+        .pub-more { text-decoration: none; }
+        @media (max-width: 768px) { .explain-stop { padding: 11px 6px; } .explain-range { height: 28px; } }
+        html.dark .explain { background: #1d2430; }
+        html.dark .explain-label { color: #cdd4de; }
+        html.dark .explain-label strong, html.dark .explain-stop.on { color: #8cc4ff; }
+        html.dark .explain-stop { color: #9aa4b2; }
+        html.dark .explain-text { color: #e4e8ee; }
         [hidden] { display: none !important; }
         @media (max-width: 768px) {
             .pub-toolbar { flex-direction: column; align-items: stretch; }
@@ -228,155 +93,44 @@
         html.dark .pub-filter, html.dark .pub-search input, html.dark .pub-copy { background: #1b2028; border-color: #2a313c; color: #cdd4de; }
         html.dark .pub-filter.active { background: #6cb6ff; border-color: #6cb6ff; color: #0f1115; }
         html.dark .badge-cites { background: #17251d; color: #8fdca4; }
-        .scholar-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: #0a6db0;
-            text-decoration: none;
-            font-size: 14px;
-            margin-top: 8px;
-        }
+        .scholar-link { display: inline-flex; align-items: center; gap: 6px; color: #0a6db0; text-decoration: none; font-size: 14px; margin-top: 8px; }
         .scholar-link:hover { text-decoration: underline; }
         @media (max-width: 768px) {
             .scholar-link { display: flex; margin: 0 !important; padding: 8px 0; }
             .pub-link { padding: 10px 18px; }
         }
-
-/* Mobile-Friendly Adjustments */
-
-@media screen and (max-width: 768px) {
-    
-    /* Header and Navigation Styles */
-    header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    nav a {
-        display: block;
-        margin: 5px 0;
-        text-align: center;
-    }
-
-    /* Container adjustments */
-    .container {
-        width: 95%; /* Increased width for smaller devices */
-    }
-
-    .main-content {
-        padding: 30px; /* Reduced padding for smaller devices */
-    }
-
-    .image-section img {
-        max-width: 80%; /* Images should take more width on mobile */
-    }
-
-    .cv-section {
-        margin-top: 20px; /* Reduced margin for mobile */
-    }
-
-    footer div {
-        margin-bottom: 10px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    
-    header h1 {
-        font-size: 24px; /* Adjust title size for very small devices */
-    }
-
-    nav a {
-        padding: 5px;
-        font-size: 14px; /* Adjust font size for very small devices */
-    }
-}
-      
+        @media screen and (max-width: 768px) {
+            .image-section img { max-width: 80%; }
+            .cv-section { margin-top: 20px; }
+        }
         .pub-plain { background: #f0f9f4; border-left: 3px solid #28a745; border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 12px 0 4px; font-size: 14px; color: #2c5f3f; line-height: 1.55; }
         .pub-plain-label { display: inline-block; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #28a745; margin-right: 8px; }
     </style>
 
-    <style>
-    #particles-js {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-    }
     
-        /* Hamburger menu */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 4px;
-            z-index: 200;
-        }
-        .hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: #333;
-            border-radius: 2px;
-            transition: transform 0.3s, opacity 0.3s;
-        }
-        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-        @media screen and (max-width: 768px) {
-            .hamburger { display: flex; }
-            nav ul {
-                display: none;
-                flex-direction: column;
-                gap: 0;
-                position: absolute;
-                top: 64px;
-                right: 0;
-                left: 0;
-                background: #fff;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-                z-index: 100;
-                padding: 8px 0;
-            }
-            nav ul.open { display: flex; }
-            nav a { padding: 12px 24px; border-radius: 0; display: block; }
-            header { position: relative; flex-wrap: nowrap; }
-        }
-        </style>
     <link rel="stylesheet" href="../assets/site.css">
 </head>
 
 <body class="content-page">
 
 
-    <header>
-        <h1><a href="../index_classic.html" style="text-decoration: none; color: inherit;">Vishal John</a></h1>
-
-      <nav>
-            <ul>
-                <li><a href="../index_classic.html">Home</a></li>
-                <li><a href="about.html">About Me</a></li>
-                 <li><a href="blog.html">Newsletter</a></li>
-                <li><a href="publications.html">Publications</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <button class="hamburger" id="hamburger" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-    </header>
+    <!-- site:header -->
+<header>
+    <h1><a href="../index_classic.html">Vishal John</a></h1>
+    <nav aria-label="Main">
+        <ul>
+            <li><a href="../index_classic.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="blog.html">Newsletter</a></li>
+            <li><a href="publications.html" aria-current="page">Publications</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+<!-- /site:header -->
 
     
       <div class="container">
@@ -405,7 +159,7 @@
                 <input type="search" id="pubSearch" placeholder="Search titles, authors, journals" aria-label="Search publications and presentations">
             </label>
         </div>
-        <p class="pub-empty" id="pubEmpty" hidden>Nothing matches that search. <button type="button" class="pub-reset" id="pubReset">Show everything</button></p>
+        <p class="pub-empty" id="pubEmpty" hidden><svg class="doodle doodle-inline" viewBox="0 0 120 120" aria-hidden="true"><use href="../assets/doodles.svg#germ-orange"/></svg>That one got away: nothing matches that search. <button type="button" class="pub-reset" id="pubReset">Show everything</button></p>
 
         <section id="pubSection">
         <div id="publications-container" style="margin-top:24px;"></div>
@@ -420,12 +174,15 @@
         </div>
     </div>
 
-    <footer>
-        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
-        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
-        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
-    </footer>
+    <!-- site:footer -->
+<footer>
+    <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+    <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+    <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+    <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+</footer>
+<script src="../assets/codeblue.js" defer></script>
+<!-- /site:footer -->
 
     <script>
     const ROLE_CONFIG = {
@@ -479,15 +236,44 @@
             + '<div class="pub-title">' + p.title + '</div>'
             + '<div class="pub-authors">' + fmt(p.authors) + '</div>'
             + (isPaper
-                ? '<div class="pub-journal">' + p.journal + ', ' + p.year_detail + '. DOI: ' + p.doi + '</div><div class="pub-abstract">' + p.abstract + '</div>'
-                  + (p.plain ? '<div class="pub-plain"><span class="pub-plain-label">In plain English</span>' + p.plain + '</div>' : '')
+                ? '<div class="pub-journal">' + p.journal + ', ' + p.year_detail + '. DOI: ' + p.doi + '</div>' + explainer(p, idx)
                 : '<div class="pub-journal">' + p.conference + ' &middot; ' + p.location + ' &middot; ' + p.date + '</div>'
                   + (p.note ? '<div class="pub-abstract">' + p.note + '</div>' : ''))
             + '<div class="pub-actions">'
             + (p.url ? '<a href="' + p.url + '" target="_blank" rel="noopener" class="pub-link">' + (isPaper ? 'Read Paper' : 'View') + '</a>' : '')
             + '<button type="button" class="pub-copy" data-kind="' + kind + '" data-i="' + idx + '"><i class="far fa-copy" aria-hidden="true"></i> <span>Copy citation</span></button>'
+            + (isPaper && p.slug ? '<a class="pub-copy pub-more" href="papers/' + esc(p.slug) + '.html"><i class="fas fa-share-alt" aria-hidden="true"></i> <span>Page to share</span></a>' : '')
             + '</div></div>';
     }
+
+    // "Explain it like I'm..." slider: 0 = 5-year-old, 1 = college student, 2 = physician
+    const LEVELS = ['a 5-year-old', 'a college student', 'a physician'];
+    const levelText = (p, n) => [p.kid, p.plain, p.abstract][n] || p.plain || p.abstract || '';
+    const chosen = {};   // keeps each card's choice when filters re-render the list
+    function explainer(p, i) {
+        const n = chosen[i] === undefined ? 1 : chosen[i];
+        return '<div class="explain" data-i="' + i + '">'
+            + '<label class="explain-label" for="ex' + i + '">Explain it like I\'m <strong>' + LEVELS[n] + '</strong></label>'
+            + '<input class="explain-range" id="ex' + i + '" type="range" min="0" max="2" step="1" value="' + n + '" aria-valuetext="' + LEVELS[n] + '">'
+            + '<div class="explain-stops">' + ['5 years old', 'In college', 'A physician'].map((t, k) =>
+                '<button type="button" class="explain-stop' + (k === n ? ' on' : '') + '" data-n="' + k + '">' + t + '</button>').join('') + '</div>'
+            + '<p class="explain-text" aria-live="polite">' + levelText(p, n) + '</p></div>';
+    }
+    function setLevel(box, n) {
+        const i = +box.dataset.i, p = PUBS[i]; chosen[i] = n;
+        const range = box.querySelector('.explain-range');
+        range.value = n; range.setAttribute('aria-valuetext', LEVELS[n]);
+        box.querySelector('.explain-label strong').textContent = LEVELS[n];
+        box.querySelectorAll('.explain-stop').forEach((b, k) => b.classList.toggle('on', k === n));
+        box.querySelector('.explain-text').textContent = levelText(p, n);
+    }
+    document.addEventListener('input', e => {
+        if (e.target.classList && e.target.classList.contains('explain-range')) setLevel(e.target.closest('.explain'), +e.target.value);
+    });
+    document.addEventListener('click', e => {
+        const b = e.target.closest && e.target.closest('.explain-stop');
+        if (b) setLevel(b.closest('.explain'), +b.dataset.n);
+    });
 
     function renderList(list, kind, el) {
         const byYear = {};
@@ -499,7 +285,7 @@
     // ---- filters + search ----
     let filter = 'all', query = '';
     const isFirst = p => p.role === 'first' || p.role === 'co-first' || p.highlight === true || /^\*\*/.test(p.authors || '');
-    const matches = p => !query || [p.title, plainText(p.authors), p.journal, p.conference, p.location, p.abstract, p.note, String(p.year)]
+    const matches = p => !query || [p.title, plainText(p.authors), p.journal, p.conference, p.location, p.abstract, p.plain, p.kid, p.note, String(p.year)]
         .join(' ').toLowerCase().includes(query);
 
     function render() {
@@ -514,7 +300,7 @@
         const filtered = filter !== 'all' || query;
         document.getElementById('pub-count').textContent = filtered
             ? pubs.length + ' of ' + PUBS.length + ' papers · ' + pres.length + ' of ' + PRES.length + ' presentations shown'
-            : PUBS.length + ' peer-reviewed publication' + (PUBS.length !== 1 ? 's' : '') + ' · Koschmann Lab, University of Michigan';
+            : PUBS.length + ' peer-reviewed publication' + (PUBS.length !== 1 ? 's' : '') + (TOTAL ? ' · cited ' + TOTAL.toLocaleString() + ' times' : '');
         document.getElementById('pres-count').textContent = pres.length + ' conference presentation' + (pres.length !== 1 ? 's' : '');
         applyCites();
     }
@@ -545,7 +331,7 @@
         return legacyCopy(t);
     }
     document.addEventListener('click', e => {
-        const b = e.target.closest('.pub-copy'); if (!b) return;
+        const b = e.target.closest('button.pub-copy'); if (!b) return;
         const p = (b.dataset.kind === 'paper' ? PUBS : PRES)[+b.dataset.i];
         const label = b.querySelector('span');
         copyText(b.dataset.kind === 'paper' ? citePaper(p) : citeTalk(p))
@@ -554,51 +340,30 @@
             .finally(() => setTimeout(() => { label.textContent = 'Copy citation'; b.classList.remove('done'); }, 1800));
     });
 
-    // ---- Citation counts (OpenAlex; Google Scholar has no public API) ----
-    let CITES = {};
+    // ---- Citation counts: saved daily by a GitHub Action (tools/fetch-citations.py, data from OpenAlex) ----
+    let CITES = {}, TOTAL = 0;
     function applyCites() {
         document.querySelectorAll('.badge-cites').forEach(el => {
             const n = CITES[el.dataset.doi];
             if (n > 0) { el.textContent = 'Cited by ' + n.toLocaleString(); el.title = 'Citation count from OpenAlex'; el.hidden = false; }
         });
     }
-    function loadCites() {
-        const dois = PUBS.map(p => p.doi).filter(Boolean);
-        if (!dois.length) return;
-        const ctrl = new AbortController(); setTimeout(() => ctrl.abort(), 8000);
-        fetch('https://api.openalex.org/works?per-page=50&select=doi,cited_by_count&filter=doi:' + dois.map(encodeURIComponent).join('|'), { signal: ctrl.signal })
-            .then(r => r.ok ? r.json() : null)
-            .then(j => {
-                if (!j || !j.results) return;
-                j.results.forEach(w => { if (w.doi) CITES[w.doi.replace('https://doi.org/', '').toLowerCase()] = w.cited_by_count; });
-                applyCites();
-            }).catch(() => {});
-    }
 
     Promise.all([
         fetch('../assets/publications.json').then(r => r.json()).then(j => j.data),
-        fetch('../assets/presentations.json').then(r => r.json()).then(j => j.data)
-    ]).then(([pubs, pres]) => {
+        fetch('../assets/presentations.json').then(r => r.json()).then(j => j.data),
+        fetch('../assets/citations.json').then(r => r.ok ? r.json() : {}).catch(() => ({}))
+    ]).then(([pubs, pres, cites]) => {
+        CITES = cites.counts || {}; TOTAL = cites.total || 0;
         PUBS = pubs.slice().sort((a, b) => b.year - a.year);
         PRES = pres.slice().sort((a, b) => b.year - a.year);
-        render(); loadCites();
+        render();
     }).catch(() => {
         document.getElementById('pub-count').textContent = 'Could not load publications right now. Please refresh the page.';
         document.getElementById('pres-count').textContent = '';
     });
     </script>
 
-    <script>
-        const btn = document.getElementById('hamburger');
-        const navUl = document.querySelector('nav ul');
-        if (btn && navUl) {
-            btn.addEventListener('click', () => {
-                btn.classList.toggle('open');
-                navUl.classList.toggle('open');
-            });
-        }
-    </script>
-    <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
     <script src="../assets/site.js"></script>
     <script src="../assets/chat-widget.js" defer></script>
     <script src="../assets/theme.js"></script>

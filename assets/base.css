@@ -1,0 +1,31 @@
+/* Vishal John: base layout shared by every classic page (header, nav, menu
+   button, footer, page card). Loaded first; page styles and site.css build on it. */
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
+
+header { position: relative; background-color: #fff; padding: 20px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+header h1 { margin: 0; }
+header a { text-decoration: none; color: inherit; }
+
+nav ul { list-style: none; padding: 0; display: flex; }
+nav a { text-decoration: none; color: #333; padding: 5px 10px; border-radius: 3px; transition: background-color 0.3s; }
+nav a:hover { background-color: #f8f8f8; }
+nav a[aria-current="page"] { color: var(--accent, #0a6db0); font-weight: 600; }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; z-index: 200; }
+.hamburger:hover { background: none; }
+.hamburger span { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.container { width: 80%; margin: auto; padding: 50px 0; }
+.main-content { background-color: #fff; padding: 50px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+
+footer { text-align: center; padding: 20px 0; background-color: #333; color: #fff; }
+footer i { color: #ff5733; }
+footer a:hover i { color: #ff9966; }
+
+@media screen and (max-width: 768px) {
+    .container { width: 95%; }
+    .main-content { padding: 30px; }
+}

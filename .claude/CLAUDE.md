@@ -11,3 +11,6 @@ Static site on GitHub Pages; pushing to `main` deploys in about a minute.
 - Publications: `assets/publications.json`. Presentations: `assets/presentations.json`. Both feed the Publications page and the CV.
 - Shared styles: `assets/site.css` (loaded after each page's inline styles). Shared scripts: `assets/site.js`, `assets/theme.js`, `assets/gallery.js`, `assets/chat-widget.js`.
 - Chat backend: `cloudflare-worker.js` runs on Cloudflare and must be redeployed there by hand.
+- Shared header/footer: edit `tools/partials/`, then run `python3 tools/build.py` (also regenerates paper pages, short links and the sitemap). Base layout CSS is `assets/base.css`.
+- Share images: `python3 tools/build-share-images.py` after adding a page or paper.
+- Daily job `.github/workflows/refresh-data.yml` refreshes `assets/medium.json` and `assets/citations.json`.

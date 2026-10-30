@@ -28,322 +28,55 @@
 <meta content="https://www.vishaljohn.com/assets/og/standrews.jpg" name="twitter:image"/>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
-<style>
-      
-      
-        
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+<link rel="stylesheet" href="../assets/base.css">
+    <style>
+        .main-content h2, .main-content p { margin: 20px 0; }
+        .main-content h2 { border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
+        iframe { display: block; margin: 20px auto; max-width: 100%; }
+        figure { margin: 20px 0; text-align: center; }
+        figure img { max-width: 25%; border-radius: 5px; box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1); }
+        figcaption { margin-top: 10px; color: #666; }
+        .donate-button { display: inline-block; padding: 10px 20px; background-color: #FF0000; color: #fff; border-radius: 3px; text-decoration: none; margin: 20px 0; transition: background-color 0.3s; }
+        .donate-button:hover { background-color: #FF7276; }
+        .center-content { display: flex; justify-content: center; align-items: center; height: calc(100vh - 150px); flex-direction: column; }
+        .image-container { display: flex; flex-wrap: nowrap; overflow: hidden; width: 100%; position: relative; }
+        figure { flex: 0 0 100%; }
+        figure img { width: 100%; }
+        .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .gallery-image { max-width: 100%; cursor: pointer; transition: transform 0.3s; border-radius: 5px; box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1); }
+        .gallery-image:hover { transform: scale(1.1); }
+        .lightbox { display: none; position: fixed; z-index: 9999; padding-top: 50px; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.8); }
+        .lightbox-content { margin: auto; display: block; width: 80%; max-width: 700px; }
+        .lightbox-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; }
+        .lightbox-close:hover, .lightbox-close:focus { color: #bbb; text-decoration: none; cursor: pointer; }
+        .lightbox-caption { text-align: center; padding: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; }
+        @media screen and (max-width: 768px) {
+            .image-section img { max-width: 80%; }
+            .cv-section { margin-top: 20px; }
         }
-
-        header {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        nav li {
-            display: inline-block;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-
-        nav a:hover {
-            background-color: #f8f8f8;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 50px 0;
-        }
-
-        .main-content {
-            background-color: #fff;
-            padding: 50px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .main-content h2, .main-content p {
-            margin: 20px 0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #333;
-            color: #fff;
-        }
-
-       /* Styles for social media icons */
-        footer i {
-            color: #ff5733;  /* Change this color as you desire */
-        }
-
-        footer a:hover i {
-            color: #ff9966;  /* Change this color as you desire */
-        }
-      
-.main-content h2 {
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        iframe {
-            display: block;
-            margin: 20px auto;
-            max-width: 100%;
-        }
-
-        figure {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        figure img {
-            max-width: 25%;
-            border-radius: 5px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        figcaption {
-            margin-top: 10px;
-            color: #666;
-        }
-
-        .donate-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #FF0000;
-            color: #fff;
-            border-radius: 3px;
-            text-decoration: none;
-            margin: 20px 0;
-            transition: background-color 0.3s;
-        }
-
-        .donate-button:hover {
-            background-color: #FF7276;
-        }
-
-.center-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: calc(100vh - 150px);  /* rough estimation of header and footer height combined */
-    flex-direction: column;
-}
-
-
-.image-container {
-    display: flex;
-    flex-wrap: nowrap;  /* Prevent wrapping */
-    overflow: hidden;  /* Hide overflow images */
-    width: 100%;  /* Full width of parent */
-    position: relative;  /* This can be useful for positioning navigation controls if needed */
-}
-
-figure {
-    flex: 0 0 100%;  /* Each figure will be 100% of the .image-container's width */
-}
-
-figure img {
-    width: 100%;  /* Image takes full width of the figure */
-}
-
-
-
-/* Gallery container style */
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* This creates 2 columns of equal width */
-    gap: 20px;  /* Spacing between images */
-}
-
-/* Gallery Image Styles */
-.gallery-image {
-    max-width: 100%; /* Using 100% here will allow the image to adjust to the width of the grid column */
-    cursor: pointer;
-    transition: transform 0.3s;
-    border-radius: 5px;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-.gallery-image:hover {
-    transform: scale(1.1);
-}
-
-/* Styles for Lightbox */
-.lightbox {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    padding-top: 50px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-.lightbox-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-}
-
-.lightbox-close {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.lightbox-close:hover, .lightbox-close:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.lightbox-caption {
-    text-align: center;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-}
-
-      /* Mobile-Friendly Adjustments */
-
-@media screen and (max-width: 768px) {
-    
-    /* Header and Navigation Styles */
-    header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    nav a {
-        display: block;
-        margin: 5px 0;
-        text-align: center;
-    }
-
-    /* Container adjustments */
-    .container {
-        width: 95%; /* Increased width for smaller devices */
-    }
-
-    .main-content {
-        padding: 30px; /* Reduced padding for smaller devices */
-    }
-
-    .image-section img {
-        max-width: 80%; /* Images should take more width on mobile */
-    }
-
-    .cv-section {
-        margin-top: 20px; /* Reduced margin for mobile */
-    }
-
-    footer div {
-        margin-bottom: 10px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    
-    header h1 {
-        font-size: 24px; /* Adjust title size for very small devices */
-    }
-
-    nav a {
-        padding: 5px;
-        font-size: 14px; /* Adjust font size for very small devices */
-    }
-}
     </style>
-<style>
-    #particles-js {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-    }
-    </style>
-<style>
-    /* Mobile hamburger nav */
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    @media screen and (max-width: 768px) {
-      header { flex-direction: row; align-items: center; text-align: left; position: relative; }
-      .hamburger { display: flex; }
-      nav { position: static; }
-      nav ul { display: none; flex-direction: column; gap: 0; position: absolute; top: 100%; right: 0; left: 0; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; padding: 8px 0; margin: 0; }
-      nav ul.open { display: flex; }
-      nav a { padding: 12px 24px; border-radius: 0; display: block; text-align: center; margin: 0; }
-    }
-    </style>
+
+
 <link href="../assets/site.css" rel="stylesheet"/>
 </head>
 <body class="project-page">
+<!-- site:header -->
 <header>
-<h1><a href="../index_classic.html" style="text-decoration: none; color: inherit;">Vishal John</a></h1>
-<nav>
-<ul>
-<li><a href="../index_classic.html">Home</a></li>
-<li><a href="about.html">About Me</a></li>
-<li><a href="blog.html">Newsletter</a></li>
-<li><a href="publications.html">Publications</a></li>
-<li><a href="contact.html">Contact</a></li>
-</ul>
-</nav>
-<button aria-label="Menu" class="hamburger" id="hamburger">
-<span></span><span></span><span></span>
-</button>
+    <h1><a href="../index_classic.html">Vishal John</a></h1>
+    <nav aria-label="Main">
+        <ul>
+            <li><a href="../index_classic.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="blog.html">Newsletter</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
 </header>
+<!-- /site:header -->
 <div class="container">
 <div class="main-content">
 <div class="project-hero">
@@ -375,25 +108,15 @@ figure img {
 <a class="pn-prev" href="koschmannlab.html"><span class="pn-dir">&larr; Previous project</span><span class="pn-name">Koschmann Lab</span></a>
 <a class="pn-next" href="HELP.html"><span class="pn-dir">Next project &rarr;</span><span class="pn-name">Hospital Elder Life Program</span></a>
 </nav>
+<!-- site:footer -->
 <footer>
-        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
-        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
-        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
-    </footer>
-<script>
-    (function(){
-      var btn = document.getElementById('hamburger');
-      var navUl = document.querySelector('nav ul');
-      if (btn && navUl) {
-        btn.addEventListener('click', function(){
-          btn.classList.toggle('open');
-          navUl.classList.toggle('open');
-        });
-      }
-    })();
-    </script>
-<script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
+    <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+    <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+    <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+    <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+</footer>
+<script src="../assets/codeblue.js" defer></script>
+<!-- /site:footer -->
 <script src="../assets/site.js"></script>
 <script defer="" src="../assets/chat-widget.js"></script>
     <script src="../assets/gallery.js"></script>

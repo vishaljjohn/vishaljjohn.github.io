@@ -1,6 +1,19 @@
 /* Vishal John — shared site behavior: tasteful scroll reveal */
 (function () {
   "use strict";
+
+  // Mobile menu button + footer year (shared by every classic page)
+  function shell() {
+    var btn = document.getElementById("hamburger"), list = document.querySelector("nav ul");
+    if (btn && list) btn.addEventListener("click", function () {
+      var open = list.classList.toggle("open");
+      btn.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".cur-year"), function (e) { e.textContent = new Date().getFullYear(); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", shell); else shell();
+
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce || !("IntersectionObserver" in window)) return; // leave content fully visible
 

@@ -349,16 +349,24 @@
         .filter-hint { position: fixed; z-index: 9; background: #fff; color: #15171b; font-size: 13px; font-weight: 700; padding: 9px 13px; border-radius: 12px; box-shadow: 0 10px 28px rgba(0,0,0,0.35); pointer-events: none; opacity: 0; transform: translateY(8px); transition: opacity .3s, transform .3s; max-width: 220px; line-height: 1.3; }
         .filter-hint.show { opacity: 1; transform: none; }
         .filter-hint:after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #fff; }
-        /* Connecting intro */
-        .connecting { position: fixed; inset: 0; z-index: 60; background: #0b0c0e; display: flex; align-items: center; justify-content: center; transition: opacity .5s; }
-        .connecting.gone { opacity: 0; pointer-events: none; }
-        .conn-inner { text-align: center; }
-        .conn-ring { width: 104px; height: 104px; border-radius: 50%; margin: 0 auto 18px; position: relative; }
-        .conn-ring img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; position: absolute; top: 4px; left: 4px; }
-        .conn-ring:before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 3px solid rgba(255,255,255,.15); border-top-color: var(--accent); animation: connspin 1s linear infinite; }
-        @keyframes connspin { to { transform: rotate(360deg); } }
-        .conn-title { font-size: 18px; font-weight: 700; }
-        .conn-sub { color: var(--muted); font-size: 12px; margin-top: 6px; letter-spacing: 2px; text-transform: uppercase; }
+        /* Incoming call screen */
+        .ringing { position: fixed; inset: 0; z-index: 60; background: radial-gradient(circle at 50% 30%, #1d2533, #0b0c0e 70%); display: flex; align-items: center; justify-content: center; padding: 24px; transition: opacity .35s; }
+        .ringing.gone { opacity: 0; pointer-events: none; }
+        .ring-inner { text-align: center; }
+        .ring-photo { position: relative; width: 132px; height: 132px; margin: 0 auto 22px; }
+        .ring-photo img { position: relative; width: 132px; height: 132px; border-radius: 50%; object-fit: cover; object-position: center 20%; display: block; box-shadow: 0 8px 30px rgba(0,0,0,.5); }
+        .ring-photo span { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(46,194,126,.7); animation: ringpulse 1.8s ease-out infinite; }
+        .ring-photo span:nth-child(2) { animation-delay: .6s; }
+        @keyframes ringpulse { from { transform: scale(1); opacity: .9; } to { transform: scale(1.65); opacity: 0; } }
+        .ring-name { font-size: 26px; font-weight: 700; }
+        .ring-sub { color: var(--muted); font-size: 15px; margin-top: 6px; }
+        .ring-btns { display: flex; justify-content: center; gap: 56px; margin-top: 40px; }
+        .ring-btn { display: flex; flex-direction: column; align-items: center; gap: 9px; background: none; border: 0; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+        .ring-ico { width: 68px; height: 68px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 8px 24px rgba(0,0,0,.4); transition: transform .15s; }
+        .ring-btn:hover .ring-ico { transform: scale(1.07); }
+        .decline .ring-ico { background: var(--red); }
+        .accept .ring-ico { background: var(--green); animation: ringshake 1.2s ease-in-out infinite; }
+        @keyframes ringshake { 0%, 60%, 100% { transform: none; } 70% { transform: rotate(-12deg); } 80% { transform: rotate(12deg); } 90% { transform: rotate(-8deg); } }
 
         /* Now playing */
         .nowplaying { position: fixed; left: 22px; top: 70px; z-index: 6; display: flex; align-items: center; gap: 8px; background: var(--panel); border: 1px solid var(--stroke); border-radius: 999px; padding: 6px 13px 6px 7px; color: #fff; text-decoration: none; font-size: 12px; max-width: 250px; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
@@ -433,11 +441,15 @@
 <body class="no-video">
 
     <!-- "Connecting…" intro -->
-    <div class="connecting" id="connecting">
-        <div class="conn-inner">
-            <div class="conn-ring"><img src="images/Vishal%20John%20Headshot.jpg" alt="Vishal"></div>
-            <div class="conn-title">Vishal is joining the call…</div>
-            <div class="conn-sub">connecting</div>
+    <div class="ringing" id="ringing" role="dialog" aria-label="Incoming video call from Vishal John">
+        <div class="ring-inner">
+            <div class="ring-photo"><span></span><span></span><img src="images/Vishal%20John%20Headshot.jpg" alt=""></div>
+            <div class="ring-name">Vishal John</div>
+            <div class="ring-sub">is calling you…</div>
+            <div class="ring-btns">
+                <button type="button" class="ring-btn decline" id="ringDecline"><span class="ring-ico"><i class="fas fa-phone-slash"></i></span>Decline</button>
+                <button type="button" class="ring-btn accept" id="ringAccept"><span class="ring-ico"><i class="fas fa-video"></i></span>Accept</button>
+            </div>
         </div>
     </div>
 
@@ -1008,7 +1020,8 @@
         var arStatusEl = document.getElementById('arStatus');
         document.getElementById('cFilters').addEventListener('click', function () { openOv('ovFilters'); });
 
-        /* one-time inviting hint pointing at the Filters button */
+        /* one-time inviting hint pointing at the Filters button (starts when the call does) */
+        var startFilterHint = function () {};
         (function () {
             var btn = document.getElementById('cFilters');
             var fhint = document.createElement('div');
@@ -1024,8 +1037,7 @@
             }
             function show() { place(); fhint.classList.add('show'); place(); }
             function hide() { fhint.classList.remove('show'); btn.classList.remove('pulse-hint'); }
-            setTimeout(show, 1500);
-            setTimeout(hide, 9000);
+            startFilterHint = function () { setTimeout(show, 1500); setTimeout(hide, 9000); };
             btn.addEventListener('click', hide);
             window.addEventListener('resize', function () { if (fhint.classList.contains('show')) place(); });
         })();
@@ -1500,6 +1512,7 @@
             endBtn.addEventListener('click', function () {
                 var ec = document.getElementById('endingCall');
                 ec.classList.add('show');
+                buzz(40);
                 setTimeout(function () { window.location.href = 'index_classic.html'; }, 1000);
             });
             // coming Back from the classic site restores this page from the cache with the
@@ -1509,15 +1522,38 @@
             });
         }
 
-        /* ---- Connecting intro (2.5s) ---- */
+        /* ---- Incoming call: Accept starts the intro, Decline goes to the classic site ---- */
+        function buzz(p) { if (navigator.vibrate) { try { navigator.vibrate(p); } catch (e) {} } }
+        var callStarted = false;
+        function startCall() {
+            if (callStarted) return;
+            callStarted = true;
+            run();
+            startFilterHint();
+        }
         (function () {
-            var c = document.getElementById('connecting');
-            if (!c) return;
-            var dur = reduceMotion ? 300 : 2000;
-            setTimeout(function () {
+            var c = document.getElementById('ringing');
+            var answered = false;
+            try { answered = sessionStorage.getItem('vj_answered') === '1'; } catch (e) {}
+            function remember() { try { sessionStorage.setItem('vj_answered', '1'); } catch (e) {} }
+            function hide() {
                 c.classList.add('gone');
-                setTimeout(function () { if (c.parentNode) c.parentNode.removeChild(c); }, 600);
-            }, dur);
+                setTimeout(function () { if (c.parentNode) c.parentNode.removeChild(c); }, 400);
+            }
+            // already answered this visit (e.g. came back with the Video call button): skip the ring
+            if (answered) { c.parentNode.removeChild(c); setTimeout(startCall, 0); return; }
+            var accept = document.getElementById('ringAccept');
+            accept.addEventListener('click', function () { remember(); buzz(20); hide(); startCall(); });
+            document.getElementById('ringDecline').addEventListener('click', function () {
+                remember(); buzz([30, 40, 30]);
+                var ec = document.getElementById('endingCall');
+                ec.querySelector('.ec-title').textContent = 'call declined';
+                ec.querySelector('.ec-sub').textContent = "no hard feelings. i'll leave a voicemail on your heart.";
+                ec.classList.add('show');
+                hide();
+                setTimeout(function () { window.location.href = 'index_classic.html'; }, 1800);
+            });
+            setTimeout(function () { accept.focus({ preventScroll: true }); }, 50);
         })();
 
         /* ---- Visitor counter ("you're visitor #N", all-time, via Worker+KV) ---- */
@@ -1565,7 +1601,7 @@
             }
         });
         Array.prototype.forEach.call(reactBar.querySelectorAll('button'), function (b) {
-            b.addEventListener('click', function () { var r = b.getBoundingClientRect(); floatEmoji(b.getAttribute('data-e'), r.left + r.width / 2); });
+            b.addEventListener('click', function () { buzz(12); var r = b.getBoundingClientRect(); floatEmoji(b.getAttribute('data-e'), r.left + r.width / 2); });
         });
         document.addEventListener('click', function (e) {
             if (reactBar.classList.contains('open') && !reactBar.contains(e.target) && !cReactBtn.contains(e.target)) reactBar.classList.remove('open');
@@ -1635,6 +1671,7 @@
             function roundRect(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
             function dl(blob) { var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'vishaljohn-call.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000); }
             document.getElementById('cCapture').addEventListener('click', function () {
+                buzz(15);
                 try {
                     var W = stage.clientWidth, H = stage.clientHeight, dpr = window.devicePixelRatio || 1;
                     var cv = document.createElement('canvas'); cv.width = W * dpr; cv.height = H * dpr;
@@ -1717,8 +1754,8 @@
                 }, s.type);
             }, s.delay);
         }
-        run();
     })();
     </script>
+    <script src="assets/codeblue.js" defer></script>
 </body>
 </html>

@@ -20,263 +20,39 @@
     <meta property="og:title" content="About Vishal John | UofL Medical Student & Researcher">
     <meta property="og:description" content="About Vishal John, a third-year medical student at the University of Louisville: his background, pediatric brain cancer research, leadership, and full CV.">
     <meta property="og:url" content="https://www.vishaljohn.com/pages/about.html">
-    <meta property="og:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <meta property="og:image" content="https://www.vishaljohn.com/assets/og/about.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Vishal John">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="About Vishal John | UofL Medical Student & Researcher">
     <meta name="twitter:description" content="About Vishal John, a third-year medical student at the University of Louisville: his background, pediatric brain cancer research, leadership, and full CV.">
-    <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og/about.jpg">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
+    <link rel="stylesheet" href="../assets/base.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+        .main-content h2, .main-content p { margin: 20px 0; }
+        .image-section { position: relative; width: 300px; height: 300px; margin: 40px auto; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; cursor: pointer; }
+        .image-section img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; transition: opacity 0.4s ease-in-out; }
+        .image-section .img-fun { opacity: 0; }
+        .image-section:hover .img-default { opacity: 0; }
+        .image-section:hover .img-fun { opacity: 1; }
+        .description-section { text-align: center; }
+        .cv-section { text-align: center; margin-top: 40px; }
+        .cv-button { padding: 10px 20px; background-color: #0a6db0; color: white; border-radius: 3px; text-decoration: none; transition: background-color 0.3s; }
+        .cv-button:hover { background-color: #005885; }
+        @media screen and (max-width: 768px) {
+            .image-section { width: min(300px, 68vw); height: min(300px, 68vw); }
+            .cv-section { margin-top: 20px; }
         }
-
-        header {
-            position: relative;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 20px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-
-        nav a:hover {
-            background-color: #f8f8f8;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 50px 0;
-        }
-
-        .main-content {
-            background-color: #fff;
-            padding: 50px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-
-        .main-content h2, .main-content p {
-            margin: 20px 0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #333;
-            color: #fff;
-        }
-
-        footer i {
-            margin: 0 10px;
-            color: #ff5733;
-            transition: color 0.3s;
-        }
-
-        footer a:hover i {
-            color: #ff9966;
-        }
-
-        .image-section {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 40px auto;
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .image-section img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            transition: opacity 0.4s ease-in-out;
-        }
-
-        .image-section .img-fun {
-            opacity: 0;
-        }
-
-        .image-section:hover .img-default {
-            opacity: 0;
-        }
-
-        .image-section:hover .img-fun {
-            opacity: 1;
-        }
-
-        .description-section {
-            text-align: center;
-        }
-
-        .cv-section {
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .cv-button {
-            padding: 10px 20px;
-            background-color: #0a6db0;
-            color: white;
-            border-radius: 3px;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-
-        .cv-button:hover {
-            background-color: #005885;
-        }
-
-/* Mobile-Friendly Adjustments */
-
-@media screen and (max-width: 768px) {
-    
-    /* Header and Navigation Styles */
-    header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    nav a {
-        display: block;
-        margin: 5px 0;
-        text-align: center;
-    }
-
-    /* Container adjustments */
-    .container {
-        width: 95%; /* Increased width for smaller devices */
-    }
-
-    .main-content {
-        padding: 30px; /* Reduced padding for smaller devices */
-    }
-
-    .image-section {
-        width: min(300px, 68vw);  /* scale the whole circle on mobile */
-        height: min(300px, 68vw); /* keeps a perfect circle the photo fills */
-    }
-
-    .cv-section {
-        margin-top: 20px; /* Reduced margin for mobile */
-    }
-
-    footer div {
-        margin-bottom: 10px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    
-    header h1 {
-        font-size: 24px; /* Adjust title size for very small devices */
-    }
-
-    nav a {
-        padding: 5px;
-        font-size: 14px; /* Adjust font size for very small devices */
-    }
-}
-        
     </style>
 
-    <style>
-    #particles-js {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-    }
     
-        /* Hamburger menu */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 4px;
-            z-index: 200;
-        }
-        .hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: #333;
-            border-radius: 2px;
-            transition: transform 0.3s, opacity 0.3s;
-        }
-        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-        @media screen and (max-width: 768px) {
-            .hamburger { display: flex; }
-            nav ul {
-                display: none;
-                flex-direction: column;
-                gap: 0;
-                position: absolute;
-                top: 64px;
-                right: 0;
-                left: 0;
-                background: #fff;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-                z-index: 100;
-                padding: 8px 0;
-            }
-            nav ul.open { display: flex; }
-            nav a { padding: 12px 24px; border-radius: 0; display: block; }
-            header { position: relative; flex-wrap: nowrap; }
-        }
-        </style>
     <link rel="stylesheet" href="../assets/site.css">
     <style>
-        /* ---------- Timeline ---------- */
         .tl-card { margin-top: 28px; padding: 36px 48px; }
         .tl-heading { margin: 0 0 22px !important; font-size: 13px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent); }
         .timeline { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: relative; }
@@ -304,16 +80,12 @@
         html.dark .tl-what { color: #cdd4de; }
         html.dark .tl-year { color: #9aa4b2; }
         html.dark .tl-heading { color: #6cb6ff; }
-
-        /* Photo swap: hover with a mouse, tap on phones (hover would "stick" on touch) */
         @media (hover: none) {
             .image-section:hover .img-default { opacity: 1; }
             .image-section:hover .img-fun { opacity: 0; }
         }
         .image-section.swapped .img-default { opacity: 0; }
         .image-section.swapped .img-fun { opacity: 1; }
-
-        /* ---------- CV (rendered from assets/cv.json) ---------- */
         .cv { margin-top: 28px; padding: 48px 56px; line-height: 1.5; }
         .cv-loading { color: var(--muted); text-align: center; }
         .cv-updated { margin: 12px 0 0 !important; font-size: 12px; color: var(--muted); }
@@ -365,14 +137,10 @@
         html.dark .cv-org, html.dark .cv-item li, html.dark .cv-list li, html.dark .cv-skills dd, html.dark .cv-note, html.dark .cv-contact a, html.dark .cv-headline { color: #cdd4de; }
         html.dark .cv-sec > h3 { color: #6cb6ff; border-color: #2a313c; }
         html.dark .cv-head { border-color: #6cb6ff; }
-
-        /* Print / "Save as PDF": just the CV, on white */
         @media print {
             @page { margin: 0.6in 0.65in; }
-            html, body { background: #fff !important; }
-            body::before, header, footer, .vj-theme-toggle, .vjw-launch, .vjw-call, .vjw-tip, .vjw-panel,
-            .container > .main-content:not(.cv) { display: none !important; }
-            .container { width: auto; padding: 0; margin: 0; }
+            html { background: #fff !important; }
+            body::before, .vj-theme-toggle, .vjw-launch, .vjw-call, .vjw-tip, .vjw-panel, .container > .main-content:not(.cv) { display: none !important; }
             .cv { box-shadow: none !important; padding: 0; margin: 0; font-size: 12px; }
             .cv-head h2 { font-size: 24px; }
             .cv-sec { margin-top: 18px; }
@@ -390,21 +158,23 @@
 
 <body class="content-page">
 
-    <header>
-        <h1><a href="../index_classic.html">Vishal John</a></h1>
-        <nav>
-            <ul>
-                <li><a href="../index_classic.html">Home</a></li>
-                <li><a href="about.html">About Me</a></li>
-                <li><a href="blog.html">Newsletter</a></li>
-                <li><a href="publications.html">Publications</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <button class="hamburger" id="hamburger" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-    </header>
+    <!-- site:header -->
+<header>
+    <h1><a href="../index_classic.html">Vishal John</a></h1>
+    <nav aria-label="Main">
+        <ul>
+            <li><a href="../index_classic.html">Home</a></li>
+            <li><a href="about.html" aria-current="page">About Me</a></li>
+            <li><a href="blog.html">Newsletter</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+<!-- /site:header -->
 
     <main class="container">
         <section class="main-content">
@@ -429,7 +199,8 @@
         </section>
 
         <!-- Timeline: each stop links to its page (or the CV for school) -->
-        <section class="main-content tl-card" aria-label="My path so far">
+        <section class="main-content tl-card has-doodle" aria-label="My path so far">
+            <svg class="doodle doodle-corner" viewBox="0 0 120 120" aria-hidden="true"><use href="../assets/doodles.svg#memory"/></svg>
             <h2 class="tl-heading">My path so far</h2>
             <ol class="timeline">
                 <li><a href="#cv"><span class="tl-dot"></span><span class="tl-year">2017 – 2021</span><span class="tl-name">University of Michigan</span><span class="tl-what">B.S., Biopsychology, Cognition &amp; Neuroscience</span></a></li>
@@ -446,23 +217,16 @@
         </section>
     </main>
 
-    <footer>
-        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
-        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
-        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
-    </footer>
+    <!-- site:footer -->
+<footer>
+    <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+    <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+    <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+    <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+</footer>
+<script src="../assets/codeblue.js" defer></script>
+<!-- /site:footer -->
 
-    <script>
-        const btn = document.getElementById('hamburger');
-        const navUl = document.querySelector('nav ul');
-        if (btn && navUl) {
-            btn.addEventListener('click', () => {
-                btn.classList.toggle('open');
-                navUl.classList.toggle('open');
-            });
-        }
-    </script>
     <script>
     /* Tap (or Enter) swaps the photo; on desktop the hover still works too */
     (function () {
@@ -561,7 +325,6 @@
         });
     })();
     </script>
-    <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
     <script src="../assets/site.js"></script>
     <script src="../assets/chat-widget.js" defer></script>
     <script src="../assets/theme.js"></script>

@@ -28,35 +28,12 @@
 <meta content="https://www.vishaljohn.com/assets/og/bluegrassbiodesign.jpg" name="twitter:image"/>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
-<style>
+<link rel="stylesheet" href="../assets/base.css">
+    <style>
         * { box-sizing: border-box; }
-        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
-        #particles-js { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-
-        header { position: relative; background-color: #fff; padding: 16px 24px; box-shadow: 0px 3px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; z-index: 10; }
-        header h1 { margin: 0; font-size: 22px; }
-        header a { text-decoration: none; color: inherit; }
-        nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 4px; }
-        nav a { text-decoration: none; color: #333; padding: 5px 10px; border-radius: 3px; transition: background-color 0.3s; font-size: 14px; }
-        nav a:hover { background-color: #f8f8f8; }
-
-        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-        .hamburger span { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-        .container { width: 80%; margin: auto; padding: 50px 0; position: relative; z-index: 1; }
-        .main-content { background-color: #fff; padding: 50px; box-shadow: 0px 3px 10px rgba(0,0,0,0.1); }
         .main-content h2 { border-bottom: 2px solid #333; padding-bottom: 10px; margin: 36px 0 20px; }
         .main-content h2:first-of-type { margin-top: 0; }
         .main-content p { margin: 16px 0; line-height: 1.7; }
-
-        footer { text-align: center; padding: 20px 0; background-color: #333; color: #fff; position: relative; z-index: 1; margin-top: 0; }
-        footer i { color: #ff5733; }
-        footer a:hover i { color: #ff9966; }
-
-        /* Program header */
         .program-header { display: flex; gap: 28px; align-items: flex-start; margin-bottom: 36px; }
         .program-logo { flex-shrink: 0; width: 110px; height: 110px; background: linear-gradient(135deg, #AD0000, #c41230); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 11px; text-align: center; padding: 10px; line-height: 1.4; }
         .program-logo .logo-icon { font-size: 26px; margin-bottom: 6px; }
@@ -65,43 +42,31 @@
         .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
         .tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #f0f4ff; color: #0a6db0; font-weight: bold; }
         .tag-red { background: #fff0f0; color: #AD0000; }
-        @media (max-width: 768px) { .news-link { display: inline-flex; padding: 8px 0; } }
+        @media (max-width: 768px) {
+            .news-link { display: inline-flex; padding: 8px 0; }
+        }
         .news-link { display: inline-flex; align-items: center; gap: 6px; color: #0a6db0; font-size: 13px; text-decoration: none; }
         .news-link:hover { text-decoration: underline; }
-
-        /* Gallery */
         .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 20px 0; }
         .photo-grid img { width: 100%; height: 240px; object-fit: cover; object-position: center; border-radius: 6px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; display: block; }
         .photo-grid img:hover { transform: scale(1.02); }
         .photo-grid .full-width { grid-column: 1 / -1; }
         .photo-grid .full-width img { height: 320px; }
         figcaption { font-size: 12px; color: #888; text-align: center; margin-top: 6px; }
-
-        /* Process steps */
         .process-steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; margin: 20px 0; }
         .step-card { background: #f9f9f9; border: 1px solid #eee; border-top: 3px solid #AD0000; border-radius: 6px; padding: 16px 12px; text-align: center; }
         .step-number { font-size: 20px; font-weight: bold; color: #AD0000; margin-bottom: 6px; }
         .step-title { font-size: 13px; font-weight: bold; color: #222; margin-bottom: 4px; }
         .step-desc { font-size: 12px; color: #888; line-height: 1.5; }
-
-        /* Lightbox */
         .lightbox { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); padding-top: 40px; }
         .lightbox img { display: block; max-width: 85%; max-height: 82vh; margin: auto; border-radius: 4px; object-fit: contain; }
         .lightbox-close { position: absolute; top: 14px; right: 24px; color: #fff; font-size: 40px; cursor: pointer; font-weight: bold; }
         .lightbox-close:hover { color: #ccc; }
-
         .btn-red { display: inline-block; padding: 10px 22px; background-color: #AD0000; color: #fff; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: bold; transition: background-color 0.2s; }
         .btn-red:hover { background-color: #8a0000; }
         .btn-dark { display: inline-block; padding: 10px 22px; background-color: #333; color: #fff; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: bold; margin-left: 12px; transition: background-color 0.2s; }
         .btn-dark:hover { background-color: #111; }
-
         @media screen and (max-width: 768px) {
-            .hamburger { display: flex; }
-            nav ul { display: none; flex-direction: column; gap: 0; position: absolute; top: 60px; right: 0; left: 0; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; padding: 8px 0; }
-            nav ul.open { display: flex; }
-            nav a { padding: 12px 24px; border-radius: 0; display: block; }
-            .container { width: 95%; }
-            .main-content { padding: 28px; }
             .program-header { flex-direction: column; }
             .photo-grid { grid-template-columns: 1fr; }
             .photo-grid .full-width { grid-column: 1; }
@@ -111,21 +76,23 @@
 <link href="../assets/site.css" rel="stylesheet"/>
 </head>
 <body class="project-page">
+<!-- site:header -->
 <header>
-<h1><a href="../index_classic.html">Vishal John</a></h1>
-<nav>
-<ul>
-<li><a href="../index_classic.html">Home</a></li>
-<li><a href="about.html">About Me</a></li>
-<li><a href="blog.html">Newsletter</a></li>
-<li><a href="publications.html">Publications</a></li>
-<li><a href="contact.html">Contact</a></li>
-</ul>
-</nav>
-<button aria-label="Menu" class="hamburger" id="hamburger">
-<span></span><span></span><span></span>
-</button>
+    <h1><a href="../index_classic.html">Vishal John</a></h1>
+    <nav aria-label="Main">
+        <ul>
+            <li><a href="../index_classic.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="blog.html">Newsletter</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
 </header>
+<!-- /site:header -->
 <div class="container">
 <div class="main-content">
 <div class="project-hero">
@@ -189,20 +156,15 @@
 <a class="pn-prev" href="rockcancer.html"><span class="pn-dir">&larr; Previous project</span><span class="pn-name">Rock Cancer</span></a>
 <a class="pn-next" href="childrensbook.html"><span class="pn-dir">Next project &rarr;</span><span class="pn-name">Children's Book</span></a>
 </nav>
+<!-- site:footer -->
 <footer>
-        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
-        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
-        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
-    </footer>
-<script>
-        // Hamburger
-        document.getElementById('hamburger').addEventListener('click', function() {
-            this.classList.toggle('open');
-            document.querySelector('nav ul').classList.toggle('open');
-        });
-    </script>
-<script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
+    <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+    <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+    <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+    <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+</footer>
+<script src="../assets/codeblue.js" defer></script>
+<!-- /site:footer -->
 <script src="../assets/site.js"></script>
 <script defer="" src="../assets/chat-widget.js"></script>
     <script src="../assets/gallery.js"></script>

@@ -18,223 +18,82 @@
     <meta property="og:title" content="Newsletter | Vishal John">
     <meta property="og:description" content="Essays by Vishal John on medicine, healthcare, and life as a medical student, from resident physician wellbeing to homelessness and city design.">
     <meta property="og:url" content="https://www.vishaljohn.com/pages/blog.html">
-    <meta property="og:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <meta property="og:image" content="https://www.vishaljohn.com/assets/og/blog.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Vishal John">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Newsletter | Vishal John">
     <meta name="twitter:description" content="Essays by Vishal John on medicine, healthcare, and life as a medical student, from resident physician wellbeing to homelessness and city design.">
-    <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og/blog.jpg">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   
-  <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-
-        header {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        nav li {
-            display: inline-block;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-
-        nav a:hover {
-            background-color: #f8f8f8;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 50px 0;
-        }
-
-        .main-content {
-            background-color: #fff;
-            padding: 50px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .main-content h2, .main-content p {
-            margin: 20px 0;
-        }
-
-        .articles-list {
-            margin-top: 30px;
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .articles-list li {
-            margin-bottom: 15px;
-        }
-
-        .articles-list a {
-            color: #0a6db0;
-            transition: color 0.3s;
-        }
-
-        .articles-list a:hover {
-            color: #005885;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #333;
-            color: #fff;
-        }
-
-
-       /* Styles for social media icons */
-        footer i {
-            color: #ff5733;  /* Change this color as you desire */
-        }
-
-        footer a:hover i {
-            color: #ff9966;  /* Change this color as you desire */
-        }
-
-
-      /* Mobile-Friendly Adjustments */
-
-@media screen and (max-width: 768px) {
-    
-    /* Header and Navigation Styles */
-    header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    nav a {
-        display: block;
-        margin: 5px 0;
-        text-align: center;
-    }
-
-    /* Container adjustments */
-    .container {
-        width: 95%; /* Increased width for smaller devices */
-    }
-
-    .main-content {
-        padding: 30px; /* Reduced padding for smaller devices */
-    }
-
-    .image-section img {
-        max-width: 80%; /* Images should take more width on mobile */
-    }
-
-    .cv-section {
-        margin-top: 20px; /* Reduced margin for mobile */
-    }
-
-    footer div {
-        margin-bottom: 10px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    
-    header h1 {
-        font-size: 24px; /* Adjust title size for very small devices */
-    }
-
-    nav a {
-        padding: 5px;
-        font-size: 14px; /* Adjust font size for very small devices */
-    }
-}
-      
-    </style>
-
+  <link rel="stylesheet" href="../assets/base.css">
     <style>
-    #particles-js {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-    }
+        .main-content h2, .main-content p { margin: 20px 0; }
+        .articles-list { margin-top: 30px; list-style-type: none; padding: 0; }
+        .articles-list li { margin-bottom: 15px; }
+        .articles-list a { color: #0a6db0; transition: color 0.3s; }
+        .articles-list a:hover { color: #005885; }
+        @media screen and (max-width: 768px) {
+            .image-section img { max-width: 80%; }
+            .cv-section { margin-top: 20px; }
+        }
+            .post-intro { color: var(--ink-soft, #555a61); margin: 0 0 22px; }
+        .articles-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+        .articles-list li.post { padding: 0; border: 0 !important; }
+        .post-link { display: grid; grid-template-columns: 240px 1fr; gap: 0; background: #fff; border: 1px solid #e8eaed; border-radius: 10px; overflow: hidden; color: inherit !important; font-weight: 400 !important; text-decoration: none !important; transition: box-shadow .2s ease, transform .2s ease; }
+        .post-link:hover { box-shadow: 0 10px 28px rgba(18,24,33,.1); transform: translateY(-2px); }
+        .post-img { width: 100%; height: 100%; min-height: 170px; object-fit: cover; display: block; background: #eef1f4; }
+        .post-link > .post-body:only-child { grid-column: 1 / -1; }
+        .post-body { padding: 20px 24px; min-width: 0; }
+        .post-meta { font-size: 12.5px; color: #6b7280; margin-bottom: 6px; }
+        .post-title { font-size: 18px; line-height: 1.35; margin: 0 0 8px; color: #232529; }
+        .post-preview { font-size: 14.5px; line-height: 1.6; color: #555a61; margin: 0 0 10px !important; }
+        .post-more { font-size: 13.5px; font-weight: 600; color: #0a6db0; }
+        @media (max-width: 680px) {
+            .post-link { grid-template-columns: 1fr; }
+            .post-img { height: 170px; min-height: 0; }
+            .post-body { padding: 16px 18px; }
+        }
+        html.dark .post-link { background: #1b2028; border-color: #2a313c; }
+        html.dark .post-title { color: #f0f3f7; }
+        html.dark .post-preview, html.dark .post-intro { color: #cdd4de; }
+        html.dark .post-meta { color: #9aa4b2; }
+        html.dark .post-more { color: #6cb6ff; }
     </style>
-    <style>
-    /* Mobile hamburger nav */
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    @media screen and (max-width: 768px) {
-      header { flex-direction: row; align-items: center; text-align: left; position: relative; }
-      .hamburger { display: flex; }
-      nav { position: static; }
-      nav ul { display: none; flex-direction: column; gap: 0; position: absolute; top: 100%; right: 0; left: 0; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; padding: 8px 0; margin: 0; }
-      nav ul.open { display: flex; }
-      nav a { padding: 12px 24px; border-radius: 0; display: block; text-align: center; margin: 0; }
-    }
-    </style>
+
+    
+    
     <link rel="stylesheet" href="../assets/site.css">
 </head>
 
 <body class="content-page">
 
 
-    <header>
-        <h1><a href="../index_classic.html" style="text-decoration: none; color: inherit;">Vishal John</a></h1>
-
-       <nav>
-            <ul>
-                <li><a href="../index_classic.html">Home</a></li>
-                <li><a href="about.html">About Me</a></li>
-                 <li><a href="blog.html">Newsletter</a></li>
-                <li><a href="publications.html">Publications</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-            <button class="hamburger" id="hamburger" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-    </header>
+    <!-- site:header -->
+<header>
+    <h1><a href="../index_classic.html">Vishal John</a></h1>
+    <nav aria-label="Main">
+        <ul>
+            <li><a href="../index_classic.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="blog.html" aria-current="page">Newsletter</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+<!-- /site:header -->
 
     <div class="container">
         <div class="main-content">
-            <h2>Check out some of my writings below!</h2>
+            <h2>My writing</h2>
+            <p class="post-intro">Essays on medicine, healthcare, and the world around them. New posts appear here automatically.</p>
             <ul id="medium-articles" class="articles-list"></ul>
         </div>
     </div>
@@ -267,16 +126,24 @@
             if (!items.length) { showError(); return; }
             list.textContent = '';
             items.forEach(it => {
-                const li = document.createElement('li');
-                li.style.cssText = 'display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid #eee;';
-                const a = document.createElement('a');
+                const li = document.createElement('li'); li.className = 'post';
+                const a = document.createElement('a'); a.className = 'post-link';
                 a.href = /^https:\/\//.test(it.link || '') ? it.link : 'https://medium.com/@' + mediumUser;
                 a.target = '_blank'; a.rel = 'noopener noreferrer';
-                a.textContent = it.title || 'Untitled';
-                const date = document.createElement('span');
-                date.style.cssText = 'font-size:13px;color:#888;margin-left:16px;white-space:nowrap;';
-                date.textContent = fmtDate(it.pubDate);
-                li.appendChild(a); li.appendChild(date); list.appendChild(li);
+                if (it.image && /^https:\/\//.test(it.image)) {
+                    const img = document.createElement('img'); img.className = 'post-img'; img.src = it.image; img.alt = '';
+                    img.loading = 'lazy'; img.decoding = 'async';
+                    img.addEventListener('error', () => img.remove());
+                    a.appendChild(img);
+                }
+                const body = document.createElement('div'); body.className = 'post-body';
+                const meta = document.createElement('div'); meta.className = 'post-meta';
+                meta.textContent = [fmtDate(it.pubDate), it.minutes ? it.minutes + ' min read' : ''].filter(Boolean).join(' · ');
+                const title = document.createElement('h3'); title.className = 'post-title'; title.textContent = it.title || 'Untitled';
+                body.appendChild(meta); body.appendChild(title);
+                if (it.preview) { const p = document.createElement('p'); p.className = 'post-preview'; p.textContent = it.preview; body.appendChild(p); }
+                const more = document.createElement('span'); more.className = 'post-more'; more.textContent = 'Read on Medium →';
+                body.appendChild(more); a.appendChild(body); li.appendChild(a); list.appendChild(li);
             });
         }
 
@@ -318,26 +185,16 @@
     </script>
 
 
-  <footer>
-        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
-        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
-        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
-    </footer>
+  <!-- site:footer -->
+<footer>
+    <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+    <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+    <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+    <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+</footer>
+<script src="../assets/codeblue.js" defer></script>
+<!-- /site:footer -->
 
-    <script>
-    (function(){
-      var btn = document.getElementById('hamburger');
-      var navUl = document.querySelector('nav ul');
-      if (btn && navUl) {
-        btn.addEventListener('click', function(){
-          btn.classList.toggle('open');
-          navUl.classList.toggle('open');
-        });
-      }
-    })();
-    </script>
-    <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
     <script src="../assets/site.js"></script>
     <script src="../assets/chat-widget.js" defer></script>
     <script src="../assets/theme.js"></script>

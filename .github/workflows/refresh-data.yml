@@ -1,4 +1,4 @@
-name: Refresh Medium posts
+name: Refresh site data
 
 on:
   schedule:
@@ -15,14 +15,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 tools/fetch-medium.py
+      # citations only change the live counts; a failure here must not block new posts
+      - run: python3 tools/fetch-citations.py || true
       - name: Commit if changed
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet assets/medium.json; then echo "no new posts"; exit 0; fi
+          if git diff --quiet -- assets/medium.json && ! git diff -- assets/citations.json | grep -q '^[-+] .*"[0-9]\|total'; then echo "nothing new"; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-          git commit -am "Refresh Medium posts"
+          git add assets/medium.json assets/citations.json
+          git commit -m "Refresh Medium posts and citations"
           git push
           # pushes made with the workflow token don't always start a Pages build; ask for one
           gh api -X POST "repos/${{ github.repository }}/pages/builds" || true

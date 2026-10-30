@@ -1,0 +1,11 @@
+BEGIN:VCARD
+VERSION:3.0
+N:John;Vishal;;;
+FN:Vishal John
+ORG:University of Louisville School of Medicine
+TITLE:M.D. Candidate\, Class of 2028
+EMAIL;TYPE=INTERNET,WORK:vishal.john@louisville.edu
+URL:https://www.vishaljohn.com
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/vishaljjohn/
+NOTE:Met through vishaljohn.com/card
+END:VCARD

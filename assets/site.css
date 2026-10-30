@@ -454,3 +454,25 @@ html.dark .step-title { color: #f0f3f7; }
   .contact-form { width: calc(100% - 24px); margin: 24px auto 32px !important; }
 }
 @media print { body { display: block; min-height: 0; } }
+
+/* ---- Paper pages ---- */
+.paper-page > h2 { margin-top: 20px !important; }
+.paper-page .ph-role { margin: 6px 0 !important; color: var(--ink-soft); font-size: 14px; line-height: 1.6; }
+.paper-page .ph-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none; }
+.paper-summary { background: var(--accent-soft); border-radius: 10px; padding: 16px 20px; margin: 20px 0 0; }
+.paper-summary p { margin: 0 !important; }
+.paper-summary .paper-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px !important; }
+.paper-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+html.dark .paper-summary { background: #1d2430; }
+html.dark .paper-summary .paper-label { color: #8cc4ff; }
+html.dark .paper-page .ph-role { color: #cdd4de; }
+
+/* ---- Hand-drawn Immune Team doodles ---- */
+.doodle { display: block; transition: transform .25s ease; }
+.doodle:hover { transform: rotate(-6deg) scale(1.05); }
+.doodle-corner { position: absolute; width: 74px; height: 74px; top: -30px; right: 22px; }
+.has-doodle { position: relative; }
+.doodle-inline { width: 84px; height: 84px; margin: 0 auto 8px; }
+@media (max-width: 480px) { .doodle-corner { width: 58px; height: 58px; top: -24px; right: 14px; } }
+@media print { .doodle, .doodle-corner { display: none !important; } }
+@media (max-width: 768px) { .paper-page .ph-link { padding: 12px 0; } }

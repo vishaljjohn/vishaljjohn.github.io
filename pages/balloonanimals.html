@@ -29,117 +29,16 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
+    <link rel="stylesheet" href="../assets/base.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-
-        header {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 { margin: 0; }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        nav li { display: inline-block; }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-
-        nav a:hover { background-color: #f8f8f8; }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 50px 0;
-        }
-
-        .main-content {
-            background-color: #fff;
-            padding: 50px;
-            box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .main-content h2 {
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
+        .main-content h2 { border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
         .main-content p { margin: 20px 0; line-height: 1.7; }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #333;
-            color: #fff;
-        }
-
-        footer i { color: #ff5733; }
-        footer a:hover i { color: #ff9966; }
-
-        /* Hero cover image */
-        .cover-image {
-            width: 100%;
-            height: 420px;
-            object-fit: cover;
-            object-position: center center;
-            border-radius: 6px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-            margin-bottom: 32px;
-        }
-
-        /* Stats strip */
-        .stats-strip {
-            display: flex;
-            gap: 0;
-            border: 1px solid #eee;
-            border-radius: 6px;
-            overflow: hidden;
-            margin: 28px 0;
-        }
-
-        .stat-item {
-            flex: 1;
-            text-align: center;
-            padding: 18px 12px;
-            border-right: 1px solid #eee;
-        }
-
+        .cover-image { width: 100%; height: 420px; object-fit: cover; object-position: center center; border-radius: 6px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); margin-bottom: 32px; }
+        .stats-strip { display: flex; gap: 0; border: 1px solid #eee; border-radius: 6px; overflow: hidden; margin: 28px 0; }
+        .stat-item { flex: 1; text-align: center; padding: 18px 12px; border-right: 1px solid #eee; }
         .stat-item:last-child { border-right: none; }
-
-        .stat-number {
-            font-size: 16px;
-            font-weight: bold;
-            color: #0a6db0;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #888;
-            margin-top: 4px;
-        }
-
+        .stat-number { font-size: 16px; font-weight: bold; color: #0a6db0; }
+        .stat-label { font-size: 12px; color: #888; margin-top: 4px; }
         .spin-stage { position: relative; height: 440px; perspective: 1300px; margin: 24px 0; background: radial-gradient(circle at 50% 35%, #232323, #050505); border-radius: 12px; overflow: hidden; cursor: grab; -webkit-user-select: none; user-select: none; touch-action: pan-y; }
         .spin-stage.grabbing { cursor: grabbing; }
         .spin-ring { position: absolute; top: 50%; left: 50%; width: 240px; height: 320px; margin: -160px 0 0 -120px; transform-style: preserve-3d; }
@@ -152,67 +51,35 @@
         .spin-btn { background: #0a6db0; color: #fff; border: none; border-radius: 50%; width: 42px; height: 42px; font-size: 20px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; }
         .spin-btn:hover { background: #075488; }
         .spin-btn:active { transform: scale(0.92); }
-
-        /* Mobile */
         @media screen and (max-width: 768px) {
-            header { flex-direction: column; align-items: center; text-align: center; }
-            nav ul { flex-direction: column; gap: 10px; }
-            nav a { display: block; margin: 5px 0; text-align: center; }
-            .container { width: 95%; }
-            .main-content { padding: 30px; }
             .gallery { grid-template-columns: 1fr; }
             .stats-strip { flex-wrap: wrap; }
             .stat-item { min-width: 45%; }
         }
-
-        @media screen and (max-width: 480px) {
-            header h1 { font-size: 24px; }
-            nav a { padding: 5px; font-size: 14px; }
-        }
-
-        #particles-js {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-        }
     </style>
-    <style>
-    /* Mobile hamburger nav */
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    @media screen and (max-width: 768px) {
-      header { flex-direction: row; align-items: center; text-align: left; position: relative; }
-      .hamburger { display: flex; }
-      nav { position: static; }
-      nav ul { display: none; flex-direction: column; gap: 0; position: absolute; top: 100%; right: 0; left: 0; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; padding: 8px 0; margin: 0; }
-      nav ul.open { display: flex; }
-      nav a { padding: 12px 24px; border-radius: 0; display: block; text-align: center; margin: 0; }
-    }
-    </style>
+    
     <link rel="stylesheet" href="../assets/site.css">
 </head>
 
 <body class="project-page">
 
-    <header>
-        <h1><a href="../index_classic.html" style="text-decoration: none; color: inherit;">Vishal John</a></h1>
-        <nav>
-            <ul>
-                <li><a href="../index_classic.html">Home</a></li>
-                <li><a href="about.html">About Me</a></li>
-                <li><a href="blog.html">Newsletter</a></li>
-                <li><a href="publications.html">Publications</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-            <button class="hamburger" id="hamburger" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-    </header>
+    <!-- site:header -->
+<header>
+    <h1><a href="../index_classic.html">Vishal John</a></h1>
+    <nav aria-label="Main">
+        <ul>
+            <li><a href="../index_classic.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="blog.html">Newsletter</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+<!-- /site:header -->
 
     <div class="container">
         <div class="main-content">
@@ -283,26 +150,16 @@
 <a class="pn-prev" href="japan.html"><span class="pn-dir">&larr; Previous project</span><span class="pn-name">Ishinomaki, Japan</span></a>
 <a class="pn-next" href="rockcancer.html"><span class="pn-dir">Next project &rarr;</span><span class="pn-name">Rock Cancer</span></a>
 </nav>
+<!-- site:footer -->
 <footer>
-        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
-        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
-        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
-    </footer>
+    <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+    <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+    <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+    <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+</footer>
+<script src="../assets/codeblue.js" defer></script>
+<!-- /site:footer -->
 
-    <script>
-    (function(){
-      var btn = document.getElementById('hamburger');
-      var navUl = document.querySelector('nav ul');
-      if (btn && navUl) {
-        btn.addEventListener('click', function(){
-          btn.classList.toggle('open');
-          navUl.classList.toggle('open');
-        });
-      }
-    })();
-    </script>
-    <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
     <script src="../assets/site.js"></script>
     <script src="../assets/chat-widget.js" defer></script>
     <script src="../assets/gallery.js"></script>

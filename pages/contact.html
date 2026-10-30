@@ -18,224 +18,42 @@
     <meta property="og:title" content="Contact | Vishal John">
     <meta property="og:description" content="Send Vishal John a message about research, his children's book, Rock Cancer, speaking, or anything else. He reads every note.">
     <meta property="og:url" content="https://www.vishaljohn.com/pages/contact.html">
-    <meta property="og:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <meta property="og:image" content="https://www.vishaljohn.com/assets/og/contact.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Vishal John">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Contact | Vishal John">
     <meta name="twitter:description" content="Send Vishal John a message about research, his children's book, Rock Cancer, speaking, or anything else. He reads every note.">
-    <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og/contact.jpg">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   
-  <style>
-      
-      
-        
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+  <link rel="stylesheet" href="../assets/base.css">
+    <style>
+        .main-content h2, .main-content p { margin: 20px 0; }
+        .contact-form { background: #fff; padding: 20px; box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1); margin-top: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background-color: #333; color: #fff; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #555; }
+        @media screen and (max-width: 768px) {
+            .image-section img { max-width: 80%; }
+            .cv-section { margin-top: 20px; }
         }
-
-        header {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        nav li {
-            display: inline-block;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-
-        nav a:hover {
-            background-color: #f8f8f8;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 50px 0;
-        }
-
-        .main-content {
-            background-color: #fff;
-            padding: 50px;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .main-content h2, .main-content p {
-            margin: 20px 0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #333;
-            color: #fff;
-        }
-
-       /* Styles for social media icons */
-        footer i {
-            color: #ff5733;  /* Change this color as you desire */
-        }
-
-        footer a:hover i {
-            color: #ff9966;  /* Change this color as you desire */
-        }
-
-      .contact-form {
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-button {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #555;
-}
-
-/* Mobile-Friendly Adjustments */
-
-@media screen and (max-width: 768px) {
-    
-    /* Header and Navigation Styles */
-    header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    nav a {
-        display: block;
-        margin: 5px 0;
-        text-align: center;
-    }
-
-    /* Container adjustments */
-    .container {
-        width: 95%; /* Increased width for smaller devices */
-    }
-
-    .main-content {
-        padding: 30px; /* Reduced padding for smaller devices */
-    }
-
-    .image-section img {
-        max-width: 80%; /* Images should take more width on mobile */
-    }
-
-    .cv-section {
-        margin-top: 20px; /* Reduced margin for mobile */
-    }
-
-    footer div {
-        margin-bottom: 10px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    
-    header h1 {
-        font-size: 24px; /* Adjust title size for very small devices */
-    }
-
-    nav a {
-        padding: 5px;
-        font-size: 14px; /* Adjust font size for very small devices */
-    }
-}
-
-      
     </style>
 
+    
     <style>
-    #particles-js {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-    }
-    </style>
-    <style>
-    /* Mobile hamburger nav */
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    @media screen and (max-width: 768px) {
-      header { flex-direction: row; align-items: center; text-align: left; position: relative; }
-      .hamburger { display: flex; }
-      nav { position: static; }
-      nav ul { display: none; flex-direction: column; gap: 0; position: absolute; top: 100%; right: 0; left: 0; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; padding: 8px 0; margin: 0; }
-      nav ul.open { display: flex; }
-      nav a { padding: 12px 24px; border-radius: 0; display: block; text-align: center; margin: 0; }
-    }
-        /* Form status */
         .form-status { margin: 12px 0 0; font-size: 14px; color: #1e7b34; min-height: 1px; }
         .form-status.error { color: #b42318; }
         .contact-form button[type="submit"]:disabled { opacity: .6; cursor: default; }
         html.dark .form-status { color: #6fd38b; }
         html.dark .form-status.error { color: #ff8a8f; }
         [hidden] { display: none !important; }
+            .card-link { font-size: 14px; color: #555a61; margin: 0 0 18px; }
+        html.dark .card-link { color: #cdd4de; }
     </style>
     <link rel="stylesheet" href="../assets/site.css">
 </head>
@@ -243,27 +61,30 @@ button:hover {
 <body class="content-page">
 
 
-    <header>
-        <h1><a href="../index_classic.html" style="text-decoration: none; color: inherit;">Vishal John</a></h1>
-
-      <nav>
-            <ul>
-                <li><a href="../index_classic.html">Home</a></li>
-                <li><a href="about.html">About Me</a></li>
-                 <li><a href="blog.html">Newsletter</a></li>
-                <li><a href="publications.html">Publications</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-            <button class="hamburger" id="hamburger" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-    </header>
+    <!-- site:header -->
+<header>
+    <h1><a href="../index_classic.html">Vishal John</a></h1>
+    <nav aria-label="Main">
+        <ul>
+            <li><a href="../index_classic.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="blog.html">Newsletter</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+<!-- /site:header -->
 
         
 
-<div class="contact-form">
+<div class="contact-form has-doodle">
+    <svg class="doodle doodle-corner" viewBox="0 0 120 120" aria-hidden="true"><use href="../assets/doodles.svg#bbee"/></svg>
     <h2>Send Me A Message</h2>
+    <p class="card-link">Meeting me in person? <a href="card.html">Here's my digital business card.</a></p>
     <form id="contactForm" action="https://formspree.io/f/mbjvgonb" method="POST">
         <div class="form-group">
             <label for="name">Name:</label>
@@ -291,25 +112,16 @@ button:hover {
         <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
     </form>
 
-</div><footer>
-        <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
-        <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
-        <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
-    </footer>
+</div><!-- site:footer -->
+<footer>
+    <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+    <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+    <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+    <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+</footer>
+<script src="../assets/codeblue.js" defer></script>
+<!-- /site:footer -->
 
-    <script>
-    (function(){
-      var btn = document.getElementById('hamburger');
-      var navUl = document.querySelector('nav ul');
-      if (btn && navUl) {
-        btn.addEventListener('click', function(){
-          btn.classList.toggle('open');
-          navUl.classList.toggle('open');
-        });
-      }
-    })();
-    </script>
     <script>
     /* Contact form: send in the background, clear it, then show our own thank-you page.
        Without JavaScript the form still posts to Formspree normally. */
@@ -340,7 +152,6 @@ button:hover {
         });
     })();
     </script>
-    <script>document.querySelectorAll(".cur-year").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
     <script src="../assets/site.js"></script>
     <script src="../assets/chat-widget.js" defer></script>
     <script src="../assets/theme.js"></script>
