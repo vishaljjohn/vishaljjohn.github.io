@@ -99,7 +99,7 @@
         }
 
         .articles-list a {
-            color: #0077b6;
+            color: #0a6db0;
             transition: color 0.3s;
         }
 
@@ -212,7 +212,7 @@
     <link rel="stylesheet" href="../assets/site.css">
 </head>
 
-<body>
+<body class="content-page">
 
 
     <header>
@@ -256,7 +256,7 @@
         const list = document.getElementById('medium-articles');
 
         function showError() {
-            list.innerHTML = '<li style="color:#888;">Could not load articles right now. <a href="https://medium.com/@' + mediumUser + '" target="_blank" rel="noopener" style="color:#0077b6;">Read on Medium directly →</a></li>';
+            list.innerHTML = '<li style="color:#888;">Could not load articles right now. <a href="https://medium.com/@' + mediumUser + '" target="_blank" rel="noopener" style="color:#0a6db0;">Read on Medium directly →</a></li>';
         }
 
         // Build rows with DOM APIs: titles/links come from third-party proxies, so never inject them as HTML.

@@ -143,8 +143,8 @@ nav a { font-size: 14px; }
 .spin-caption { text-align: center; color: #333; font-size: 14px; min-height: 20px; margin: 4px 0 2px; transition: opacity 0.2s; }
 .spin-hint { text-align: center; color: #888; font-size: 12px; letter-spacing: 0.5px; margin: 2px 0 10px; }
 .spin-controls { display: flex; justify-content: center; gap: 14px; margin-bottom: 4px; }
-.spin-btn { background: #0077b6; color: #fff; border: none; border-radius: 50%; width: 42px; height: 42px; font-size: 20px; line-height: 1; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; }
-.spin-btn:hover { background: #023e8a; }
+.spin-btn { background: #0a6db0; color: #fff; border: none; border-radius: 50%; width: 42px; height: 42px; font-size: 20px; line-height: 1; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; }
+.spin-btn:hover { background: #075488; }
 .spin-btn:active { transform: scale(0.92); }
 @media screen and (max-width: 480px) {
   .spin-stage { height: 400px; }
@@ -154,7 +154,7 @@ nav a { font-size: 14px; }
 
 /* Spin-gallery: click-to-enlarge cursor + shared lightbox */
 .spin-card:not(.dim) { cursor: zoom-in; }
-.spin-lightbox { position: fixed; inset: 0; z-index: 100000; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.92); padding: 24px; opacity: 0; transition: opacity 0.2s ease; }
+.spin-lightbox { position: fixed; inset: 0; z-index: 2147483600; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.92); padding: 24px; opacity: 0; transition: opacity 0.2s ease; }
 .spin-lightbox.open { display: flex; opacity: 1; }
 .spin-lb-img { max-width: 92vw; max-height: 84vh; object-fit: contain; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
 .spin-lb-caption { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; color: #fff; font-size: 15px; padding: 0 24px; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
@@ -409,3 +409,48 @@ footer a:focus-visible, .vj-theme-toggle:focus-visible { outline-color: #fff; }
 }
 html.dark .project-nav a { background: #161a20; color: #f0f3f7; box-shadow: 0 3px 10px rgba(0,0,0,.5); }
 html.dark .pn-dir { color: #6cb6ff; }
+
+/* ===========================================================
+   Same page shell everywhere: header height, card shape and
+   spacing, headings, and a footer that sits at the bottom
+   =========================================================== */
+body { display: flex; flex-direction: column; min-height: 100vh; }
+footer { margin-top: auto; }
+header { flex-shrink: 0; }
+nav ul { margin: 0; gap: 4px; }
+.container { margin: 0 auto; padding: 50px 0; }
+.main-content { margin-top: 0; padding: 50px; border-radius: var(--radius); }
+.contact-form { width: 100%; box-sizing: border-box; margin: 50px auto !important; }
+.spotify-section { border-radius: var(--radius); }
+.project-item { border-radius: var(--radius); }
+.hero-label { color: var(--muted); }
+.stat-number { color: var(--accent); }
+.articles-list a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.articles-list a:hover { text-decoration: underline; }
+
+/* same section heading on every page */
+body.content-page .main-content > h2:not(.tl-heading),
+body.content-page section > h2,
+body.content-page .contact-form:not(.thanks) > h2 { font-size: 24px; letter-spacing: -.2px; }
+body.content-page .main-content > h2:not(.tl-heading)::after,
+body.content-page section > h2::after,
+body.content-page .contact-form:not(.thanks) > h2::after {
+  content: ""; display: block; width: 44px; height: 3px; margin-top: 10px; border-radius: 2px; background: var(--accent);
+}
+.description-section { text-align: left; }
+.description-section p { line-height: 1.75; color: #3a3f45; }
+html.dark .description-section p { color: #cdd4de; }
+
+/* Bluegrass process cards in the shared blue */
+.step-card { border-top-color: var(--accent); border-radius: 8px; }
+.step-number { color: var(--accent); }
+html.dark .step-card { background: #1b2028; border-color: #2a313c; border-top-color: #6cb6ff; }
+html.dark .step-number { color: #6cb6ff; }
+html.dark .step-title { color: #f0f3f7; }
+
+@media (max-width: 768px) {
+  .main-content { padding: 30px; }
+  .container { padding: 24px 0 32px; }
+  .contact-form { width: calc(100% - 24px); margin: 24px auto 32px !important; }
+}
+@media print { body { display: block; min-height: 0; } }
