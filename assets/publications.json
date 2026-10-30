@@ -29,6 +29,19 @@
   },
   "data": [
     {
+      "year": 2026,
+      "title": "Surgical waste from stereotactic glioma biopsies contains clinically relevant tumor DNA",
+      "authors": "Wadden J, Adam T, Lau BC, Cartaxo R, Wink K, Niculcea M, Kong S, **John V**, Aittaleb R, Pearson AN, Becker N, Tripathy A, Mortazavi A, Serhan H, Merrill NM, Merajver SD, Franson AT, Upadhyaya SA, Ranjan P, Dickson RP, Heth JC, Muraszko KM, Garton H, Marupudi NI, Ferris SP, Magge SN, Kumar-Sinha C, Nazarian J, Al-Holou WN, Venneti S, Koschmann C.",
+      "journal": "Scientific Reports (Nature)",
+      "year_detail": "Oct 2026, Article in Press",
+      "doi": "10.1038/s41598-026-75123-w",
+      "url": "https://www.nature.com/articles/s41598-026-75123-w",
+      "abstract": "Stereotactic needle biopsy is used to sample gliomas in deep or eloquent brain regions, but the tissue it yields is scarce. This study collected 32 waste samples (needle rinse fluid, expelled aspirate, and gauze debris) from 31 biopsy procedures and found tumor-associated alterations in all 27 successfully sequenced samples (96% overall detection), showing that routinely discarded biopsy material is a recoverable source of tumor DNA for molecular profiling.",
+      "role": "co-author",
+      "highlight": false,
+      "plain": "When surgeons take a tiny needle sample from a brain tumor, some material gets rinsed off and thrown away. This study showed that this \"waste\" still carries the tumor's DNA, so it can be tested to learn about the tumor without needing extra tissue from the patient."
+    },
+    {
       "year": 2023,
       "title": "Clinical efficacy of ONC201 in H3K27M-mutant diffuse midline gliomas is driven by disruption of integrated metabolic and epigenetic pathways",
       "authors": "Chung C, Sweha SR, Pratt D, Tamrazi B, Panwalkar P, Banda A, Bayliss J, Hawes D, Yang F, Lee HJ, Shan M, Cieslik M, Qin T, Wierzbicki K, Stallard S, Walling D, **John V**, Mullan B, Bruzek A, Cantor E, Koschmann C, et al.",
