@@ -360,6 +360,12 @@
     ctx.globalAlpha = 1;
     ctx.restore();
 
+    // shows where Mac is headed
+    if (target) {
+      ctx.save(); ctx.setLineDash([5, 5]); ctx.strokeStyle = "rgba(255,255,255,.85)"; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(target.x, target.y, 14, 0, 6.29); ctx.stroke(); ctx.restore();
+    }
+
     // arrow to the closest germ Mac can eat, when none is on screen
     var best = null, bestD = 1e9;
     germs.forEach(function (g) {
@@ -437,14 +443,27 @@
     var box = canvas.getBoundingClientRect();
     target = { x: e.clientX - box.left, y: e.clientY - box.top };
   }
-  canvas.addEventListener("pointerdown", function (e) { if (running) { e.preventDefault(); aim(e); } });
-  canvas.addEventListener("pointermove", function (e) {
+  function aimAt(x, y) {
+    var box = canvas.getBoundingClientRect();
+    target = { x: x - box.left, y: y - box.top };
+  }
+  canvas.addEventListener("pointerdown", function (e) {
     if (!running) return;
-    if (e.pointerType === "mouse" || e.buttons || e.pressure > 0) aim(e);
+    e.preventDefault();
+    if (e.pointerType !== "mouse" && canvas.setPointerCapture) { try { canvas.setPointerCapture(e.pointerId); } catch (err) {} }
+    aimAt(e.clientX, e.clientY);
   });
-  // on touch, lifting the finger makes Mac coast to a stop
-  canvas.addEventListener("pointerup", function (e) { if (e.pointerType !== "mouse") target = null; });
-  canvas.addEventListener("pointercancel", function () { target = null; });
+  canvas.addEventListener("pointermove", function (e) {
+    if (running && (e.pointerType === "mouse" || e.buttons || e.pressure > 0)) aimAt(e.clientX, e.clientY);
+  });
+  // touch: Mac keeps swimming the way you last pointed after the finger lifts, so a quick tap works too
+  function onTouch(e) {
+    if (!running || !e.touches.length) return;
+    e.preventDefault();
+    aimAt(e.touches[0].clientX, e.touches[0].clientY);
+  }
+  canvas.addEventListener("touchstart", onTouch, { passive: false });
+  canvas.addEventListener("touchmove", onTouch, { passive: false });
 
   var KEYMAP = { ArrowLeft: "left", ArrowRight: "right", ArrowUp: "up", ArrowDown: "down", a: "left", d: "right", w: "up", s: "down" };
   // capture phase, so playing with the arrow keys doesn't flip the book pages or scroll the page

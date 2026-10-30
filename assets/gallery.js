@@ -132,7 +132,8 @@
     }
 
     var theta = 360 / n;
-    var radius = (n === 2) ? 200 : Math.round(120 / Math.tan(Math.PI / n)) + 40;
+    var halfCard = (cards[0].offsetWidth || 340) / 2;
+    var radius = (n === 2) ? 200 : Math.round(halfCard / Math.tan(Math.PI / n)) + 40;
     var angle = 0;
     var dragging = false, lastX = 0, downX = 0, moved = false;
     var autoTimer = null, idleTimer = null;
