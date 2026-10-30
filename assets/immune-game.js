@@ -7,7 +7,11 @@
    - Macrophages engulf germs.
    - Memory: after a few of one germ, it is easier to catch from then on.
    - B-Bee's antibodies slow germs down and make them easier to swallow.
-   - Tia the T-Cell calls in backup. */
+   - Tia the T-Cell calls in backup.
+
+   The game gets harder every 30 seconds up to level 6, and every finished game
+   earns a trophy. Winners can put their name on the top 10 (cloudflare-worker.js
+   keeps the shared list; until it answers, the list is kept on this device). */
 (function () {
   "use strict";
   var root = document.getElementById("germGame");
@@ -18,6 +22,8 @@
   var KINDS = ["germ-green", "germ-blue", "germ-purple", "germ-orange"];
   var KIND_NAMES = { "germ-green": "green germs", "germ-blue": "squiggly germs", "germ-purple": "purple germs", "germ-orange": "orange germs" };
   var MEMORY_AT = 4;
+  var MAX_LEVEL = 6, LEVEL_EVERY = 30, WIN_BONUS = 100;
+  var SCORES_URL = "https://vishal-chat.vishaljjohn.workers.dev/scores";
   var FACTS = [
     "Macrophage means \"big eater.\" Mac's name is his job!",
     "Your body makes billions of new immune cells every day.",
@@ -28,7 +34,7 @@
 
   var stage = root.querySelector(".gg-stage"), canvas = root.querySelector(".gg-canvas"), ctx = canvas.getContext("2d");
   var startPanel = root.querySelector(".gg-start"), endPanel = root.querySelector(".gg-end");
-  var scoreEl = root.querySelector(".gg-score"), sizeEl = root.querySelector(".gg-size");
+  var scoreEl = root.querySelector(".gg-score"), levelEl = root.querySelector(".gg-level");
   var barEl = root.querySelector(".gg-bar i"), sayEl = root.querySelector(".gg-say");
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -48,16 +54,17 @@
   /* ---- State ---- */
   var W = 0, H = 0, DPR = 1, running = false, paused = false, raf = null, last = 0;
   var mac, germs, crumbs, cells, drops, bits, floats, deco, cam, remembered, eatenByKind;
-  var score, infection, hurtUntil, antibodyUntil, spawnIn, dropIn, sayUntil, elapsed, target, keys = {};
+  var level, score, infection, hurtUntil, antibodyUntil, spawnIn, dropIn, sayUntil, elapsed, target, keys = {};
 
   function rnd(a, b) { return a + Math.random() * (b - a); }
   function buzz(p) { if (navigator.vibrate) { try { navigator.vibrate(p); } catch (e) {} } }
+  function hard() { return level - 1; } // 0 at the start, 5 at the top level
   function grow(obj, area) { obj.r = Math.sqrt(Math.max(1, obj.r * obj.r + area)); }
 
   function say(text, hold) { sayEl.textContent = text; sayUntil = elapsed + (hold || 3); }
   function hud() {
     scoreEl.textContent = score;
-    sizeEl.textContent = Math.round(mac.r / START_R * 10) / 10 + "x";
+    levelEl.textContent = level;
     barEl.style.width = Math.max(0, Math.min(100, infection)) + "%";
   }
 
@@ -83,8 +90,8 @@
     var p = awayFromMac(Math.max(320, Math.min(W, H) * 0.7));
     var roll = Math.random(), base = mac ? mac.r : START_R, r;
     if (sizeHint) r = sizeHint;
-    else if (roll < 0.7) r = rnd(base * 0.45, base * 0.82);
-    else if (roll < 0.9) r = rnd(base * 0.85, base * 1.2);
+    else if (roll < 0.74 - hard() * 0.012) r = rnd(base * 0.45, base * 0.82);
+    else if (roll < 0.92 - hard() * 0.01) r = rnd(base * 0.85, base * 1.2);
     else r = rnd(base * 1.35, base * 1.9);
     r = Math.max(11, Math.min(170, r));
     germs.push({ x: p.x, y: p.y, r: r, kind: KINDS[Math.floor(Math.random() * KINDS.length)], a: rnd(0, 6.28), vx: 0, vy: 0, wob: rnd(0, 6.28), born: elapsed });
@@ -99,7 +106,7 @@
     mac = { x: WORLD_W / 2, y: WORLD_H / 2, r: START_R, vx: 0, vy: 0, gulp: 0 };
     germs = []; crumbs = []; cells = []; drops = []; bits = []; floats = []; deco = [];
     remembered = {}; eatenByKind = {};
-    score = 0; infection = 45; hurtUntil = 0; antibodyUntil = 0; spawnIn = 2.6; dropIn = 12; sayUntil = 0; elapsed = 0;
+    level = 1; score = 0; infection = 45; hurtUntil = 0; antibodyUntil = 0; spawnIn = 2.6; dropIn = 12; sayUntil = 0; elapsed = 0;
     target = null; keys = {};
     cam = { x: mac.x, y: mac.y, s: 1 };
     var i;
@@ -134,9 +141,9 @@
     germs.splice(idx, 1);
     grow(mac, g.r * g.r * 0.38);
     mac.gulp = 1;
-    var pts = Math.max(1, Math.round(g.r / 12));
+    var pts = Math.max(1, Math.round(g.r / 12)) * level; // later germs are worth more
     score += pts;
-    infection -= 1 + g.r / 40;
+    infection -= (1 + g.r / 40) * (infection > 65 ? 1.8 : 1.15); // a comeback is always possible
     burst(g.x, g.y, "#ffe08a", 10);
     floatText(g.x, g.y, "+" + pts);
     buzz(10);
@@ -157,7 +164,7 @@
     var a = Math.atan2(mac.y - g.y, mac.x - g.x);
     mac.vx += Math.cos(a) * 520; mac.vy += Math.sin(a) * 520;
     grow(g, 60);
-    infection += 2;
+    infection += 1;
     burst(mac.x, mac.y, "#ff6b6b", 12);
     floatText(mac.x, mac.y - mac.r, "Ouch!", "#ffe3e3");
     say("That germ was too big! Look for ones smaller than Mac.");
@@ -201,6 +208,12 @@
   /* ---- Update ---- */
   function step(dt) {
     elapsed += dt;
+    var nextLevel = Math.min(MAX_LEVEL, 1 + Math.floor(elapsed / LEVEL_EVERY));
+    if (nextLevel !== level) {
+      level = nextLevel;
+      say("Level " + level + "! The germs are getting faster, and worth more.", 3);
+      hud();
+    }
     // steering: pointer position relative to Mac, or the keyboard
     var ix = 0, iy = 0;
     if (keys.left) ix -= 1; if (keys.right) ix += 1; if (keys.up) iy -= 1; if (keys.down) iy += 1;
@@ -232,11 +245,11 @@
       var g = germs[i];
       var dist = Math.hypot(mac.x - g.x, mac.y - g.y);
       var edible = canEat(g);
-      var gs = 56 * Math.pow(26 / g.r, 0.2) * slow * (remembered[g.kind] ? 0.72 : 1);
+      var gs = 56 * (1 + hard() * 0.05) * Math.pow(26 / g.r, 0.2) * slow * (remembered[g.kind] ? 0.72 : 1);
       var ax = Math.cos(g.a), ay = Math.sin(g.a);
       g.a += rnd(-1.4, 1.4) * dt;
-      if (!edible && dist < 280 && elapsed - g.born > 1) { // bigger germs give chase, a bit slower than Mac
-        ax = (mac.x - g.x) / dist; ay = (mac.y - g.y) / dist; gs = Math.min(speed * 0.62, gs * 2.1 + 40) * slow;
+      if (!edible && dist < 280 + hard() * 12 && elapsed - g.born > 1) { // bigger germs give chase, a bit slower than Mac
+        ax = (mac.x - g.x) / dist; ay = (mac.y - g.y) / dist; gs = Math.min(speed * (0.6 + hard() * 0.015), gs * 2.1 + 40) * slow;
       } else if (edible && dist < 150 + mac.r) { // smaller ones try to scurry off
         ax = (g.x - mac.x) / dist; ay = (g.y - mac.y) / dist; gs *= 1.55;
       }
@@ -270,9 +283,9 @@
     // germs multiply when left alone
     spawnIn -= dt;
     if (spawnIn <= 0) {
-      spawnIn = Math.max(1.8, 2.7 - elapsed * 0.008);
+      spawnIn = 2.7 - hard() * 0.14;
       if (germs.length < 46) spawnGerm();
-      infection += 0.4 + Math.min(0.5, germs.length * 0.01);
+      infection += 0.4 + hard() * 0.03 + Math.min(0.5, germs.length * 0.01);
       hud();
       if (infection >= 100) { end(false); return; }
     }
@@ -405,6 +418,7 @@
     newGame();
     running = true; paused = false;
     startPanel.hidden = true; endPanel.hidden = true;
+    root.classList.remove("ended");
     root.classList.add("playing");
     document.documentElement.classList.add("gg-lock");
     resize();
@@ -424,16 +438,108 @@
     resize();
   }
 
+  /* ---- Trophies and the top 10 ---- */
+  var scores = [], shared = false, pendingScore = 0;
+  var boardEl = document.querySelector(".gg-board-list"), boardNote = document.querySelector(".gg-board-note");
+  var nameForm = root.querySelector(".gg-name"), nameInput = root.querySelector(".gg-name input"), nameMsg = root.querySelector(".gg-name-msg");
+
+  // Keep nameProblem the same as the copy in cloudflare-worker.js.
+  function nameProblem(raw) {
+    var name = String(raw || "").replace(/\s+/g, " ").trim();
+    if (!/^[A-Za-z][A-Za-z0-9 .'-]{1,13}$/.test(name)) return "Use 2 to 14 letters or numbers, starting with a letter.";
+    var leet = name.toLowerCase().replace(/[01345789]/g, function (c) { return { 0: "o", 1: "i", 3: "e", 4: "a", 5: "s", 7: "t", 8: "b", 9: "g" }[c]; });
+    var words = leet.split(/[^a-z]+/).filter(Boolean);
+    var joined = words.join(""), squeezed = joined.replace(/(.)\1+/g, "$1");
+    var anywhere = ["fuck", "fuk", "shit", "bitch", "cunt", "nigg", "nigr", "fagg", "whore", "slut", "porn", "nazi", "hitler", "asshole", "retard", "pussy", "penis", "vagina", "dildo", "wank", "twat", "jizz", "kkk", "boob", "molest", "pedo"];
+    var whole = ["ass", "as", "arse", "cock", "dick", "cum", "tit", "tits", "fag", "sex", "sexy", "rape", "rapist", "anal", "piss", "crap", "damn", "hell", "kill", "killer", "poop", "negro", "coon", "spic", "chink", "homo", "hoe", "ho", "nude", "balls", "bastard", "suck", "sucks"];
+    var bad = anywhere.some(function (w) { return joined.indexOf(w) >= 0 || squeezed.indexOf(w) >= 0; }) ||
+      words.concat(joined).some(function (w) { return whole.indexOf(w) >= 0 && w !== "as" && w !== "ho"; }) ||
+      (whole.indexOf(squeezed) >= 0 && words.length > 0 && joined !== "as" && joined !== "ho");
+    return bad ? "Please pick a kinder name." : "";
+  }
+
+  function localScores() {
+    try { return JSON.parse(localStorage.getItem("vj-gulp-top")) || []; } catch (e) { return []; }
+  }
+  function drawBoard() {
+    boardEl.textContent = "";
+    scores.forEach(function (row) {
+      var li = document.createElement("li"), who = document.createElement("span"), pts = document.createElement("strong");
+      who.textContent = row.n; pts.textContent = row.s;
+      li.appendChild(who); li.appendChild(pts);
+      boardEl.appendChild(li);
+    });
+    boardNote.textContent = !scores.length ? "No champions yet. Win a game to be the first!" : (shared ? "" : "Top scores on this device.");
+  }
+  function loadBoard() {
+    return fetch(SCORES_URL, { cache: "no-store" }).then(function (r) {
+      if (!r.ok) throw new Error("no board");
+      return r.json();
+    }).then(function (d) { scores = d.scores || []; shared = true; drawBoard(); }).catch(function () {
+      scores = localScores(); shared = false; drawBoard();
+    });
+  }
+  function saveLocal(name, score) {
+    var list = localScores();
+    list.push({ n: name, s: score, t: Date.now() });
+    list.sort(function (a, b) { return b.s - a.s || a.t - b.t; });
+    list.length = Math.min(list.length, 10);
+    try { localStorage.setItem("vj-gulp-top", JSON.stringify(list)); } catch (e) {}
+    scores = list; shared = false; drawBoard();
+  }
+  function makesTop10(score) { return scores.length < 10 || score > scores[scores.length - 1].s; }
+  function nameDone(text) {
+    nameForm.hidden = true;
+    endPanel.querySelector(".gg-verdict").textContent = text;
+  }
+  nameForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = nameInput.value.replace(/\s+/g, " ").trim(), problem = nameProblem(name), btn = nameForm.querySelector("button");
+    nameMsg.textContent = problem;
+    if (problem || btn.disabled) return;
+    btn.disabled = true;
+    fetch(SCORES_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: name, score: pendingScore }) }).then(function (r) {
+      if (r.status === 404 || r.status === 405 || r.status >= 500) throw new Error("no board");
+      return r.json().then(function (d) {
+        if (!r.ok) { nameMsg.textContent = d.error || "Please try another name."; return; }
+        scores = d.scores || []; shared = true; drawBoard();
+        nameDone(name + ", you're on the top 10!");
+      });
+    }).catch(function () {
+      saveLocal(name, pendingScore);
+      nameDone(name + ", you're on this device's top 10!");
+    }).then(function () { btn.disabled = false; });
+  });
+
+  function trophyFor(won) {
+    if (won) return { color: "#e8b923", name: "Gold trophy: Immune Team Champion" };
+    if (score >= 40) return { color: "#a9b4c0", name: "Silver trophy: Brave Germ Fighter" };
+    return { color: "#c98a4b", name: "Bronze trophy: Thanks for helping Sam!" };
+  }
+
   function end(won) {
+    if (won) score += WIN_BONUS;
+    hud();
     stopPlaying();
+    root.classList.add("ended");
+    sayEl.textContent = "Your immune system is always on patrol.";
     var best = score;
     try { best = Math.max(score, parseInt(localStorage.getItem("vj-gulp-best"), 10) || 0); localStorage.setItem("vj-gulp-best", best); } catch (e) {}
+    var trophy = trophyFor(won);
+    endPanel.querySelector(".gg-trophy").style.color = trophy.color;
+    endPanel.querySelector(".gg-trophy-name").textContent = trophy.name;
     endPanel.querySelector(".gg-final").textContent = won ? "Sam's knee is all better!" : "The germs took over!";
     endPanel.querySelector(".gg-verdict").textContent = won
-      ? "You and the Immune Team cleared the infection. Great gulping!"
-      : "Germs multiply fast. Try swallowing the small ones early, before they pile up.";
-    endPanel.querySelector(".gg-best").textContent = "Score " + score + " · Best " + best + " · Mac grew to " + Math.round(mac.r / START_R * 10) / 10 + "x";
+      ? "You and the Immune Team cleared the infection."
+      : "Germs multiply fast. Swallow the small ones early, and win to get on the top 10.";
+    endPanel.querySelector(".gg-best").textContent = "Score " + score + " · Best " + best + " · Reached level " + level;
+    pendingScore = score;
+    nameInput.value = ""; nameMsg.textContent = "";
+    nameForm.hidden = !(won && makesTop10(score));
+    if (won && nameForm.hidden) endPanel.querySelector(".gg-verdict").textContent = "So close to the top 10! It takes " + (scores[scores.length - 1].s + 1) + " points.";
     endPanel.hidden = false;
+    endPanel.scrollTop = 0;
+    if (window.innerWidth <= 768) stage.scrollIntoView({ block: "start", behavior: "instant" });
     endPanel.querySelector(".gg-again").focus({ preventScroll: true });
     buzz(won ? [30, 50, 30, 50, 60] : 60);
   }
@@ -482,6 +588,7 @@
   root.querySelector(".gg-again").addEventListener("click", start);
   root.querySelector(".gg-quit").addEventListener("click", function () {
     stopPlaying();
+    root.classList.remove("ended");
     startPanel.hidden = false; endPanel.hidden = true;
   });
 
@@ -494,6 +601,7 @@
   });
 
   resize();
+  loadBoard();
 
   // character cards: little hello wiggle on the doodle when flipped
   Array.prototype.forEach.call(document.querySelectorAll(".character-card"), function (card) {

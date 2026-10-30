@@ -104,6 +104,29 @@
         .gg-best { font-size: 13px; }
         .gg-end-btns { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
         .gg-say { margin: 0 !important; padding: 11px 16px; font-size: 14px; line-height: 1.45 !important; min-height: 44px; color: var(--ink-soft, #555a61) !important; }
+        .gg-end { justify-content: flex-start; }
+        .germ-game.ended .gg-stage { height: auto; }
+        .germ-game.ended .gg-end { position: relative; inset: auto; min-height: 460px; overflow: visible; box-sizing: border-box; }
+        .gg-end > :first-child { margin-top: auto; }
+        .gg-end > :last-child { margin-bottom: auto; }
+        .gg-trophy { width: 64px; height: 64px; flex-shrink: 0; }
+        .gg-panel .gg-trophy-name { font-size: 13.5px; font-weight: 700; }
+        .gg-name { margin: 8px 0 0; width: 100%; max-width: 300px; }
+        .gg-name[hidden] { display: none; }
+        .gg-name label { display: block; font-size: 14px; font-weight: 600; color: #232529; margin-bottom: 6px; }
+        .gg-name-row { display: flex; gap: 8px; }
+        .gg-name input { flex: 1; min-width: 0; padding: 10px 12px; font: 16px var(--font, sans-serif); color: #232529; background: #fff; border: 1.5px solid #9aa4b2; border-radius: 8px; }
+        .gg-name button { padding: 10px 16px; border: 0; border-radius: 8px; background: #0a6db0; color: #fff; font: 600 15px var(--font, sans-serif); cursor: pointer; }
+        .gg-panel .gg-name-msg { font-size: 13px; color: #b3261e; min-height: 18px; }
+        .gg-board { margin: 14px 0 8px; padding: 14px 16px; border: 1px solid var(--line, #e8eaed); border-radius: 12px; }
+        .gg-board h3 { margin: 0 0 8px; font-size: 16px; }
+        .gg-board-list { margin: 0; padding-left: 26px; }
+        .gg-board-list li { padding: 3px 0; font-size: 14.5px; }
+        .gg-board-list li span { display: inline-block; min-width: 62%; overflow-wrap: anywhere; }
+        .gg-board-note { margin: 4px 0 0 !important; font-size: 13px; color: var(--muted, #6b7280) !important; }
+        .gg-board-note:empty { display: none; }
+        html.dark .gg-board { border-color: #2a313c; }
+        html.dark .gg-board h3, html.dark .gg-board-list li { color: #e6eaf0; }
         /* phones: the game fills the screen while playing so a finger has room, and the page can't scroll */
         html.gg-lock { overflow: hidden; }
         @media (min-width: 769px) { html.gg-lock { overflow: visible; } }
@@ -123,7 +146,9 @@
         html.dark .gg-say { color: #cdd4de !important; }
         html.dark .gg-hud strong { color: #f0f3f7; }
         html.dark .gg-bar { background: #2a313c; }
-        html.dark .gg-panel p, html.dark .gg-panel .gg-panel-title { color: #232529 !important; }
+        html.dark .gg-panel p, html.dark .gg-panel .gg-panel-title, html.dark .gg-name label { color: #232529 !important; }
+        html.dark .gg-panel .gg-name-msg { color: #b3261e !important; }
+        html.dark .gg-name input { background: #fff !important; color: #232529 !important; }
         html.dark .gg-end-btns a.gg-buy { color: #0a6db0; }
     </style>
     
@@ -236,7 +261,7 @@
                 <div class="gg-hud">
                     <span>Score <strong class="gg-score">0</strong></span>
                     <span class="gg-meter">Infection <span class="gg-bar"><i></i></span></span>
-                    <span>Size <strong class="gg-size">1x</strong></span>
+                    <span>Level <strong class="gg-level">1</strong></span>
                     <button type="button" class="gg-quit" aria-label="Quit game">&times;</button>
                 </div>
                 <div class="gg-stage">
@@ -254,9 +279,16 @@
                         <p class="gg-how">Touch or drag anywhere and Mac swims that way. On a computer, use your mouse or arrow keys.</p>
                     </div>
                     <div class="gg-panel gg-end" hidden>
+                        <svg class="gg-trophy" viewBox="0 0 64 64" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="5" d="M16 12H6c0 13 5 20 14 22M48 12h10c0 13-5 20-14 22"/><path fill="currentColor" stroke="#232529" stroke-width="2" stroke-linejoin="round" d="M15 6h34v14c0 12-7 20-17 20S15 32 15 20zM28 40h8v9h7a3 3 0 0 1 3 3v6H18v-6a3 3 0 0 1 3-3h7z"/></svg>
+                        <p class="gg-trophy-name"></p>
                         <p class="gg-panel-title gg-final"></p>
                         <p class="gg-verdict"></p>
                         <p class="gg-best"></p>
+                        <form class="gg-name" hidden>
+                            <label for="ggName">Put your name on the top 10</label>
+                            <div class="gg-name-row"><input id="ggName" type="text" maxlength="14" autocomplete="off" autocapitalize="words" placeholder="Your name"><button type="submit">Save</button></div>
+                            <p class="gg-name-msg" role="alert"></p>
+                        </form>
                         <div class="gg-end-btns">
                             <button type="button" class="gg-again">Play again</button>
                             <a class="gg-buy" href="https://www.amazon.com/Brave-Little-Immune-Team/dp/B0GVC5R915" target="_blank" rel="noopener">Get the book</a>
@@ -265,6 +297,11 @@
                     </div>
                 </div>
                 <p class="gg-say" aria-live="polite">Your immune system is always on patrol.</p>
+            </div>
+            <div class="gg-board">
+                <h3>Top 10 Immune Champions</h3>
+                <ol class="gg-board-list"></ol>
+                <p class="gg-board-note"></p>
             </div>
 
             <h2>Why I Wrote It</h2>
@@ -345,7 +382,7 @@
     })();
 </script>
     <script src="../assets/site.js"></script>
-    <script src="../assets/immune-game.js?v=2"></script>
+    <script src="../assets/immune-game.js?v=3"></script>
     <script src="../assets/chat-widget.js" defer></script>
     <script src="../assets/theme.js"></script>
 </body>

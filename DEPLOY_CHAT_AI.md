@@ -27,7 +27,7 @@ Worker → **Settings** → **Bindings** / **Variables and Secrets**:
 | Name | Type | What it's for |
 |---|---|---|
 | `AI` | Workers AI binding | Runs the model |
-| `VISITS` | KV namespace binding | Visitor counter and the question log |
+| `VISITS` | KV namespace binding | Visitor counter, question log, and the game's top 10 |
 | `ASK_LOG_KEY` | Secret (text) | Password for viewing the question log |
 
 Without `ASK_LOG_KEY`, the question log is simply turned off. Don't reuse the old key that
@@ -49,6 +49,11 @@ the log.
   so it won't respond from a local preview.
 - Repeated first questions are cached for a day, so after changing facts some old answers can
   linger for up to 24 hours.
+
+## Game top 10
+Mac's Big Gulp saves winners' names through `/scores` in this Worker, using `VISITS`. Until the
+Worker is redeployed, the game keeps a top 10 on each visitor's own device instead. To remove
+an entry, edit the `gulp_top` key in the `VISITS` KV namespace in the Cloudflare dashboard.
 
 ## Tuning
 - Edit `SYSTEM_PROMPT` in `cloudflare-worker.js` to add or correct facts, then redeploy.
