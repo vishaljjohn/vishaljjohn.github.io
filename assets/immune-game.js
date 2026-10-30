@@ -158,6 +158,12 @@
     if (infection <= 0) end(true);
   }
   function hurt(g) {
+    if (elapsed < antibodyUntil) { // the antibody shield bounces red germs away
+      var away = Math.atan2(g.y - mac.y, g.x - mac.x), gap = mac.r + g.r * 0.72 + 2;
+      g.x = mac.x + Math.cos(away) * gap; g.y = mac.y + Math.sin(away) * gap;
+      g.vx = Math.cos(away) * 320; g.vy = Math.sin(away) * 320;
+      return;
+    }
     if (elapsed < hurtUntil) return;
     hurtUntil = elapsed + 1.8;
     mac.r = Math.max(MIN_R, Math.sqrt(mac.r * mac.r * 0.82));
@@ -187,7 +193,7 @@
     buzz(20);
     if (d.kind === "bbee") {
       antibodyUntil = elapsed + 8;
-      say("B-Bee's antibodies! Germs are tagged: slower and easier to swallow for 8 seconds.", 4);
+      say("B-Bee's antibodies! Mac is shielded from red germs for 8 seconds, and germs are slower.", 4);
     } else {
       // Tia calls in backup: nearby smaller germs get cleared
       var n = 0, reach = Math.max(W, H) / cam.s * 0.55;
@@ -361,7 +367,7 @@
     ctx.globalAlpha = flashing ? 0.45 : 1;
     sprite("mac", 0, 0, mac.r);
     ctx.restore();
-    if (tagged) ring(mac.x, mac.y, mac.r * 1.2, "rgba(58,143,216,.8)", 4 / cam.s, [10, 8]);
+    if (tagged) ring(mac.x, mac.y, mac.r * 1.2, "rgba(255,255,255,.95)", 5 / cam.s);
 
     floats.forEach(function (f) {
       ctx.globalAlpha = Math.min(1, f.life * 2); ctx.fillStyle = f.c; ctx.strokeStyle = "rgba(0,0,0,.45)"; ctx.lineWidth = 3 / cam.s;
