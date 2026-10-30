@@ -45,9 +45,9 @@
       "conference": "American Society of Human Genetics (ASHG) Annual Meeting",
       "location": "Boston, MA",
       "date": "October 16, 2025",
-      "type": "abstract",
+      "type": "poster",
       "highlight": true,
-      "note": "First-author abstract presentation"
+      "note": "First-author poster presentation"
     },
     {
       "year": 2025,
@@ -56,9 +56,9 @@
       "conference": "Research!Louisville",
       "location": "Louisville, KY",
       "date": "October 14, 2025",
-      "type": "abstract",
+      "type": "poster",
       "highlight": true,
-      "note": "First-author abstract presentation"
+      "note": "First-author poster presentation"
     },
     {
       "year": 2023,

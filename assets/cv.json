@@ -17,10 +17,26 @@
   "headline": "M.D. Candidate, Class of 2028 · University of Louisville School of Medicine",
   "location": "Louisville, KY",
   "contact": [
-    { "label": "vishal.john@louisville.edu", "url": "mailto:vishal.john@louisville.edu", "icon": "fas fa-envelope" },
-    { "label": "vishaljohn.com", "url": "https://www.vishaljohn.com", "icon": "fas fa-globe" },
-    { "label": "linkedin.com/in/vishaljjohn", "url": "https://www.linkedin.com/in/vishaljjohn/", "icon": "fab fa-linkedin" },
-    { "label": "Google Scholar", "url": "https://scholar.google.com/citations?user=QXyjTGgAAAAJ", "icon": "fas fa-graduation-cap" }
+    {
+      "label": "vishal.john@louisville.edu",
+      "url": "mailto:vishal.john@louisville.edu",
+      "icon": "fas fa-envelope"
+    },
+    {
+      "label": "vishaljohn.com",
+      "url": "https://www.vishaljohn.com",
+      "icon": "fas fa-globe"
+    },
+    {
+      "label": "linkedin.com/in/vishaljjohn",
+      "url": "https://www.linkedin.com/in/vishaljjohn/",
+      "icon": "fab fa-linkedin"
+    },
+    {
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=QXyjTGgAAAAJ",
+      "icon": "fas fa-graduation-cap"
+    }
   ],
   "sections": [
     {
@@ -97,13 +113,21 @@
         }
       ]
     },
-    { "title": "Publications", "source": "publications" },
-    { "title": "Presentations", "source": "presentations" },
+    {
+      "title": "Publications",
+      "source": "publications"
+    },
+    {
+      "title": "Presentations",
+      "source": "presentations"
+    },
     {
       "title": "Other Publications",
       "type": "list",
       "items": [
-        { "text": "**John V**, Patel N. *The Brave Little Immune Team*. Children's book introducing the immune system to ages 4–8. 2025. Available on Amazon." }
+        {
+          "text": "**John V**, Patel N. *The Brave Little Immune Team*. Children's book introducing the immune system to ages 4–8. 2025. Available on Amazon."
+        }
       ]
     },
     {
@@ -111,16 +135,28 @@
       "type": "entries",
       "items": [
         {
+          "title": "Board Member",
+          "org": "Rock Cancer",
+          "location": "Ann Arbor, MI & Louisville, KY",
+          "dates": "Feb 2022 – Present",
+          "bullets": [
+            "Serve on the board of a nonprofit offering free rock climbing to children and young adults with cancer.",
+            "Maintain the website for all of the organization's chapters and created its merchandise store.",
+            "Recruit volunteers for belaying and for administrative work such as marketing; helped grow the program to national coverage on NBC Nightly News and mlive.",
+            "Helped launch the Louisville program in partnership with Norton Children's Cancer Institute."
+          ]
+        },
+        {
           "title": "President",
           "org": "Oncology Interest Group, University of Louisville School of Medicine",
           "location": "Louisville, KY",
-          "dates": "Jul 2025 – Present"
+          "dates": "Jul 2025 – May 2026"
         },
         {
           "title": "President",
           "org": "South Asian Medical Student Association, University of Louisville School of Medicine",
           "location": "Louisville, KY",
-          "dates": "2025 – 2026",
+          "dates": "Jul 2025 – May 2026",
           "bullets": [
             "Planned and budgeted a year of seven cultural, professional, and wellness events, including Diwali and Holi celebrations and a Ramadan Iftar.",
             "Organized a South Asian physician mentorship meet-and-greet, with specialties chosen by member poll, and a physician seminar co-hosted with a specialty interest group.",
@@ -131,19 +167,9 @@
           "title": "Peer Mentor",
           "org": "University of Louisville School of Medicine",
           "location": "Louisville, KY",
-          "dates": "2025 – 2026",
+          "dates": "Jul 2025 – May 2026",
           "bullets": [
             "Mentored three first-year medical students through the transition to medical school, advising on study strategies, exam preparation, wellness, and getting involved in research and student organizations."
-          ]
-        },
-        {
-          "title": "Leadership Team",
-          "org": "Rock Cancer",
-          "location": "Ann Arbor, MI & Louisville, KY",
-          "dates": "Feb 2022 – Present",
-          "bullets": [
-            "Free rock climbing for children and young adults with cancer. Built the program's website and merchandise shop and helped grow it to national coverage on NBC Nightly News and mlive.",
-            "Helped launch the Louisville program in partnership with Norton Children's Cancer Institute; volunteer belayer."
           ]
         },
         {
@@ -194,28 +220,60 @@
       "title": "Honors & Awards",
       "type": "list",
       "items": [
-        { "text": "James B. Angell Scholar, University of Michigan", "dates": "2020" },
-        { "text": "South Asian Studies Fellow, U-M Center for South Asian Studies", "dates": "2019" },
-        { "text": "Center for Japanese Studies Scholarship, University of Michigan" },
-        { "text": "University High Honors (5x), University of Michigan" },
-        { "text": "Health Sciences Scholars Program, University of Michigan", "dates": "2017 – 2018" }
+        {
+          "text": "Primary Care Scholarship, University of Louisville School of Medicine (HRSA Value-Based Medical Education Program)",
+          "dates": "2025, 2026"
+        },
+        {
+          "text": "James B. Angell Scholar, University of Michigan",
+          "dates": "2020"
+        },
+        {
+          "text": "South Asian Studies Fellow, U-M Center for South Asian Studies",
+          "dates": "2019"
+        },
+        {
+          "text": "Center for Japanese Studies Scholarship, University of Michigan"
+        },
+        {
+          "text": "University High Honors (5x), University of Michigan"
+        },
+        {
+          "text": "Health Sciences Scholars Program, University of Michigan",
+          "dates": "2017 – 2018"
+        }
       ]
     },
     {
       "title": "Certifications",
       "type": "list",
       "items": [
-        { "text": "Stop the Bleed, American College of Surgeons", "dates": "2025" }
+        {
+          "text": "Stop the Bleed, American College of Surgeons",
+          "dates": "2025"
+        }
       ]
     },
     {
       "title": "Skills & Interests",
       "type": "skills",
       "items": [
-        { "label": "Laboratory", "text": "ddPCR, qPCR, western blot, 2D and organoid cell culture, cryosectioning, confocal microscopy, immunohistochemistry, ELISA, primer/assay design" },
-        { "label": "Computational", "text": "R, Linux/bash, RNA-seq analysis (cutadapt, bowtie, samtools, DESeq), high-performance computing" },
-        { "label": "Languages", "text": "English (native), Malayalam (fluent)" },
-        { "label": "Interests", "text": "Rock climbing, balloon art, coffee, children's science writing" }
+        {
+          "label": "Laboratory",
+          "text": "ddPCR, qPCR, western blot, 2D and organoid cell culture, cryosectioning, confocal microscopy, immunohistochemistry, ELISA, primer/assay design"
+        },
+        {
+          "label": "Computational",
+          "text": "R, Linux/bash, RNA-seq analysis (cutadapt, bowtie, samtools, DESeq), high-performance computing"
+        },
+        {
+          "label": "Languages",
+          "text": "English (native), Malayalam (fluent)"
+        },
+        {
+          "label": "Interests",
+          "text": "Rock climbing, balloon art, coffee, children's science writing"
+        }
       ]
     }
   ]
