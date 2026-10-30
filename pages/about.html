@@ -371,7 +371,7 @@
             @page { margin: 0.6in 0.65in; }
             html, body { background: #fff !important; }
             body::before, header, footer, .vj-theme-toggle, .vjw-launch, .vjw-call, .vjw-tip, .vjw-panel,
-            .container > .main-content:not(.cv), .skip-link { display: none !important; }
+            .container > .main-content:not(.cv) { display: none !important; }
             .container { width: auto; padding: 0; margin: 0; }
             .cv { box-shadow: none !important; padding: 0; margin: 0; font-size: 12px; }
             .cv-head h2 { font-size: 24px; }
@@ -389,7 +389,6 @@
 </head>
 
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
 
     <header>
         <h1><a href="../index_classic.html">Vishal John</a></h1>
@@ -407,7 +406,7 @@
         </button>
     </header>
 
-    <main class="container" id="main" tabindex="-1">
+    <main class="container">
         <section class="main-content">
             <h2>About Me</h2>
 

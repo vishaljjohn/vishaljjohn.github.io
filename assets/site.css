@@ -384,14 +384,7 @@ html.dark body.project-page .main-content .project-hero .ph-role { color: #9aa4b
   .spotify-open { padding: 13px 0 !important; }
 }
 
-/* ---- Accessibility: skip link + clear keyboard focus ---- */
-.skip-link {
-  position: fixed; left: 12px; top: -60px; z-index: 100000;
-  background: var(--accent); color: #fff !important; font-weight: 700; font-size: 14px;
-  padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: top .15s ease;
-}
-.skip-link:focus { top: 12px; }
-#main:focus { outline: none; }
+/* ---- Clear keyboard focus outlines ---- */
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible,
 select:focus-visible, [tabindex]:focus-visible, summary:focus-visible {
   outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px;
