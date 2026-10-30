@@ -140,7 +140,7 @@
             .gg-hud { font-size: 13px; padding: 8px 12px; gap: 8px; }
             .gg-rules { font-size: 13.5px; }
         }
-        @media (max-width: 400px) { .gg-hero { width: 60px; height: 60px; } .gg-panel .gg-panel-title { font-size: 19px; } }
+        @media (max-width: 400px) { .gg-hero { width: 44px; height: 44px; } .gg-rules { margin: 4px 0 10px; } .gg-panel .gg-panel-title { font-size: 19px; } }
         html.dark .germ-game { background: #1b2028; border-color: #2a313c; }
         html.dark .gg-hud { color: #cdd4de; }
         html.dark .gg-say { color: #cdd4de !important; }
@@ -269,9 +269,10 @@
                     <div class="gg-panel gg-start">
                         <svg class="gg-hero" viewBox="0 0 120 120" aria-hidden="true"><use href="../assets/doodles.svg#mac"/></svg>
                         <p class="gg-panel-title">Mac is hungry!</p>
+                        <p class="gg-how">The game only ends if the infection hits 100%.</p>
                         <ul class="gg-rules">
                             <li><span class="gg-dot ok"></span>Green ring: swallow it and grow</li>
-                            <li><span class="gg-dot no"></span>Red ring: too big, run away!</li>
+                            <li><span class="gg-dot no"></span>Red ring: too big! It shrinks Mac, so dodge it</li>
                             <li><svg viewBox="0 0 120 120" aria-hidden="true"><use href="../assets/doodles.svg#own-cell"/></svg>Pink cells are Sam's. Leave them be</li>
                             <li><svg viewBox="0 0 120 120" aria-hidden="true"><use href="../assets/doodles.svg#bbee"/></svg><svg viewBox="0 0 120 120" aria-hidden="true"><use href="../assets/doodles.svg#tia"/></svg>Grab B-Bee and Tia for help</li>
                         </ul>
@@ -382,7 +383,7 @@
     })();
 </script>
     <script src="../assets/site.js"></script>
-    <script src="../assets/immune-game.js?v=3"></script>
+    <script src="../assets/immune-game.js?v=4"></script>
     <script src="../assets/chat-widget.js" defer></script>
     <script src="../assets/theme.js"></script>
 </body>

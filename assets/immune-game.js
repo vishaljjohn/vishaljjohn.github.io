@@ -18,7 +18,7 @@
   if (!root) return;
 
   var WORLD_W = 1800, WORLD_H = 1200;
-  var START_R = 26, MIN_R = 20;
+  var START_R = 26, MIN_R = 24; // at the smallest size, small germs still have green rings
   var KINDS = ["germ-green", "germ-blue", "germ-purple", "germ-orange"];
   var KIND_NAMES = { "germ-green": "green germs", "germ-blue": "squiggly germs", "germ-purple": "purple germs", "germ-orange": "orange germs" };
   var MEMORY_AT = 4;
@@ -164,13 +164,11 @@
     var a = Math.atan2(mac.y - g.y, mac.x - g.x);
     mac.vx += Math.cos(a) * 520; mac.vy += Math.sin(a) * 520;
     grow(g, 60);
-    infection += 1;
     burst(mac.x, mac.y, "#ff6b6b", 12);
     floatText(mac.x, mac.y - mac.r, "Ouch!", "#ffe3e3");
-    say("That germ was too big! Look for ones smaller than Mac.");
+    say("Ouch, but Mac is okay! Keep going and look for green rings.");
     buzz([30, 40, 30]);
     hud();
-    if (infection >= 100) end(false);
   }
   function bumpCell(c) {
     if (elapsed < hurtUntil) return;
@@ -410,7 +408,8 @@
     if (!running) return;
     var dt = Math.min(0.05, (t - last) / 1000 || 0.016);
     last = t;
-    if (!paused) { step(dt); if (running) draw(); }
+    // one bad frame must never freeze the game
+    if (!paused) { try { step(dt); if (running) draw(); } catch (e) { if (window.console) console.error(e); } }
     if (running) raf = requestAnimationFrame(frame);
   }
 
@@ -528,7 +527,7 @@
     var trophy = trophyFor(won);
     endPanel.querySelector(".gg-trophy").style.color = trophy.color;
     endPanel.querySelector(".gg-trophy-name").textContent = trophy.name;
-    endPanel.querySelector(".gg-final").textContent = won ? "Sam's knee is all better!" : "The germs took over!";
+    endPanel.querySelector(".gg-final").textContent = won ? "Sam's knee is all better!" : "The infection reached 100%!";
     endPanel.querySelector(".gg-verdict").textContent = won
       ? "You and the Immune Team cleared the infection."
       : "Germs multiply fast. Swallow the small ones early, and win to get on the top 10.";
