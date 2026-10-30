@@ -28,6 +28,17 @@
   },
   "data": [
     {
+      "year": 2026,
+      "title": "From Base Pairs to Blood Type incorporating Machine Learning Program: High School Students Decode Their Own ABO Gene towards Privately-held Sequencing and AI in Biology",
+      "authors": "**Vishal John**, Lucia Moscola, Ziqi Guo, Ava Dornseif, Cristina Castillo, Inhan Lee.",
+      "conference": "American Society of Human Genetics (ASHG) 2026 Annual Meeting",
+      "location": "Montréal, QC, Canada",
+      "date": "October 20–24, 2026",
+      "type": "poster",
+      "highlight": true,
+      "note": "First-author poster. High school students in miRcore's Sequencing Your Genome program built a machine-learning model that predicts blood type from their own ABO variants, correctly classifying 85% of participants it had never seen."
+    },
+    {
       "year": 2025,
       "title": "Engaging citizen scientists through WES self-data analysis training",
       "authors": "**Vishal John**, Veena Thamilsevan, Lucia Moscola, Inhan Lee.",

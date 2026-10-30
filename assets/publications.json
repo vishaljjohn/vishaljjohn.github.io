@@ -31,7 +31,7 @@
     {
       "year": 2026,
       "title": "Surgical waste from stereotactic glioma biopsies contains clinically relevant tumor DNA",
-      "authors": "Wadden J, Adam T, Lau BC, Cartaxo R, Wink K, Niculcea M, Kong S, **John V**, Aittaleb R, Pearson AN, Becker N, Tripathy A, Mortazavi A, Serhan H, Merrill NM, Merajver SD, Franson AT, Upadhyaya SA, Ranjan P, Dickson RP, Heth JC, Muraszko KM, Garton H, Marupudi NI, Ferris SP, Magge SN, Kumar-Sinha C, Nazarian J, Al-Holou WN, Venneti S, Koschmann C.",
+      "authors": "Wadden J, Adam T, Lau BC, Cartaxo RT, Wink K, Niculcea M, Kong S, **John V**, Aittaleb R, Pearson AN, Becker N, Tripathy A, Mortazavi A, Serhan H, Merrill NM, Merajver SD, Franson AT, Upadhyaya SA, Ranjan P, Dickson RP, Heth JC, Muraszko KM, Garton H, Marupudi NI, Ferris SP, Magge SN, Kumar-Sinha C, Nazarian J, Al-Holou WN, Venneti S, Koschmann C.",
       "journal": "Scientific Reports (Nature)",
       "year_detail": "Oct 2026, Article in Press",
       "doi": "10.1038/s41598-026-75123-w",
@@ -44,9 +44,9 @@
     {
       "year": 2023,
       "title": "Clinical efficacy of ONC201 in H3K27M-mutant diffuse midline gliomas is driven by disruption of integrated metabolic and epigenetic pathways",
-      "authors": "Chung C, Sweha SR, Pratt D, Tamrazi B, Panwalkar P, Banda A, Bayliss J, Hawes D, Yang F, Lee HJ, Shan M, Cieslik M, Qin T, Wierzbicki K, Stallard S, Walling D, **John V**, Mullan B, Bruzek A, Cantor E, Koschmann C, et al.",
+      "authors": "Venneti S, Kawakibi AR, Ji S, Waszak SM, Sweha SR, Mota M, …, Cartaxo RT, **John V**, Messinger D, …, Gardner SL, Koschmann C (84 authors).",
       "journal": "Cancer Discovery",
-      "year_detail": "2023",
+      "year_detail": "Nov 2023, Vol 13(11), pp 2370-2393",
       "doi": "10.1158/2159-8290.CD-23-0131",
       "url": "https://aacrjournals.org/cancerdiscovery/article/doi/10.1158/2159-8290.CD-23-0131/728431/Clinical-efficacy-of-ONC201-in-H3K27M-mutant",
       "abstract": "H3K27M-mutant diffuse midline glioma (DMG) patients have no proven effective therapies. ONC201 is an imipridone compound with clinical activity in H3K27M-mutant DMG. This study investigates the integrated metabolic and epigenetic mechanisms underlying ONC201's clinical efficacy in this devastating pediatric brain cancer.",
@@ -55,11 +55,11 @@
       "plain": "A drug called ONC201 helps some children with an aggressive, hard-to-treat brain tumor. This study worked out how it helps — by simultaneously cutting off the tumor's energy supply and flipping the chemical switches that keep its cancer genes turned on."
     },
     {
-      "year": 2022,
+      "year": 2023,
       "title": "Liquid biopsy in pediatric brain tumors",
       "authors": "Tripathy A†, **John V†**, Wadden J, Kong S, Sharba S, Koschmann C.",
       "journal": "Frontiers in Genetics",
-      "year_detail": "Jan 2023",
+      "year_detail": "Jan 2023, Vol 13, Article 1114762",
       "doi": "10.3389/fgene.2022.1114762",
       "url": "https://www.frontiersin.org/articles/10.3389/fgene.2022.1114762/full",
       "abstract": "Malignant primary brain tumors are the most common cancer in children aged 0-14 years and the leading cause of cancer death in pediatric patients. This review covers minimally invasive liquid biopsy approaches — including circulating tumor DNA in CSF and plasma — as tools for diagnosis, monitoring, and treatment guidance in pediatric brain tumors.",
@@ -72,7 +72,7 @@
       "title": "Cell-Free Tumor DNA (cf-tDNA) Liquid Biopsy: Current Methods and Use in Brain Tumor Immunotherapy",
       "authors": "Wadden J, Ravi K, **John V**, Babila CM, Koschmann C.",
       "journal": "Frontiers in Immunology",
-      "year_detail": "Apr 2022",
+      "year_detail": "Apr 2022, Vol 13, Article 882452",
       "doi": "10.3389/fimmu.2022.882452",
       "url": "https://www.frontiersin.org/articles/10.3389/fimmu.2022.882452/full",
       "abstract": "Gliomas cause significant morbidity and mortality, and development of precision diagnostics and novel targeted immunotherapies is critically important. This review examines cf-tDNA liquid biopsy methods and their application in brain tumor immunotherapy, addressing how circulating tumor DNA from CSF and plasma can resolve pseudoprogression and guide targeted therapies.",
@@ -83,7 +83,7 @@
     {
       "year": 2022,
       "title": "Serial H3K27M cell-free tumor DNA (cf-tDNA) tracking predicts ONC201 treatment response and progression in diffuse midline glioma",
-      "authors": "Cantor E, Wierzbicki K, Tarapore RS, Ravi K, Thomas C, Cartaxo R, Yadav VN, Ravindran R, Bruzek AK, Wadden J, **John V**, Babila CM, Cummings JR, ..., Koschmann C.",
+      "authors": "Cantor E, Wierzbicki K, Tarapore RS, Ravi K, Thomas C, Cartaxo R, Yadav VN, Ravindran R, Bruzek AK, Wadden J, **John V**, Babila CM, Cummings JR, Kawakibi AR, Ji S, Ramos J, Paul A, Walling D, Leonard M, Robertson P, Franson A, Mody R, Garton HJL, Venneti S, Odia Y, Kline C, Vitanza NA, Khatua S, Mueller S, Allen JE, Gardner SL, Koschmann C.",
       "journal": "Neuro-Oncology",
       "year_detail": "Aug 2022, Vol 24(8), pp 1366-1374",
       "doi": "10.1093/neuonc/noac030",
@@ -96,15 +96,15 @@
     {
       "year": 2022,
       "title": "Ultra-rapid somatic variant detection via real-time targeted amplicon sequencing",
-      "authors": "Wadden J, Wierzbicki K, Cantor E, Thomas C, Cartaxo R, **John V**, Koschmann C, et al.",
+      "authors": "Wadden J, Newell BS, Bugbee J, **John V**, Bruzek AK, Dickson RP, Koschmann C, Blaauw D, Narayanasamy S, Das R.",
       "journal": "Communications Biology (Nature)",
-      "year_detail": "Jul 2022",
+      "year_detail": "Jul 2022, Vol 5, Article 708",
       "doi": "10.1038/s42003-022-03657-6",
       "url": "https://www.nature.com/articles/s42003-022-03657-6",
       "abstract": "Molecular markers are essential for cancer diagnosis, clinical trial enrollment, and intraoperative surgical decision-making. This work presents a proof-of-principle approach for sub-1-hour targeted variant detection using real-time DNA sequencers, demonstrating confirmation of a hotspot mutation from tumor tissue in approximately 52 minutes.",
       "role": "co-author",
       "highlight": false,
-      "plain": "Identifying a tumor's exact mutation normally takes days. This proof-of-concept method reads the key mutation in about 52 minutes — potentially fast enough to guide decisions while the patient is still in the operating room."
+      "plain": "Identifying a tumor's exact mutation normally takes hours. This proof-of-concept method reads the key mutation in about 52 minutes — potentially fast enough to guide decisions while the patient is still in the operating room."
     }
   ]
 }
