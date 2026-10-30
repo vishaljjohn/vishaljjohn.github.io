@@ -60,10 +60,11 @@
    + 'opacity:0.85;transition:opacity .2s,transform .2s;}'
    + '.vjw-launch:hover{opacity:1;transform:translateY(-2px);}'
    + '.vjw-launch svg{width:26px;height:26px;}'
-   + '.vjw-tip{position:fixed;right:86px;bottom:32px;background:#15171b;color:#fff;font-size:13px;padding:8px 12px;'
+   // sits above the chat button so it never covers the "Video call" pill to its left
+   + '.vjw-tip{position:fixed;right:20px;bottom:88px;background:#15171b;color:#fff;font-size:13px;padding:8px 12px;'
    + 'border-radius:10px;z-index:2147483000;box-shadow:0 6px 18px rgba(0,0,0,.25);max-width:200px;'
    + 'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;}'
-   + '.vjw-tip:after{content:"";position:absolute;right:-6px;bottom:14px;border:6px solid transparent;border-left-color:#15171b;}'
+   + '.vjw-tip:after{content:"";position:absolute;right:22px;bottom:-6px;border:6px solid transparent;border-bottom:0;border-top-color:#15171b;}'
    + '.vjw-panel{position:fixed;right:20px;bottom:88px;width:360px;max-width:calc(100vw - 32px);height:520px;max-height:calc(100vh - 120px);'
    + 'background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.30);z-index:2147483000;display:none;flex-direction:column;'
    + 'overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;}'
@@ -94,7 +95,7 @@
    + '.vjw-call{position:fixed;right:88px;bottom:25px;z-index:2147483000;display:flex;align-items:center;gap:7px;background:#0a6db0;color:#fff;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-weight:700;font-size:13px;height:46px;padding:0 16px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,0.28);}'
    + '.vjw-call:hover{background:#085a93;}'
    + '.vjw-call svg{width:18px;height:18px;}'
-   + '@media (max-width:480px){.vjw-panel{right:12px;bottom:80px;height:70vh;}.vjw-launch{right:14px;bottom:14px;}.vjw-call{right:80px;bottom:21px;height:42px;font-size:12px;padding:0 12px;}.vjw-tip{display:none;}}';
+   + '@media (max-width:480px){.vjw-panel{right:12px;bottom:80px;height:70vh;}.vjw-launch{right:14px;bottom:14px;}.vjw-call{right:80px;bottom:21px;height:42px;font-size:12px;padding:0 12px;}.vjw-tip{display:none !important;}}';
   var style = document.createElement('style'); style.textContent = css; document.head.appendChild(style);
 
   /* ---- DOM ---- */
@@ -103,7 +104,8 @@
   launch.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>';
   document.body.appendChild(launch);
 
-  var vcUrl = location.pathname.indexOf('/pages/') !== -1 ? '../index.html' : 'index.html';
+  // root-relative so it also works on the 404 page, which GitHub serves at any missing URL
+  var vcUrl = '/index.html';
   var vcBtn = document.createElement('a');
   vcBtn.className = 'vjw-call'; vcBtn.href = vcUrl; vcBtn.setAttribute('aria-label', 'Back to video call');
   vcBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="13" height="12" rx="2"></rect><path d="M22 8l-5 4 5 4V8z"></path></svg> Video call';

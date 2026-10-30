@@ -5,6 +5,9 @@
 <script>(function(){try{if(localStorage.getItem("vj-theme")==="dark")document.documentElement.classList.add("dark");}catch(e){}})();</script>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="../site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Newsletter | Vishal John</title>
     <meta name="description" content="Newsletter and writing by Vishal John on medicine, research, and life as a medical student.">
@@ -21,6 +24,7 @@
     <meta name="twitter:title" content="Newsletter | Vishal John">
     <meta name="twitter:description" content="Newsletter and writing by Vishal John on medicine, research, and life as a medical student.">
     <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   
   <style>
@@ -249,7 +253,7 @@
         const list = document.getElementById('medium-articles');
 
         function showError() {
-            list.innerHTML = '<li style="color:#888;">Could not load articles right now. <a href="https://medium.com/@' + mediumUser + '" target="_blank" style="color:#0077b6;">Read on Medium directly →</a></li>';
+            list.innerHTML = '<li style="color:#888;">Could not load articles right now. <a href="https://medium.com/@' + mediumUser + '" target="_blank" rel="noopener" style="color:#0077b6;">Read on Medium directly →</a></li>';
         }
 
         // Build rows with DOM APIs: titles/links come from third-party proxies, so never inject them as HTML.

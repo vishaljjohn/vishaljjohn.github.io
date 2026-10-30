@@ -5,6 +5,9 @@
 <script>(function(){try{if(localStorage.getItem("vj-theme")==="dark")document.documentElement.classList.add("dark");}catch(e){}})();</script>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="../site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO -->
     <title>About Vishal John | UofL Medical Student & Researcher</title>
@@ -24,6 +27,7 @@
     <meta name="twitter:title" content="About Vishal John | UofL Medical Student & Researcher">
     <meta name="twitter:description" content="Learn about Vishal John — a third-year medical student at UofL, former Koschmann Lab researcher, miRcore Project Lead, and children's book author.">
     <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
     <style>
@@ -314,6 +318,9 @@
             .cv-skills { grid-template-columns: 1fr; gap: 2px; }
             .cv-skills dd { margin-bottom: 8px; }
             .cv-section .cv-btn { margin: 14px 0 0; }
+            .description-section { text-align: left; }
+            .cv-contact { gap: 2px 16px; }
+            .cv-contact a { padding: 6px 0; }
         }
         html.dark .cv-title, html.dark .cv-skills dt, html.dark .cv strong { color: #f0f3f7; }
         html.dark .cv-org, html.dark .cv-item li, html.dark .cv-list li, html.dark .cv-skills dd, html.dark .cv-note, html.dark .cv-contact a, html.dark .cv-headline { color: #cdd4de; }

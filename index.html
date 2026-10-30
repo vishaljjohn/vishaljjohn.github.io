@@ -24,7 +24,8 @@
     <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og-image.jpg">
     <meta name="theme-color" content="#0b0c0e">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
     <script type="application/ld+json">
     {
@@ -300,6 +301,19 @@
         @media (max-width: 360px) {
             .ctrl { width: 42px; height: 42px; font-size: 15px; }
         }
+        /* fit all seven call buttons (including End call) on one row */
+        @media (max-width: 430px) {
+            .controls { gap: 6px; justify-content: space-between; }
+            .ctrl { width: 42px; height: 42px; font-size: 15px; }
+            .ctrl.leave { width: 42px; padding: 0; border-radius: 50%; }
+            .leave-label { display: none; }
+            .clockbox a { padding: 10px 4px; }
+            .logo { padding: 10px 0; }
+        }
+        @media (max-width: 350px) {
+            .controls { gap: 4px; }
+            .ctrl, .ctrl.leave { width: 38px; height: 38px; font-size: 14px; }
+        }
 
         /* Ending-call transition */
         .ending-call { position: fixed; inset: 0; z-index: 50; background: #0b0c0e; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
@@ -324,7 +338,7 @@
         #arStatus { font-size: 12px; color: var(--muted); margin: 8px 0 0; min-height: 14px; }
         .fsec { font-size: 13px; color: #fff; margin: 2px 0 10px; font-weight: 700; letter-spacing: 0.3px; }
         .fgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); gap: 10px; }
-        .fcell { background: rgba(255,255,255,0.06); border: 1px solid var(--stroke); border-radius: 12px; padding: 12px 6px; text-align: center; cursor: pointer; color: #fff; font-size: 12px; transition: background 0.15s; }
+        .fcell { background: rgba(255,255,255,0.06); border: 1px solid var(--stroke); border-radius: 12px; padding: 12px 6px; text-align: center; cursor: pointer; color: #fff; font-size: 12px; font-family: inherit; line-height: normal; transition: background 0.15s; }
         .fcell:hover { background: rgba(255,255,255,0.13); }
         .fcell.active { background: var(--accent); border-color: var(--accent); }
         .fcell .emoji { font-size: 30px; display: block; margin-bottom: 5px; line-height: 1; }
@@ -613,7 +627,7 @@
             <div class="sheet-head"><h2>Share this site</h2><button class="sheet-close" data-close aria-label="Close">&times;</button></div>
             <div class="share-url">
                 <input id="shareUrl" type="text" readonly value="https://www.vishaljohn.com/">
-                <button id="copyBtn" class="share-copy"><i class="fas fa-copy"></i> <span>Copy</span></button>
+                <button type="button" id="copyBtn" class="share-copy"><i class="fas fa-copy"></i> <span>Copy</span></button>
             </div>
             <div class="links" style="margin-top:16px;">
                 <a id="shareX" href="#" target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i> X</a>
@@ -633,7 +647,7 @@
             <div class="fsec" style="margin-top:18px;">Face filters <span style="font-weight:400;color:var(--muted);">— tap to toggle; they track your face</span></div>
             <div class="fgrid" id="stickerGrid"></div>
             <div id="arStatus"></div>
-            <button class="fclear" id="clearFilters">Clear filters</button>
+            <button type="button" class="fclear" id="clearFilters">Clear filters</button>
         </div>
     </div>
 
@@ -903,7 +917,7 @@
             { k: ['newsletter','blog','substack','subscribe'],
               a: "i write a newsletter — you can check it out on my <a href='pages/blog.html'>Newsletter</a> page." },
             { k: ['music','spotify','listening','song','last.fm','lastfm'],
-              a: "music's a big part of my life — tap the music pill at the top-left to see what i've been listening to, or hit the red End call button for my classic site." },
+              a: "music's a big part of my life — tap the music pill at the top-left to see what i've been listening to, or hit the red hang-up button for my classic site." },
             { k: ['hello','hi','hey','yo','hiya','good morning','good evening','howdy','sup'],
               a: "hey! great to see you 😊 ask me anything — the kids' book, balloon animals, my volunteering, or how to get in touch." },
             { k: ['thank','thanks','appreciate','cool','awesome'],
@@ -1029,17 +1043,25 @@
             { label: 'Invert',  emoji: '🔄', f: 'invert(1) hue-rotate(180deg)' }
         ];
         var vibeGrid = document.getElementById('vibeGrid');
-        VIBES.forEach(function (v) {
-            var c = document.createElement('div');
-            c.className = 'fcell' + (v.f === '' ? ' active' : '');
-            c.innerHTML = '<span class="emoji">' + v.emoji + '</span>' + v.label;
-            c.addEventListener('click', function () {
-                feed.style.filter = v.f;
-                document.querySelectorAll('#vibeGrid .fcell').forEach(function (n) { n.classList.remove('active'); });
-                c.classList.add('active');
+        var vibeFilter = '';
+        // Applies a vibe to the call video (and the blurred backdrop phones show behind it).
+        function setVibe(f) {
+            vibeFilter = f;
+            feed.style.filter = f;
+            if (feedBg) feedBg.style.filter = f ? 'blur(26px) brightness(0.5) ' + f : '';
+            Array.prototype.forEach.call(vibeGrid.children, function (n) {
+                var on = n.getAttribute('data-f') === f;
+                n.classList.toggle('active', on); n.setAttribute('aria-pressed', on ? 'true' : 'false');
             });
+        }
+        VIBES.forEach(function (v) {
+            var c = document.createElement('button');
+            c.type = 'button'; c.className = 'fcell'; c.setAttribute('data-f', v.f);
+            c.innerHTML = '<span class="emoji">' + v.emoji + '</span>' + v.label;
+            c.addEventListener('click', function () { setVibe(v.f); });
             vibeGrid.appendChild(c);
         });
+        setVibe('');
 
         /* ---- AR face filters: one active asset per slot (top/head/eyes/mouth/face) ---- */
         var ASSETS = [
@@ -1085,15 +1107,16 @@
 
         var stickerGrid = document.getElementById('stickerGrid');
         ASSETS.forEach(function (a) {
-            var c = document.createElement('div');
-            c.className = 'fcell'; c.setAttribute('data-id', a.id); c.setAttribute('data-slot', a.slot);
+            var c = document.createElement('button');
+            c.type = 'button'; c.className = 'fcell'; c.setAttribute('data-id', a.id); c.setAttribute('data-slot', a.slot);
             c.innerHTML = '<span class="emoji">' + a.preview + '</span>' + a.label;
             c.addEventListener('click', function () { toggleAsset(a); });
             stickerGrid.appendChild(c);
         });
         function refreshActive() {
             document.querySelectorAll('#stickerGrid .fcell').forEach(function (n) {
-                n.classList.toggle('active', arSlots[n.getAttribute('data-slot')] === n.getAttribute('data-id'));
+                var on = arSlots[n.getAttribute('data-slot')] === n.getAttribute('data-id');
+                n.classList.toggle('active', on); n.setAttribute('aria-pressed', on ? 'true' : 'false');
             });
         }
         function anyActive() { for (var k in arSlots) { if (arSlots[k]) return true; } return false; }
@@ -1103,7 +1126,7 @@
             if (anyActive()) ensureAR(); else { stopLoop(); clearCanvas(); }
         }
         document.getElementById('clearFilters').addEventListener('click', function () {
-            arSlots = {}; refreshActive(); stopLoop(); clearCanvas();
+            arSlots = {}; refreshActive(); stopLoop(); clearCanvas(); setVibe('');
         });
 
         function sizeCanvas() {
@@ -1123,7 +1146,10 @@
             }
             selfArCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
         }
-        function clearCanvas() { arCtx.clearRect(0, 0, stage.clientWidth, stage.clientHeight); }
+        function clearCanvas() {
+            arCtx.clearRect(0, 0, stage.clientWidth, stage.clientHeight);
+            if (selfArCtx) selfArCtx.clearRect(0, 0, selfTile.clientWidth, selfTile.clientHeight);
+        }
         window.addEventListener('resize', function () { sizeCanvas(); });
 
         /* video -> screen mapping (object-fit: cover + object-position) */
@@ -1190,6 +1216,7 @@
             else if (kind === 'long') { fx = 0.9; fy = 1.6; }
             var dw = sw * fx, dh = sh * fy, dx = cx - dw / 2, dy = cy - dh / 2;
             arCtx.save();
+            if (vibeFilter) arCtx.filter = vibeFilter;
             arCtx.beginPath(); arCtx.ellipse(cx, cy, dw / 2, dh / 2, 0, 0, 2 * Math.PI); arCtx.clip();
             try { arCtx.drawImage(feed, vx, vy, vw_, vh_, dx, dy, dw, dh); } catch (e) {}
             arCtx.restore();
@@ -1474,6 +1501,11 @@
                 ec.classList.add('show');
                 setTimeout(function () { window.location.href = 'index_classic.html'; }, 1000);
             });
+            // coming Back from the classic site restores this page from the cache with the
+            // "ending call…" screen still up; take it down again
+            window.addEventListener('pageshow', function (e) {
+                if (e.persisted) document.getElementById('endingCall').classList.remove('show');
+            });
         }
 
         /* ---- Connecting intro (2.5s) ---- */
@@ -1612,11 +1644,13 @@
                         // blurred backdrop behind a letterboxed (contain) frame, matching the on-screen look
                         if ((getComputedStyle(feed).objectFit || 'cover') === 'contain') {
                             var bs = Math.max(W / mvw, H / mvh);
-                            x.save(); x.filter = 'blur(18px) brightness(0.5)';
+                            x.save(); x.filter = 'blur(18px) brightness(0.5)' + (vibeFilter ? ' ' + vibeFilter : '');
                             try { x.drawImage(feed, 0, 0, mvw, mvh, (W - mvw * bs) / 2, (H - mvh * bs) / 2, mvw * bs, mvh * bs); } catch (e) {}
                             x.restore();
                         }
+                        x.save(); if (vibeFilter) x.filter = vibeFilter;
                         x.drawImage(feed, 0, 0, mvw, mvh, moffX, moffY, mvw * mscale, mvh * mscale);
+                        x.restore();
                     }
                     x.drawImage(arCanvas, 0, 0, W, H);
                     if (selfTile.classList.contains('live') && selfcam.readyState >= 2) {
@@ -1650,7 +1684,7 @@
             { delay: 700, type: 900, msg: greet + ", you made it 👋 welcome to my little corner of the internet." },
             { delay: 400, type: 1100, msg: "i'm Vishal: an M3 med student at UofL, children's book author, balloon animal artist, and aspiring coffee shop owner." },
             { delay: 350, type: 900, msg: "ask me anything below, or pick a topic:", replies: true },
-            { delay: 500, type: 800, msg: "p.s. — prefer a normal website? just tap the red “End call” button below anytime 👇" }
+            { delay: 500, type: 800, msg: "p.s. — prefer a normal website? just tap the red hang-up button below anytime 👇" }
         ];
         var si = 0;
         function run() {

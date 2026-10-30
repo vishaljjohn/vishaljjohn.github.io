@@ -47,6 +47,23 @@
       el.style.transitionDelay = (Math.min(i % 6, 5) * 50) + "ms";
       io.observe(el);
     });
+
+    // A fast flick (or jumping to an #anchor) can skip past an element
+    // without it ever intersecting, which would leave it invisible.
+    var pending = false;
+    function catchUp() {
+      pending = false;
+      var vh = window.innerHeight;
+      nodes.forEach(function (el) {
+        if (!el.classList.contains("in-view") && el.getBoundingClientRect().top < vh) {
+          el.classList.add("in-view");
+          io.unobserve(el);
+        }
+      });
+    }
+    window.addEventListener("scroll", function () {
+      if (!pending) { pending = true; requestAnimationFrame(catchUp); }
+    }, { passive: true });
   }
 
   if (document.readyState === "loading") {

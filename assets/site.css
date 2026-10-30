@@ -189,6 +189,9 @@ html.dark .main-content, html.dark .container { color: #d7dce3; }
 html.dark h1, html.dark h2, html.dark h3, html.dark h4 { color: #f0f3f7; }
 html.dark p, html.dark li, html.dark td, html.dark th { color: #cdd4de; }
 html.dark a { color: #6cb6ff; }
+/* ...but links styled as solid buttons keep their white label */
+html.dark a.vjw-call, html.dark a.cv-button, html.dark a.pub-link, html.dark a.donate-button,
+html.dark a.amazon-button, html.dark a.btn.primary, html.dark .ss-cap a { color: #fff; }
 html.dark .hero-label, html.dark .hero-bio, html.dark .spotify-sub, html.dark .track-artist, html.dark figcaption, html.dark .track-loading, html.dark small, html.dark .muted { color: #9aa4b2; }
 html.dark .btn-primary { background: #6cb6ff; color: #0f1115; }
 html.dark .btn-secondary { background: transparent; color: #d7dce3; border-color: #3a4250; }
@@ -221,3 +224,21 @@ html.dark .contact-form button, html.dark form button[type="submit"] { backgroun
 html.dark .contact-form button:hover, html.dark form button[type="submit"]:hover { background-color: #4f9fe8; }
 /* Blog/newsletter list separators in dark */
 html.dark .articles-list li { border-bottom-color: #2a313c !important; }
+
+/* ===========================================================
+   Phone fixes (desktop untouched: everything below is
+   inside max-width queries)
+   =========================================================== */
+@media (max-width: 768px) {
+  /* the floating theme / video-call / chat buttons sit over the
+     bottom of the screen; leave room so they don't cover the footer */
+  footer { padding-bottom: 88px !important; }
+  /* footer icons: comfortable tap targets */
+  footer a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; text-decoration: none; }
+  /* bigger tap area for the menu button */
+  .hamburger { padding: 10px; margin-right: -10px; }
+  /* YouTube embeds have fixed 650x315 attributes; keep them 16:9 */
+  iframe[src*="youtube.com"] { width: 100%; height: auto; aspect-ratio: 16 / 9; }
+  /* form fields: padding inside the 100% width, not on top of it */
+  .form-group input, .form-group textarea { box-sizing: border-box; max-width: 100%; }
+}

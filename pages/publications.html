@@ -5,6 +5,9 @@
 <script>(function(){try{if(localStorage.getItem("vj-theme")==="dark")document.documentElement.classList.add("dark");}catch(e){}})();</script>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="../site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO -->
     <title>Publications | Vishal John</title>
@@ -24,6 +27,7 @@
     <meta name="twitter:title" content="Publications | Vishal John">
     <meta name="twitter:description" content="Peer-reviewed publications and conference presentations by Vishal John, including research on pediatric brain cancer, liquid biopsy, and diffuse midline glioma.">
     <meta name="twitter:image" content="https://www.vishaljohn.com/images/Photo1.jpg">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   
   <style>
@@ -206,6 +210,10 @@
             margin-top: 8px;
         }
         .scholar-link:hover { text-decoration: underline; }
+        @media (max-width: 768px) {
+            .scholar-link { display: flex; margin: 0 !important; padding: 8px 0; }
+            .pub-link { padding: 10px 18px; }
+        }
 
 /* Mobile-Friendly Adjustments */
 
@@ -351,10 +359,10 @@
 
         <h2>Publications</h2>
         <p style="color:#666;font-size:14px;margin-bottom:4px;" id="pub-count">Loading publications...</p>
-        <a class="scholar-link" href="https://scholar.google.com/citations?user=QXyjTGgAAAAJ" target="_blank">
+        <a class="scholar-link" href="https://scholar.google.com/citations?user=QXyjTGgAAAAJ" target="_blank" rel="noopener">
             <i class="fas fa-graduation-cap"></i> View on Google Scholar
         </a>
-        <a class="scholar-link" href="https://www.researchgate.net/profile/Vishal-John" target="_blank" style="margin-left:16px;">
+        <a class="scholar-link" href="https://www.researchgate.net/profile/Vishal-John" target="_blank" rel="noopener" style="margin-left:16px;">
             <i class="fab fa-researchgate"></i> View on ResearchGate
         </a>
         <div id="publications-container" style="margin-top:24px;"></div>
@@ -405,7 +413,7 @@
                     + '<div class="pub-journal">' + p.journal + ', ' + p.year_detail + '. DOI: ' + p.doi + '</div>'
                     + '<div class="pub-abstract">' + p.abstract + '</div>'
                     + (p.plain ? '<div class="pub-plain"><span class="pub-plain-label">In plain English</span>' + p.plain + '</div>' : '')
-                    + '<a href="' + p.url + '" target="_blank" class="pub-link">Read Paper</a></div>';
+                    + '<a href="' + p.url + '" target="_blank" rel="noopener" class="pub-link">Read Paper</a></div>';
             });
         });
         document.getElementById('publications-container').innerHTML = html;
@@ -428,7 +436,7 @@
                     + '<div class="pub-authors">' + fmt(p.authors) + '</div>'
                     + '<div class="pub-journal">' + p.conference + ' &middot; ' + p.location + ' &middot; ' + p.date + '</div>'
                     + (p.note ? '<div class="pub-abstract">' + p.note + '</div>' : '')
-                    + (p.url ? '<a href="' + p.url + '" target="_blank" class="pub-link">View</a>' : '')
+                    + (p.url ? '<a href="' + p.url + '" target="_blank" rel="noopener" class="pub-link">View</a>' : '')
                     + '</div>';
             });
         });

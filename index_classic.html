@@ -5,6 +5,9 @@
 <script>(function(){try{if(localStorage.getItem("vj-theme")==="dark")document.documentElement.classList.add("dark");}catch(e){}})();</script>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO -->
     <title>Vishal John | Medical Student, Aspiring Coffee Shop Owner & Balloon Animal Artist</title>
@@ -24,6 +27,7 @@
     <meta name="twitter:title" content="Vishal John | Medical Student, Researcher & Author">
     <meta name="twitter:description" content="Personal website of Vishal John — M3 medical student at UofL, aspiring coffee shop owner, and balloon animal artist.">
     <meta name="twitter:image" content="https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <meta name="keywords" content="Vishal John, medicine, nonprofit, volunteer, Rock Cancer, miRcore">
 
@@ -106,9 +110,16 @@
             .spotify-section { width: 95%; padding: 24px; }
             .spotify-layout { flex-direction: column; }
             .spotify-widget { width: 100%; display: flex; justify-content: center; }
+            .spotify-layout { align-items: stretch; gap: 28px; }
+            .spotify-tracks { width: 100%; min-width: 0; }
+            .spotify-widget img { width: 100%; height: auto; }
+            .spotify-open { padding: 10px 0; }
         }
         @media screen and (max-width: 480px) {
             header h1 { font-size: 20px; }
+            .projects-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 16px 12px; }
+            .project-item { height: 150px; }
+            .hero-btns a { padding: 11px 18px; }
         }
     </style>
     <script type="application/ld+json">
@@ -219,7 +230,7 @@
         <p class="spotify-sub">My recent Spotify activity via Last.fm</p>
         <div class="spotify-layout">
             <div class="spotify-widget">
-                <a href="https://spotify-github-profile.kittinanx.com/api/view?uid=22enikmc36cjblojhfhekdvzq&redirect=true" target="_blank">
+                <a href="https://spotify-github-profile.kittinanx.com/api/view?uid=22enikmc36cjblojhfhekdvzq&redirect=true" target="_blank" rel="noopener">
                     <img loading="lazy" decoding="async" src="https://spotify-github-profile.kittinanx.com/api/view?uid=22enikmc36cjblojhfhekdvzq&cover_image=true&theme=default&show_offline=false&background_color=121212&interchange=false&profanity=true&bar_color_cover=false" alt="Spotify Now Playing" style="border-radius:8px; max-width:100%;">
                 </a>
             </div>
@@ -228,7 +239,7 @@
                 <ul class="track-list" id="track-list">
                     <li class="track-loading">Loading tracks...</li>
                 </ul>
-                <a class="spotify-open" href="https://www.last.fm/user/vishaljjohn" target="_blank">
+                <a class="spotify-open" href="https://www.last.fm/user/vishaljjohn" target="_blank" rel="noopener">
                     <i class="fab fa-lastfm"></i> Last.fm Profile
                 </a>
             </div>
