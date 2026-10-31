@@ -148,7 +148,7 @@
   function esc(s){ return s.replace(/[&<>]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;'})[c]; }); }
 
   // keep trailing punctuation ("…here: https://x.com.") out of the link
-  function linkify(s){ return esc(s).replace(/(https?:\/\/[^\s<]*[^\s<.,;:!?)'"])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>'); }
+  function linkify(s){ return esc(s).replace(/(https?:\/\/[^\s<'"]*[^\s<'".,;:!?)])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>'); }
 
   // Streamed reply (Server-Sent Events). Calls onToken(text) as tokens arrive.
   // Resolves to { ok:true, full } on success, { ok:false } to trigger the local fallback.
@@ -165,7 +165,10 @@
         if (!r.ok || !r.body || !r.body.getReader) return { ok:false };
         var reader = r.body.getReader(), dec = new TextDecoder(), buf = '', full = '';
         function pump(){
+          // a reply that stalls partway also falls back, so the chat never stays stuck
+          if (ctrl) timer = setTimeout(function(){ ctrl.abort(); }, 20000);
           return reader.read().then(function(res){
+            clearTimeout(timer);
             if (res.done) return { ok:true, full:full };
             buf += dec.decode(res.value, { stream:true });
             var lines = buf.split('\n'); buf = lines.pop();

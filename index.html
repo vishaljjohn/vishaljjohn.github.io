@@ -1056,8 +1056,9 @@
             }
             function show() { place(); fhint.classList.add('show'); place(); }
             function hide() { fhint.classList.remove('show'); btn.classList.remove('pulse-hint'); }
-            startFilterHint = function () { setTimeout(show, 1500); setTimeout(hide, 9000); };
-            btn.addEventListener('click', hide);
+            var tapped = false;
+            startFilterHint = function () { setTimeout(function () { if (!tapped) show(); }, 1500); setTimeout(hide, 9000); };
+            btn.addEventListener('click', function () { tapped = true; hide(); });
             window.addEventListener('resize', function () { if (fhint.classList.contains('show')) place(); });
         })();
 
@@ -1423,6 +1424,7 @@
         function ensureAR() {
             sizeCanvas();
             if (faceLandmarker || arFailed) { startLoop(); return; }
+            startLoop();   // stickers show centered until the tracker is ready
             if (arLoading) return;
             arLoading = true; setStatus('loading face tracker…');
             (async function () {
@@ -1520,8 +1522,9 @@
                     copyBtn.querySelector('span').textContent = 'Copied!';
                     setTimeout(function () { copyBtn.querySelector('span').textContent = 'Copy'; }, 1600);
                 };
-                if (navigator.clipboard) { navigator.clipboard.writeText(SHARE_URL).then(done).catch(done); }
-                else { var i = document.getElementById('shareUrl'); i.select(); document.execCommand('copy'); done(); }
+                var legacy = function () { var i = document.getElementById('shareUrl'); i.select(); document.execCommand('copy'); done(); };
+                if (navigator.clipboard) { navigator.clipboard.writeText(SHARE_URL).then(done).catch(legacy); }
+                else { legacy(); }
             });
         }
 
@@ -1530,6 +1533,8 @@
         if (endBtn) {
             endBtn.addEventListener('click', function () {
                 var ec = document.getElementById('endingCall');
+                ec.querySelector('.ec-title').textContent = 'ending call…'; // a decline may have changed these before coming Back
+                ec.querySelector('.ec-sub').textContent = 'taking you to my classic site';
                 ec.classList.add('show');
                 buzz(40);
                 setTimeout(function () { window.location.href = 'index_classic.html'; }, 1000);
@@ -1575,7 +1580,7 @@
                 ec.querySelector('.ec-sub').textContent = sayings[Math.floor(Math.random() * sayings.length)];
                 ec.classList.add('show');
                 hide();
-                setTimeout(function () { window.location.href = 'index_classic.html'; }, 1800);
+                setTimeout(function () { window.location.href = 'index_classic.html'; }, 4000);
             });
             setTimeout(function () { accept.focus({ preventScroll: true }); }, 50);
         })();
@@ -1733,7 +1738,7 @@
                         if (!blob) { alert('Could not capture — the video may still be loading.'); return; }
                         var file = new File([blob], 'vishaljohn-call.png', { type: 'image/png' });
                         if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                            navigator.share({ files: [file], title: 'On a call with Vishal' }).catch(function () { dl(blob); });
+                            navigator.share({ files: [file], title: 'On a call with Vishal' }).catch(function (err) { if (!err || err.name !== 'AbortError') dl(blob); });
                         } else { dl(blob); }
                     }, 'image/png');
                 } catch (err) { alert('Could not capture — the video may still be loading.'); }

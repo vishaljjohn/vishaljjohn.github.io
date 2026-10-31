@@ -1,6 +1,7 @@
 /* Mac's Big Gulp: the Immune Team game on the children's book page.
    Steer Mac the Macrophage around Sam's scraped knee, swallow germs to grow,
-   dodge the ones bigger than you, and leave Sam's own cells alone.
+   dodge the ones bigger than you (one touch ends the game unless B-Bee's
+   antibodies are shielding him), and leave Sam's own cells alone.
    Germs keep multiplying, so clear the infection before it takes over.
 
    Immune-system ideas in the rules:
@@ -9,7 +10,7 @@
    - B-Bee's antibodies slow germs down and make them easier to swallow.
    - Tia the T-Cell calls in backup.
 
-   The game gets harder every 30 seconds up to level 6, and every finished game
+   The game gets harder every 22 seconds up to level 6, and every finished game
    earns a trophy. Winners can put their name on the top 10 (cloudflare-worker.js
    keeps the shared list; until it answers, the list is kept on this device). */
 (function () {
@@ -22,7 +23,7 @@
   var KINDS = ["germ-green", "germ-blue", "germ-purple", "germ-orange"];
   var KIND_NAMES = { "germ-green": "green germs", "germ-blue": "squiggly germs", "germ-purple": "purple germs", "germ-orange": "orange germs" };
   var MEMORY_AT = 4;
-  var MAX_LEVEL = 6, LEVEL_EVERY = 30, WIN_BONUS = 100;
+  var MAX_LEVEL = 6, LEVEL_EVERY = 22, WIN_BONUS = 100;
   var SCORES_URL = "https://vishal-chat.vishaljjohn.workers.dev/scores";
   var FACTS = [
     "Macrophage means \"big eater.\" Mac's name is his job!",
@@ -106,7 +107,7 @@
     mac = { x: WORLD_W / 2, y: WORLD_H / 2, r: START_R, vx: 0, vy: 0, gulp: 0 };
     germs = []; crumbs = []; cells = []; drops = []; bits = []; floats = []; deco = [];
     remembered = {}; eatenByKind = {};
-    level = 1; score = 0; infection = 45; hurtUntil = 0; antibodyUntil = 0; spawnIn = 2.6; dropIn = 12; sayUntil = 0; elapsed = 0;
+    level = 1; score = 0; infection = 45; hurtUntil = 0; antibodyUntil = -1; spawnIn = 2.6; dropIn = 12; sayUntil = 0; elapsed = 0;
     target = null; keys = {};
     cam = { x: mac.x, y: mac.y, s: 1 };
     var i;
@@ -158,23 +159,14 @@
     if (infection <= 0) end(true);
   }
   function hurt(g) {
-    if (elapsed < antibodyUntil) { // the antibody shield bounces red germs away
+    if (elapsed < antibodyUntil + 0.8) { // the antibody shield bounces red germs away; the extra moment is for germs that turn red as it fades
       var away = Math.atan2(g.y - mac.y, g.x - mac.x), gap = mac.r + g.r * 0.72 + 2;
       g.x = mac.x + Math.cos(away) * gap; g.y = mac.y + Math.sin(away) * gap;
       g.vx = Math.cos(away) * 320; g.vy = Math.sin(away) * 320;
       return;
     }
-    if (elapsed < hurtUntil) return;
-    hurtUntil = elapsed + 1.8;
-    mac.r = Math.max(MIN_R, Math.sqrt(mac.r * mac.r * 0.82));
-    var a = Math.atan2(mac.y - g.y, mac.x - g.x);
-    mac.vx += Math.cos(a) * 520; mac.vy += Math.sin(a) * 520;
-    grow(g, 60);
-    burst(mac.x, mac.y, "#ff6b6b", 12);
-    floatText(mac.x, mac.y - mac.r, "Ouch!", "#ffe3e3");
-    say("Ouch, but Mac is okay! Keep going and look for green rings.");
-    buzz([30, 40, 30]);
-    hud();
+    burst(mac.x, mac.y, "#ff6b6b", 18);
+    end(false, true);
   }
   function bumpCell(c) {
     if (elapsed < hurtUntil) return;
@@ -228,7 +220,7 @@
       var ease = Math.min(1, d / 70);
       if (d > 6) { ix = dx / d * ease; iy = dy / d * ease; }
     }
-    var speed = 245 * Math.pow(START_R / mac.r, 0.28);
+    var speed = 285 * Math.pow(START_R / mac.r, 0.28);
     var k = Math.min(1, dt * 7);
     mac.vx += (ix * speed - mac.vx) * k; mac.vy += (iy * speed - mac.vy) * k;
     mac.x = Math.max(mac.r, Math.min(WORLD_W - mac.r, mac.x + mac.vx * dt));
@@ -249,11 +241,11 @@
       var g = germs[i];
       var dist = Math.hypot(mac.x - g.x, mac.y - g.y);
       var edible = canEat(g);
-      var gs = 56 * (1 + hard() * 0.05) * Math.pow(26 / g.r, 0.2) * slow * (remembered[g.kind] ? 0.72 : 1);
+      var gs = 68 * (1 + hard() * 0.07) * Math.pow(26 / g.r, 0.2) * slow * (remembered[g.kind] ? 0.72 : 1);
       var ax = Math.cos(g.a), ay = Math.sin(g.a);
       g.a += rnd(-1.4, 1.4) * dt;
       if (!edible && dist < 280 + hard() * 12 && elapsed - g.born > 1) { // bigger germs give chase, a bit slower than Mac
-        ax = (mac.x - g.x) / dist; ay = (mac.y - g.y) / dist; gs = Math.min(speed * (0.6 + hard() * 0.015), gs * 2.1 + 40) * slow;
+        ax = (mac.x - g.x) / dist; ay = (mac.y - g.y) / dist; gs = Math.min(speed * (0.62 + hard() * 0.02), gs * 2.1 + 40) * slow;
       } else if (edible && dist < 150 + mac.r) { // smaller ones try to scurry off
         ax = (g.x - mac.x) / dist; ay = (g.y - mac.y) / dist; gs *= 1.55;
       }
@@ -263,7 +255,7 @@
       if (g.x <= g.r || g.x >= WORLD_W - g.r || g.y <= g.r || g.y >= WORLD_H - g.r) g.a += 2;
       g.wob += dt * 4;
       if (edible) { if (dist < mac.r * 0.92) eat(g, i); }
-      else if (dist < mac.r + g.r * 0.72) hurt(g);
+      else if (dist < mac.r * 0.85 + g.r * 0.62) hurt(g);
       if (!running) return;
     }
 
@@ -287,7 +279,7 @@
     // germs multiply when left alone
     spawnIn -= dt;
     if (spawnIn <= 0) {
-      spawnIn = 2.7 - hard() * 0.14;
+      spawnIn = 2.2 - hard() * 0.14;
       if (germs.length < 46) spawnGerm();
       infection += 0.4 + hard() * 0.03 + Math.min(0.5, germs.length * 0.01);
       hud();
@@ -522,7 +514,7 @@
     return { color: "#c98a4b", name: "Bronze trophy: Thanks for helping Sam!" };
   }
 
-  function end(won) {
+  function end(won, caught) {
     if (won) score += WIN_BONUS;
     hud();
     stopPlaying();
@@ -533,9 +525,10 @@
     var trophy = trophyFor(won);
     endPanel.querySelector(".gg-trophy").style.color = trophy.color;
     endPanel.querySelector(".gg-trophy-name").textContent = trophy.name;
-    endPanel.querySelector(".gg-final").textContent = won ? "Sam's knee is all better!" : "The infection reached 100%!";
+    endPanel.querySelector(".gg-final").textContent = won ? "Sam's knee is all better!" : caught ? "A red germ got Mac!" : "The infection reached 100%!";
     endPanel.querySelector(".gg-verdict").textContent = won
       ? "You and the Immune Team cleared the infection."
+      : caught ? "Dodge the red rings, or grab B-Bee for a shield. Win to get on the top 10."
       : "Germs multiply fast. Swallow the small ones early, and win to get on the top 10.";
     endPanel.querySelector(".gg-best").textContent = "Score " + score + " · Best " + best + " · Reached level " + level;
     pendingScore = score;
@@ -583,6 +576,7 @@
     keys[KEYMAP[e.key]] = true; e.preventDefault(); e.stopPropagation();
   }, true);
   document.addEventListener("keyup", function (e) { if (KEYMAP[e.key]) keys[KEYMAP[e.key]] = false; }, true);
+  window.addEventListener("blur", function () { keys = {}; }); // a key released in another window never sends keyup
 
   document.addEventListener("visibilitychange", function () {
     paused = document.hidden;
