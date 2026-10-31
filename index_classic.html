@@ -63,6 +63,18 @@
         .spotify-sub { color: #888; font-size: 14px; margin: 0 0 24px; }
         .spotify-layout { display: flex; gap: 40px; align-items: flex-start; }
         .spotify-widget { flex-shrink: 0; }
+        .sp-now { display: block; width: 280px; max-width: 100%; background: #121212; color: #fff; border-radius: 8px; overflow: hidden; text-decoration: none; }
+        .sp-now[hidden] { display: none; }
+        .sp-now img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+        .sp-now-text { display: block; padding: 12px 14px; font-size: 14px; }
+        .sp-now-label { display: block; color: #1DB954; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+        .sp-now-name, .sp-now-artist { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sp-now-name { font-weight: bold; }
+        .sp-now-artist { color: #b3b3b3; font-size: 13px; margin-top: 2px; }
+        .sp-play { flex-shrink: 0; width: 32px; height: 32px; margin-left: auto; border: 0; border-radius: 50%; background: #1DB954; color: #fff; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .sp-play:hover { background: #1aa34a; }
+        .sp-note { margin: 12px 0 0; font-size: 11px; color: #888; }
+        @media (max-width: 680px) { .sp-play { width: 40px; height: 40px; font-size: 13px; } }
         .spotify-tracks { flex: 1; }
         .spotify-tracks h3 { font-size: 15px; font-weight: bold; color: #333; margin: 0 0 16px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         .track-list { list-style: none; padding: 0; margin: 0; }
@@ -120,6 +132,7 @@
     }
     </script>
     <link rel="stylesheet" href="assets/site.css">
+    <script src="assets/sp-preview.js"></script>
 </head>
 
 <body>
@@ -202,16 +215,13 @@
         <h2><i class="fab fa-spotify" style="color:#1DB954;"></i> What I'm Listening To</h2>
         <p class="spotify-sub">My recent Spotify activity via Last.fm</p>
         <div class="spotify-layout">
-            <div class="spotify-widget">
-                <a href="https://spotify-github-profile.kittinanx.com/api/view?uid=22enikmc36cjblojhfhekdvzq&redirect=true" target="_blank" rel="noopener">
-                    <img loading="lazy" decoding="async" src="https://spotify-github-profile.kittinanx.com/api/view?uid=22enikmc36cjblojhfhekdvzq&cover_image=true&theme=default&show_offline=false&background_color=121212&interchange=false&profanity=true&bar_color_cover=false" alt="Spotify Now Playing" style="border-radius:8px; max-width:100%;">
-                </a>
-            </div>
+            <div class="spotify-widget"><a class="sp-now" id="spNow" target="_blank" rel="noopener" hidden></a></div>
             <div class="spotify-tracks">
                 <h3>Recently Played</h3>
                 <ul class="track-list" id="track-list">
                     <li class="track-loading">Loading tracks...</li>
                 </ul>
+                <p class="sp-note">Samples from Apple Music</p>
                 <a class="spotify-open" href="https://www.last.fm/user/vishaljjohn" target="_blank" rel="noopener">
                     <i class="fab fa-lastfm"></i> Last.fm Profile
                 </a>
@@ -234,28 +244,50 @@
 
         // Last.fm recent tracks
         const list = document.getElementById('track-list');
-        fetch('https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=vishaljjohn&api_key=83c5b48d3d1c6dcc0591b439664a3ed0&limit=8&format=json')
-            .then(r => r.json())
-            .then(data => {
-                const raw = data.recenttracks?.track;
-                const tracks = Array.isArray(raw) ? raw : (raw ? [raw] : []);
-                if (!tracks || !tracks.length) throw new Error('no tracks');
-                // escape track/artist names so titles with < or & can't break the list
-                const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-                list.innerHTML = tracks.slice(0, 8).map((t, i) => {
-                    const isNow = t['@attr']?.nowplaying === 'true';
-                    return `<li class="track-item">
-                        <span class="track-num" style="${isNow ? 'color:#1DB954;font-size:10px;' : ''}">${isNow ? '▶' : i + 1}</span>
-                        <div class="track-info">
-                            <div class="track-name">${esc(t.name)}</div>
-                            <div class="track-artist">${esc(t.artist?.['#text'])}</div>
-                        </div>
-                    </li>`;
-                }).join('');
-            })
-            .catch(() => {
-                list.innerHTML = `<li class="track-loading">Couldn't load recent tracks right now.</li>`;
-            });
+        const spNow = document.getElementById('spNow');
+        // escape track/artist names so titles with < or & can't break the list
+        const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+        let loaded = false, shown = '';
+        const spUrl = t => 'https://open.spotify.com/search/' + encodeURIComponent((t.name + ' ' + (t.artist?.['#text'] || '')).trim());
+        function loadTracks() {
+            fetch('https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=vishaljjohn&api_key=83c5b48d3d1c6dcc0591b439664a3ed0&limit=8&format=json')
+                .then(r => r.json())
+                .then(data => {
+                    const raw = data.recenttracks?.track;
+                    const tracks = Array.isArray(raw) ? raw : (raw ? [raw] : []);
+                    if (!tracks.length) throw new Error('no tracks');
+                    loaded = true;
+                    const sig = tracks.slice(0, 8).map(t => t.name + '|' + (t.artist?.['#text'] || '') + (t['@attr']?.nowplaying || '')).join('\n');
+                    if (sig === shown) return;   // same songs: leave the list (and any sample) alone
+                    shown = sig;
+                    list.innerHTML = tracks.slice(0, 8).map((t, i) => {
+                        const isNow = t['@attr']?.nowplaying === 'true';
+                        return `<li class="track-item">
+                            <span class="track-num" style="${isNow ? 'color:#1DB954;font-size:10px;' : ''}">${isNow ? '▶' : i + 1}</span>
+                            <div class="track-info">
+                                <div class="track-name">${esc(t.name)}</div>
+                                <div class="track-artist">${esc(t.artist?.['#text'])}</div>
+                            </div>
+                        </li>`;
+                    }).join('');
+                    Array.from(list.children).forEach((li, i) => li.appendChild(spPreview.button(tracks[i].name, tracks[i].artist?.['#text'] || '', spUrl(tracks[i]))));
+                    spPreview.paint();
+                    // big card for the latest track (skips Last.fm's blank star image)
+                    const t0 = tracks[0], artist = t0.artist?.['#text'] || '';
+                    const art = (t0.image?.[3]?.['#text'] || t0.image?.[2]?.['#text'] || '');
+                    spNow.href = spUrl(t0);
+                    spNow.innerHTML = (art && !/2a96cbd8b46e442fc41c2b86b821562f/.test(art) ? `<img src="${esc(art)}" alt="">` : '')
+                        + `<span class="sp-now-text"><span class="sp-now-label">${t0['@attr']?.nowplaying === 'true' ? 'Now playing' : 'Last played'}</span>`
+                        + `<span class="sp-now-name">${esc(t0.name)}</span><span class="sp-now-artist">${esc(artist)}</span></span>`;
+                    spNow.hidden = false;
+                })
+                .catch(() => {
+                    if (!loaded) list.innerHTML = `<li class="track-loading">Couldn't load recent tracks right now.</li>`;
+                });
+        }
+        loadTracks();
+        // keep it current while the page is open
+        setInterval(() => { if (!document.hidden) loadTracks(); }, 60000);
     </script>
     <script src="assets/site.js"></script>
     <script src="assets/chat-widget.js" defer></script>

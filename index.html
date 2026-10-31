@@ -441,19 +441,25 @@
         .sp-head { font-size: 12px; font-weight: 700; color: #fff; padding: 4px 6px 8px; display: flex; align-items: center; gap: 7px; }
         .sp-head .fa-spotify { color: #1DB954; }
         .sp-list { list-style: none; margin: 0; padding: 0; }
-        .sp-list a { display: flex; align-items: center; gap: 10px; padding: 7px 6px; border-radius: 8px; text-decoration: none; color: #fff; }
+        .sp-list li { display: flex; align-items: center; gap: 2px; }
+        .sp-list a { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 7px 6px; border-radius: 8px; text-decoration: none; color: #fff; }
         .sp-list a:hover { background: rgba(255,255,255,.08); }
         .sp-list img, .sp-noart { width: 36px; height: 36px; border-radius: 5px; object-fit: cover; flex-shrink: 0; }
         .sp-noart { background: #1DB954; display: flex; align-items: center; justify-content: center; font-size: 13px; }
         .sp-meta { min-width: 0; display: flex; flex-direction: column; }
         .sp-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .sp-artist { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sp-play { flex-shrink: 0; width: 34px; height: 34px; border: 0; border-radius: 50%; background: #1DB954; color: #fff; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .sp-play:hover { background: #1aa34a; }
+        .sp-note { margin: 8px 6px 0; font-size: 10px; color: var(--muted); }
+        @media (max-width: 680px) { .sp-play { width: 40px; height: 40px; font-size: 13px; } }
         .sp-open { display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 8px; background: #1DB954; color: #fff; text-decoration: none; font-size: 13px; font-weight: 700; padding: 9px; border-radius: 9px; }
         .sp-open:hover { background: #1aa34a; }
         @media (max-width: 680px) { .sp-panel { left: 14px; top: 96px; } }
         .self-ar { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; display: none; }
         .self-tile.live .self-ar { display: block; }
     </style>
+    <script src="assets/sp-preview.js"></script>
 </head>
 
 <body class="no-video">
@@ -480,6 +486,7 @@
     <div class="sp-panel" id="spPanel">
         <div class="sp-head"><i class="fab fa-spotify"></i> Recently played</div>
         <ul class="sp-list" id="spList"></ul>
+        <p class="sp-note">Samples from Apple Music</p>
         <a class="sp-open" href="https://open.spotify.com/user/22enikmc36cjblojhfhekdvzq" target="_blank" rel="noopener"><i class="fab fa-spotify"></i> Open Spotify</a>
     </div>
 
@@ -1052,7 +1059,11 @@
                 var left = r.left + r.width / 2 - fhint.offsetWidth / 2;
                 left = Math.max(8, Math.min(window.innerWidth - fhint.offsetWidth - 8, left));
                 fhint.style.left = left + 'px';
-                fhint.style.top = (r.top - fhint.offsetHeight - 12) + 'px';
+                var top = r.top - fhint.offsetHeight - 12;
+                var box = document.querySelector('.chat-field');
+                var b = box && box.offsetParent ? box.getBoundingClientRect() : null;
+                if (b && top < b.bottom && top + fhint.offsetHeight > b.top) top = b.top - fhint.offsetHeight - 10;
+                fhint.style.top = top + 'px';
             }
             function show() { place(); fhint.classList.add('show'); place(); }
             function hide() { fhint.classList.remove('show'); btn.classList.remove('pulse-hint'); }
@@ -1582,7 +1593,6 @@
                 hide();
                 setTimeout(function () { window.location.href = 'index_classic.html'; }, 4000);
             });
-            setTimeout(function () { accept.focus({ preventScroll: true }); }, 50);
         })();
 
         /* ---- Visitor counter ("you're visitor #N", all-time, via Worker+KV) ---- */
@@ -1641,29 +1651,41 @@
             var np = document.getElementById('nowPlaying'), npt = document.getElementById('npText');
             var panel = document.getElementById('spPanel'), list = document.getElementById('spList');
             function spUrl(name, artist) { return 'https://open.spotify.com/search/' + encodeURIComponent(((name || '') + ' ' + (artist || '')).trim()); }
-            fetch('https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=vishaljjohn&api_key=83c5b48d3d1c6dcc0591b439664a3ed0&limit=5&format=json')
-                .then(function (r) { return r.json(); })
-                .then(function (d) {
-                    var tr = d && d.recenttracks && d.recenttracks.track;
-                    if (!tr) return; if (!Array.isArray(tr)) tr = [tr]; if (!tr.length) return;
-                    var t0 = tr[0], now = t0['@attr'] && t0['@attr'].nowplaying === 'true';
-                    npt.textContent = (now ? 'Now playing: ' : 'Last played: ') + t0.name + ' · ' + ((t0.artist && t0.artist['#text']) || '');
-                    np.style.display = 'flex';
-                    tr.slice(0, 5).forEach(function (t) {
-                        var artist = (t.artist && t.artist['#text']) || '';
-                        var img = ''; if (t.image && t.image.length) { img = (t.image[2] && t.image[2]['#text']) || (t.image[1] && t.image[1]['#text']) || ''; }
-                        var li = document.createElement('li');
-                        var a = document.createElement('a'); a.href = spUrl(t.name, artist); a.target = '_blank'; a.rel = 'noopener';
-                        if (img) { var im = document.createElement('img'); im.src = img; im.alt = ''; a.appendChild(im); }
-                        else { var no = document.createElement('span'); no.className = 'sp-noart'; no.innerHTML = '<i class="fas fa-music"></i>'; a.appendChild(no); }
-                        var meta = document.createElement('span'); meta.className = 'sp-meta';
-                        var nm = document.createElement('span'); nm.className = 'sp-name'; nm.textContent = t.name;
-                        var ar = document.createElement('span'); ar.className = 'sp-artist'; ar.textContent = artist;
-                        meta.appendChild(nm); meta.appendChild(ar); a.appendChild(meta); li.appendChild(a); list.appendChild(li);
-                    });
-                }).catch(function () {});
-            np.addEventListener('click', function (e) { e.stopPropagation(); panel.classList.toggle('open'); });
-            document.addEventListener('click', function (e) { if (!panel.contains(e.target) && !np.contains(e.target)) panel.classList.remove('open'); });
+            var shown = '';
+            function load() {
+                fetch('https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=vishaljjohn&api_key=83c5b48d3d1c6dcc0591b439664a3ed0&limit=5&format=json')
+                    .then(function (r) { return r.json(); })
+                    .then(function (d) {
+                        var tr = d && d.recenttracks && d.recenttracks.track;
+                        if (!tr) return; if (!Array.isArray(tr)) tr = [tr]; if (!tr.length) return;
+                        var t0 = tr[0], now = t0['@attr'] && t0['@attr'].nowplaying === 'true';
+                        npt.textContent = (now ? 'Now playing: ' : 'Last played: ') + t0.name + ' · ' + ((t0.artist && t0.artist['#text']) || '');
+                        np.style.display = 'flex';
+                        var sig = tr.slice(0, 5).map(function (t) { return t.name + '|' + ((t.artist && t.artist['#text']) || ''); }).join('\n');
+                        if (sig === shown) return;   // same songs: leave the list (and any sample) alone
+                        shown = sig;
+                        list.innerHTML = '';
+                        tr.slice(0, 5).forEach(function (t) {
+                            var artist = (t.artist && t.artist['#text']) || '';
+                            var img = ''; if (t.image && t.image.length) { img = (t.image[2] && t.image[2]['#text']) || (t.image[1] && t.image[1]['#text']) || ''; }
+                            if (/2a96cbd8b46e442fc41c2b86b821562f/.test(img)) img = '';   // Last.fm's blank star image
+                            var li = document.createElement('li');
+                            var a = document.createElement('a'); a.href = spUrl(t.name, artist); a.target = '_blank'; a.rel = 'noopener';
+                            if (img) { var im = document.createElement('img'); im.src = img; im.alt = ''; a.appendChild(im); }
+                            else { var no = document.createElement('span'); no.className = 'sp-noart'; no.innerHTML = '<i class="fas fa-music"></i>'; a.appendChild(no); }
+                            var meta = document.createElement('span'); meta.className = 'sp-meta';
+                            var nm = document.createElement('span'); nm.className = 'sp-name'; nm.textContent = t.name;
+                            var ar = document.createElement('span'); ar.className = 'sp-artist'; ar.textContent = artist;
+                            meta.appendChild(nm); meta.appendChild(ar); a.appendChild(meta); li.appendChild(a); li.appendChild(spPreview.button(t.name, artist, a.href)); list.appendChild(li);
+                        });
+                        spPreview.paint();
+                    }).catch(function () {});
+            }
+            load();
+            // keep it current while the page is open
+            setInterval(function () { if (!document.hidden) load(); }, 60000);
+            np.addEventListener('click', function (e) { e.stopPropagation(); if (!panel.classList.toggle('open')) spPreview.stop(); });
+            document.addEventListener('click', function (e) { if (panel.classList.contains('open') && !panel.contains(e.target) && !np.contains(e.target)) { panel.classList.remove('open'); spPreview.stop(); } });
         })();
 
         /* ---- "Share screen" project tour ---- */

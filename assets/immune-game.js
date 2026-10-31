@@ -39,7 +39,7 @@
   var barEl = root.querySelector(".gg-bar i"), sayEl = root.querySelector(".gg-say");
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---- Sprites: the same doodles used across the site ---- */
+  /* ---- Sprites: the same doodles as the character cards ---- */
   var sprites = {};
   fetch("../assets/doodles.svg").then(function (r) { return r.text(); }).then(function (text) {
     var doc = new DOMParser().parseFromString(text, "image/svg+xml");
