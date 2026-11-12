@@ -15,7 +15,7 @@
   var KB = [
     { k: ['who are you','about you','yourself','your name','what do you do'],
       a: "i'm Vishal John — an M3 medical student at the University of Louisville, plus a children's book author, balloon animal artist, and aspiring coffee shop owner." },
-    { k: ['school','med','student','uofl','louisville','michigan','study'],
+    { k: ['school','med school','medical','student','uofl','louisville','michigan','study'],
       a: "i'm a 3rd-year (M3) med student at the University of Louisville School of Medicine; i did my undergrad at the University of Michigan." },
     { k: ['book','children','author','immune','buy','amazon'],
       a: "i co-wrote a kids' book, \"The Brave Little Immune Team,\" for ages 4-8. you can grab it on <a href='https://www.amazon.com/Brave-Little-Immune-Team/dp/B0GVC5R915' target='_blank' rel='noopener'>Amazon</a>." },
@@ -29,7 +29,7 @@
       a: "i've contributed to 6 publications — see them on my <a href='https://scholar.google.com/citations?user=QXyjTGgAAAAJ' target='_blank' rel='noopener'>Google Scholar</a>." },
     { k: ['rock cancer','climb'],
       a: "i'm on the leadership team of Rock Cancer — free rock climbing for young cancer survivors." },
-    { k: ['volunteer','service','community','help','breakfast','andrew'],
+    { k: ['volunteer','service','community','elder life','help program','breakfast','andrew'],
       a: "i'm on the board of Rock Cancer, and in Ann Arbor i volunteered with Saint Andrew's Breakfast Program and the Hospital Elder Life Program (HELP) until 2024." },
     { k: ['contact','email','reach','hire','message','collaborat','work together'],
       a: "the best way to reach me is my Contact page — i'd love to hear from you." },

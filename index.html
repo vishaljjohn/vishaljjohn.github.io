@@ -433,9 +433,10 @@
         .ss-bar { display: flex; align-items: center; gap: 9px; padding: 11px 16px; background: #15181d; font-size: 13px; color: #cfd2d6; border-bottom: 1px solid var(--stroke); }
         .ss-livedot { width: 9px; height: 9px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 0 rgba(229,72,77,.6); animation: connspin 0s; }
         .ss-bar .sheet-close { font-size: 22px; }
-        .ss-stage { position: relative; aspect-ratio: 16/9; background: #000; }
+        .ss-stage { position: relative; aspect-ratio: 16/9; background: #000; overflow: hidden; }   /* keep the blurred backdrop from covering the close button */
         .ss-slide { position: absolute; inset: 0; opacity: 0; transition: opacity .5s; display: flex; align-items: flex-end; }
-        .ss-slide.on { opacity: 1; }
+        .ss-slide { pointer-events: none; }   /* hidden slides must not catch taps meant for the visible one */
+        .ss-slide.on { opacity: 1; pointer-events: auto; }
         .ss-slide img { position: absolute; inset: 0; width: 100%; height: 100%; }
         .ss-bg { object-fit: cover; filter: blur(22px) brightness(0.5); transform: scale(1.12); }
         .ss-fg { object-fit: contain; }
@@ -997,7 +998,7 @@
               a: "Bluegrass Biodesign is a medical-device innovation program i've been part of. more on the <a href='pages/bluegrassbiodesign.html'>Bluegrass Biodesign</a> page." },
             { k: ['japan','ishinomaki','revitaliz'],
               a: "i spent time on community revitalization in Ishinomaki, Japan. photos and the story are on the <a href='pages/japan.html'>Japan</a> page." },
-            { k: ['help','elder','hospital','older'],
+            { k: ['help program','elder','hospital','older'],
               a: "i volunteered with the Hospital Elder Life Program (HELP) from 2022 to 2024, supporting older patients. more on the <a href='pages/HELP.html'>HELP</a> page." },
             { k: ['breakfast','andrew','saint','volunteer','service','community'],
               a: "i served at Saint Andrew's Breakfast Program from 2021 to 2024, and i'm on the board of Rock Cancer. there's a page on <a href='pages/standrews.html'>Saint Andrew's</a>, and you can see everything via 'My work' in the chat." },
