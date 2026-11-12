@@ -149,7 +149,7 @@ nav a { font-size: 14px; }
 .spin-btn:hover { background: #075488; }
 .spin-btn:active { transform: scale(0.92); }
 @media screen and (max-width: 480px) {
-  .spin-stage { height: 400px; }
+  .spin-stage { height: 320px; }   /* less empty black around the 250px photos on phones */
   .spin-gallery .spin-ring { width: 250px; height: 250px; margin: -125px 0 0 -125px; }
   .spin-gallery .spin-card { width: 250px; height: 250px; }
 }
@@ -177,6 +177,12 @@ nav a { font-size: 14px; }
   .spin-lb-nav { width: 44px; height: 44px; font-size: 26px; background: rgba(255,255,255,0.22); }
   .spin-lb-prev { left: 8px; } .spin-lb-next { right: 8px; }
   .spin-lightbox { padding: 12px; }
+  /* phones: arrows sit at the bottom beside the caption instead of covering the photo */
+  .spin-lb-nav { top: auto; bottom: calc(10px + env(safe-area-inset-bottom)); transform: none; }
+  .spin-lb-caption { bottom: calc(22px + env(safe-area-inset-bottom)); padding: 0 62px; font-size: 14px; }
+  .spin-lb-close { top: calc(10px + env(safe-area-inset-top)); right: 10px; }
+  .spin-lb-counter { top: calc(18px + env(safe-area-inset-top)); }
+  .spin-lb-img { max-height: calc(100dvh - 150px); }
 }
 
 /* ===========================================================

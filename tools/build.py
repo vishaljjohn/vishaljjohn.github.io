@@ -10,7 +10,7 @@
 The result is plain HTML, so GitHub Pages serves it with no build step.
 Share images are separate: python3 tools/build-share-images.py
 """
-import datetime, glob, html, json, os, re, sys
+import datetime, glob, html, json, os, re, subprocess, sys
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 os.chdir(ROOT)
@@ -171,8 +171,15 @@ def paper_pages():
 def sitemap():
     skip = {"404.html", "pages/thanks.html"}
     pages = ["index.html", "index_classic.html"] + sorted(glob.glob("pages/*.html")) + sorted(glob.glob("pages/papers/*.html"))
+    def lastmod(p):
+        # date of the last commit that touched the page, so search engines know what changed
+        try:
+            d = subprocess.run(["git", "log", "-1", "--format=%cs", "--", p], capture_output=True, text=True).stdout.strip()
+        except OSError:
+            d = ""
+        return d or datetime.date.fromtimestamp(os.path.getmtime(p)).isoformat()
     body = "\n".join(
-        f"  <url><loc>https://www.vishaljohn.com/{'' if p == 'index.html' else p}</loc></url>" for p in pages if p not in skip)
+        f"  <url><loc>https://www.vishaljohn.com/{'' if p == 'index.html' else p}</loc><lastmod>{lastmod(p)}</lastmod></url>" for p in pages if p not in skip)
     new = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{body}\n</urlset>\n'
     if not os.path.exists("sitemap.xml") or open("sitemap.xml").read() != new:
         open("sitemap.xml", "w").write(new)

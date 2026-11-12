@@ -24,9 +24,18 @@
     <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og-image.jpg">
     <meta name="theme-color" content="#0b0c0e">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Vishal John",
+      "url": "https://www.vishaljohn.com/"
+    }
+    </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -161,6 +170,20 @@
             display: flex; flex-direction: column; gap: 10px; transition: opacity 0.25s, transform 0.25s, bottom 0.2s;
         }
         .chat.hidden { opacity: 0; transform: translateY(12px); pointer-events: none; }
+        /* Minimized chat: collapses to a small pill so the video (and my face) is fully visible */
+        .chat-pill {
+            display: none; align-self: flex-start; align-items: center; gap: 9px; min-height: 44px;
+            background: rgba(14,16,20,0.86); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.20); border-radius: 999px; padding: 5px 15px 5px 5px;
+            color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.28); animation: pop 0.32s ease both; transition: background 0.18s;
+        }
+        .chat-pill:hover { background: rgba(40,44,50,0.92); }
+        .chat-pill img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+        .chat-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+        .chat-pill i { font-size: 11px; color: var(--muted); }
+        .chat.mini > :not(.chat-pill) { display: none !important; }
+        .chat.mini .chat-pill { display: inline-flex; }
         .chat-head { display: flex; align-items: center; gap: 9px; margin-bottom: 2px; }
         .chat-ava { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid var(--stroke); }
         .chat-name { font-size: 13px; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.7); }
@@ -346,9 +369,9 @@
         .fclear:hover { background: rgba(255,255,255,0.14); }
         .ctrl.pulse-hint { animation: vjpulse 1.7s ease-in-out infinite; }
         @keyframes vjpulse { 0%,100% { box-shadow: 0 0 0 0 rgba(10,109,176,0.55); } 50% { box-shadow: 0 0 0 9px rgba(10,109,176,0); } }
-        .filter-hint { position: fixed; z-index: 9; background: #fff; color: #15171b; font-size: 13px; font-weight: 700; padding: 9px 13px; border-radius: 12px; box-shadow: 0 10px 28px rgba(0,0,0,0.35); pointer-events: none; opacity: 0; transform: translateY(8px); transition: opacity .3s, transform .3s; max-width: 220px; line-height: 1.3; }
+        .filter-hint { position: fixed; z-index: 11; background: #fff; color: #15171b; font-size: 13px; font-weight: 700; padding: 9px 13px; border-radius: 12px; box-shadow: 0 10px 28px rgba(0,0,0,0.35); pointer-events: none; opacity: 0; transform: translateY(8px); transition: opacity .3s, transform .3s; max-width: 220px; line-height: 1.3; }
         .filter-hint.show { opacity: 1; transform: none; }
-        .filter-hint:after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #fff; }
+        .filter-hint:after { content: ""; position: absolute; left: var(--arrow-x, 50%); bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #fff; }
         /* Incoming call screen */
         .ringing { position: fixed; inset: 0; z-index: 60; background: radial-gradient(circle at 50% 30%, #1d2533, #0b0c0e 70%); display: flex; align-items: center; justify-content: center; padding: 24px; transition: opacity .35s; }
         .ringing.gone { opacity: 0; pointer-events: none; }
@@ -575,6 +598,9 @@
 
     <!-- Chat -->
     <div class="chat" id="chat">
+        <button type="button" class="chat-pill" id="chatPill" aria-label="Open chat with Vishal" aria-controls="thread">
+            <img src="images/Vishal%20John%20Headshot.jpg" alt=""><span>Chat with Vishal</span><span class="dot"></span><i class="fas fa-chevron-up"></i>
+        </button>
         <div class="chat-head">
             <img class="chat-ava" src="images/Vishal%20John%20Headshot.jpg" alt="Vishal">
             <div>
@@ -889,7 +915,35 @@
         var field = document.getElementById('chatField');
         var sendBtn = document.getElementById('chatSend');
         var hist = [];
+        var chatPill = document.getElementById('chatPill');
+        var chatEngaged = false, miniTimer = null;
+        function expandChat() {
+            chat.classList.remove('mini', 'hidden');
+            scrollDown();
+        }
+        function minimizeChat() {
+            if (chat.classList.contains('hidden') || chat.classList.contains('mini')) return;
+            chat.classList.add('hidden');                       // fade out first…
+            setTimeout(function () { chat.classList.add('mini'); chat.classList.remove('hidden'); }, 260);   // …then show the pill
+        }
+        // Once the intro has fully shown, tuck the chat away after 7 seconds so the
+        // video is unobstructed, unless the visitor has started using the chat.
+        function scheduleMinimize() {
+            clearTimeout(miniTimer);
+            miniTimer = setTimeout(function () {
+                if (chatEngaged) return;
+                if (chat.matches(':hover')) { scheduleMinimize(); return; }   // reading with the mouse over it: wait
+                minimizeChat();
+            }, 7000);
+        }
+        function engage() { chatEngaged = true; clearTimeout(miniTimer); }
+        ['pointerdown', 'focusin', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) {
+            chat.addEventListener(ev, function (e) { if (!chat.classList.contains('mini')) engage(); }, { passive: true });
+        });
+        chatPill.addEventListener('click', function () { engage(); expandChat(); });
         document.getElementById('cChat').addEventListener('click', function () {
+            engage();
+            if (chat.classList.contains('mini')) { expandChat(); return; }
             chat.classList.toggle('hidden');
             if (!chat.classList.contains('hidden')) field.focus();
         });
@@ -1059,16 +1113,16 @@
                 var left = r.left + r.width / 2 - fhint.offsetWidth / 2;
                 left = Math.max(8, Math.min(window.innerWidth - fhint.offsetWidth - 8, left));
                 fhint.style.left = left + 'px';
-                var top = r.top - fhint.offsetHeight - 12;
-                var box = document.querySelector('.chat-field');
-                var b = box && box.offsetParent ? box.getBoundingClientRect() : null;
-                if (b && top < b.bottom && top + fhint.offsetHeight > b.top) top = b.top - fhint.offsetHeight - 10;
-                fhint.style.top = top + 'px';
+                // keep the arrow on the button even when the bubble is nudged in from the screen edge
+                var ax = r.left + r.width / 2 - left;
+                fhint.style.setProperty('--arrow-x', Math.max(14, Math.min(fhint.offsetWidth - 14, ax)) + 'px');
+                // sit right above the button (it briefly overlaps the chat box on phones, which is fine: it's on top and gone in 5s)
+                fhint.style.top = (r.top - fhint.offsetHeight - 10) + 'px';
             }
-            function show() { place(); fhint.classList.add('show'); place(); }
+            function show() { place(); fhint.classList.add('show'); place(); setTimeout(hide, 5000); }
             function hide() { fhint.classList.remove('show'); btn.classList.remove('pulse-hint'); }
             var tapped = false;
-            startFilterHint = function () { setTimeout(function () { if (!tapped) show(); }, 1500); setTimeout(hide, 9000); };
+            startFilterHint = function () { setTimeout(function () { if (!tapped) show(); }, 1500); };
             btn.addEventListener('click', function () { tapped = true; hide(); });
             window.addEventListener('resize', function () { if (fhint.classList.contains('show')) place(); });
         })();
@@ -1807,6 +1861,7 @@
                     addBubble(s.msg);
                     hist.push({ role: 'assistant', content: s.msg });
                     if (s.replies) showChips();
+                    if (si >= steps.length) scheduleMinimize();
                     run();
                 }, s.type);
             }, s.delay);

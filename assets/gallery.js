@@ -125,10 +125,16 @@
       if (captionEl) captionEl.textContent = captionOf(cards[0]);
       var hint1 = gallery.querySelector('.spin-hint');
       var ctrls1 = gallery.querySelector('.spin-controls');
-      if (hint1) hint1.textContent = 'Click the photo to enlarge';
+      if (hint1) hint1.textContent = (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches ? 'Tap' : 'Click') + ' the photo to enlarge';
       if (ctrls1) ctrls1.style.display = 'none';
       cards[0].addEventListener('click', function () { enlarge(0); });
       return;
+    }
+
+    // Touch screens: say "swipe/tap" instead of "drag/click"
+    var hintEl = gallery.querySelector('.spin-hint');
+    if (hintEl && window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+      hintEl.textContent = hintEl.textContent.replace(/^Drag/, 'Swipe').replace(/click/g, 'tap');
     }
 
     var theta = 360 / n;
