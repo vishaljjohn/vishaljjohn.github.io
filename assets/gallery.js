@@ -118,6 +118,32 @@
     }
     function enlarge(i) { ensureLightbox().show(buildItems(), i); }
 
+    // Load every photo in the carousel once it gets near the screen. The browser's own
+    // lazy loading (notably iPhone Safari) treats the cards turned sideways in 3D as
+    // off-screen and never fetches them, so the carousel showed blank cards until a
+    // photo was opened in the lightbox. The stage itself is flat, so watch that instead.
+    var loaded = false;
+    function loadAll() {
+      if (loaded) return; loaded = true;
+      cards.forEach(function (c) {
+        var im = c.querySelector('img'); if (!im) return;
+        var wasLazy = im.getAttribute('loading') === 'lazy';
+        im.loading = 'eager'; im.removeAttribute('loading');
+        if (wasLazy && !(im.complete && im.naturalWidth)) {
+          var s = im.getAttribute('src');             // re-set src so engines that ignore the
+          im.removeAttribute('src'); im.setAttribute('src', s);   // loading change still fetch it
+        }
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) { loadAll(); io.disconnect(); }
+      }, { rootMargin: '900px 0px' });
+      io.observe(stage);
+    } else {
+      loadAll();
+    }
+
     // With a single image there is nothing to spin: show it flat but still clickable.
     if (n === 1) {
       cards[0].style.transform = 'none';
@@ -141,7 +167,7 @@
     var halfCard = (cards[0].offsetWidth || 340) / 2;
     var radius = (n === 2) ? 200 : Math.round(halfCard / Math.tan(Math.PI / n)) + 40;
     var angle = 0;
-    var dragging = false, lastX = 0, downX = 0, moved = false;
+    var dragging = false, lastX = 0, downX = 0, moved = false, startAngle = 0;
     var autoTimer = null, idleTimer = null;
 
     cards.forEach(function (card, i) {
@@ -172,9 +198,17 @@
     function stopAuto() { clearInterval(autoTimer); autoTimer = null; }
     function restartIdle() { clearTimeout(idleTimer); idleTimer = setTimeout(startAuto, 4000); }
 
-    function onDown(e) { dragging = true; moved = false; downX = lastX = (e.touches ? e.touches[0].clientX : e.clientX); ring.style.transition = 'none'; stopAuto(); stage.classList.add('grabbing'); }
+    function onDown(e) { dragging = true; moved = false; startAngle = Math.round(angle / theta) * theta; downX = lastX = (e.touches ? e.touches[0].clientX : e.clientX); ring.style.transition = 'none'; stopAuto(); stage.classList.add('grabbing'); }
     function onMove(e) { if (!dragging) return; var x = (e.touches ? e.touches[0].clientX : e.clientX); var dx = x - lastX; lastX = x; if (Math.abs(x - downX) > 6) moved = true; angle += dx * 0.4; update(); }
-    function onUp() { if (!dragging) return; dragging = false; stage.classList.remove('grabbing'); snap(); restartIdle(); }
+    function onUp() {
+      if (!dragging) return; dragging = false; stage.classList.remove('grabbing');
+      // A deliberate swipe always moves at least one photo. With only 2-3 photos each step is
+      // 120-180 degrees, so a normal thumb swipe used to round back to the same photo.
+      var dist = lastX - downX, target = Math.round(angle / theta) * theta;
+      if (target === startAngle && Math.abs(dist) > 40) { angle = startAngle + (dist > 0 ? theta : -theta); ring.style.transition = 'transform 0.5s ease-out'; update(); }
+      else snap();
+      restartIdle();
+    }
 
     stage.addEventListener('mousedown', onDown);
     window.addEventListener('mousemove', onMove);

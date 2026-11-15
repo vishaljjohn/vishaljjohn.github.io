@@ -346,6 +346,9 @@
         var next = document.getElementById('bookNext');
         var counter = document.getElementById('bookCounter');
         if(!img) return;
+        // Each new page is set while the image is turned edge-on mid-flip; with lazy loading,
+        // iPhone Safari treats it as off-screen and can leave the page blank, so load eagerly.
+        img.removeAttribute('loading');
         // preload only the next page instead of the whole book up front
         function preload(n){ if(n>=1 && n<=total){ var pre=new Image(); pre.src='../images/book/page'+n+'.jpg'; } }
         preload(2);
@@ -373,7 +376,14 @@
         }
         prev.addEventListener('click', function(e){ e.stopPropagation(); go(cur-1,-1); });
         next.addEventListener('click', function(e){ e.stopPropagation(); go(cur+1, 1); });
-        stage.addEventListener('click', function(){ go(cur+1, 1); });
+        var swiped=false, sx=0, sy=0;
+        stage.addEventListener('click', function(){ if(swiped){ swiped=false; return; } go(cur+1, 1); });
+        // swipe left/right on phones to turn pages
+        stage.addEventListener('touchstart', function(e){ var t=e.changedTouches[0]; sx=t.clientX; sy=t.clientY; swiped=false; }, {passive:true});
+        stage.addEventListener('touchend', function(e){
+            var t=e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy;
+            if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)*1.2){ swiped=true; go(dx<0?cur+1:cur-1, dx<0?1:-1); setTimeout(function(){ swiped=false; }, 400); }
+        }, {passive:true});
         document.addEventListener('keydown', function(e){
             if(/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
             if(e.key==='ArrowLeft') go(cur-1,-1);

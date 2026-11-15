@@ -120,7 +120,10 @@
 
         // Build rows with DOM APIs: titles/links come from third-party proxies, so never inject them as HTML.
         function fmtDate(d) {
-            return d ? new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+            if (!d) return '';
+            // the backup feed sends "2024-02-19 23:56:21" (UTC), which Safari can't parse
+            const dt = new Date(/^\d{4}-\d\d-\d\d \d/.test(d) ? d.replace(' ', 'T') + 'Z' : d);
+            return isNaN(dt) ? '' : dt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
         }
         function renderItems(items) {
             if (!items.length) { showError(); return; }
