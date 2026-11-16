@@ -84,8 +84,10 @@ a { transition: color .2s ease; }
    Authoritative mobile navigation (overrides older inline
    rules via load order). Applies to all classic pages that
    use <header><nav><ul> + .hamburger.
+   Up to 900px: below that the six links + name don't fit on one row.
    =========================================================== */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
+  .hamburger { padding: 10px; margin-right: -10px; }
   header {
     flex-direction: row;
     flex-wrap: nowrap;
@@ -126,7 +128,8 @@ nav a.nav-call:hover { color: #075488; }
 header { padding: 16px 24px; }
 header h1 { font-size: 24px; margin: 0; line-height: 1.2; }
 header h1 a { font-size: inherit; font-weight: 700; }
-nav a { font-size: 14px; }
+nav a { font-size: 14px; white-space: nowrap; }   /* never split a menu label */
+header h1 a { white-space: nowrap; }
 @media (max-width: 480px) { header h1 { font-size: 20px; } }
 
 /* ===========================================================

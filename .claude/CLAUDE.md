@@ -16,4 +16,3 @@ Static site on GitHub Pages; pushing to `main` deploys in about a minute.
 - Project tiles on both homepages use 600px copies in `images/thumbs/`; `tools/build.py` creates missing ones.
 - Share images: `python3 tools/build-share-images.py` after adding a page or paper.
 - Daily job `.github/workflows/refresh-data.yml` refreshes `assets/medium.json` and `assets/citations.json`, and runs `tools/find-new-papers.py`, which opens a GitHub issue when OpenAlex lists a paper by Vishal that isn't in `publications.json` (not-his DOIs go in the `ignore` list in `assets/new-papers.json`).
-- Seasonal touches (Halloween, Diwali lights, December snow, New Year, Holi): `assets/seasonal.js`, loaded on every page; preview with `?season=halloween` etc. Diwali/Holi dates are a table in that file (extend it after 2032).

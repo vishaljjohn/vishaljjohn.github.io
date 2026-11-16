@@ -145,6 +145,15 @@
         .gb-admin button { padding: 8px 14px; border-radius: 6px; border: 0; background: #333; color: #fff; cursor: pointer; }
         .gb-admin .gb-admin-msg { margin: 8px 0 0; }
         .mod { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 6px; z-index: 3; }
+        /* the writer's own notes get a small delete button (only on the device that pinned them) */
+        .note-del {
+            position: absolute; top: 6px; right: 6px; z-index: 3; width: 30px; height: 30px; border-radius: 50%; border: 0; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; color: rgba(43,42,39,0.7); background: rgba(0,0,0,0.07);
+            opacity: 0.55; transition: opacity 0.15s, background 0.15s, color 0.15s;
+        }
+        .note:hover .note-del, .note:focus-within .note-del, .note-del:focus-visible { opacity: 1; }
+        .note-del:hover { background: #c0392b; color: #fff; }
+        @media (hover: none) { .note-del { opacity: 0.8; } }
         .mod button { font: 700 12px/1 system-ui, sans-serif; padding: 7px 10px; border: 0; border-radius: 999px; cursor: pointer; color: #fff; background: #1f9d55; box-shadow: 0 2px 5px rgba(0,0,0,0.25); }
         .mod button.no { background: #c0392b; }
         .gb-section-label { font: 700 12px/1 system-ui, sans-serif; letter-spacing: 1px; text-transform: uppercase; color: #fff; margin: 0 0 18px; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
@@ -201,7 +210,7 @@
             <li><a href="about.html">About Me</a></li>
             <li><a href="blog.html">Newsletter</a></li>
             <li><a href="publications.html">Publications</a></li>
-            <li><a href="guestbook.html" aria-current="page">Guestbook</a></li>
+            <li><a href="guestbook.html" aria-current="page">Sign The Guestbook</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
@@ -230,7 +239,7 @@
             <form class="compose note" id="gbForm" data-c="0" novalidate>
                 <span class="pin" aria-hidden="true"></span>
                 <label class="gb-l" for="gbMsg">Your note</label>
-                <textarea id="gbMsg" name="msg" maxlength="240" rows="4" placeholder="Hi from a fellow Wolverine!" required></textarea>
+                <textarea id="gbMsg" name="msg" maxlength="240" rows="4" placeholder="Hi, from a fellow Kentuckian!" required></textarea>
                 <p class="gb-chars" id="gbChars" aria-live="polite">240 left</p>
                 <div class="gb-row">
                     <div>
@@ -276,7 +285,6 @@
     <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
 </footer>
 <script src="../assets/codeblue.js" defer></script>
-<script src="../assets/seasonal.js" defer></script>
 <!-- /site:footer -->
 
     <script>
@@ -303,6 +311,25 @@
             var keep = list.filter(function (n) { return ids.indexOf(n.id) === -1 && Date.now() - n.t < 30 * 864e5; });
             if (keep.length !== list.length) store('vj_gb_mine', keep);
             return keep;
+        }
+
+        // delete codes for notes pinned from this device: { noteId: code }
+        function tokens() { return store('vj_gb_tokens') || {}; }
+        function forget(id) {
+            var t = tokens(); delete t[id]; store('vj_gb_tokens', t);
+            store('vj_gb_mine', (store('vj_gb_mine') || []).filter(function (n) { return n.id !== id; }));
+        }
+        function deleteMine(n) {
+            if (!confirm('Delete your note? This can\u2019t be undone.')) return;
+            fetch(API + '/delete', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: n.id, token: tokens()[n.id] }) })
+                .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, d: d }; }); })
+                .then(function (res) {
+                    if (!res.ok && res.status !== 403) throw new Error();
+                    forget(n.id);   // 403: the note is already gone (or rejected), so just tidy up
+                    approved = res.d.notes || approved.filter(function (x) { return x.id !== n.id; });
+                    render(); say('Your note was removed.');
+                })
+                .catch(function () { say('Couldn\u2019t delete your note right now. Please try again in a bit.', true); });
         }
 
         function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return Math.abs(h); }
@@ -337,6 +364,13 @@
                 b.textContent = n.owner ? 'Pinned by Vishal' : 'Waiting for approval';
                 if (!n.owner) b.title = 'Only you can see this note until Vishal approves it';
                 el.appendChild(b);
+            }
+            if (!n.owner && tokens()[n.id]) {
+                var del = document.createElement('button'); del.type = 'button'; del.className = 'note-del';
+                del.setAttribute('aria-label', 'Delete my note'); del.title = 'Delete my note';
+                del.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+                del.addEventListener('click', function () { deleteMine(n); });
+                el.appendChild(del);
             }
             if (opts.mod) {
                 var m = document.createElement('div'); m.className = 'mod';
@@ -407,6 +441,7 @@
                         throw new Error(res.d.error || 'down');
                     }
                     var list = store('vj_gb_mine') || []; list.unshift(res.d.note); store('vj_gb_mine', list.slice(0, 5));
+                    if (res.d.token) { var t = tokens(); t[res.d.note.id] = res.d.token; var ks = Object.keys(t); if (ks.length > 20) delete t[ks[0]]; store('vj_gb_tokens', t); }
                     msg.value = ''; updateChars();
                     render();
                     say('Pinned! It’ll show up for everyone once I’ve read it. Thank you!');

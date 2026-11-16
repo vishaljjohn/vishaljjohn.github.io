@@ -244,6 +244,13 @@ async function gbLooksBad(env, text) {
   } catch (e) { return false; } // Vishal still approves every note
 }
 function gbIsAdmin(env, key) { return !!(env.ASK_LOG_KEY && key && String(key) === env.ASK_LOG_KEY); }
+// Each note gets a secret delete code that only the writer's browser keeps; the Worker stores
+// just its SHA-256 hash (field "k") and never sends that field out.
+async function gbHash(token) {
+  const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(String(token)));
+  return Array.from(new Uint8Array(d)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+}
+function gbPublic(list) { return list.map(function (n) { return { id: n.id, n: n.n, f: n.f, m: n.m, c: n.c, t: n.t }; }); }
 
 async function handleGuestbook(request, env, origin, cors, url) {
   if (origin && !ALLOWED_ORIGINS.includes(origin)) return json({ error: "forbidden" }, 403, cors);
@@ -251,16 +258,30 @@ async function handleGuestbook(request, env, origin, cors, url) {
   const load = async function (k) { return JSON.parse((await env.VISITS.get(k)) || "[]"); };
 
   if (request.method === "GET") {
-    const notes = await load("gb_notes");
+    const notes = gbPublic(await load("gb_notes"));
     if (url.searchParams.get("pending") === "1") {
       if (!gbIsAdmin(env, url.searchParams.get("key"))) return json({ error: "unauthorized" }, 401, cors);
-      return json({ notes, pending: await load("gb_pending") }, 200, cors);
+      return json({ notes, pending: gbPublic(await load("gb_pending")) }, 200, cors);
     }
     return json({ notes }, 200, cors);
   }
   if (request.method !== "POST" || !origin) return json({ error: "forbidden" }, 403, cors);
   let body;
   try { body = await request.json(); } catch (e) { return json({ error: "invalid json" }, 400, cors); }
+
+  // a visitor deletes their own note (published or still waiting), using its delete code
+  if (url.pathname === "/guestbook/delete") {
+    const id = String(body.id || ""), token = String(body.token || "");
+    if (!id || token.length < 16) return json({ error: "missing note or code" }, 400, cors);
+    const k = await gbHash(token);
+    let notes = await load("gb_notes"), pending = await load("gb_pending");
+    const mine = function (n) { return n.id === id && n.k && n.k === k; };
+    if (!notes.some(mine) && !pending.some(mine)) return json({ error: "You can only delete your own note." }, 403, cors);
+    notes = notes.filter(function (n) { return !mine(n); }); pending = pending.filter(function (n) { return !mine(n); });
+    await env.VISITS.put("gb_notes", JSON.stringify(notes));
+    await env.VISITS.put("gb_pending", JSON.stringify(pending));
+    return json({ ok: true, notes: gbPublic(notes) }, 200, cors);
+  }
 
   // moderation: approve / reject a pending note, or delete a published one
   if (url.pathname === "/guestbook/moderate") {
@@ -278,7 +299,7 @@ async function handleGuestbook(request, env, origin, cors, url) {
     } else return json({ error: "unknown note or action" }, 400, cors);
     await env.VISITS.put("gb_notes", JSON.stringify(notes));
     await env.VISITS.put("gb_pending", JSON.stringify(pending));
-    return json({ notes, pending }, 200, cors);
+    return json({ notes: gbPublic(notes), pending: gbPublic(pending) }, 200, cors);
   }
 
   // a visitor pins a new note (held until Vishal approves it)
@@ -293,10 +314,11 @@ async function handleGuestbook(request, env, origin, cors, url) {
   if (await gbLooksBad(env, name + " (" + from + "): " + msg)) return json({ error: "Please keep notes kind.", field: "msg" }, 400, cors);
   const color = Math.max(0, Math.min(GB_COLORS - 1, parseInt(body.color, 10) || 0));
   const note = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7), n: name, f: from, m: msg, c: color, t: Date.now() };
-  pending.push(note);
+  const token = Array.from(crypto.getRandomValues(new Uint8Array(18))).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+  pending.push(Object.assign({ k: await gbHash(token) }, note));
   await env.VISITS.put(ipKey, "1", { expirationTtl: 300 });
   await env.VISITS.put("gb_pending", JSON.stringify(pending));
-  return json({ ok: true, pending: true, note }, 200, cors);
+  return json({ ok: true, pending: true, note, token }, 200, cors);
 }
 
 export default {
@@ -317,7 +339,7 @@ export default {
     }
 
     if (_url.pathname === "/scores") return handleScores(request, env, origin, cors);
-    if (_url.pathname === "/guestbook" || _url.pathname === "/guestbook/moderate") return handleGuestbook(request, env, origin, cors, _url);
+    if (_url.pathname === "/guestbook" || _url.pathname === "/guestbook/moderate" || _url.pathname === "/guestbook/delete") return handleGuestbook(request, env, origin, cors, _url);
 
     // ---- View logged visitor questions (protected) ----
     if (request.method === "GET" && _url.pathname === "/questions") {
