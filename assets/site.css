@@ -485,3 +485,12 @@ html.dark .paper-page .ph-role { color: #cdd4de; }
 /* Phone fixes: iPhones zoom in on fields under 16px; 100vh is taller than the visible screen */
 @media (max-width: 768px) { .form-group input, .form-group textarea { font-size: 16px; } }
 @supports (min-height: 100dvh) { body { min-height: 100dvh; } }
+
+/* ---- Readability: text that fell below the WCAG AA contrast minimum ---- */
+.stat-label, .flip-counter { color: #6b6b6b; }
+.explain-stop { color: #4b5563; }
+.explain-stop.on { color: var(--accent, #0a6db0); }
+.cv-cite a { text-decoration: underline; text-underline-offset: 2px; }   /* DOI links must stand out from the citation text (about.html sets the same) */
+html.dark .ph-link, html.dark .stat-number { color: #6cb6ff; }
+html.dark .stat-label, html.dark .flip-counter, html.dark .cv-dates, html.dark .cv-loc, html.dark .step-desc, html.dark .gg-board-note,
+html.dark #pub-count, html.dark #pres-count, html.dark .photo-caption { color: #9aa4b2 !important; }   /* beats inline / !important light colors */

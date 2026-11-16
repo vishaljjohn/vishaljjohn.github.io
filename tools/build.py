@@ -6,6 +6,7 @@
 - Generates a shareable page for each paper in assets/publications.json
 - Generates the short links (/cv, /book, /rockcancer, ...)
 - Rewrites sitemap.xml
+- Creates missing project-tile thumbnails in images/thumbs/
 
 The result is plain HTML, so GitHub Pages serves it with no build step.
 Share images are separate: python3 tools/build-share-images.py
@@ -185,8 +186,30 @@ def sitemap():
         open("sitemap.xml", "w").write(new)
 
 
+def thumbs():
+    """Make 600px copies (images/thumbs/) for the project tiles on both homepages."""
+    want = set(re.findall(r'images/thumbs/([^"\'\s)]+)', open("index_classic.html").read()))
+    want |= set(os.path.basename(m) for m in re.findall(r"img: '(images/[^']+)'", open("index.html").read()))
+    missing = [n for n in sorted(want) if not os.path.exists("images/thumbs/" + n) and os.path.exists("images/" + n)]
+    if not missing:
+        return
+    try:
+        from PIL import Image, ImageOps
+    except ImportError:
+        print("thumbs: install Pillow to create", ", ".join(missing))
+        return
+    os.makedirs("images/thumbs", exist_ok=True)
+    for n in missing:
+        im = ImageOps.exif_transpose(Image.open("images/" + n)).convert("RGB")
+        if im.width > 600:
+            im = im.resize((600, round(im.height * 600 / im.width)), Image.LANCZOS)
+        im.save("images/thumbs/" + n, "JPEG", quality=78, optimize=True, progressive=True)
+        print("thumb", n)
+
+
 def main():
     paper_pages()
+    thumbs()
     short_links()
     pages = ["index_classic.html", "404.html"] + sorted(glob.glob("pages/*.html")) + sorted(glob.glob("pages/papers/*.html"))
     for page in pages:

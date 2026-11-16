@@ -584,7 +584,7 @@
     <div class="stage">
         <div class="feed-wrap">
             <!-- Drop your video-call clip in as assets/call.mp4 and it will play here automatically -->
-            <video id="feedBg" class="feed-bg" autoplay muted loop playsinline aria-hidden="true"></video>
+            <canvas id="feedBg" class="feed-bg" width="64" height="36" aria-hidden="true"></canvas>
             <video id="feed" class="feed" autoplay muted playsinline poster="images/Vishal%20John%20Headshot.jpg"></video>
             <div class="placeholder-note">[ video placeholder — add clips to assets/videos/ ]</div>
         </div>
@@ -627,7 +627,7 @@
                 <div class="chat-status"><span class="dot"></span> online</div>
             </div>
         </div>
-        <div id="thread" role="log" aria-live="polite" aria-atomic="false"></div>
+        <div id="thread" role="log" aria-live="polite" aria-atomic="false" aria-label="Chat messages" tabindex="0"></div>
         <div class="chat-input">
             <input class="chat-field" id="chatField" type="text" autocomplete="off"
                    placeholder="Ask me anything…" aria-label="Message Vishal">
@@ -776,11 +776,22 @@
         var order = [], pos = 0, loopCount = 0;
         var bgQuery = window.matchMedia ? window.matchMedia('(max-width: 820px) and (orientation: portrait)') : null;
         function bgVisible() { return !bgQuery || bgQuery.matches; }
-        if (bgQuery && bgQuery.addEventListener) bgQuery.addEventListener('change', function () {
-            if (!feedBg || !order.length) return;
-            if (bgQuery.matches) { if (feedBg.getAttribute('src')) { var pb = feedBg.play(); if (pb && pb.catch) pb.catch(function () {}); } else loadBg(order[pos]); }
-            else if (!bgQuery.matches) { try { feedBg.pause(); } catch (e) {} }
-        });
+        // The blurred backdrop phones show behind the (letterboxed) video is painted from the
+        // main video onto a tiny canvas a few times a second, instead of downloading and
+        // decoding the same clip a second time in another <video>. Heavy CSS blur hides the
+        // low resolution, so it looks the same and saves ~1.2 MB and a decoder on phones.
+        var bgCtx = feedBg && feedBg.getContext ? feedBg.getContext('2d') : null, bgLast = 0;
+        function paintBg(now) {
+            requestAnimationFrame(paintBg);
+            if (!bgCtx || document.hidden || !bgVisible() || feed.readyState < 2 || !feed.videoWidth) return;
+            if (now - bgLast < 120 && !feed.paused) return;          // ~8 fps is plenty under a 26px blur
+            if (feed.paused && bgLast && now - bgLast < 1000) return;  // paused: refresh rarely
+            bgLast = now;
+            var w = 64, h = Math.max(1, Math.round(64 * feed.videoHeight / feed.videoWidth));
+            if (feedBg.height !== h) feedBg.height = h;
+            try { bgCtx.drawImage(feed, 0, 0, w, h); } catch (e) {}
+        }
+        if (bgCtx) requestAnimationFrame(paintBg);
 
         var _tapPlayArmed = false;
         function armTapPlay() {
@@ -789,14 +800,6 @@
             document.addEventListener('touchstart', go, { passive: true });
             document.addEventListener('click', go);
         }
-        function loadBg(name) {
-            if (!feedBg) return;
-            feedBg.muted = true; feedBg.defaultMuted = true; feedBg.loop = true; feedBg.playsInline = true;
-            feedBg.setAttribute('playsinline', ''); feedBg.setAttribute('webkit-playsinline', '');
-            feedBg.src = VIDEO_DIR + encodeURIComponent(name); feedBg.load();
-            var pb = feedBg.play(); if (pb && pb.catch) pb.catch(function () {});
-            if (reduceMotion) { try { feedBg.pause(); } catch (e) {} }
-        }
         function loadVideo(name) {
             feed.loop = false;
             feed.muted = true; feed.defaultMuted = true; feed.playsInline = true;
@@ -804,7 +807,6 @@
             feed.src = VIDEO_DIR + encodeURIComponent(name);
             feed.load();
             var p = feed.play(); if (p && p.catch) p.catch(function () {});
-            if (bgVisible()) loadBg(name);
             if (reduceMotion) { var pz = function () { feed.pause(); feed.removeEventListener('loadeddata', pz); }; feed.addEventListener('loadeddata', pz); }
             armTapPlay();
         }
@@ -907,6 +909,8 @@
         document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
 
         /* ---- Projects grid ---- */
+        // small copies for tiles and blurred backdrops (full-size photos are only needed when shown large)
+        function thumb(src) { return src.replace(/^images\//, 'images/thumbs/'); }
         var projects = [
             { t: 'Balloon Animals', img: 'images/balloon_clownnose1.jpg', url: 'pages/balloonanimals.html' },
             { t: 'Rock Cancer', img: 'images/RockCancer.jpg', url: 'pages/rockcancer.html' },
@@ -923,7 +927,7 @@
             var a = document.createElement('a');
             a.className = 'card'; a.href = p.url;
             var img = document.createElement('img');
-            img.loading = 'lazy'; img.src = p.img; img.alt = p.t;
+            img.loading = 'lazy'; img.src = thumb(p.img); img.alt = p.t;
             var sp = document.createElement('span'); sp.textContent = p.t;
             a.appendChild(img); a.appendChild(sp); grid.appendChild(a);
         });
@@ -1590,10 +1594,9 @@
             rafId = requestAnimationFrame(loop);
         }
         document.addEventListener('visibilitychange', function () {
-            if (document.hidden) { try { feed.pause(); } catch (e) {} try { if (feedBg) feedBg.pause(); } catch (e) {} }
+            if (document.hidden) { try { feed.pause(); } catch (e) {} }
             else if (!reduceMotion && !document.body.classList.contains('no-video')) {
                 var pp = feed.play(); if (pp && pp.catch) pp.catch(function () {});
-                if (feedBg && bgVisible() && feedBg.getAttribute('src')) { var pbg = feedBg.play(); if (pbg && pbg.catch) pbg.catch(function () {}); }
             }
         });
 
@@ -1785,7 +1788,7 @@
             var si = 0, timer = null;
             projects.forEach(function (p, idx) {
                 var sl = document.createElement('div'); sl.className = 'ss-slide' + (idx === 0 ? ' on' : '');
-                var bg = document.createElement('img'); bg.className = 'ss-bg'; bg.loading = 'lazy'; bg.src = p.img; bg.alt = '';
+                var bg = document.createElement('img'); bg.className = 'ss-bg'; bg.loading = 'lazy'; bg.src = thumb(p.img); bg.alt = '';
                 var im = document.createElement('img'); im.className = 'ss-fg'; im.loading = 'lazy'; im.src = p.img; im.alt = p.t;
                 var cap = document.createElement('div'); cap.className = 'ss-cap';
                 var h = document.createElement('h3'); h.textContent = p.t;
