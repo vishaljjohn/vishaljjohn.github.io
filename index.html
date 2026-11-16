@@ -193,6 +193,14 @@
         .chat.mini > :not(.chat-pill) { display: none !important; }
         .chat.mini .chat-pill { display: inline-flex; }
         .chat-head { display: flex; align-items: center; gap: 9px; margin-bottom: 2px; }
+        /* collapse the open chat back to the "Chat with Vishal" pill */
+        .chat-min {
+            position: absolute; top: 0; right: 0; z-index: 1; width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff;
+            background: rgba(14,16,20,0.86); border: 1px solid rgba(255,255,255,0.20);
+            -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); transition: background 0.18s;
+        }
+        .chat-min:hover { background: rgba(40,44,50,0.92); }
         .chat-ava { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid var(--stroke); }
         .chat-name { font-size: 13px; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.7); }
         .chat-status { font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 5px; }
@@ -337,7 +345,7 @@
         @media (max-width: 360px) {
             .ctrl { width: 42px; height: 42px; font-size: 15px; }
         }
-        /* fit all seven call buttons (including End call) on one row */
+        /* fit all six call buttons (including End call) on one row */
         @media (max-width: 430px) {
             .controls { gap: 6px; justify-content: space-between; }
             .ctrl { width: 42px; height: 42px; font-size: 15px; }
@@ -627,6 +635,7 @@
                 <div class="chat-status"><span class="dot"></span> online</div>
             </div>
         </div>
+        <button type="button" class="chat-min" id="chatMin" aria-label="Minimize chat"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <div id="thread" role="log" aria-live="polite" aria-atomic="false" aria-label="Chat messages" tabindex="0"></div>
         <div class="chat-input">
             <input class="chat-field" id="chatField" type="text" autocomplete="off"
@@ -650,7 +659,6 @@
             <button class="ctrl pulse-hint" id="cFilters" aria-label="Filters and face effects"><i class="fas fa-magic"></i><span class="tip">Filters</span></button>
             <button class="ctrl" id="cReact" aria-label="Reactions"><i class="fas fa-smile"></i><span class="tip">React</span></button>
             <button class="ctrl" id="cScreen" aria-label="Share screen — project tour"><i class="fas fa-desktop"></i><span class="tip">Share screen</span></button>
-            <button class="ctrl" id="cChat" aria-label="Toggle chat"><i class="fas fa-comment"></i><span class="tip">Chat</span></button>
             <button class="ctrl" id="cCapture" aria-label="Take a photo of the call"><i class="fas fa-camera"></i><span class="tip">Capture</span></button>
             <button class="ctrl" id="cShare" aria-label="Share this site"><i class="fas fa-share-alt"></i><span class="tip">Share</span></button>
             <button class="ctrl leave" id="endCall" aria-label="End call and go to my classic site"><i class="fas fa-phone-slash"></i><span class="leave-label">End call</span></button>
@@ -980,10 +988,12 @@
         });
         thread.addEventListener('scroll', function () { if (!chat.classList.contains('mini')) chatActivity(); }, { passive: true });
         chatPill.addEventListener('click', expandChat);
-        document.getElementById('cChat').addEventListener('click', function () {
-            if (chat.classList.contains('mini')) { expandChat(); return; }
-            chat.classList.toggle('hidden');
-            if (!chat.classList.contains('hidden')) { field.focus(); chatActivity(); }
+        // the chat is always either open or the "Chat with Vishal" pill; it never disappears
+        document.getElementById('chatMin').addEventListener('click', function () {
+            clearTimeout(miniTimer); miniTimer = null;
+            if (document.activeElement === field) field.blur();
+            minimizeChat();
+            setTimeout(function () { chatPill.focus({ preventScroll: true }); }, 300);
         });
 
         function scrollDown() { thread.scrollTop = thread.scrollHeight; }

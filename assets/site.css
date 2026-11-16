@@ -494,3 +494,9 @@ html.dark .paper-page .ph-role { color: #cdd4de; }
 html.dark .ph-link, html.dark .stat-number { color: #6cb6ff; }
 html.dark .stat-label, html.dark .flip-counter, html.dark .cv-dates, html.dark .cv-loc, html.dark .step-desc, html.dark .gg-board-note,
 html.dark #pub-count, html.dark #pres-count, html.dark .photo-caption { color: #9aa4b2 !important; }   /* beats inline / !important light colors */
+
+/* phones: the video-call and chat buttons are stacked (about 126px tall), so the
+   footer needs more room at the bottom for the copyright line to clear them */
+@media (max-width: 480px) {
+  footer { padding-bottom: calc(140px + env(safe-area-inset-bottom)) !important; }
+}
