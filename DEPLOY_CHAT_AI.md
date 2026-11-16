@@ -27,8 +27,8 @@ Worker → **Settings** → **Bindings** / **Variables and Secrets**:
 | Name | Type | What it's for |
 |---|---|---|
 | `AI` | Workers AI binding | Runs the model |
-| `VISITS` | KV namespace binding | Visitor counter, question log, and the game's top 10 |
-| `ASK_LOG_KEY` | Secret (text) | Password for viewing the question log |
+| `VISITS` | KV namespace binding | Visitor counter, question log, the game's top 10, and the guestbook |
+| `ASK_LOG_KEY` | Secret (text) | Password for viewing the question log and moderating the guestbook |
 
 Without `ASK_LOG_KEY`, the question log is simply turned off. Don't reuse the old key that
 used to be written in this repo.
@@ -54,6 +54,20 @@ the log.
 Mac's Big Gulp saves winners' names through `/scores` in this Worker, using `VISITS`. Until the
 Worker is redeployed, the game keeps a top 10 on each visitor's own device instead. To remove
 an entry, edit the `gulp_top` key in the `VISITS` KV namespace in the Cloudflare dashboard.
+
+## Guestbook
+The guestbook page (`pages/guestbook.html`) saves notes through `/guestbook` in this Worker,
+using `VISITS` (keys `gb_notes` for published notes and `gb_pending` for notes waiting for
+approval). **It needs this Worker redeployed (step 2) before notes can be saved**; until then the
+page shows only Vishal's welcome note and says it couldn't pin new ones.
+
+- Every new note waits for approval. The person who wrote it sees it on their own device in the
+  meantime, marked "Waiting for approval".
+- To moderate, open **https://www.vishaljohn.com/pages/guestbook.html?admin**, enter your
+  `ASK_LOG_KEY`, and tap **Show pending notes**. Approve or reject each one; published notes get a
+  Delete button. The key is remembered on that device.
+- Built-in protection: links are blocked, a word filter and the AI screen out rude notes, one note
+  per visitor every 5 minutes, at most 100 notes waiting, and hidden-field bot trapping.
 
 ## Tuning
 - Edit `SYSTEM_PROMPT` in `cloudflare-worker.js` to add or correct facts, then redeploy.

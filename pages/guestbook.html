@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<script>(function(){try{if(localStorage.getItem("vj-theme")==="dark")document.documentElement.classList.add("dark");}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="../site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guestbook | Vishal John</title>
+    <meta name="description" content="Pin a sticky note to Vishal John's guestbook wall: say hi, share where you're from, or how you know him. He reads every note.">
+    <meta name="author" content="Vishal John">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.vishaljohn.com/pages/guestbook.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Guestbook | Vishal John">
+    <meta property="og:description" content="Pin a sticky note to Vishal John's guestbook wall: say hi, share where you're from, or how you know him. He reads every note.">
+    <meta property="og:url" content="https://www.vishaljohn.com/pages/guestbook.html">
+    <meta property="og:image" content="https://www.vishaljohn.com/assets/og/guestbook.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Vishal John">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Guestbook | Vishal John">
+    <meta name="twitter:description" content="Pin a sticky note to Vishal John's guestbook wall: say hi, share where you're from, or how you know him. He reads every note.">
+    <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og/guestbook.jpg">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap">
+    <link rel="stylesheet" href="../assets/base.css">
+    <style>
+        /* ---------- Guestbook: a corkboard of sticky notes ---------- */
+        :root {
+            --hand: 'Caveat', 'Segoe Print', 'Bradley Hand', 'Chalkboard SE', 'Comic Sans MS', cursive;
+            --n0: #fff1a6; --n1: #ffd3dd; --n2: #c8f1d6; --n3: #cfe6ff; --n4: #e3d7ff; --n5: #ffdcbd;
+            --note-ink: #2b2a27;
+        }
+        .gb-intro { max-width: 640px; color: var(--ink-soft, #555a61); font-size: 16px; line-height: 1.6; margin: 0 0 6px; }
+        .gb-count { font-size: 14px; color: #6b6b6b; margin: 0 0 22px; }
+
+        /* the board */
+        .gb-board {
+            position: relative; border-radius: 14px; padding: 34px 28px 40px;
+            background-color: #c99c62;
+            background-image:
+                radial-gradient(rgba(255,255,255,0.10) 1px, transparent 1.5px),
+                radial-gradient(rgba(90,55,20,0.18) 1px, transparent 1.6px),
+                radial-gradient(circle at 20% 15%, rgba(255,235,200,0.35), transparent 55%),
+                radial-gradient(circle at 85% 90%, rgba(80,45,10,0.25), transparent 60%);
+            background-size: 7px 7px, 11px 11px, 100% 100%, 100% 100%;
+            background-position: 0 0, 3px 5px, 0 0, 0 0;
+            box-shadow: inset 0 0 0 10px #8a5a2b, inset 0 0 0 12px #6f4520, inset 0 6px 24px rgba(0,0,0,0.25), 0 10px 30px rgba(0,0,0,0.12);
+        }
+        .gb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 30px 26px; align-items: start; }
+
+        /* a sticky note */
+        .note {
+            --rot: 0deg; --bg: var(--n0);
+            position: relative; aspect-ratio: 1 / 1; display: flex; flex-direction: column;
+            padding: 26px 18px 14px; background: var(--bg); color: var(--note-ink);
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0) 40%), linear-gradient(135deg, transparent 88%, rgba(0,0,0,0.06) 88%);
+            box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 8px 14px -6px rgba(0,0,0,0.35), 0 18px 28px -18px rgba(0,0,0,0.45);
+            transform: rotate(var(--rot)); transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border-radius: 2px 2px 3px 18px / 2px 2px 3px 8px; overflow-wrap: anywhere;
+        }
+        .note:hover, .note:focus-within { transform: rotate(0deg) translateY(-4px) scale(1.03); z-index: 2;
+            box-shadow: 0 2px 2px rgba(0,0,0,0.12), 0 16px 26px -8px rgba(0,0,0,0.4), 0 28px 40px -20px rgba(0,0,0,0.45); }
+        .note[data-c="0"] { --bg: var(--n0); } .note[data-c="1"] { --bg: var(--n1); } .note[data-c="2"] { --bg: var(--n2); }
+        .note[data-c="3"] { --bg: var(--n3); } .note[data-c="4"] { --bg: var(--n4); } .note[data-c="5"] { --bg: var(--n5); }
+        .note-msg { font-family: var(--hand); font-size: 23px; line-height: 1.12; font-weight: 500; flex: 1; margin: 0; white-space: pre-wrap; }
+        .note.long .note-msg { font-size: 19px; }
+        .note.xlong .note-msg { font-size: 17px; }
+        .note-sig { font-family: var(--hand); font-weight: 700; font-size: 19px; margin: 8px 0 0; text-align: right; line-height: 1.1; }
+        .note-sig small { display: block; font-weight: 500; font-size: 16px; opacity: 0.75; }
+        .note-date { font-size: 11px; letter-spacing: 0.4px; text-transform: uppercase; opacity: 0.55; margin-top: 6px; font-family: system-ui, -apple-system, sans-serif; }
+
+        /* push pin */
+        .note .pin {
+            position: absolute; top: -9px; left: 50%; width: 18px; height: 18px; margin-left: -9px; border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #ff8a8a, #d62828 55%, #8f1414);
+            box-shadow: 0 3px 4px rgba(0,0,0,0.45), inset 0 -2px 3px rgba(0,0,0,0.25);
+        }
+        .note .pin::after { content: ""; position: absolute; left: 50%; top: 14px; width: 2px; height: 6px; margin-left: -1px; background: linear-gradient(#9aa0a6, #5f6368); border-radius: 0 0 1px 1px; }
+        .note .pin.blue { background: radial-gradient(circle at 35% 30%, #8cc8ff, #1f6fd1 55%, #103f80); }
+        .note .pin.green { background: radial-gradient(circle at 35% 30%, #9ff0b8, #1f9d55 55%, #0f5a30); }
+        /* tape instead of a pin on some notes */
+        .note .tape {
+            position: absolute; top: -12px; left: 50%; width: 92px; height: 26px; margin-left: -46px; transform: rotate(-3deg);
+            background: rgba(255,255,255,0.55); border-left: 1px dashed rgba(0,0,0,0.06); border-right: 1px dashed rgba(0,0,0,0.06);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.12); -webkit-backdrop-filter: blur(1px); backdrop-filter: blur(1px);
+        }
+
+        /* Vishal's own note and a visitor's not-yet-approved note */
+        .note.mine-pending { outline: 2px dashed rgba(0,0,0,0.35); outline-offset: -8px; }
+        .note-badge {
+            position: absolute; left: 12px; bottom: -12px; z-index: 1; font: 700 10.5px/1 system-ui, -apple-system, sans-serif; letter-spacing: 0.4px;
+            text-transform: uppercase; color: #fff; background: #3b3f45; padding: 6px 9px; border-radius: 999px; box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+        .note-badge.owner { background: var(--accent, #0a6db0); }
+
+        /* the composer is itself a sticky note you write on */
+        .compose-wrap { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 34px; align-items: center; margin: 4px 0 40px; }
+        .compose.note { aspect-ratio: auto; min-height: 300px; padding: 30px 20px 18px; transform: rotate(-1.5deg); }
+        .compose.note:hover, .compose.note:focus-within { transform: rotate(0deg); }
+        .compose label.gb-l { display: block; font: 700 11px/1 system-ui, -apple-system, sans-serif; letter-spacing: 0.5px; text-transform: uppercase; opacity: 0.6; margin: 0 0 4px; }
+        .compose textarea, .compose input[type="text"] {
+            width: 100%; border: 0; background: transparent; color: var(--note-ink); font-family: var(--hand); outline: none; padding: 2px 0; border-radius: 0;
+        }
+        .compose textarea {
+            font-size: 24px; line-height: 30px; min-height: 120px; resize: none; display: block;
+            background-image: repeating-linear-gradient(to bottom, transparent 0 29px, rgba(0,0,0,0.13) 29px 30px); background-attachment: local;
+        }
+        .compose input[type="text"] { font-size: 21px; font-weight: 700; border-bottom: 1px solid rgba(0,0,0,0.18); margin-bottom: 10px; }
+        .compose input[type="text"]:focus, .compose textarea:focus { box-shadow: 0 2px 0 rgba(10,109,176,0.55); }
+        .compose ::placeholder { color: rgba(43,42,39,0.45); }
+        .compose .gb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+        .compose .gb-chars { font: 12px/1 system-ui, -apple-system, sans-serif; opacity: 0.55; text-align: right; margin: 4px 0 0; }
+        .compose .gb-chars.low { color: #b42318; opacity: 1; }
+        .compose .field-error { box-shadow: 0 2px 0 #b42318 !important; }
+
+        .compose-side h3 { font-size: 22px; margin: 0 0 8px; color: var(--ink, #232529); }
+        .compose-side p { color: var(--ink-soft, #555a61); margin: 0 0 16px; line-height: 1.6; }
+        .swatches { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 18px; border: 0; padding: 0; }
+        .swatches legend { font: 700 12px/1 system-ui, -apple-system, sans-serif; letter-spacing: 0.5px; text-transform: uppercase; color: #6b6b6b; margin-bottom: 10px; padding: 0; }
+        .swatch { position: relative; }
+        .swatch input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+        .swatch span { display: block; width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.12); box-shadow: 0 2px 5px rgba(0,0,0,0.12); transition: transform 0.15s; }
+        .swatch input:checked + span { transform: scale(1.12); box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--accent, #0a6db0); }
+        .swatch input:focus-visible + span { box-shadow: 0 0 0 3px #fff, 0 0 0 5px #6cc0ff; }
+        .gb-submit { font-size: 15px; padding: 12px 22px; }
+        .gb-submit:disabled { opacity: 0.6; cursor: default; }
+        .gb-status { min-height: 22px; margin: 12px 0 0; font-size: 14px; color: #1f7a3a; }
+        .gb-status.error { color: #b42318; }
+        .gb-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+        /* moderation (only with ?admin) */
+        .gb-admin { display: none; margin: 0 0 24px; padding: 14px 16px; border-radius: 10px; background: #fff7e0; border: 1px solid #f0d58a; font-size: 14px; }
+        .gb-admin.on { display: block; }
+        .gb-admin form { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 0; }
+        .gb-admin input { padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; min-width: 0; flex: 1 1 180px; font-size: 16px; }
+        .gb-admin button { padding: 8px 14px; border-radius: 6px; border: 0; background: #333; color: #fff; cursor: pointer; }
+        .gb-admin .gb-admin-msg { margin: 8px 0 0; }
+        .mod { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 6px; z-index: 3; }
+        .mod button { font: 700 12px/1 system-ui, sans-serif; padding: 7px 10px; border: 0; border-radius: 999px; cursor: pointer; color: #fff; background: #1f9d55; box-shadow: 0 2px 5px rgba(0,0,0,0.25); }
+        .mod button.no { background: #c0392b; }
+        .gb-section-label { font: 700 12px/1 system-ui, sans-serif; letter-spacing: 1px; text-transform: uppercase; color: #fff; margin: 0 0 18px; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+
+        /* notes drop onto the board */
+        @keyframes pinIn { from { opacity: 0; transform: translateY(-18px) rotate(calc(var(--rot) * 3)) scale(0.96); } to { opacity: 1; transform: rotate(var(--rot)); } }
+        .gb-grid .note { animation: pinIn 0.45s cubic-bezier(.2,.9,.3,1.2) both; animation-delay: calc(var(--i, 0) * 45ms); }
+        @media (prefers-reduced-motion: reduce) { .gb-grid .note { animation: none; } .note, .note:hover { transition: none; } }
+
+        /* dark mode: dark felt board, notes keep their colors */
+        html.dark .gb-board { background-color: #3b2f25; box-shadow: inset 0 0 0 10px #2a2018, inset 0 0 0 12px #1c1510, inset 0 6px 24px rgba(0,0,0,0.5), 0 10px 30px rgba(0,0,0,0.3); }
+        html.dark .gb-count, html.dark .swatches legend { color: #9aa4b2; }
+        html.dark .gb-intro, html.dark .compose-side p { color: #c3cad4; }
+        html.dark .compose-side h3 { color: #f0f3f7; }
+        html.dark .gb-status { color: #6fd38b; }
+        html.dark .gb-status.error { color: #ff8a8f; }
+        html.dark .swatch input:checked + span { box-shadow: 0 0 0 3px #161a20, 0 0 0 5px #6cb6ff; }
+        /* notes are paper: keep dark ink on them even in dark mode (site-wide dark rules would recolor it) */
+        html.dark .note, html.dark .note p { color: var(--note-ink) !important; }
+        html.dark .compose textarea, html.dark .compose input[type="text"] { background-color: transparent !important; color: var(--note-ink) !important; border-color: rgba(0,0,0,0.18) !important; }
+        html.dark .compose textarea { border: 0 !important; }
+        html.dark .compose ::placeholder { color: rgba(43,42,39,0.45) !important; }
+
+        /* phones */
+        @media (max-width: 760px) {
+            .compose-wrap { grid-template-columns: 1fr; gap: 22px; }
+            .compose.note { max-width: 340px; width: calc(100% - 12px); margin: 6px auto 0; transform: rotate(-1deg); }
+            .compose-side { text-align: center; }
+            .swatches { justify-content: center; }
+        }
+        @media (max-width: 640px) {
+            .gb-board { margin: 0 -30px; border-radius: 0; padding: 30px 18px 36px; box-shadow: inset 0 6px 20px rgba(0,0,0,0.25); }
+            html.dark .gb-board { box-shadow: inset 0 6px 20px rgba(0,0,0,0.5); }
+            .gb-grid { grid-template-columns: repeat(auto-fill, minmax(138px, 1fr)); gap: 24px 16px; }
+            .note { padding: 22px 12px 10px; }
+            .note-msg { font-size: 19px; } .note.long .note-msg { font-size: 16.5px; } .note.xlong .note-msg { font-size: 15px; }
+            .note-sig { font-size: 16px; } .note-sig small { font-size: 14px; }
+            .note .tape { width: 70px; margin-left: -35px; }
+            .compose textarea { font-size: 22px; }
+        }
+        @media (max-width: 340px) { .gb-grid { grid-template-columns: 1fr; padding: 0 18px; } }
+    </style>
+    <link rel="stylesheet" href="../assets/site.css">
+</head>
+
+<body class="content-page">
+
+    <!-- site:header -->
+<header>
+    <h1><a href="../index_classic.html">Vishal John</a></h1>
+    <nav aria-label="Main">
+        <ul>
+            <li><a href="../index_classic.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="blog.html">Newsletter</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="guestbook.html" aria-current="page">Guestbook</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+<!-- /site:header -->
+
+    <div class="container">
+    <div class="main-content">
+        <h2>Guestbook</h2>
+        <p class="gb-intro">Stopped by? Pin a note to the wall. Tell me where you're from, how we met, or just say hi. I read every single one.</p>
+        <p class="gb-count" id="gbCount" aria-live="polite">&nbsp;</p>
+
+        <div class="gb-admin" id="gbAdmin">
+            <form id="gbAdminForm">
+                <strong>Moderation</strong>
+                <input type="password" id="gbKey" placeholder="Moderation key" autocomplete="current-password" aria-label="Moderation key">
+                <button type="submit">Show pending notes</button>
+            </form>
+            <p class="gb-admin-msg" id="gbAdminMsg" role="status"></p>
+        </div>
+
+        <div class="compose-wrap">
+            <form class="compose note" id="gbForm" data-c="0" novalidate>
+                <span class="pin" aria-hidden="true"></span>
+                <label class="gb-l" for="gbMsg">Your note</label>
+                <textarea id="gbMsg" name="msg" maxlength="240" rows="4" placeholder="Hi from a fellow Wolverine!" required></textarea>
+                <p class="gb-chars" id="gbChars" aria-live="polite">240 left</p>
+                <div class="gb-row">
+                    <div>
+                        <label class="gb-l" for="gbName">Name</label>
+                        <input type="text" id="gbName" name="name" maxlength="40" autocomplete="given-name" placeholder="Your name" required>
+                    </div>
+                    <div>
+                        <label class="gb-l" for="gbFrom">From</label>
+                        <input type="text" id="gbFrom" name="from" maxlength="40" placeholder="City, school…">
+                    </div>
+                </div>
+                <div class="gb-hp" aria-hidden="true"><label for="gbSite">Website</label><input type="text" id="gbSite" name="website" tabindex="-1" autocomplete="off"></div>
+            </form>
+            <div class="compose-side">
+                <h3>Pin a note</h3>
+                <p>Write on the sticky note, pick a color, and pin it. Notes show up on the wall once I've had a chance to read them.</p>
+                <fieldset class="swatches" id="gbColors">
+                    <legend>Note color</legend>
+                    <label class="swatch"><input type="radio" name="color" value="0" checked aria-label="Yellow"><span style="background:var(--n0)"></span></label>
+                    <label class="swatch"><input type="radio" name="color" value="1" aria-label="Pink"><span style="background:var(--n1)"></span></label>
+                    <label class="swatch"><input type="radio" name="color" value="2" aria-label="Mint"><span style="background:var(--n2)"></span></label>
+                    <label class="swatch"><input type="radio" name="color" value="3" aria-label="Blue"><span style="background:var(--n3)"></span></label>
+                    <label class="swatch"><input type="radio" name="color" value="4" aria-label="Lavender"><span style="background:var(--n4)"></span></label>
+                    <label class="swatch"><input type="radio" name="color" value="5" aria-label="Peach"><span style="background:var(--n5)"></span></label>
+                </fieldset>
+                <button type="submit" form="gbForm" class="btn-primary gb-submit" id="gbSubmit"><i class="fas fa-thumbtack" aria-hidden="true"></i> Pin it to the wall</button>
+                <p class="gb-status" id="gbStatus" role="status" aria-live="polite"></p>
+            </div>
+        </div>
+
+        <section class="gb-board" aria-label="Guestbook notes">
+            <div class="gb-grid" id="gbWall"></div>
+        </section>
+    </div>
+    </div>
+
+    <!-- site:footer -->
+<footer>
+    <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+    <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+    <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+    <a href="../pages/card.html" aria-label="Business card"><i class="fas fa-id-card fa-2x"></i></a>
+    <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+</footer>
+<script src="../assets/codeblue.js" defer></script>
+<!-- /site:footer -->
+
+    <script>
+    /* Guestbook: notes live in the chat Worker (cloudflare-worker.js, /guestbook).
+       New notes wait for approval; the person who wrote one sees it on their own
+       device in the meantime. Moderation: open this page with ?admin. */
+    (function () {
+        var API = 'https://vishal-chat.vishaljjohn.workers.dev/guestbook';
+        var wall = document.getElementById('gbWall');
+        var form = document.getElementById('gbForm');
+        var msg = document.getElementById('gbMsg'), nameIn = document.getElementById('gbName'), fromIn = document.getElementById('gbFrom');
+        var chars = document.getElementById('gbChars'), status = document.getElementById('gbStatus'), submit = document.getElementById('gbSubmit');
+        var countEl = document.getElementById('gbCount');
+        var approved = [], pendingAdmin = [], adminKey = '';
+        var isAdmin = /[?&]admin\b/.test(location.search);
+
+        // Vishal's own note, always pinned first
+        var WELCOME = { id: 'welcome', n: 'Vishal', f: '', c: 3, m: "Thanks for stopping by my little corner of the internet! Pin a note: where you're from, how we met, or just hi. I read every single one.", owner: true };
+
+        function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || 'null'); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
+        // my notes still waiting for approval (shown only on this device)
+        function mine() {
+            var list = store('vj_gb_mine') || [], ids = approved.map(function (n) { return n.id; });
+            var keep = list.filter(function (n) { return ids.indexOf(n.id) === -1 && Date.now() - n.t < 30 * 864e5; });
+            if (keep.length !== list.length) store('vj_gb_mine', keep);
+            return keep;
+        }
+
+        function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return Math.abs(h); }
+        function when(t) {
+            if (!t) return '';
+            var d = (Date.now() - t) / 1000;
+            if (d < 3600) return 'just now';
+            if (d < 86400) return Math.floor(d / 3600) + 'h ago';
+            if (d < 7 * 86400) return Math.floor(d / 86400) + 'd ago';
+            return new Date(t).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        }
+
+        function noteEl(n, opts) {
+            opts = opts || {};
+            var h = hash(n.id), el = document.createElement('article');
+            el.className = 'note' + (n.m.length > 170 ? ' xlong' : n.m.length > 110 ? ' long' : '') + (opts.pending ? ' mine-pending' : '');
+            el.setAttribute('data-c', String(n.c || 0));
+            el.style.setProperty('--rot', (n.owner ? -2 : ((h % 7) - 3) * 0.9) + 'deg');
+            el.style.setProperty('--i', String(opts.i || 0));
+            var holder = document.createElement('span');
+            var kind = n.owner ? 0 : h % 5;   // pins mostly, tape sometimes
+            holder.className = kind === 3 || kind === 4 ? 'tape' : 'pin' + (kind === 1 ? ' blue' : kind === 2 ? ' green' : '');
+            holder.setAttribute('aria-hidden', 'true');
+            var p = document.createElement('p'); p.className = 'note-msg'; p.textContent = n.m;
+            var sig = document.createElement('p'); sig.className = 'note-sig'; sig.textContent = '— ' + n.n;
+            if (n.f) { var sm = document.createElement('small'); sm.textContent = n.f; sig.appendChild(sm); }
+            el.appendChild(holder); el.appendChild(p); el.appendChild(sig);
+            if (n.t && !opts.pending) { var dt = document.createElement('span'); dt.className = 'note-date'; dt.textContent = when(n.t); el.appendChild(dt); }
+            el.setAttribute('aria-label', 'Note from ' + n.n + (n.f ? ', ' + n.f : ''));
+            if (n.owner || opts.pending) {
+                var b = document.createElement('span'); b.className = 'note-badge' + (n.owner ? ' owner' : '');
+                b.textContent = n.owner ? 'Pinned by Vishal' : 'Waiting for approval';
+                if (!n.owner) b.title = 'Only you can see this note until Vishal approves it';
+                el.appendChild(b);
+            }
+            if (opts.mod) {
+                var m = document.createElement('div'); m.className = 'mod';
+                opts.mod.forEach(function (a) {
+                    var btn = document.createElement('button'); btn.type = 'button'; btn.textContent = a.label; if (a.no) btn.className = 'no';
+                    btn.addEventListener('click', function () { moderate(n.id, a.action); });
+                    m.appendChild(btn);
+                });
+                el.appendChild(m);
+            }
+            return el;
+        }
+
+        function render() {
+            wall.textContent = '';
+            var i = 0;
+            if (isAdmin && adminKey && pendingAdmin.length) {
+                var lab = document.createElement('p'); lab.className = 'gb-section-label'; lab.style.gridColumn = '1 / -1';
+                lab.textContent = pendingAdmin.length + ' waiting for approval'; wall.appendChild(lab);
+                pendingAdmin.forEach(function (n) { wall.appendChild(noteEl(n, { i: i++, mod: [{ label: 'Approve', action: 'approve' }, { label: 'Reject', action: 'reject', no: true }] })); });
+                var lab2 = document.createElement('p'); lab2.className = 'gb-section-label'; lab2.style.gridColumn = '1 / -1'; lab2.style.marginTop = '14px';
+                lab2.textContent = 'On the wall'; wall.appendChild(lab2);
+            }
+            wall.appendChild(noteEl(WELCOME, { i: i++ }));
+            mine().forEach(function (n) { wall.appendChild(noteEl(n, { pending: true, i: i++ })); });
+            approved.forEach(function (n) {
+                wall.appendChild(noteEl(n, { i: Math.min(i++, 20), mod: isAdmin && adminKey ? [{ label: 'Delete', action: 'delete', no: true }] : null }));
+            });
+            var c = approved.length;
+            countEl.textContent = c ? c + ' note' + (c === 1 ? '' : 's') + ' pinned so far' : 'Be one of the first to pin a note!';
+        }
+
+        function load() {
+            var url = isAdmin && adminKey ? API + '?pending=1&key=' + encodeURIComponent(adminKey) : API;
+            return fetch(url).then(function (r) { if (r.status === 401) throw new Error('key'); if (!r.ok) throw new Error('down'); return r.json(); })
+                .then(function (d) { approved = d.notes || []; pendingAdmin = d.pending || []; render(); return d; });
+        }
+
+        // ---- writing a note ----
+        function setColor(c) { form.setAttribute('data-c', c); }
+        Array.prototype.forEach.call(document.querySelectorAll('#gbColors input'), function (r) {
+            r.addEventListener('change', function () { setColor(r.value); });
+        });
+        function updateChars() {
+            var left = 240 - msg.value.length;
+            chars.textContent = left + ' left'; chars.classList.toggle('low', left <= 20);
+        }
+        msg.addEventListener('input', updateChars);
+        [msg, nameIn, fromIn].forEach(function (f) { f.addEventListener('input', function () { f.classList.remove('field-error'); }); });
+
+        function say(text, err) { status.textContent = text; status.className = 'gb-status' + (err ? ' error' : ''); }
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var body = {
+                name: nameIn.value.trim(), from: fromIn.value.trim(), msg: msg.value.trim(),
+                color: Number((document.querySelector('#gbColors input:checked') || {}).value || 0),
+                website: document.getElementById('gbSite').value
+            };
+            if (body.msg.length < 2) { msg.classList.add('field-error'); msg.focus(); return say('Write a short note first.', true); }
+            if (!body.name) { nameIn.classList.add('field-error'); nameIn.focus(); return say('Add your name so I know who it’s from.', true); }
+            submit.disabled = true; say('Pinning…');
+            fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+                .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; }); })
+                .then(function (res) {
+                    if (!res.ok || !res.d.note) {
+                        var f = res.d.field === 'name' ? nameIn : res.d.field === 'from' ? fromIn : res.d.field === 'msg' ? msg : null;
+                        if (f) { f.classList.add('field-error'); f.focus(); }
+                        throw new Error(res.d.error || 'down');
+                    }
+                    var list = store('vj_gb_mine') || []; list.unshift(res.d.note); store('vj_gb_mine', list.slice(0, 5));
+                    msg.value = ''; updateChars();
+                    render();
+                    say('Pinned! It’ll show up for everyone once I’ve read it. Thank you!');
+                    var first = wall.querySelector('.mine-pending');
+                    if (first && first.scrollIntoView) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                })
+                .catch(function (err) {
+                    say(err && err.message && err.message !== 'down' && err.message !== 'Failed to fetch' ? err.message : 'Couldn’t pin your note right now. Please try again in a bit.', true);
+                })
+                .then(function () { submit.disabled = false; });
+        });
+        // Enter in the name/from fields submits; Enter in the note adds a line
+        [nameIn, fromIn].forEach(function (f) { f.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); form.requestSubmit ? form.requestSubmit() : submit.click(); } }); });
+
+        // ---- moderation (?admin) ----
+        function moderate(id, action) {
+            if (action !== 'approve' && !confirm(action === 'delete' ? 'Delete this note from the wall?' : 'Reject this note?')) return;
+            fetch(API + '/moderate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: adminKey, id: id, action: action }) })
+                .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+                .then(function (d) { approved = d.notes || []; pendingAdmin = d.pending || []; render(); })
+                .catch(function () { alert('That didn’t work. Check the key and try again.'); });
+        }
+        if (isAdmin) {
+            var panel = document.getElementById('gbAdmin'), keyIn = document.getElementById('gbKey'), amsg = document.getElementById('gbAdminMsg');
+            panel.classList.add('on');
+            keyIn.value = store('vj_gb_key') || '';
+            document.getElementById('gbAdminForm').addEventListener('submit', function (e) {
+                e.preventDefault(); adminKey = keyIn.value.trim(); amsg.textContent = 'Loading…';
+                load().then(function (d) { store('vj_gb_key', adminKey); amsg.textContent = (d.pending || []).length + ' note(s) waiting. Approve, reject, or delete below.'; })
+                    .catch(function (err) { adminKey = ''; amsg.textContent = err.message === 'key' ? 'That key didn’t work.' : 'Couldn’t reach the guestbook. Is the Worker deployed?'; });
+            });
+        }
+
+        render();
+        load().catch(function () { countEl.textContent = 'The wall is warming up. Be one of the first to pin a note!'; });
+    })();
+    </script>
+    <script src="../assets/site.js"></script>
+    <script src="../assets/chat-widget.js" defer></script>
+    <script src="../assets/theme.js"></script>
+</body>
+
+</html>

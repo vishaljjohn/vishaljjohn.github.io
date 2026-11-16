@@ -31,6 +31,8 @@
       a: "i'm on the leadership team of Rock Cancer — free rock climbing for young cancer survivors." },
     { k: ['volunteer','service','community','elder life','help program','breakfast','andrew'],
       a: "i'm on the board of Rock Cancer, and in Ann Arbor i volunteered with Saint Andrew's Breakfast Program and the Hospital Elder Life Program (HELP) until 2024." },
+    { k: ['guestbook','guest book','sticky note','leave a note','sign your','pin a note'],
+      a: "i'd love that! pin a sticky note on my <a href='/pages/guestbook.html'>guestbook wall</a>: where you're from, how we met, or just hi." },
     { k: ['contact','email','reach','hire','message','collaborat','work together'],
       a: "the best way to reach me is my Contact page — i'd love to hear from you." },
     { k: ['link','social','linkedin','github','medium','online'],

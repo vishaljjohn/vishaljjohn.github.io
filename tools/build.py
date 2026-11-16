@@ -16,7 +16,8 @@ import datetime, glob, html, json, os, re, subprocess, sys
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 os.chdir(ROOT)
 CURRENT = {"index_classic.html": "home", "pages/about.html": "about", "pages/blog.html": "blog",
-           "pages/publications.html": "publications", "pages/contact.html": "contact"}
+           "pages/publications.html": "publications", "pages/guestbook.html": "guestbook",
+           "pages/contact.html": "contact"}
 
 
 def partial(name, page):

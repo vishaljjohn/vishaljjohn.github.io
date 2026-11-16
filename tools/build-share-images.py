@@ -2,16 +2,18 @@
 """Makes the preview card shown when a page is shared (texts, LinkedIn, etc.).
 
 Run after adding a page or paper:  python3 tools/build-share-images.py
+Only some pages:  python3 tools/build-share-images.py pages/guestbook.html
+Other Chrome:     CHROME=/path/to/chrome CHROME_ARGS="--no-sandbox" python3 tools/build-share-images.py ...
 Needs Google Chrome and Pillow. Writes assets/og/*.jpg and points each page's
 og:image and twitter:image at its card.
 """
-import glob, html, json, os, re, subprocess, tempfile
+import glob, html, json, os, re, subprocess, sys, tempfile
 from urllib.parse import unquote
 from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 os.chdir(ROOT)
-CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+CHROME = os.environ.get("CHROME", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
 SITE = "https://www.vishaljohn.com/"
 
 # page -> (card title, photo). The summary comes from the page's own description.
@@ -21,6 +23,7 @@ PAGES = {
     "pages/publications.html": ("Publications", "images/Photo1.jpg"),
     "pages/blog.html": ("My Writing", "images/Vishal John Headshot.jpg"),
     "pages/contact.html": ("Get in Touch", "images/Vishal John Headshot.jpg"),
+    "pages/guestbook.html": ("Guestbook", "images/Vishal John Headshot.jpg"),
     "pages/card.html": ("Digital Business Card", "images/Vishal John Headshot.jpg"),
     "pages/balloonanimals.html": ("Balloon Animals", "images/balloon_clownnose1.jpg"),
     "pages/rockcancer.html": ("Rock Cancer", "images/RockCancer.jpg"),
@@ -64,7 +67,7 @@ def render(out, title, summary, kicker, right, side=""):
     with tempfile.TemporaryDirectory() as tmp:
         src, png = os.path.join(tmp, "card.html"), os.path.join(tmp, "card.png")
         open(src, "w").write(doc)
-        subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=1",
+        subprocess.run([CHROME, *os.environ.get("CHROME_ARGS", "").split(), "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=1",
                         "--window-size=1200,630", "--allow-file-access-from-files", f"--screenshot={png}", "file://" + src],
                        check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=60)
         os.makedirs(os.path.dirname(out), exist_ok=True)
@@ -97,7 +100,10 @@ def description(page):
 
 
 def main():
+    only = sys.argv[1:]
     for page, (title, photo) in PAGES.items():
+        if only and page not in only:
+            continue
         name = "home" if page == "index_classic.html" else os.path.basename(page)[:-5]
         out = f"assets/og/{name}.jpg"
         pic = "file://" + os.path.join(ROOT, photo).replace(" ", "%20")
@@ -108,7 +114,7 @@ def main():
         render(out, title, description(page), "Vishal John", '<div class="side"></div>', side)
         set_meta(page, out)
         print(out)
-    for p in json.load(open("assets/publications.json"))["data"]:
+    for p in ([] if only else json.load(open("assets/publications.json"))["data"]):
         out = f"assets/og/papers/{p['slug']}.jpg"
         journal = p["journal"].replace(" (Nature)", "")
         right = f'<div class="side journal"><b>Published in</b><span>{html.escape(journal)}</span><i>{p["year"]}</i></div>'
