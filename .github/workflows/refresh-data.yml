@@ -8,6 +8,7 @@ on:
 permissions:
   contents: write
   pages: write
+  issues: write   # to flag new papers
 
 jobs:
   refresh:
@@ -17,15 +18,26 @@ jobs:
       - run: python3 tools/fetch-medium.py
       # citations only change the live counts; a failure here must not block new posts
       - run: python3 tools/fetch-citations.py || true
+      # new papers by Vishal that aren't on the Publications page yet (OpenAlex); never blocks the rest
+      - run: python3 tools/find-new-papers.py || true
+      - name: Flag new papers in a GitHub issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -s new-papers.md ]; then
+            gh issue create --title "New paper found for the Publications page ($(date +%Y-%m-%d))" --body-file new-papers.md || true
+            rm -f new-papers.md
+          fi
       - name: Commit if changed
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- assets/medium.json && ! git diff -- assets/citations.json | grep -q '^[-+] .*"[0-9]\|total'; then echo "nothing new"; exit 0; fi
+          if git diff --quiet -- assets/medium.json assets/new-papers.json && ! git diff -- assets/citations.json | grep -q '^[-+] .*"[0-9]\|total'; then echo "nothing new"; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
           git add assets/medium.json assets/citations.json
-          git commit -m "Refresh Medium posts and citations"
+          [ -f assets/new-papers.json ] && git add assets/new-papers.json
+          git commit -m "Refresh Medium posts, citations and new-paper check"
           git push
           # pushes made with the workflow token don't always start a Pages build; ask for one
           gh api -X POST "repos/${{ github.repository }}/pages/builds" || true

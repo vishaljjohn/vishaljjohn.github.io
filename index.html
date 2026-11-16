@@ -398,6 +398,10 @@
         .fcell { background: rgba(255,255,255,0.06); border: 1px solid var(--stroke); border-radius: 12px; padding: 12px 6px; text-align: center; cursor: pointer; color: #fff; font-size: 12px; font-family: inherit; line-height: normal; transition: background 0.15s; }
         .fcell:hover { background: rgba(255,255,255,0.13); }
         .fcell.active { background: var(--accent); border-color: var(--accent); }
+        /* this month's seasonal filters (see assets/seasonal.js) */
+        .fcell.seasonal { border-color: rgba(255,183,3,0.65); box-shadow: inset 0 0 0 1px rgba(255,183,3,0.25); position: relative; }
+        .fcell.seasonal::after { content: "new"; position: absolute; top: 4px; right: 5px; font-size: 9px; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase; color: #ffb703; }
+        .fcell.seasonal.active { border-color: var(--accent); }
         .fcell .emoji { font-size: 30px; display: block; margin-bottom: 5px; line-height: 1; }
         .fclear { margin-top: 16px; background: rgba(255,255,255,0.08); border: 1px solid var(--stroke); color: #fff; padding: 10px 16px; border-radius: 10px; cursor: pointer; font-size: 13px; }
         .fclear:hover { background: rgba(255,255,255,0.14); }
@@ -769,6 +773,7 @@
         </div>
     </div>
 
+    <script src="assets/seasonal.js"></script>
     <script>
     (function () {
         "use strict";
@@ -1194,7 +1199,7 @@
             var btn = document.getElementById('cFilters');
             var fhint = document.createElement('div');
             fhint.className = 'filter-hint';
-            fhint.textContent = 'tap to put a filter on me!';
+            fhint.textContent = (window.VJ_SEASON && window.VJ_SEASON.hint) || 'tap to put a filter on me!';
             document.body.appendChild(fhint);
             function place() {
                 var r = btn.getBoundingClientRect();
@@ -1228,6 +1233,8 @@
             { label: 'Noir',    emoji: '🖤', f: 'grayscale(1) contrast(1.4) brightness(0.95)' },
             { label: 'Invert',  emoji: '🔄', f: 'invert(1) hue-rotate(180deg)' }
         ];
+        var SEASON = window.VJ_SEASON || {};
+        if (SEASON.vibe) VIBES.splice(1, 0, { label: SEASON.vibe.label, emoji: SEASON.vibe.emoji, f: SEASON.vibe.f, seasonal: true });
         var vibeGrid = document.getElementById('vibeGrid');
         var vibeFilter = '';
         // Applies a vibe to the call video (and the blurred backdrop phones show behind it).
@@ -1242,12 +1249,13 @@
         }
         VIBES.forEach(function (v) {
             var c = document.createElement('button');
-            c.type = 'button'; c.className = 'fcell'; c.setAttribute('data-f', v.f);
+            c.type = 'button'; c.className = 'fcell' + (v.seasonal ? ' seasonal' : ''); c.setAttribute('data-f', v.f);
             c.innerHTML = '<span class="emoji">' + v.emoji + '</span>' + v.label;
             c.addEventListener('click', function () { setVibe(v.f); });
             vibeGrid.appendChild(c);
         });
-        setVibe('');
+        // the last week of October starts the call with the spooky look (Normal switches it off)
+        setVibe(SEASON.vibeDefault && SEASON.vibe ? SEASON.vibe.f : '');
 
         /* ---- AR face filters: one active asset per slot (top/head/eyes/mouth/face) ---- */
         var ASSETS = [
@@ -1287,6 +1295,8 @@
             { id:'wide', label:'Wide',      slot:'distort', preview:'😬', distort:'wide' },
             { id:'long', label:'Long face', slot:'distort', preview:'🫤', distort:'long' }
         ];
+        // seasonal face filters (Halloween, Diwali, December) go first, marked as specials
+        if (SEASON.assets && SEASON.assets.length) ASSETS = SEASON.assets.map(function (a) { a.seasonal = true; return a; }).concat(ASSETS);
         var assetById = {}; ASSETS.forEach(function (a) { assetById[a.id] = a; });
         var SLOT_ORDER = ['distort','hair','head','face','beard','cheeks','eyes','mouth','top','tears'];
         var arSlots = {};
@@ -1294,7 +1304,7 @@
         var stickerGrid = document.getElementById('stickerGrid');
         ASSETS.forEach(function (a) {
             var c = document.createElement('button');
-            c.type = 'button'; c.className = 'fcell'; c.setAttribute('data-id', a.id); c.setAttribute('data-slot', a.slot);
+            c.type = 'button'; c.className = 'fcell' + (a.seasonal ? ' seasonal' : ''); c.setAttribute('data-id', a.id); c.setAttribute('data-slot', a.slot);
             c.innerHTML = '<span class="emoji">' + a.preview + '</span>' + a.label;
             c.addEventListener('click', function () { toggleAsset(a); });
             stickerGrid.appendChild(c);
@@ -1913,9 +1923,12 @@
         var steps = [
             { delay: 700, type: 900, msg: greet + ", you made it. welcome to my little corner of the internet." },
             { delay: 400, type: 1100, msg: "i'm Vishal: an M3 med student at UofL, children's book author, balloon animal artist, and aspiring coffee shop owner." },
+        ];
+        if (SEASON.greeting) steps.push({ delay: 400, type: 900, msg: SEASON.greeting });
+        steps = steps.concat([
             { delay: 350, type: 900, msg: "ask me anything below, or pick a topic:", replies: true },
             { delay: 500, type: 800, msg: "p.s. — prefer a normal website? just tap the red hang-up button below anytime." }
-        ];
+        ]);
         var si = 0;
         // The intro stops as soon as the visitor sends something, so it never
         // keeps talking over (or out of order with) their conversation.
