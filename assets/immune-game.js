@@ -543,10 +543,6 @@
   }
 
   /* ---- Controls ---- */
-  function aim(e) {
-    var box = canvas.getBoundingClientRect();
-    target = { x: e.clientX - box.left, y: e.clientY - box.top };
-  }
   function aimAt(x, y) {
     var box = canvas.getBoundingClientRect();
     target = { x: x - box.left, y: y - box.top };

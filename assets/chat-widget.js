@@ -214,7 +214,7 @@
 
   function openPanel(){
     panel.classList.add('open'); tip.style.display = 'none';
-    if (!greeted){ greeted = true; setTimeout(function(){ var ty=addTyping(); setTimeout(function(){ rmTyping(); addBubble("hey! i'm vishal (well, an ai version of me). ask me anything about my work, the kids' book, balloon animals, or how to get in touch."); }, 700); }, 150); }
+    if (!greeted){ greeted = true; setTimeout(function(){ addTyping(); setTimeout(function(){ rmTyping(); addBubble("hey! i'm vishal (well, an ai version of me). ask me anything about my work, the kids' book, balloon animals, or how to get in touch."); }, 700); }, 150); }
     setTimeout(function(){ field.focus(); }, 200);
   }
   function closePanel(){ panel.classList.remove('open'); }
