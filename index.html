@@ -935,7 +935,7 @@
         var sendBtn = document.getElementById('chatSend');
         var hist = [];
         var chatPill = document.getElementById('chatPill');
-        var miniTimer = null, miniArmed = false;
+        var miniTimer = null, miniArmed = false, chatting = false;   // chatting: the visitor has sent a message
         function expandChat() {
             chat.classList.remove('mini', 'hidden');
             scrollDown();
@@ -958,7 +958,7 @@
         }
         var miniDue = 0;
         function chatActivity(ms) {
-            if (!miniArmed) return;                      // the intro is still playing
+            if (!miniArmed || chatting) return;          // intro still playing, or they're mid-conversation
             var due = Date.now() + (ms || 3000);
             if (miniTimer && due < miniDue) return;      // never cut a reply's reading time short
             miniDue = due;
@@ -966,7 +966,7 @@
             miniTimer = setTimeout(function () {
                 miniTimer = null;
                 if (chat.classList.contains('mini') || chat.classList.contains('hidden')) return;
-                if (chatBusy()) return;                  // blur / mouseleave / the reply will restart it
+                if (chatBusy() || chatting) return;      // blur / mouseleave / the reply will restart it
                 minimizeChat();
             }, ms || 3000);
         }
@@ -1087,6 +1087,8 @@
             text = (text || '').trim();
             if (!text || busy) return;
             busy = true; sendBtn.disabled = true;
+            // once someone is talking to the chat, stop auto-hiding it; they close it when they're done
+            chatting = true; clearTimeout(miniTimer); miniTimer = null;
             stopIntro();
             if (chat.classList.contains('hidden')) chat.classList.remove('hidden');
             addBubble(text, true);
@@ -1106,8 +1108,6 @@
                     showChips();   // a visitor who typed during the intro still gets the topic buttons
                     hist.push({ role: 'assistant', content: stripTags(reply) });
                     busy = false; sendBtn.disabled = false;
-                    // give time to read the reply before the chat tucks away (3s minimum, 12s max)
-                    miniArmed = true; chatActivity(Math.min(12000, Math.max(3000, stripTags(reply).length * 45)));
                 }, wait);
             });
         }
