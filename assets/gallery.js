@@ -167,7 +167,7 @@
     var halfCard = (cards[0].offsetWidth || 340) / 2;
     var radius = (n === 2) ? 200 : Math.round(halfCard / Math.tan(Math.PI / n)) + 40;
     var angle = 0;
-    var dragging = false, lastX = 0, downX = 0, moved = false, startAngle = 0;
+    var dragging = false, lastX = 0, downX = 0, downY = 0, axis = '', moved = false, startAngle = 0;
     var autoTimer = null, idleTimer = null;
 
     cards.forEach(function (card, i) {
@@ -194,14 +194,48 @@
     function snap() { angle = Math.round(angle / theta) * theta; ring.style.transition = 'transform 0.5s ease-out'; update(); }
     function step(dir) { stopAuto(); ring.style.transition = 'transform 0.5s ease-out'; angle += -dir * theta; update(); restartIdle(); }
 
-    function startAuto() { if (autoTimer) return; autoTimer = setInterval(function () { ring.style.transition = 'transform 0.9s linear'; angle -= theta; update(); }, 2600); }
+    // Auto-rotate only while the gallery is on screen (it used to start 4s after page load,
+    // so visitors scrolling down arrived mid-spin), and pause while a photo is enlarged.
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var inView = false;
+    function lightboxOpen() { var o = document.querySelector('.spin-lightbox'); return !!(o && o.classList.contains('open')); }
+    function canAuto() { return inView && !document.hidden && !reduceMotion && !dragging; }
+    function startAuto() {
+      if (autoTimer || !canAuto()) return;
+      autoTimer = setInterval(function () {
+        if (!canAuto()) { stopAuto(); return; }
+        if (lightboxOpen()) return;
+        ring.style.transition = 'transform 0.9s linear'; angle -= theta; update();
+      }, 2600);
+    }
     function stopAuto() { clearInterval(autoTimer); autoTimer = null; }
     function restartIdle() { clearTimeout(idleTimer); idleTimer = setTimeout(startAuto, 4000); }
 
-    function onDown(e) { dragging = true; moved = false; startAngle = Math.round(angle / theta) * theta; downX = lastX = (e.touches ? e.touches[0].clientX : e.clientX); ring.style.transition = 'none'; stopAuto(); stage.classList.add('grabbing'); }
-    function onMove(e) { if (!dragging) return; var x = (e.touches ? e.touches[0].clientX : e.clientX); var dx = x - lastX; lastX = x; if (Math.abs(x - downX) > 6) moved = true; angle += dx * 0.4; update(); }
+    function onDown(e) {
+      dragging = true; moved = false; axis = e.touches ? '' : 'x';   // mouse drags are always sideways
+      startAngle = Math.round(angle / theta) * theta;
+      downX = lastX = (e.touches ? e.touches[0].clientX : e.clientX);
+      downY = (e.touches ? e.touches[0].clientY : e.clientY);
+      ring.style.transition = 'none'; stopAuto(); stage.classList.add('grabbing');
+    }
+    function onMove(e) {
+      if (!dragging) return;
+      var x = (e.touches ? e.touches[0].clientX : e.clientX), y = (e.touches ? e.touches[0].clientY : e.clientY);
+      // On touch screens, decide once whether this is a sideways swipe or a page scroll.
+      // A vertical scroll over the gallery used to spin it (and could skip a photo).
+      if (!axis) {
+        var ax = Math.abs(x - downX), ay = Math.abs(y - downY);
+        if (ax < 8 && ay < 8) return;
+        axis = ax > ay ? 'x' : 'y';
+      }
+      if (axis === 'y') return;
+      var dx = x - lastX; lastX = x; if (Math.abs(x - downX) > 6) moved = true; angle += dx * 0.4; update();
+    }
+    function onCancel() { if (!dragging) return; dragging = false; stage.classList.remove('grabbing'); angle = startAngle; ring.style.transition = 'transform 0.5s ease-out'; update(); restartIdle(); }
     function onUp() {
-      if (!dragging) return; dragging = false; stage.classList.remove('grabbing');
+      if (!dragging) return;
+      if (axis === 'y' || !axis) { onCancel(); return; }   // it was a scroll or a tap, not a swipe
+      dragging = false; stage.classList.remove('grabbing');
       // A deliberate swipe always moves at least one photo. With only 2-3 photos each step is
       // 120-180 degrees, so a normal thumb swipe used to round back to the same photo.
       var dist = lastX - downX, target = Math.round(angle / theta) * theta;
@@ -216,19 +250,27 @@
     stage.addEventListener('touchstart', onDown, { passive: true });
     stage.addEventListener('touchmove', onMove, { passive: true });
     stage.addEventListener('touchend', onUp);
+    stage.addEventListener('touchcancel', onCancel);   // e.g. a notification interrupts the swipe
 
     if (prevBtn) prevBtn.addEventListener('click', function () { step(-1); });
     if (nextBtn) nextBtn.addEventListener('click', function () { step(1); });
 
-    // Pause auto-rotate when the page/tab is hidden or motion is reduced.
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Pause when the tab is hidden; resume when it's back (if the gallery is on screen).
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) { stopAuto(); clearTimeout(idleTimer); }
-      else if (!reduceMotion) restartIdle();
+      else if (inView) restartIdle();
     });
 
     update();
-    if (!reduceMotion) restartIdle();
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          inView = e.isIntersecting;
+          if (inView) { clearTimeout(idleTimer); idleTimer = setTimeout(startAuto, 600); }   // start spinning soon after it scrolls into view
+          else { stopAuto(); clearTimeout(idleTimer); }
+        });
+      }, { threshold: 0.4 }).observe(stage);
+    } else { inView = true; restartIdle(); }
   }
 
   function initAll() {

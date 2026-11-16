@@ -105,7 +105,7 @@
   document.body.appendChild(launch);
 
   // root-relative so it also works on the 404 page, which GitHub serves at any missing URL
-  var vcUrl = '/index.html';
+  var vcUrl = '/';
   var vcBtn = document.createElement('a');
   vcBtn.className = 'vjw-call'; vcBtn.href = vcUrl; vcBtn.setAttribute('aria-label', 'Back to video call');
   vcBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="13" height="12" rx="2"></rect><path d="M22 8l-5 4 5 4V8z"></path></svg><span class="vjw-call-t">Video call</span>';

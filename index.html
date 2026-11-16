@@ -39,20 +39,28 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
+      "@type": "ProfilePage",
+      "@id": "https://www.vishaljohn.com/",
+      "url": "https://www.vishaljohn.com/",
       "name": "Vishal John",
-      "url": "https://www.vishaljohn.com",
-      "image": "https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg",
-      "jobTitle": "Medical Student",
-      "worksFor": { "@type": "Organization", "name": "University of Louisville School of Medicine" },
-      "alumniOf": { "@type": "Organization", "name": "University of Michigan" },
-      "sameAs": [
-        "https://www.linkedin.com/in/vishaljjohn/",
-        "https://github.com/vishaljjohn",
-        "https://scholar.google.com/citations?user=QXyjTGgAAAAJ",
-        "https://medium.com/@vishaljjohn"
-      ],
-      "description": "M3 medical student at the University of Louisville School of Medicine, children's book author, balloon animal artist, and aspiring coffee shop owner."
+      "mainEntity": {
+        "@type": "Person",
+        "@id": "https://www.vishaljohn.com/#person",
+        "name": "Vishal John",
+        "url": "https://www.vishaljohn.com/",
+        "image": "https://www.vishaljohn.com/images/Vishal%20John%20Headshot.jpg",
+        "jobTitle": "Medical Student",
+        "worksFor": { "@type": "Organization", "name": "University of Louisville School of Medicine" },
+        "alumniOf": { "@type": "Organization", "name": "University of Michigan" },
+        "sameAs": [
+          "https://www.linkedin.com/in/vishaljjohn/",
+          "https://github.com/vishaljjohn",
+          "https://scholar.google.com/citations?user=QXyjTGgAAAAJ",
+          "https://www.researchgate.net/profile/Vishal-John",
+          "https://medium.com/@vishaljjohn"
+        ],
+        "description": "M3 medical student at the University of Louisville School of Medicine, children's book author, balloon animal artist, and aspiring coffee shop owner."
+      }
     }
     </script>
 
@@ -303,6 +311,11 @@
                 bottom: calc(118px + env(safe-area-inset-bottom) + var(--kb));
             }
             #thread { max-height: 42vh; }
+            /* keep the top of the chat below the "YOU" camera tile on shorter phones
+               (tile ends ~200px down; header + input + bottom bar take ~230px more) */
+            @supports (height: 100dvh) {
+                #thread { max-height: min(42vh, max(96px, calc(100dvh - 430px - env(safe-area-inset-top) - env(safe-area-inset-bottom) - var(--kb)))); }
+            }
             .bottombar { flex-direction: column; gap: 10px; padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); }
             .controls {
                 order: 1; gap: 8px; width: 100%; max-width: 100%;
@@ -531,9 +544,14 @@
     <div class="sr-only">
         <h1>Vishal John — medical student, children's book author &amp; balloon animal artist</h1>
         <p>Vishal John is a third-year (M3) medical student at the University of Louisville School of Medicine, the author of the children's book "The Brave Little Immune Team," a balloon animal artist, and an aspiring coffee shop owner.</p>
+        <p>He has researched pediatric brain cancer and liquid biopsy in the Koschmann Lab at the University of Michigan, led bioinformatics education at miRcore, and serves on the board of Rock Cancer.</p>
         <nav aria-label="Main">
-            <a href="pages/about.html">About</a>
+            <a href="pages/about.html">About Vishal John</a>
             <a href="pages/publications.html">Publications</a>
+            <a href="pages/childrensbook.html">The Brave Little Immune Team</a>
+            <a href="pages/balloonanimals.html">Balloon animals</a>
+            <a href="pages/koschmannlab.html">Koschmann Lab research</a>
+            <a href="pages/rockcancer.html">Rock Cancer</a>
             <a href="pages/blog.html">Newsletter</a>
             <a href="pages/contact.html">Contact</a>
             <a href="index_classic.html">Classic site</a>
@@ -917,36 +935,51 @@
         var sendBtn = document.getElementById('chatSend');
         var hist = [];
         var chatPill = document.getElementById('chatPill');
-        var chatEngaged = false, miniTimer = null;
+        var miniTimer = null, miniArmed = false;
         function expandChat() {
             chat.classList.remove('mini', 'hidden');
             scrollDown();
+            chatActivity();
         }
         function minimizeChat() {
             if (chat.classList.contains('hidden') || chat.classList.contains('mini')) return;
             chat.classList.add('hidden');                       // fade out first…
             setTimeout(function () { chat.classList.add('mini'); chat.classList.remove('hidden'); }, 260);   // …then show the pill
         }
-        // Once the intro has fully shown, tuck the chat away after 7 seconds so the
-        // video is unobstructed, unless the visitor has started using the chat.
-        function scheduleMinimize() {
+        // Tuck the chat into a small pill after 3 seconds of inactivity so the video stays
+        // visible. It never hides while the visitor is typing, has unsent text, is waiting
+        // for a reply, or (on a computer) has the mouse over it; each of those restarts the
+        // countdown when it ends. Replies get a little extra reading time.
+        // phones keep a sticky :hover after a tap, so only count hovering on devices with a real mouse
+        var hasMouse = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        function chatBusy() {
+            return busy || !!document.getElementById('__typing') || document.activeElement === field
+                || !!field.value.trim() || (hasMouse && chat.matches(':hover'));
+        }
+        var miniDue = 0;
+        function chatActivity(ms) {
+            if (!miniArmed) return;                      // the intro is still playing
+            var due = Date.now() + (ms || 3000);
+            if (miniTimer && due < miniDue) return;      // never cut a reply's reading time short
+            miniDue = due;
             clearTimeout(miniTimer);
             miniTimer = setTimeout(function () {
-                if (chatEngaged) return;
-                if (chat.matches(':hover')) { scheduleMinimize(); return; }   // reading with the mouse over it: wait
+                miniTimer = null;
+                if (chat.classList.contains('mini') || chat.classList.contains('hidden')) return;
+                if (chatBusy()) return;                  // blur / mouseleave / the reply will restart it
                 minimizeChat();
-            }, 7000);
+            }, ms || 3000);
         }
-        function engage() { chatEngaged = true; clearTimeout(miniTimer); }
-        ['pointerdown', 'focusin', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) {
-            chat.addEventListener(ev, function (e) { if (!chat.classList.contains('mini')) engage(); }, { passive: true });
+        function armMinimize() { miniArmed = true; chatActivity(); }
+        ['pointerdown', 'keydown', 'input', 'wheel', 'touchstart', 'focusout', 'mouseleave'].forEach(function (ev) {
+            chat.addEventListener(ev, function () { if (!chat.classList.contains('mini')) chatActivity(); }, { passive: true });
         });
-        chatPill.addEventListener('click', function () { engage(); expandChat(); });
+        thread.addEventListener('scroll', function () { if (!chat.classList.contains('mini')) chatActivity(); }, { passive: true });
+        chatPill.addEventListener('click', expandChat);
         document.getElementById('cChat').addEventListener('click', function () {
-            engage();
             if (chat.classList.contains('mini')) { expandChat(); return; }
             chat.classList.toggle('hidden');
-            if (!chat.classList.contains('hidden')) field.focus();
+            if (!chat.classList.contains('hidden')) { field.focus(); chatActivity(); }
         });
 
         function scrollDown() { thread.scrollTop = thread.scrollHeight; }
@@ -1073,6 +1106,8 @@
                     showChips();   // a visitor who typed during the intro still gets the topic buttons
                     hist.push({ role: 'assistant', content: stripTags(reply) });
                     busy = false; sendBtn.disabled = false;
+                    // give time to read the reply before the chat tucks away (3s minimum, 12s max)
+                    miniArmed = true; chatActivity(Math.min(12000, Math.max(3000, stripTags(reply).length * 45)));
                 }, wait);
             });
         }
@@ -1862,7 +1897,7 @@
                     addBubble(s.msg);
                     hist.push({ role: 'assistant', content: s.msg });
                     if (s.replies) showChips();
-                    if (si >= steps.length) scheduleMinimize();
+                    if (si >= steps.length) armMinimize();
                     run();
                 }, s.type);
             }, s.delay);

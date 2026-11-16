@@ -10,14 +10,14 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO -->
-    <title>About Vishal John | UofL Medical Student & Researcher</title>
+    <title>About Me | Vishal John, UofL Medical Student</title>
     <meta name="description" content="About Vishal John, a third-year medical student at the University of Louisville: his background, pediatric brain cancer research, leadership, and full CV.">
     <meta name="author" content="Vishal John">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.vishaljohn.com/pages/about.html">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="About Vishal John | UofL Medical Student & Researcher">
+    <meta property="og:title" content="About Me | Vishal John, UofL Medical Student">
     <meta property="og:description" content="About Vishal John, a third-year medical student at the University of Louisville: his background, pediatric brain cancer research, leadership, and full CV.">
     <meta property="og:url" content="https://www.vishaljohn.com/pages/about.html">
     <meta property="og:image" content="https://www.vishaljohn.com/assets/og/about.jpg">
@@ -26,7 +26,7 @@
     <meta property="og:site_name" content="Vishal John">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="About Vishal John | UofL Medical Student & Researcher">
+    <meta name="twitter:title" content="About Me | Vishal John, UofL Medical Student">
     <meta name="twitter:description" content="About Vishal John, a third-year medical student at the University of Louisville: his background, pediatric brain cancer research, leadership, and full CV.">
     <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og/about.jpg">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -128,7 +128,9 @@
             .cv-list li { flex-direction: column; gap: 0; }
             .cv-skills { grid-template-columns: 1fr; gap: 2px; }
             .cv-skills dd { margin-bottom: 8px; }
-            .cv-section .cv-btn { margin: 14px 0 0; }
+            /* phones: line the two buttons up side by side (stacked and centered if they don't fit) */
+            .cv-section { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; }
+            .cv-section .cv-btn { margin: 0; }
             .description-section { text-align: left; }
             .cv-contact { gap: 2px 16px; }
             .cv-contact a { padding: 6px 0; }
@@ -160,7 +162,7 @@
 
     <!-- site:header -->
 <header>
-    <h1><a href="../index_classic.html">Vishal John</a></h1>
+    <h1><a href="/" title="Video call with Vishal">Vishal John</a></h1>
     <nav aria-label="Main">
         <ul>
             <li><a href="../index_classic.html">Home</a></li>
