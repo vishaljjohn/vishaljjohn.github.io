@@ -105,6 +105,12 @@
         }
         .pub-plain { background: #f0f9f4; border-left: 3px solid #28a745; border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 12px 0 4px; font-size: 14px; color: #2c5f3f; line-height: 1.55; }
         .pub-plain-label { display: inline-block; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #28a745; margin-right: 8px; }
+        /* lab photo at the top of the page: as wide as the card (up to 720px) */
+        .lab-photo { display: block; width: 100%; max-width: 720px; max-width: min(720px, calc(68vh * 4 / 3)); height: auto; aspect-ratio: 4 / 3; object-fit: cover; margin: 0 auto 12px; border-radius: 8px; }
+        /* phones: run it edge to edge across the top of the card */
+        @media (max-width: 640px) {
+            .lab-photo { width: calc(100% + 60px); max-width: none; margin: -30px -30px 14px; border-radius: var(--radius, 12px) var(--radius, 12px) 0 0; }
+        }
     </style>
 
     
@@ -136,7 +142,7 @@
       <div class="container">
     <div class="main-content">
 
-        <img loading="lazy" decoding="async" src="../images/Photo1.jpg" alt="Pipetting" style="width:50%;display:block;margin:0 auto 12px;border-radius:4px;">
+        <img src="../images/Photo1.jpg" alt="Lab members gathered at a lab bench while a young child shows them how to pipette" width="1500" height="1125" class="lab-photo">
         <p class="photo-caption" style="text-align:center;color:#6b6b6b;font-size:16px;margin-bottom:32px;">Our "young" PI teaching us how to pipette</p>
 
         <h2>Publications</h2>
