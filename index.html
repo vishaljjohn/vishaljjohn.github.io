@@ -253,7 +253,20 @@
             position: absolute; left: 0; right: 0; bottom: 0; z-index: 8;
             display: flex; align-items: center; justify-content: space-between; gap: 16px;
             padding: 16px 22px calc(16px + env(safe-area-inset-bottom));
+            padding-left: max(22px, env(safe-area-inset-left)); padding-right: max(22px, env(safe-area-inset-right));
         }
+        /* never break "7:15 PM", "V❤J" or "visitor #265" across two lines */
+        .clockbox { min-width: 0; }
+        .clockbox > * { white-space: nowrap; flex-shrink: 0; }
+        .controls { flex-shrink: 0; }
+        /* when the bar runs out of room (e.g. phones held sideways), tidy up in steps;
+           the .fit classes are added by fitBar() only when needed */
+        .bottombar.fit1 .vcount, .bottombar.fit1 .vc-sep { display: none !important; }
+        .bottombar.fit2 .ctrl.leave { width: 46px; padding: 0; border-radius: 50%; }
+        .bottombar.fit2 .leave-label { display: none; }
+        .bottombar.fit3 { gap: 10px; }
+        .bottombar.fit3 .controls { gap: 6px; }
+        .bottombar.fit3 .clockbox { gap: 8px; }
         .clockbox { display: flex; align-items: center; gap: 12px; font-size: 13px; }
         .clockbox .time { font-weight: 700; font-variant-numeric: tabular-nums; }
         .clockbox .sep { color: rgba(255,255,255,0.35); }
@@ -899,6 +912,27 @@
             document.getElementById('clock').textContent = h + ':' + (m < 10 ? '0' + m : m) + ' ' + ap;
         }
         tick(); setInterval(tick, 1000);
+
+        /* ---- Keep the bottom bar on one tidy line ----
+           Side by side (wider screens), measure whether the clock/links and the call
+           buttons fit; if not, hide the visitor counter, then shrink End call to a
+           round button, then tighten the spacing. Phones in portrait stack the two
+           rows instead, so nothing is hidden there. */
+        var bar = document.querySelector('.bottombar'), clockbox = document.querySelector('.clockbox');
+        function fitBar() {
+            if (!bar) return;
+            bar.classList.remove('fit1', 'fit2', 'fit3');
+            if (getComputedStyle(bar).flexDirection === 'column') return;
+            var levels = ['fit1', 'fit2', 'fit3'];
+            for (var i = 0; i < levels.length && (bar.scrollWidth > bar.clientWidth + 1 || clockbox.scrollWidth > clockbox.clientWidth + 1); i++) {
+                bar.classList.add(levels[i]);
+            }
+        }
+        window.fitBar = fitBar;
+        fitBar();
+        window.addEventListener('resize', fitBar);
+        window.addEventListener('orientationchange', function () { setTimeout(fitBar, 250); });
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitBar);
 
         /* ---- Options menu ---- */
         var optBtn = document.getElementById('optBtn'), optMenu = document.getElementById('optMenu');
@@ -1701,7 +1735,7 @@
         /* ---- Visitor counter ("you're visitor #N", all-time, via Worker+KV) ---- */
         (function () {
             var el = document.getElementById('visitorCount'), sep = document.getElementById('vcSep');
-            function show(n) { try { n = Number(n).toLocaleString(); } catch (e) {} el.textContent = "visitor #" + n; el.style.display = ''; if (sep) sep.style.display = ''; }
+            function show(n) { try { n = Number(n).toLocaleString(); } catch (e) {} el.textContent = "visitor #" + n; el.style.display = ''; if (sep) sep.style.display = ''; if (window.fitBar) fitBar(); }
             var cached = null; try { cached = sessionStorage.getItem('vj_calln'); } catch (e) {}
             if (cached) { show(cached); return; }
             if (!AI_ENDPOINT) return;
