@@ -5,3 +5,5 @@ _wigtest.html
 _wt.html
 .Rhistory
 new-papers.md
+__pycache__/
+*.pyc
