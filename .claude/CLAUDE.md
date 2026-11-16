@@ -4,7 +4,7 @@ Static site on GitHub Pages; pushing to `main` deploys in about a minute.
 
 ## Always
 - Every change must work on phones (check 375px and 320px wide: no sideways scrolling, readable text, tappable buttons, nav works) **and leave the desktop look unchanged**. Put phone-only fixes inside `@media (max-width: …)` rules so desktop styles are untouched.
-- Commit and push only after Vishal approves.
+- When a change is done and checked, commit and push it straight to `main` (Vishal wants to see it live; it can be reverted later). Also push the working branch.
 
 ## Where things live
 - CV: `assets/cv.json` (rendered on `pages/about.html`). Rebuild the PDF with `./tools/build-cv-pdf.sh` after any CV, publication, or presentation change.
