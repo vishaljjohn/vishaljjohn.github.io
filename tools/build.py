@@ -190,8 +190,9 @@ def sitemap():
 def thumbs():
     """Make 600px copies (images/thumbs/) for the project tiles on both homepages."""
     want = set(re.findall(r'images/thumbs/([^"\'\s)]+)', open("index_classic.html").read()))
-    want |= set(os.path.basename(m) for m in re.findall(r"img: '(images/[^']+)'", open("index.html").read()))
-    missing = [n for n in sorted(want) if not os.path.exists("images/thumbs/" + n) and os.path.exists("images/" + n)]
+    src = {os.path.basename(m): m for m in re.findall(r"img: '(images/[^']+)'", open("index.html").read())}
+    want |= set(src)
+    missing = [n for n in sorted(want) if not os.path.exists("images/thumbs/" + n) and os.path.exists(src.get(n, "images/" + n))]
     if not missing:
         return
     try:
@@ -201,7 +202,7 @@ def thumbs():
         return
     os.makedirs("images/thumbs", exist_ok=True)
     for n in missing:
-        im = ImageOps.exif_transpose(Image.open("images/" + n)).convert("RGB")
+        im = ImageOps.exif_transpose(Image.open(src.get(n, "images/" + n))).convert("RGB")
         if im.width > 600:
             im = im.resize((600, round(im.height * 600 / im.width)), Image.LANCZOS)
         im.save("images/thumbs/" + n, "JPEG", quality=78, optimize=True, progressive=True)

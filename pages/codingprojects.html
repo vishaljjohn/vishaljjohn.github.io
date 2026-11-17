@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<script>(function(){try{if(localStorage.getItem("vj-theme")==="dark")document.documentElement.classList.add("dark");}catch(e){}})();</script>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="../site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Projects &amp; Tools | Vishal John</title>
+    <meta name="description" content="Free, open-source tools Vishal John built to make medical school studying faster: Block Sim board-style practice exams, AnkiMedRef, Anki Face Control, and UWorld2Anki.">
+    <meta name="author" content="Vishal John">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.vishaljohn.com/pages/codingprojects.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Coding Projects &amp; Tools | Vishal John">
+    <meta property="og:description" content="Free, open-source tools Vishal John built to make medical school studying faster: Block Sim board-style practice exams, AnkiMedRef, Anki Face Control, and UWorld2Anki.">
+    <meta property="og:url" content="https://www.vishaljohn.com/pages/codingprojects.html">
+    <meta property="og:image" content="https://www.vishaljohn.com/assets/og/codingprojects.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Vishal John">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Coding Projects &amp; Tools | Vishal John">
+    <meta name="twitter:description" content="Free, open-source tools Vishal John built to make medical school studying faster: Block Sim board-style practice exams, AnkiMedRef, Anki Face Control, and UWorld2Anki.">
+    <meta name="twitter:image" content="https://www.vishaljohn.com/assets/og/codingprojects.jpg">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/base.css">
+    <style>
+        /* ---------- Coding projects: same visual language as the Publications page ---------- */
+        .main-content h2, .main-content p { margin: 20px 0; }
+        .cp-hero-icon { width: 120px; height: 120px; border-radius: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #0a6db0, #3a8fd6 55%, #6fb6ee); color: #fff; font: 700 40px/1 ui-monospace, SFMono-Regular, Menlo, monospace; box-shadow: var(--shadow, 0 6px 18px rgba(0,0,0,.12)); }
+        .cp-count { color: #6b6b6b; font-size: 14px; margin: 4px 0 2px !important; }
+        .cp-gh { display: inline-flex; align-items: center; gap: 7px; color: #0a6db0; text-decoration: none; font-size: 14px; }
+        .cp-gh:hover { text-decoration: underline; }
+
+        /* toolbar (filters + search), shared look with Publications */
+        .pub-toolbar { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; justify-content: space-between; margin: 22px 0 18px; }
+        .pub-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+        .pub-filter { border: 1.5px solid var(--line, #e8eaed); background: #fff; color: var(--ink-soft, #555a61); border-radius: 999px; padding: 9px 16px; font: 600 13px/1 var(--font, inherit); cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+        .pub-filter:hover { border-color: var(--accent, #0a6db0); color: var(--accent, #0a6db0); }
+        .pub-filter.active { background: var(--accent, #0a6db0); border-color: var(--accent, #0a6db0); color: #fff; }
+        .pub-search { position: relative; flex: 1 1 240px; max-width: 340px; }
+        .pub-search i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--muted, #6b7280); font-size: 13px; pointer-events: none; }
+        .pub-search input { width: 100%; box-sizing: border-box; padding: 10px 14px 10px 36px; border: 1.5px solid var(--line, #e8eaed); border-radius: 999px; font: 14px var(--font, inherit); background: #fff; color: var(--ink, #232529); }
+        .pub-search input:focus { outline: none; border-color: var(--accent, #0a6db0); box-shadow: 0 0 0 3px var(--accent-soft, #eaf3fa); }
+        .pub-empty { color: var(--muted, #6b7280); font-size: 14px; }
+        .pub-reset { background: none; border: 0; padding: 0; color: var(--accent, #0a6db0); font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
+        [hidden] { display: none !important; }
+
+        /* tool cards */
+        .tool-card { --tc: #0a6db0; display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 26px; align-items: start; background: #fff; border: 1px solid #e8e8e8; border-left: 4px solid var(--tc);
+            border-radius: 6px; padding: 22px 24px; margin: 0 0 22px; transition: box-shadow .2s, transform .2s; }
+        .tool-card:hover { box-shadow: 0 6px 22px rgba(0,0,0,0.08); }
+        .tool-card.featured { grid-template-columns: minmax(0, 1fr); border-left-width: 4px; padding: 0; overflow: hidden; }
+        .tool-card.featured .tool-body { padding: 22px 26px 24px; }
+        .tool-shot { display: block; width: 100%; height: auto; aspect-ratio: 1600 / 775; object-fit: cover; object-position: top left; border-bottom: 1px solid #e8e8e8; background: #f3f5f8; }
+        .shot-wrap { position: relative; }
+        .shot-tag { position: absolute; left: 14px; top: 14px; background: rgba(255,255,255,.94); color: #0a6db0; font: 700 11px/1 system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; padding: 7px 11px; border-radius: 999px; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+        .pub-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+        .badge { font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.3px; }
+        .b-type { background: #e7f1fb; color: #0a5a92; }
+        .b-lang { background: #f4f4f4; color: #555; border: 1px solid #ddd; }
+        .b-free { background: #eef6ee; color: #1e6b33; }
+        .b-access { background: #f3ecfb; color: #5b2a92; }
+        .b-team { background: #fff3cd; color: #856404; }
+        .tool-title { font-size: 21px; font-weight: 700; color: var(--ink, #222); margin: 0 0 4px; line-height: 1.3; }
+        .tool-tag { font-size: 15px; color: var(--tc); font-weight: 600; margin: 0 0 12px !important; }
+        .tool-desc { font-size: 14.5px; color: #444; line-height: 1.65; margin: 0 0 12px !important; }
+        .tool-credit { background: #fffaf0; border-left: 3px solid #e0a800; border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 14px; color: #5c4400; margin: 0 0 14px !important; line-height: 1.55; }
+        .tool-feats { list-style: none; padding: 0; margin: 0 0 14px; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr)); gap: 8px 18px; }
+        .tool-feats li { position: relative; padding-left: 22px; font-size: 13.5px; color: #4a4f55; line-height: 1.5; }
+        .tool-feats li::before { content: ""; position: absolute; left: 2px; top: 6px; width: 10px; height: 10px; border-radius: 3px; background: var(--tc); opacity: .85; }
+        .tool-how { margin: 0 0 16px; border: 1px solid #e8eaed; border-radius: 8px; background: #fafbfc; }
+        .tool-how summary { cursor: pointer; padding: 11px 14px; font: 600 13.5px/1.2 var(--font, inherit); color: var(--ink, #232529); list-style: none; display: flex; align-items: center; gap: 8px; }
+        .tool-how summary::-webkit-details-marker { display: none; }
+        .tool-how summary::before { content: "▸"; color: var(--tc); transition: transform .15s; }
+        .tool-how[open] summary::before { transform: rotate(90deg); }
+        .tool-how ol { margin: 0; padding: 2px 18px 12px 34px; font-size: 13.5px; color: #4a4f55; line-height: 1.6; }
+        .tool-how li { margin: 4px 0; }
+        .tool-how code { background: #eef1f5; border-radius: 4px; padding: 1px 5px; font-size: 12.5px; }
+        .tool-stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; }
+        .tool-stack span { font-size: 11.5px; color: #555a61; background: #f2f4f7; border-radius: 6px; padding: 3px 8px; }
+        .pub-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .pub-link { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; background: var(--tc); color: #fff; border-radius: 8px; text-decoration: none; font: 600 14px/1.2 var(--font, inherit); }
+        .pub-link:hover { filter: brightness(.92); }
+        .gh-link { display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid var(--line, #e8eaed); color: var(--ink-soft, #555a61); border-radius: 8px; padding: 8px 15px; font: 600 14px/1.2 var(--font, inherit); text-decoration: none; background: #fff; }
+        .gh-link:hover { border-color: var(--ink, #232529); color: var(--ink, #232529); }
+        .tool-note { font-size: 12.5px; color: #6b6b6b; margin: 12px 0 0 !important; }
+
+        /* --- little illustrations, built in HTML/CSS --- */
+        .mock { border-radius: 10px; overflow: hidden; box-shadow: 0 8px 22px rgba(0,0,0,.12); font-family: system-ui, -apple-system, Segoe UI, sans-serif; }
+        /* AnkiMedRef: hover a term on an Anki card */
+        .mock-anki { background: #2f3136; color: #e9e9e9; padding: 16px 16px 18px; font-size: 13.5px; line-height: 1.6; position: relative; }
+        .mock-anki .bar { display: flex; gap: 6px; margin: -4px 0 12px; }
+        .mock-anki .bar i { width: 9px; height: 9px; border-radius: 50%; background: #5a5d63; display: block; }
+        .mock-anki .term { border-bottom: 2px dotted #7cc4ff; color: #fff; cursor: help; }
+        .mock-tip { margin: 12px 0 0; background: #fff; color: #222; border-radius: 9px; padding: 10px 12px; font-size: 12.5px; line-height: 1.5; box-shadow: 0 6px 18px rgba(0,0,0,.35); position: relative; }
+        .mock-tip::before { content: ""; position: absolute; top: -7px; left: 92px; border: 7px solid transparent; border-top: 0; border-bottom-color: #fff; }
+        .mock-tip b { display: block; font-size: 13px; margin-bottom: 3px; }
+        .mock-tip .sem { display: inline-block; font: 700 10px/1 system-ui, sans-serif; letter-spacing: .4px; text-transform: uppercase; background: #fde2e2; color: #a02424; padding: 4px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 1px; }
+        .mock-tip .src { display: block; margin-top: 5px; color: #666; font-size: 11px; }
+        /* Face control: gestures */
+        .mock-face { background: linear-gradient(160deg, #f5f0ff, #eaf3ff); padding: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .gest { background: #fff; border-radius: 9px; padding: 9px 10px; display: flex; align-items: center; gap: 9px; font-size: 12.5px; color: #333; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+        .gest .ic { font-size: 20px; width: 26px; text-align: center; flex-shrink: 0; }
+        .gest kbd { font: 700 11px/1 ui-monospace, Menlo, monospace; background: #2f3136; color: #fff; padding: 3px 6px; border-radius: 4px; }
+        .gest small { display: block; color: #666; font-size: 11px; margin-top: 2px; }
+        .face-cam { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 12px; color: #5b2a92; font-weight: 700; padding: 4px 0 2px; }
+        .face-cam span { font-size: 26px; }
+        /* UWorld2Anki: the button it adds */
+        .mock-uw { background: #fff; border: 1px solid #e2e6ea; }
+        .mock-uw .uw-top { background: #174a7c; color: #fff; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; flex-wrap: wrap; }
+        .mock-uw .uw-qid { background: #fff; color: #174a7c; border-radius: 4px; padding: 4px 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
+        .mock-uw .uw-btn { background: #2e7d32; color: #fff; border-radius: 4px; padding: 3px 7px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+        .mock-uw .uw-body { padding: 12px; font-size: 12.5px; color: #444; line-height: 1.55; }
+        .mock-uw .uw-arrow { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding: 9px 10px; background: #f1f7f2; border-radius: 8px; color: #1e5b23; font-weight: 600; }
+        .mock-uw .uw-arrow span { font-size: 18px; }
+
+        /* "why I build these" strip */
+        .cp-why { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 8px 0 26px; }
+        .cp-why div { background: var(--accent-soft, #eaf3fa); border-radius: 10px; padding: 14px 16px; }
+        .cp-why b { display: block; color: var(--accent, #0a6db0); font-size: 14px; margin-bottom: 4px; }
+        .cp-why span { font-size: 13.5px; color: #4a4f55; line-height: 1.5; }
+
+        /* dark mode */
+        html.dark .tool-card { background: #1b2028; border-color: #2a313c; border-left-color: var(--tc); }
+        html.dark .cp-why b { color: #7cc0f2; }
+        html.dark .tool-shot { border-color: #2a313c; }
+        html.dark .tool-desc, html.dark .tool-feats li, html.dark .tool-how ol, html.dark .cp-why span { color: #cdd4de; }
+        html.dark .tool-title, html.dark .tool-how summary { color: #f0f3f7; }
+        html.dark .tool-how { background: #161a20; border-color: #2a313c; }
+        html.dark .tool-how code, html.dark .tool-stack span { background: #232a35; color: #cdd4de; }
+        html.dark .tool-credit { background: #2a2414; color: #f1dfa8; }
+        html.dark .gh-link, html.dark .pub-filter, html.dark .pub-search input { background: #1b2028; border-color: #2a313c; color: #cdd4de; }
+        html.dark .pub-filter.active { background: #6cb6ff; border-color: #6cb6ff; color: #0f1115; }
+        html.dark .cp-why div { background: #1d2430; }
+        html.dark .cp-count, html.dark .tool-note { color: #9aa4b2 !important; }
+        html.dark .gest small { color: #666 !important; }
+        html.dark .b-type { background: #16314a; color: #9ccfff; } html.dark .b-free { background: #17251d; color: #8fdca4; }
+        html.dark .b-access { background: #2a2040; color: #cdb3f5; } html.dark .b-team { background: #3a3014; color: #f1d27a; }
+        html.dark .b-lang { background: #232a35; color: #cdd4de; border-color: #2a313c; }
+        html.dark .tool-tag { filter: brightness(1.45); }
+        html.dark .cp-gh { color: #6cb6ff; }
+
+        /* phones */
+        @media (max-width: 860px) {
+            .tool-card { grid-template-columns: minmax(0, 1fr); gap: 18px; padding: 18px; }
+            .tool-card.featured .tool-body { padding: 18px; }
+            .cp-why { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .pub-toolbar { flex-direction: column; align-items: stretch; }
+            .pub-search { max-width: none; flex-basis: auto; }
+            .pub-filter { padding: 12px 15px; }
+            .pub-search input { padding: 12px 14px 12px 36px; font-size: 16px; }
+            .pub-link, .gh-link { padding: 12px 16px; }
+            .tool-how summary { padding: 14px; }
+        }
+        @media (max-width: 400px) {
+            .tool-title { font-size: 19px; }
+            .mock-face { grid-template-columns: 1fr; }
+            .pub-actions a { flex: 1 1 100%; justify-content: center; }
+        }
+    </style>
+    <link rel="stylesheet" href="../assets/site.css">
+</head>
+
+<body class="project-page">
+
+    <!-- site:header -->
+<header>
+    <h1><a href="../index_classic.html">Vishal John</a></h1>
+    <nav aria-label="Main">
+        <ul>
+            <li><a href="../index_classic.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="blog.html">Newsletter</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="guestbook.html">Leave Me A Note</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+<!-- /site:header -->
+
+    <div class="container">
+    <div class="main-content">
+        <div class="project-hero">
+            <div class="cp-hero-icon" aria-hidden="true">&lt;/&gt;</div>
+            <div>
+                <p class="ph-title">Coding Projects &amp; Tools</p>
+                <p class="ph-role">Free, open-source tools I built to make medical school studying faster</p>
+                <div class="tag-row"><span class="tag">Med Ed</span><span class="tag">Anki</span><span class="tag">Accessibility</span><span class="tag">Open source</span></div>
+                <a class="ph-link" href="https://github.com/vishaljjohn" target="_blank" rel="noopener"><i class="fab fa-github"></i> See all my code on GitHub</a>
+            </div>
+        </div>
+
+        <h2>Why I Build These</h2>
+        <p>Medical school is a lot of repetition: practice questions, flashcards, and looking up the same terms over and over. Whenever part of my study routine felt slow or clunky, I tried to build a fix. These are the tools that came out of that. They're all free, and the code is open for anyone to use or improve.</p>
+        <div class="cp-why">
+            <div><b>Save time</b><span>Fewer clicks between a question, the concept behind it, and the cards that drill it.</span></div>
+            <div><b>Study your way</b><span>Use your own materials and decks, offline and without accounts.</span></div>
+            <div><b>Open to everyone</b><span>Including students who can't easily use a keyboard or mouse.</span></div>
+        </div>
+
+        <h2>The Tools</h2>
+        <p class="cp-count" id="cpCount">4 free, open-source tools</p>
+        <div class="pub-toolbar" role="search">
+            <div class="pub-filters" role="group" aria-label="Filter tools">
+                <button type="button" class="pub-filter active" data-filter="all" aria-pressed="true">All</button>
+                <button type="button" class="pub-filter" data-filter="exams" aria-pressed="false">Practice exams</button>
+                <button type="button" class="pub-filter" data-filter="anki" aria-pressed="false">Anki</button>
+                <button type="button" class="pub-filter" data-filter="chrome" aria-pressed="false">Chrome extensions</button>
+                <button type="button" class="pub-filter" data-filter="access" aria-pressed="false">Accessibility</button>
+            </div>
+            <label class="pub-search">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <input type="search" id="cpSearch" placeholder="Search tools" aria-label="Search tools">
+            </label>
+        </div>
+        <p class="pub-empty" id="cpEmpty" hidden>No tools match that. <button type="button" class="pub-reset" id="cpReset">Show all tools</button></p>
+
+        <div id="cpList">
+            <!-- 1. Block Sim (featured) -->
+            <article class="tool-card featured" data-tags="exams" style="--tc:#0a6db0" id="block-sim">
+                <div class="shot-wrap">
+                    <img class="tool-shot" src="../images/projects/block-sim.jpg" width="1600" height="775" alt="Block Sim's board-style test screen showing a demo question with five answer choices, a question list, Lab Values, Notes and Calculator buttons, and a block timer">
+                    <span class="shot-tag">Featured · Live now</span>
+                </div>
+                <div class="tool-body">
+                    <div class="pub-badges"><span class="badge b-type">Web app</span><span class="badge b-free">Free · no account</span><span class="badge b-lang">TypeScript · React</span></div>
+                    <h3 class="tool-title">Block Sim</h3>
+                    <p class="tool-tag">Board-style practice exams from your own PDFs</p>
+                    <p class="tool-desc">Load any question PDF and its answer key, and Block Sim turns it into a test screen that looks and feels like the real boards: timed blocks, a question list, highlighting, strike-outs, lab values, and a calculator. Every attempt is saved, so you can come back weeks later, review exactly what you missed, and redo those questions on a spaced schedule until they stick. Everything runs in your browser. Nothing you load ever leaves your computer, and it works offline.</p>
+                    <ul class="tool-feats">
+                        <li>Exam, Tutor, and Untimed modes, including shelf-style 4-block presets</li>
+                        <li>Highlight, strike out, mark, and take notes, just like test day</li>
+                        <li>Built-in Lab Values and Calculator</li>
+                        <li>Score reports by topic, confidence, and time per question</li>
+                        <li>Missed-question bank with spaced redos (3, 7, 21, 60 days)</li>
+                        <li>Weak Areas view, offline install, and private by design</li>
+                    </ul>
+                    <details class="tool-how">
+                        <summary>How to use it</summary>
+                        <ol>
+                            <li>Open <a href="https://www.vishaljohn.com/block-sim/" target="_blank" rel="noopener">Block Sim</a> in Chrome or Edge (Safari and iPad work too) and try the 5-question demo.</li>
+                            <li>Optionally pick a data folder in iCloud, OneDrive, or Google Drive so your history follows you.</li>
+                            <li>Go to <b>Library → Import a PDF exam</b>, add the questions and the answer key, and check the key.</li>
+                            <li>Start a block, then review your score report and missed questions.</li>
+                        </ol>
+                    </details>
+                    <div class="tool-stack"><span>React</span><span>TypeScript</span><span>Tailwind</span><span>pdf.js</span><span>Tesseract OCR</span><span>IndexedDB</span><span>Offline PWA</span></div>
+                    <div class="pub-actions">
+                        <a class="pub-link" href="https://www.vishaljohn.com/block-sim/" target="_blank" rel="noopener"><i class="fas fa-play" aria-hidden="true"></i> Open Block Sim</a>
+                        <a class="gh-link" href="https://github.com/vishaljjohn/block-sim" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> View on GitHub</a>
+                    </div>
+                    <p class="tool-note">Only import materials you have the right to use.</p>
+                </div>
+            </article>
+
+            <!-- 2. AnkiMedRef -->
+            <article class="tool-card" data-tags="anki" style="--tc:#c0392b" id="ankimedref">
+                <div class="mock mock-anki" aria-hidden="true">
+                    <div class="bar"><i></i><i></i><i></i></div>
+                    A 42-year-old woman has episodic headaches, palpitations, and sweating. Urine metanephrines are elevated, suggesting a <span class="term">pheochromocytoma</span>.
+                    <div class="mock-tip"><b>Pheochromocytoma <span class="sem">Disease</span></b>A catecholamine-secreting tumor of the adrenal medulla that causes episodes of high blood pressure, headache, and sweating.<span class="src">Offline medical dictionary · instant</span></div>
+                </div>
+                <div class="tool-body">
+                    <div class="pub-badges"><span class="badge b-type">Anki add-on</span><span class="badge b-team">Built with a classmate</span><span class="badge b-lang">Python</span></div>
+                    <h3 class="tool-title">AnkiMedRef</h3>
+                    <p class="tool-tag">Hover any medical word on a card for an instant definition</p>
+                    <p class="tool-credit"><b>Made with my classmate Agboade.</b> AnkiMedRef was his idea, and we built it together, growing the medical database and fine-tuning it so looking something up never slows down a review session.</p>
+                    <p class="tool-desc">When you're flying through Anki reviews, stopping to Google an unfamiliar term breaks your flow. AnkiMedRef puts a definition right where your cursor is. Hover a word or abbreviation and a tooltip pops up with what it means and what kind of term it is, pulled from a local medical database that works offline in milliseconds, with trusted online sources as backup.</p>
+                    <ul class="tool-feats">
+                        <li>Instant, offline lookups from a large UMLS / MeSH medical database</li>
+                        <li>First Aid and Pathoma terms built right in</li>
+                        <li>200+ medical abbreviations (HbA1c, SpO2, ABG…) with zero delay</li>
+                        <li>Badges for Disease, Drug, Anatomy, Lab, and more</li>
+                        <li>Drug identification through RxNorm, plus ICD-10 code highlighting</li>
+                        <li>Falls back to the UMLS API, MedlinePlus, and Wikipedia when needed</li>
+                    </ul>
+                    <details class="tool-how">
+                        <summary>How to install</summary>
+                        <ol>
+                            <li>Download the repository and copy the folder into your Anki <code>addons21</code> folder.</li>
+                            <li>(Optional) Build the full offline database with <code>build_umls_db.py</code> using the free UMLS release from the NLM.</li>
+                            <li>Restart Anki and hover any medical term while you review.</li>
+                        </ol>
+                    </details>
+                    <div class="tool-stack"><span>Python</span><span>Anki add-on API</span><span>SQLite</span><span>UMLS / MeSH</span><span>RxNorm</span></div>
+                    <div class="pub-actions">
+                        <a class="gh-link" href="https://github.com/vishaljjohn/AnkiMedRef" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> View AnkiMedRef on GitHub</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 3. Anki Face Control -->
+            <article class="tool-card" data-tags="anki access" style="--tc:#6c3fb5" id="anki-face-control">
+                <div class="mock mock-face" aria-hidden="true">
+                    <div class="face-cam"><span>🙂</span> Webcam tracks your head</div>
+                    <div class="gest"><span class="ic">⬅️</span><div>Turn left <kbd>1</kbd><small>Again</small></div></div>
+                    <div class="gest"><span class="ic">➡️</span><div>Turn right <kbd>Space</kbd><small>Show answer / Good</small></div></div>
+                    <div class="gest"><span class="ic">↕️</span><div>Tilt up / down<small>Scroll the card</small></div></div>
+                    <div class="gest"><span class="ic">😮</span><div>Open mouth <kbd>U</kbd><small>Undo</small></div></div>
+                </div>
+                <div class="tool-body">
+                    <div class="pub-badges"><span class="badge b-access">Accessibility</span><span class="badge b-type">Desktop app</span><span class="badge b-lang">Python</span></div>
+                    <h3 class="tool-title">Anki Face Control</h3>
+                    <p class="tool-tag">Study flashcards hands-free, using only head movements</p>
+                    <p class="tool-desc">I built Anki Face Control for students with disabilities or mobility issues, so they can still study their flashcards without needing their hands to control the computer. It uses an ordinary webcam to follow small movements of your head and face and turns them into Anki controls: turn your head to answer, tilt to scroll, and open your mouth to undo. No special hardware is needed. It also helps anyone who wants to review cards while their hands are busy.</p>
+                    <ul class="tool-feats">
+                        <li>Works with any webcam; no special equipment</li>
+                        <li>One-tap calibration to your natural resting position</li>
+                        <li>Smoothing and per-action cooldowns to prevent accidental presses</li>
+                        <li>Adjustable sensitivity and adaptive, smooth scrolling</li>
+                        <li>On-screen guide showing what it's tracking</li>
+                    </ul>
+                    <details class="tool-how">
+                        <summary>How to use it</summary>
+                        <ol>
+                            <li>Install Python, then <code>pip install opencv-python mediapipe pyautogui</code>.</li>
+                            <li>Run <code>python anki_face_control.py</code>, open Anki, and start reviewing.</li>
+                            <li>Sit comfortably and press <code>c</code> to calibrate, then use head movements to study.</li>
+                        </ol>
+                    </details>
+                    <div class="tool-stack"><span>Python</span><span>MediaPipe Face Mesh</span><span>OpenCV</span><span>PyAutoGUI</span></div>
+                    <div class="pub-actions">
+                        <a class="gh-link" href="https://github.com/vishaljjohn/AnkiFaceControl" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> View Anki Face Control on GitHub</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4. UWorld2Anki -->
+            <article class="tool-card" data-tags="chrome anki" style="--tc:#2e7d32" id="uworld2anki">
+                <div class="mock mock-uw" aria-hidden="true">
+                    <div class="uw-top"><span>Item 12 of 40</span><span class="uw-qid">Question Id: 104512 <span class="uw-btn">Open in Anki (6)</span></span></div>
+                    <div class="uw-body">A 58-year-old man comes to the emergency department with crushing chest pain…
+                        <div class="uw-arrow"><span>→</span> Opens the 6 matching cards in your Anki deck</div>
+                    </div>
+                </div>
+                <div class="tool-body">
+                    <div class="pub-badges"><span class="badge b-type">Chrome extension</span><span class="badge b-free">Free</span><span class="badge b-lang">JavaScript</span></div>
+                    <h3 class="tool-title">UWorld2Anki</h3>
+                    <p class="tool-tag">Jump from a UWorld question straight to the Anki cards that cover it</p>
+                    <p class="tool-desc">After you miss a UWorld question, the best next step is to unsuspend and study the cards that cover it. UWorld2Anki reads the question ID on the page and adds an "Open in Anki" button right next to it, showing how many matching cards your deck has. One click opens exactly those cards in Anki's browser, using the AnKing deck's UWorld tags, so there's no copying IDs or searching by hand.</p>
+                    <ul class="tool-feats">
+                        <li>"Open in Anki" button next to every question ID</li>
+                        <li>Shows the number of matching cards before you click</li>
+                        <li>Works with AnKing UWorld tags for Step 1, 2, or 3</li>
+                        <li>Pre-loads the next and previous questions for speed</li>
+                        <li>Retries automatically if Anki isn't open yet</li>
+                    </ul>
+                    <details class="tool-how">
+                        <summary>How to install</summary>
+                        <ol>
+                            <li>Install the <b>AnkiConnect</b> add-on in Anki (code <code>2055492159</code>) and allow UWorld in its settings.</li>
+                            <li>Download the repository, open <code>chrome://extensions</code>, turn on Developer mode, and choose <b>Load unpacked</b>.</li>
+                            <li>Pick your Step in the extension's settings, open a UWorld question, and click <b>Open in Anki</b>.</li>
+                        </ol>
+                    </details>
+                    <div class="tool-stack"><span>JavaScript</span><span>Chrome Manifest V3</span><span>AnkiConnect</span></div>
+                    <div class="pub-actions">
+                        <a class="gh-link" href="https://github.com/vishaljjohn/Uworld2Anki-Chrome-Extension" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> View UWorld2Anki on GitHub</a>
+                    </div>
+                    <p class="tool-note">Not affiliated with UWorld, AnKing, or Anki.</p>
+                </div>
+            </article>
+        </div>
+    </div>
+    </div>
+
+    <nav class="project-nav" aria-label="More projects">
+<a class="pn-prev" href="japan.html"><span class="pn-dir">&larr; Previous project</span><span class="pn-name">Ishinomaki, Japan</span></a>
+<a class="pn-next" href="cookbook.html"><span class="pn-dir">Next project &rarr;</span><span class="pn-name">My Cookbook</span></a>
+</nav>
+
+    <!-- site:footer -->
+<footer>
+    <a href="https://www.linkedin.com/in/vishaljjohn/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+    <a href="https://github.com/vishaljjohn" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github fa-2x"></i></a>
+    <a href="https://medium.com/@vishaljjohn" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium fa-2x"></i></a>
+    <a href="../pages/card.html" aria-label="Business card"><i class="fas fa-id-card fa-2x"></i></a>
+    <p>© <span class="cur-year">2026</span> Vishal John. All Rights Reserved.</p>
+</footer>
+<script src="../assets/codeblue.js" defer></script>
+<!-- /site:footer -->
+
+    <script>
+    /* filter chips + search, like the Publications page */
+    (function () {
+        var cards = Array.prototype.slice.call(document.querySelectorAll('#cpList .tool-card'));
+        var search = document.getElementById('cpSearch'), empty = document.getElementById('cpEmpty'), count = document.getElementById('cpCount');
+        var filter = 'all';
+        function apply() {
+            var q = search.value.trim().toLowerCase(), shown = 0;
+            cards.forEach(function (c) {
+                var ok = (filter === 'all' || (' ' + c.getAttribute('data-tags') + ' ').indexOf(' ' + filter + ' ') >= 0) && (!q || c.textContent.toLowerCase().indexOf(q) >= 0);
+                c.hidden = !ok; if (ok) shown++;
+            });
+            empty.hidden = shown > 0;
+            count.textContent = (filter === 'all' && !q) ? cards.length + ' free, open-source tools' : shown + ' of ' + cards.length + ' tools shown';
+        }
+        Array.prototype.forEach.call(document.querySelectorAll('.pub-filter'), function (b) {
+            b.addEventListener('click', function () {
+                filter = b.getAttribute('data-filter');
+                Array.prototype.forEach.call(document.querySelectorAll('.pub-filter'), function (x) { var on = x === b; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+                apply();
+            });
+        });
+        search.addEventListener('input', apply);
+        document.getElementById('cpReset').addEventListener('click', function () { search.value = ''; document.querySelector('.pub-filter[data-filter="all"]').click(); });
+    })();
+    </script>
+    <script src="../assets/site.js"></script>
+    <script src="../assets/chat-widget.js" defer></script>
+    <script src="../assets/theme.js"></script>
+</body>
+
+</html>

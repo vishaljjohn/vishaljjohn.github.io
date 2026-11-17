@@ -54,6 +54,13 @@
             .projects-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
         .project-item { position: relative; border-radius: 6px; overflow: hidden; height: 180px; background: #ddd; }
+        /* above phone size: same columns as before, but a partly filled last row is centered */
+        @media (min-width: 481px) {
+            .projects-gallery { display: flex; flex-wrap: wrap; justify-content: center; --cols: 5; }
+            .project-item { flex: 0 0 calc((100% - (var(--cols) - 1) * 16px) / var(--cols)); min-width: 0; }
+        }
+        @media (min-width: 1800px) { .projects-gallery { --cols: 9; } }
+        @media (min-width: 481px) and (max-width: 1099px) { .projects-gallery { --cols: 3; } }
         .project-item > a { display: block; width: 100%; height: 100%; text-decoration: none; }
         .project-item img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform 0.3s ease; }
         .project-item:hover img { transform: scale(1.05); }
@@ -147,7 +154,7 @@
             <li><a href="pages/about.html">About Me</a></li>
             <li><a href="pages/blog.html">Newsletter</a></li>
             <li><a href="pages/publications.html">Publications</a></li>
-            <li><a href="pages/guestbook.html">Sign The Guestbook</a></li>
+            <li><a href="pages/guestbook.html">Leave Me A Note</a></li>
             <li><a href="pages/contact.html">Contact</a></li>
         </ul>
     </nav>
@@ -210,6 +217,14 @@
         <div class="project-item">
             <a href="pages/japan.html"><img loading="lazy" decoding="async" src="images/thumbs/japan1.jpg" alt="Ishinomaki Community Revitalization"></a>
             <div class="project-caption">Ishinomaki Community Revitalization (Japan)</div>
+        </div>
+        <div class="project-item">
+            <a href="pages/codingprojects.html"><img loading="lazy" decoding="async" src="images/thumbs/block-sim.jpg" alt="Coding Projects and Tools"></a>
+            <div class="project-caption">Coding Projects &amp; Tools</div>
+        </div>
+        <div class="project-item">
+            <a href="pages/cookbook.html"><img loading="lazy" decoding="async" src="images/thumbs/cooking-thailand.jpg" alt="My Cookbook" style="object-position:center 25%"></a>
+            <div class="project-caption">My Cookbook</div>
         </div>
     </div>
 

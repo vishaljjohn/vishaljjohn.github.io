@@ -10,13 +10,13 @@
 <meta name="theme-color" content="#ffffff">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Bluegrass Biodesign | Vishal John</title>
-    <meta name="description" content="Vishal John's team in UofL's Bluegrass Biodesign program found an unmet need in cardiothoracic surgery, then designed, built, and tested a medical device."/>
+    <meta name="description" content="Vishal John's Bluegrass Biodesign team at UofL built ATriFlow, a three-band wearable that tracks early warning signs of heart attack, stroke, and heart failure outside the clinic."/>
 <meta content="Vishal John" name="author"/>
 <meta content="index, follow" name="robots"/>
 <link href="https://www.vishaljohn.com/pages/bluegrassbiodesign.html" rel="canonical"/>
 <meta content="website" property="og:type"/>
 <meta content="Bluegrass Biodesign | Vishal John" property="og:title"/>
-<meta content="Vishal John's team in UofL's Bluegrass Biodesign program found an unmet need in cardiothoracic surgery, then designed, built, and tested a medical device." property="og:description"/>
+<meta content="Vishal John's Bluegrass Biodesign team at UofL built ATriFlow, a three-band wearable that tracks early warning signs of heart attack, stroke, and heart failure outside the clinic." property="og:description"/>
 <meta content="https://www.vishaljohn.com/pages/bluegrassbiodesign.html" property="og:url"/>
 <meta content="https://www.vishaljohn.com/assets/og/bluegrassbiodesign.jpg" property="og:image"/>
 <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
 <meta content="Vishal John" property="og:site_name"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Bluegrass Biodesign | Vishal John" name="twitter:title"/>
-<meta content="Vishal John's team in UofL's Bluegrass Biodesign program found an unmet need in cardiothoracic surgery, then designed, built, and tested a medical device." name="twitter:description"/>
+<meta content="Vishal John's Bluegrass Biodesign team at UofL built ATriFlow, a three-band wearable that tracks early warning signs of heart attack, stroke, and heart failure outside the clinic." name="twitter:description"/>
 <meta content="https://www.vishaljohn.com/assets/og/bluegrassbiodesign.jpg" name="twitter:image"/>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
@@ -72,6 +72,38 @@
             .photo-grid .full-width { grid-column: 1; }
             .btn-dark { margin-left: 0; margin-top: 10px; display: inline-block; }
         }
+        /* ATriFlow section */
+        .af-lede { font-size: 15.5px; line-height: 1.7; }
+        .af-concept { display: grid; grid-template-columns: 190px 1fr; gap: 28px; align-items: center; background: #fbf6f6; border: 1px solid #f0e2e2; border-radius: 12px; padding: 20px 24px; margin: 22px 0; }
+        .af-figure { text-align: center; }
+        .af-figure svg { display: block; margin: 0 auto; }
+        .af-legend { display: flex; justify-content: center; gap: 10px; margin-top: 8px; font-size: 12px; color: #7a2a2a; font-weight: 600; }
+        .af-legend i { display: inline-block; width: 12px; height: 6px; border-radius: 3px; background: #AD0000; margin-right: 4px; vertical-align: 2px; }
+        .af-concept p { margin: 0 0 12px !important; } .af-concept p:last-child { margin-bottom: 0 !important; }
+        .af-h3 { font-size: 18px; margin: 30px 0 14px; }
+        .af-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .af-metric { background: #fff; border: 1px solid #eee; border-top: 3px solid #AD0000; border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 4px; }
+        .af-metric b { font-size: 20px; color: #AD0000; }
+        .af-metric .af-full { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #555; }
+        .af-metric span:last-child { font-size: 13.5px; color: #4a4f55; line-height: 1.5; }
+        .af-timeline { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 2px solid #f0d6d6; }
+        .af-timeline li { position: relative; padding: 0 0 16px 16px; display: grid; grid-template-columns: 90px 1fr; gap: 10px; }
+        .af-timeline li::before { content: ""; position: absolute; left: -25px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 3px solid #AD0000; }
+        .af-when { font-weight: 700; color: #AD0000; font-size: 14px; }
+        .af-what { font-size: 14.5px; color: #3f4348; line-height: 1.55; }
+        .af-note { font-size: 13px; color: #6b6b6b; }
+        html.dark .af-concept { background: #241a1c; border-color: #3a2a2c; }
+        html.dark .af-metric { background: #1b2028; border-color: #2a313c; border-top-color: #ff6b6b; }
+        html.dark .af-metric b, html.dark .af-when { color: #ff8a8a; }
+        html.dark .af-metric .af-full { color: #9aa4b2; } html.dark .af-metric span:last-child, html.dark .af-what { color: #cdd4de; }
+        html.dark .af-timeline { border-color: #3a2a2c; } html.dark .af-timeline li::before { background: #161a20; border-color: #ff6b6b; }
+        html.dark .af-legend { color: #ffb3b3; } html.dark .af-note { color: #9aa4b2; }
+        @media (max-width: 860px) { .af-metrics { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px) {
+            .af-concept { grid-template-columns: 1fr; padding: 18px; gap: 14px; }
+            .af-timeline li { grid-template-columns: 1fr; gap: 2px; }
+        }
+        @media (max-width: 400px) { .af-metrics { grid-template-columns: 1fr; } }
     </style>
 <link href="../assets/site.css" rel="stylesheet"/>
 </head>
@@ -85,7 +117,7 @@
             <li><a href="about.html">About Me</a></li>
             <li><a href="blog.html">Newsletter</a></li>
             <li><a href="publications.html">Publications</a></li>
-            <li><a href="guestbook.html">Sign The Guestbook</a></li>
+            <li><a href="guestbook.html">Leave Me A Note</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
@@ -101,16 +133,54 @@
 <div>
 <p class="ph-title">Bluegrass Biodesign</p>
 <p class="ph-role">Cardiology / Cardiothoracic Surgery Team · University of Louisville · 2025 – 2026</p>
-<div class="tag-row"><span class="tag">Medical Devices</span><span class="tag">Cardiothoracic Surgery</span><span class="tag">NSF I-Corps</span></div>
+<div class="tag-row"><span class="tag">Medical Devices</span><span class="tag">Wearables</span><span class="tag">Cardiology</span><span class="tag">NSF I-Corps</span></div>
 <a class="ph-link" href="https://www.uoflnews.com/post/uofltoday/uofl-launches-new-program-aimed-at-helping-biomedical-students-innovate/" target="_blank" rel="noopener"><i class="fas fa-newspaper"></i> Read the UofL News feature</a>
 </div>
 </div>
 <h2>What is Bluegrass Biodesign</h2>
 <p>Bluegrass Biodesign is a nine-month interdisciplinary innovation program at the University of Louisville that trains the next generation of medical device developers. Students from the School of Medicine, College of Business, and J.B. Speed School of Engineering work in multidisciplinary teams to identify unmet clinical needs, design solutions, prototype devices, and validate them against real-world constraints.</p>
 <p>The program is grounded in the Stanford Biodesign framework — a structured methodology moving from clinical need-finding through prototyping and market validation. All teams complete business training through UofL's NSF-funded I-Corps program, receiving funding and mentorship to bring their ideas to life.</p>
-<h2>Our Device</h2>
-<p>Our team worked in the Cardiology and Cardiothoracic Surgery space, identifying an unmet clinical need through direct observation and physician interviews with our mentors Dr. Shahab Ghafghazi, MD and Dr. Guruprasad Giridharan, PhD. Working alongside medical students Amos Flomo, Ellen Oskoui, Caleb He, and Nikita Nair, and our engineering teammates, we designed, prototyped, and tested a device aimed at improving outcomes in the CT surgery setting.</p>
-<p>Prototyping involved everything from late-night study sessions with circuit boards to using each other as test subjects — all in the spirit of actually making something that works.</p>
+<h2>Our Device: ATriFlow</h2>
+<p class="af-lede">Heart attacks, strokes, and heart failure flare-ups (together called major adverse cardiovascular events, or <b>MACE</b>) often build silently between clinic visits. The early warning signs are changes in the blood vessels themselves: arteries stiffening, blood flow to the legs dropping, and the nervous system's control of the heart slipping. Today those can only be measured in a clinic, one test at a time, with blood pressure cuffs, Doppler ultrasound, or ECG equipment and a trained operator. So most patients get a snapshot a few times a year, and changes in between are missed.</p>
+<div class="af-concept">
+  <div class="af-figure" aria-hidden="true">
+    <svg viewBox="0 0 160 260" width="150" height="244" role="img">
+      <circle cx="80" cy="30" r="20" fill="#e8eef5"/>
+      <path d="M50 60 Q80 50 110 60 L118 140 Q80 150 42 140 Z" fill="#e8eef5"/>
+      <path d="M50 64 L28 120 L22 168" stroke="#e8eef5" stroke-width="14" fill="none" stroke-linecap="round"/>
+      <path d="M110 64 L132 120 L138 168" stroke="#e8eef5" stroke-width="14" fill="none" stroke-linecap="round"/>
+      <path d="M62 140 L58 205 L56 248" stroke="#e8eef5" stroke-width="16" fill="none" stroke-linecap="round"/>
+      <path d="M98 140 L102 205 L104 248" stroke="#e8eef5" stroke-width="16" fill="none" stroke-linecap="round"/>
+      <rect x="20" y="88" width="22" height="10" rx="4" fill="#AD0000" transform="rotate(68 31 93)"/>
+      <rect x="11" y="150" width="22" height="10" rx="4" fill="#AD0000" transform="rotate(80 22 155)"/>
+      <rect x="45" y="228" width="22" height="10" rx="4" fill="#AD0000"/>
+      <circle cx="80" cy="96" r="4" fill="#AD0000" opacity=".35"><animate attributeName="r" values="4;9;4" dur="1.2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".45;0;.45" dur="1.2s" repeatCount="indefinite"/></circle>
+    </svg>
+    <div class="af-legend"><span><i></i>Arm</span><span><i></i>Wrist</span><span><i></i>Ankle</span></div>
+  </div>
+  <div>
+    <p><b>ATriFlow</b> is a clinician-prescribed wearable made of three soft bands, worn on the arm, wrist, and ankle. Each band uses light-based pulse sensors (photoplethysmography, the same kind of sensor in a smartwatch), and together they track four markers of vascular health without a single blood pressure cuff. A patient app guides setup and checks signal quality, and a physician dashboard shows trends over time and flags changes from a patient's baseline, so care teams can step in before a crisis instead of after.</p>
+    <p>We built a working first-generation prototype that measures all four markers and tested it in controlled sessions with healthy volunteers. Next steps include testing over longer periods and during everyday activity.</p>
+  </div>
+</div>
+<h3 class="af-h3">What it tracks</h3>
+<div class="af-metrics">
+  <div class="af-metric"><b>ABI</b><span class="af-full">Ankle-brachial index</span><span>Compares blood flow at the ankle and the arm. A drop can signal peripheral artery disease.</span></div>
+  <div class="af-metric"><b>baPWV</b><span class="af-full">Pulse wave velocity</span><span>How fast the pulse travels from arm to ankle. Faster means stiffer arteries.</span></div>
+  <div class="af-metric"><b>RI</b><span class="af-full">Reflection index</span><span>How strongly the pulse wave bounces back, a window into vessel tone and endothelial health.</span></div>
+  <div class="af-metric"><b>HRV</b><span class="af-full">Heart rate variability</span><span>Beat-to-beat variation, which reflects how well the nervous system is regulating the heart.</span></div>
+</div>
+<h3 class="af-h3">Milestones</h3>
+<ol class="af-timeline">
+  <li><span class="af-when">Aug 2025</span><span class="af-what">Need-finding with cardiology and CT surgery leads to the idea for ATriFlow.</span></li>
+  <li><span class="af-when">Oct 2025</span><span class="af-what">First deliverable presentation to the Bluegrass Biodesign cohort.</span></li>
+  <li><span class="af-when">Nov 2025</span><span class="af-what">Working prototype; our engineering teammates present the ATriFlow poster at UofL's Engineering Design &amp; Innovation Showcase.</span></li>
+  <li><span class="af-when">Dec 2025</span><span class="af-what">Invention disclosure submitted to UofL's Office of Innovation &amp; Technology Transfer.</span></li>
+  <li><span class="af-when">2026</span><span class="af-what">Customer discovery through UofL's NSF I-Corps program and plans to present at conferences.</span></li>
+</ol>
+<h3 class="af-h3">The Team</h3>
+<p>Our team came from the School of Medicine and the J.B. Speed School of Engineering, mentored by Dr. Shahab Ghafghazi, MD (cardiology) and Dr. Guruprasad Giridharan, PhD (bioengineering). I worked with medical students Ellen Oskoui, Amos Flomo, Caleb He, and Nikita Nair and bioengineering student Swetha Senthil-Nathan. Prototyping involved everything from late-night sessions with circuit boards to using each other as test subjects, all in the spirit of actually making something that works.</p>
+<p class="af-note"><i class="fas fa-lock" aria-hidden="true"></i> Technical details of the design are confidential while the University of Louisville evaluates the invention.</p>
 <h2>Gallery</h2>
 <div class="spin-gallery"><div class="spin-stage"><div class="spin-ring"><div class="spin-card" data-caption="The CT Surgery Team after our first deliverable presentation, October 2025"><img alt="The CT Surgery Team after our first deliverable presentation, October 2025" src="../images/biodesign_team.jpg"/></div><div class="spin-card" data-caption="Early prototype testing — engineering and medicine colliding"><img alt="Early prototype testing — engineering and medicine colliding" src="../images/biodesign_testing1.JPG"/></div><div class="spin-card" data-caption="Using each other as test subjects — the true Biodesign experience"><img alt="Using each other as test subjects — the true Biodesign experience" src="../images/biodesign_testing2.jpg"/></div><div class="spin-card" data-caption="Late night prototyping with Arduino sensors and circuit boards"><img alt="Late night prototyping with Arduino sensors and circuit boards" src="../images/biodesign_testing3.jpg"/></div><div class="spin-card" data-caption="Certificates of Completion — February 2026"><img alt="Certificates of Completion — February 2026" src="../images/biodesign_cert.JPG"/></div></div></div><div class="spin-caption"></div><p class="spin-hint">Drag to spin · click a photo to enlarge</p><div class="spin-controls"><button aria-label="Previous" class="spin-btn spin-prev">‹</button><button aria-label="Next" class="spin-btn spin-next">›</button></div></div>
 <h2>The Biodesign Process</h2>

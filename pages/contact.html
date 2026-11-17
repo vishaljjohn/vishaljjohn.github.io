@@ -54,6 +54,21 @@
         [hidden] { display: none !important; }
             .card-link { font-size: 14px; color: #555a61; margin: 0 0 18px; }
         html.dark .card-link { color: #cdd4de; }
+        /* inbox (contact.html?admin) */
+        .ct-inbox { background: #fff7e0; border: 1px solid #f0d58a; border-radius: 10px; padding: 16px 18px; margin: 0 0 24px; }
+        .ct-inbox h2 { margin: 0 0 10px; }
+        .ct-key { display: flex; gap: 8px; flex-wrap: wrap; }
+        .ct-key input { flex: 1 1 180px; min-width: 0; padding: 9px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; }
+        .ct-key button, .ct-del { border: 0; border-radius: 6px; padding: 9px 14px; background: #333; color: #fff; cursor: pointer; font: 600 14px/1.2 inherit; }
+        .ct-del { background: #c0392b; padding: 7px 12px; font-size: 13px; }
+        .ct-msg { margin: 10px 0 !important; font-size: 14px; }
+        .ct-item { background: #fff; border: 1px solid #eadfb8; border-radius: 8px; padding: 12px 14px; margin: 0 0 10px; }
+        .ct-head { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; font-size: 14px; }
+        .ct-head span { color: #6b6b6b; font-size: 12.5px; margin-left: auto; }
+        .ct-sub { font-weight: 700; margin: 6px 0 4px !important; font-size: 14px; }
+        .ct-body { white-space: pre-wrap; margin: 0 0 10px !important; font-size: 14px; line-height: 1.55; overflow-wrap: anywhere; }
+        html.dark .ct-inbox { background: #2a2414; border-color: #4a3f20; } html.dark .ct-item { background: #1b2028; border-color: #2a313c; }
+        html.dark .ct-head span { color: #9aa4b2; }
     </style>
     <link rel="stylesheet" href="../assets/site.css">
 </head>
@@ -70,7 +85,7 @@
             <li><a href="about.html">About Me</a></li>
             <li><a href="blog.html">Newsletter</a></li>
             <li><a href="publications.html">Publications</a></li>
-            <li><a href="guestbook.html">Sign The Guestbook</a></li>
+            <li><a href="guestbook.html">Leave Me A Note</a></li>
             <li><a href="contact.html" aria-current="page">Contact</a></li>
         </ul>
     </nav>
@@ -131,13 +146,22 @@
         var status = document.getElementById('formStatus');
         var btn = form.querySelector('button[type="submit"]');
         if (!window.fetch || !window.FormData) return;
+        var INBOX = 'https://vishal-chat.vishaljjohn.workers.dev/contact';
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             btn.disabled = true; btn.textContent = 'Sending…';
             status.textContent = ''; status.className = 'form-status';
-            fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
-                .then(function (r) {
-                    if (!r.ok) throw new Error('send failed');
+            // Send to Formspree (email) and save a copy in Vishal's inbox on the site at the same time;
+            // the message counts as sent if either one works, so a slow or failed email never loses it.
+            var data = new FormData(form);
+            var copy = { name: data.get('name'), email: data.get('_replyto'), subject: data.get('subject'), message: data.get('message'), _gotcha: data.get('_gotcha') };
+            var saved = fetch(INBOX, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(copy), keepalive: true })
+                .then(function (r) { return r.ok; }).catch(function () { return false; });
+            var emailed = fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
+                .then(function (r) { return r.ok; }).catch(function () { return false; });
+            Promise.all([saved, emailed])
+                .then(function (res) {
+                    if (!res[0] && !res[1]) throw new Error('send failed');
                     form.reset();
                     window.location.href = 'thanks.html';
                 })
@@ -147,6 +171,44 @@
                     btn.disabled = false; btn.textContent = 'Send message';
                 });
         });
+        // ---- Vishal's inbox: contact.html?admin (same key as the guestbook) ----
+        if (/[?&]admin\b/.test(location.search)) {
+            var box = document.createElement('section'); box.className = 'ct-inbox';
+            box.innerHTML = '<h2>Inbox</h2><form class="ct-key"><input type="password" placeholder="Moderation key" aria-label="Moderation key" autocomplete="current-password"><button type="submit">Show messages</button></form><p class="ct-msg" role="status"></p><div class="ct-list"></div>';
+            form.parentNode.insertBefore(box, form.parentNode.firstChild);
+            var keyIn = box.querySelector('input'), msgEl = box.querySelector('.ct-msg'), list = box.querySelector('.ct-list'), key = '';
+            try { keyIn.value = JSON.parse(localStorage.getItem('vj_gb_key') || '""') || ''; } catch (e) {}
+            function show(msgs) {
+                list.textContent = '';
+                msgEl.textContent = msgs.length ? msgs.length + ' message' + (msgs.length === 1 ? '' : 's') + ', newest first.' : 'No messages yet.';
+                msgs.forEach(function (m) {
+                    var c = document.createElement('article'); c.className = 'ct-item';
+                    var h = document.createElement('div'); h.className = 'ct-head';
+                    var who = document.createElement('b'); who.textContent = m.name;
+                    var mail = document.createElement('a'); mail.href = 'mailto:' + m.email + '?subject=' + encodeURIComponent('Re: ' + (m.subject || 'your message')); mail.textContent = m.email;
+                    var when = document.createElement('span'); when.textContent = new Date(m.t).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+                    h.appendChild(who); h.appendChild(mail); h.appendChild(when);
+                    var sub = document.createElement('p'); sub.className = 'ct-sub'; sub.textContent = m.subject || '(no subject)';
+                    var body = document.createElement('p'); body.className = 'ct-body'; body.textContent = m.message;
+                    var del = document.createElement('button'); del.type = 'button'; del.className = 'ct-del'; del.textContent = 'Delete';
+                    del.addEventListener('click', function () {
+                        if (!confirm('Delete this message?')) return;
+                        fetch(INBOX + '/delete', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: key, id: m.id }) })
+                            .then(function (r) { if (!r.ok) throw new Error(); return r.json(); }).then(function (d) { show(d.messages || []); })
+                            .catch(function () { alert('That didn\u2019t work. Try again.'); });
+                    });
+                    c.appendChild(h); c.appendChild(sub); c.appendChild(body); c.appendChild(del); list.appendChild(c);
+                });
+            }
+            box.querySelector('form').addEventListener('submit', function (e) {
+                e.preventDefault(); key = keyIn.value.trim(); msgEl.textContent = 'Loading\u2026';
+                fetch(INBOX + '?key=' + encodeURIComponent(key))
+                    .then(function (r) { if (r.status === 401) throw new Error('key'); if (r.status === 429) throw new Error('locked'); if (!r.ok) throw new Error('down'); return r.json(); })
+                    .then(function (d) { try { localStorage.setItem('vj_gb_key', JSON.stringify(key)); } catch (e) {} show(d.messages || []); })
+                    .catch(function (err) { msgEl.textContent = err.message === 'key' ? 'That key didn\u2019t work.' : err.message === 'locked' ? 'Too many wrong keys. Try again in 15 minutes.' : 'Couldn\u2019t load the inbox. Is the Worker deployed?'; });
+            });
+            if (keyIn.value) box.querySelector('form').dispatchEvent(new Event('submit', { cancelable: true }));
+        }
         // coming Back from the thank-you page can restore a stale page; make sure it's empty and usable
         window.addEventListener('pageshow', function (e) {
             if (e.persisted) { form.reset(); btn.disabled = false; btn.textContent = 'Send message'; status.textContent = ''; }

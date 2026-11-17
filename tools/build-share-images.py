@@ -34,6 +34,8 @@ PAGES = {
     "pages/standrews.html": ("Saint Andrew's Breakfast Program", "images/andrew2.JPG"),
     "pages/HELP.html": ("Hospital Elder Life Program", "images/help.jpg"),
     "pages/japan.html": ("Ishinomaki, Japan", "images/japan1.jpg"),
+    "pages/codingprojects.html": ("Coding Projects & Tools", "images/projects/block-sim.jpg"),
+    "pages/cookbook.html": ("My Cookbook", "images/cooking-thailand.jpg"),
 }
 
 CARD = """<!DOCTYPE html><html><head><meta charset="utf-8"><style>
@@ -108,7 +110,7 @@ def main():
         out = f"assets/og/{name}.jpg"
         pic = "file://" + os.path.join(ROOT, photo).replace(" ", "%20")
         fit = "contain" if "Immune" in photo else "cover"
-        pos = "center 22%" if "Headshot" in photo else "left center" if "lab1" in photo else "center"
+        pos = "center 22%" if "Headshot" in photo else "left center" if "lab1" in photo else "left top" if "block-sim" in photo else "center"
         back = "#fbe3d3" if "Immune" in photo else "#fff"
         side = f"background:{back} url('{pic}') {pos}/{fit} no-repeat"
         render(out, title, description(page), "Vishal John", '<div class="side"></div>', side)

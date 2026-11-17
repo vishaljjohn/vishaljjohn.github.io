@@ -574,7 +574,7 @@
             <a href="pages/koschmannlab.html">Koschmann Lab research</a>
             <a href="pages/rockcancer.html">Rock Cancer</a>
             <a href="pages/blog.html">Newsletter</a>
-            <a href="pages/guestbook.html">Sign the guestbook</a>
+            <a href="pages/guestbook.html">Leave me a note</a>
             <a href="pages/contact.html">Contact</a>
             <a href="index_classic.html">Classic site</a>
         </nav>
@@ -622,7 +622,7 @@
         <a href="pages/about.html"><i class="fas fa-user"></i> About me</a>
         <a href="pages/publications.html"><i class="fas fa-book"></i> Publications</a>
         <a href="pages/blog.html"><i class="fas fa-envelope-open-text"></i> Newsletter</a>
-        <a href="pages/guestbook.html"><i class="fas fa-thumbtack"></i> Sign The Guestbook</a>
+        <a href="pages/guestbook.html"><i class="fas fa-thumbtack"></i> Leave Me A Note</a>
         <a href="pages/contact.html"><i class="fas fa-paper-plane"></i> Contact</a>
         <a href="#" id="mLinks"><i class="fas fa-link"></i> Find me online</a>
         <a href="index_classic.html"><i class="fas fa-th-large"></i> Classic site</a>
@@ -954,7 +954,7 @@
 
         /* ---- Projects grid ---- */
         // small copies for tiles and blurred backdrops (full-size photos are only needed when shown large)
-        function thumb(src) { return src.replace(/^images\//, 'images/thumbs/'); }
+        function thumb(src) { return src.replace(/^images\/(?:[^\/]+\/)*/, 'images/thumbs/'); }
         var projects = [
             { t: 'Balloon Animals', img: 'images/balloon_clownnose1.jpg', url: 'pages/balloonanimals.html' },
             { t: 'Rock Cancer', img: 'images/RockCancer.jpg', url: 'pages/rockcancer.html' },
@@ -964,7 +964,9 @@
             { t: 'Koschmann Lab', img: 'images/lab.jpg', url: 'pages/koschmannlab.html' },
             { t: "Saint Andrew's Breakfast", img: 'images/andrew.jpg', url: 'pages/standrews.html' },
             { t: 'Hospital Elder Life Program', img: 'images/help.jpg', url: 'pages/HELP.html' },
-            { t: 'Ishinomaki Revitalization (Japan)', img: 'images/japan1.jpg', url: 'pages/japan.html' }
+            { t: 'Ishinomaki Revitalization (Japan)', img: 'images/japan1.jpg', url: 'pages/japan.html' },
+            { t: 'Coding Projects & Tools', img: 'images/projects/block-sim.jpg', url: 'pages/codingprojects.html' },
+            { t: 'My Cookbook', img: 'images/cooking-thailand.jpg', url: 'pages/cookbook.html' }
         ];
         var grid = document.getElementById('workGrid');
         projects.forEach(function (p) {
@@ -1085,6 +1087,10 @@
               a: "i volunteered with the Hospital Elder Life Program (HELP) from 2022 to 2024, supporting older patients. more on the <a href='pages/HELP.html'>HELP</a> page." },
             { k: ['breakfast','andrew','saint','volunteer','service','community'],
               a: "i served at Saint Andrew's Breakfast Program from 2021 to 2024, and i'm on the board of Rock Cancer. there's a page on <a href='pages/standrews.html'>Saint Andrew's</a>, and you can see everything via 'My work' in the chat." },
+            { k: ['coding','code','github','program','tool','block sim','blocksim','anki add','extension','software','app'],
+              a: "i build free study tools for med school: Block Sim (board-style practice exams from your own PDFs), AnkiMedRef, Anki Face Control, and UWorld2Anki. they're all on my <a href='pages/codingprojects.html'>Coding Projects &amp; Tools</a> page." },
+            { k: ['cook','recipe','food','chef','thai','kitchen','bake'],
+              a: "i love to cook! my <a href='pages/cookbook.html'>cookbook</a> has 25 of my go-to recipes, including the thai dishes i learned at a cooking class in thailand." },
             { k: ['guestbook','guest book','sticky note','leave a note','sign your','pin a note'],
               a: "i'd love that! pin a sticky note on my <a href='pages/guestbook.html'>guestbook wall</a>: where you're from, how we met, or just hi. i read every one." },
             { k: ['contact','email','reach','get in touch','hire','message','connect'],

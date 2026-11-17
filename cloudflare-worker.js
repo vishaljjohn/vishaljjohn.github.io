@@ -23,6 +23,9 @@ GROUND RULES
 - Use ONLY the facts below. If something isn't here, say you're not sure and point them to the Contact page. Never invent facts, dates, titles, grades, or details.
 - Don't brand Vishal with a professional title he hasn't chosen — never call him "a researcher" as his identity. You MAY describe research he actually did if asked.
 - Politely decline anything inappropriate, hateful, political, or unrelated, and never give medical advice. Steer back to Vishal.
+- Coding projects (https://www.vishaljohn.com/pages/codingprojects.html): free, open-source study tools he built: Block Sim (board-style practice exams from your own PDFs, runs in the browser at vishaljohn.com/block-sim, private and offline), AnkiMedRef (Anki add-on: hover a medical term for an instant definition; built with his classmate Agboade, whose idea it was), Anki Face Control (hands-free Anki using head movements via webcam, made for students with disabilities or mobility issues), and UWorld2Anki (Chrome extension that opens the Anki cards matching a UWorld question).
+- Cookbook (https://www.vishaljohn.com/pages/cookbook.html): 25 of his go-to recipes, including Thai dishes he learned at a cooking class in Thailand (khao soi, pad thai, green curry, tom kha gai, mango sticky rice).
+- Bluegrass Biodesign device: ATriFlow, a clinician-prescribed three-band wearable (arm, wrist, ankle) with light-based pulse sensors that tracks markers of vascular health (ABI, pulse wave velocity, reflection index, HRV) to catch early warning signs of heart attack, stroke, and heart failure between clinic visits. Technical design details are confidential.
 - Guestbook: visitors can pin a sticky note (say hi, where they're from, how they know him) at https://www.vishaljohn.com/pages/guestbook.html; mention it if someone wants to say hi or leave a message for everyone to see.
 - Contact: point people to the Contact page. You may share his school email vishal.john@louisville.edu (it's on his public CV). Never share his phone number.
 
@@ -346,6 +349,44 @@ async function handleGuestbook(request, env, origin, cors, url) {
   return json({ ok: true, pending: true, note, token }, 200, cors);
 }
 
+// ---- Contact form backup inbox ----
+// Every contact-form message is also saved here (KV "contact_inbox", newest first), so it can be
+// read right away at vishaljohn.com/pages/contact.html?admin with the ASK_LOG_KEY, even if the
+// email from Formspree is slow. Formspree still sends the email as before.
+async function handleContact(request, env, origin, cors, url) {
+  if (origin && !ALLOWED_ORIGINS.includes(origin)) return json({ error: "forbidden" }, 403, cors);
+  if (!env.VISITS) return json({ error: "no KV bound" }, 503, cors);
+  const load = async function () { return JSON.parse((await env.VISITS.get("contact_inbox")) || "[]"); };
+  if (request.method === "GET") {
+    const st = await gbAdminCheck(env, request, url.searchParams.get("key"));
+    if (st !== "ok") return gbDenied(st, cors);
+    return json({ messages: await load() }, 200, cors);
+  }
+  if (request.method !== "POST" || !origin) return json({ error: "forbidden" }, 403, cors);
+  let body;
+  try { body = await request.json(); } catch (e) { return json({ error: "invalid json" }, 400, cors); }
+  if (url.pathname === "/contact/delete") {
+    const st = await gbAdminCheck(env, request, body.key);
+    if (st !== "ok") return gbDenied(st, cors);
+    const msgs = (await load()).filter(function (m) { return m.id !== String(body.id || ""); });
+    await env.VISITS.put("contact_inbox", JSON.stringify(msgs));
+    return json({ messages: msgs }, 200, cors);
+  }
+  if (body.website || body._gotcha) return json({ ok: true }, 200, cors);   // bot trap
+  const clean = function (v, max) { return String(v || "").replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, "").trim().slice(0, max); };
+  const msg = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7), t: Date.now(),
+    name: clean(body.name, 100), email: clean(body.email, 200), subject: clean(body.subject, 200), message: clean(body.message, 5000) };
+  if (!msg.name || !msg.message || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(msg.email)) return json({ error: "Please fill in your name, a valid email, and a message." }, 400, cors);
+  const ipKey = "ct_ip:" + (request.headers.get("CF-Connecting-IP") || "unknown");
+  const recent = parseInt((await env.VISITS.get(ipKey)) || "0", 10);
+  if (recent >= 3) return json({ error: "Please wait a minute before sending another message." }, 429, cors);
+  const msgs = await load();
+  msgs.unshift(msg); msgs.length = Math.min(msgs.length, 300);
+  await env.VISITS.put(ipKey, String(recent + 1), { expirationTtl: 60 });
+  await env.VISITS.put("contact_inbox", JSON.stringify(msgs));
+  return json({ ok: true }, 200, cors);
+}
+
 export default {
   async fetch(request, env, ctx) {
     const origin = request.headers.get("Origin") || "";
@@ -365,6 +406,7 @@ export default {
 
     if (_url.pathname === "/scores") return handleScores(request, env, origin, cors);
     if (_url.pathname === "/guestbook" || _url.pathname === "/guestbook/moderate" || _url.pathname === "/guestbook/delete") return handleGuestbook(request, env, origin, cors, _url);
+    if (_url.pathname === "/contact" || _url.pathname === "/contact/delete") return handleContact(request, env, origin, cors, _url);
 
     // ---- View logged visitor questions (protected) ----
     if (request.method === "GET" && _url.pathname === "/questions") {
