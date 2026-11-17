@@ -103,6 +103,8 @@
         .mock-tip::before { content: ""; position: absolute; top: -7px; left: 92px; border: 7px solid transparent; border-top: 0; border-bottom-color: #fff; }
         .mock-tip b { display: block; font-size: 13px; margin-bottom: 3px; }
         .mock-tip .sem { display: inline-block; font: 700 10px/1 system-ui, sans-serif; letter-spacing: .4px; text-transform: uppercase; background: #fde2e2; color: #a02424; padding: 4px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 1px; }
+        .mock-tip .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+        .mock-tip .chips span { font-size: 10.5px; font-weight: 600; background: #e3f4e8; color: #1e6b3a; padding: 3px 8px; border-radius: 999px; }
         .mock-tip .src { display: block; margin-top: 5px; color: #666; font-size: 11px; }
         /* Face control: gestures */
         .mock-face { background: linear-gradient(160deg, #f5f0ff, #eaf3ff); padding: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -266,34 +268,36 @@
                 <div class="mock mock-anki" aria-hidden="true">
                     <div class="bar"><i></i><i></i><i></i></div>
                     A 42-year-old woman has episodic headaches, palpitations, and sweating. Urine metanephrines are elevated, suggesting a <span class="term">pheochromocytoma</span>.
-                    <div class="mock-tip"><b>Pheochromocytoma <span class="sem">Disease</span></b>A catecholamine-secreting tumor of the adrenal medulla that causes episodes of high blood pressure, headache, and sweating.<span class="src">Offline medical dictionary · instant</span></div>
+                    <div class="mock-tip"><b>Pheochromocytoma <span class="sem">Disease</span></b>A catecholamine-secreting tumor of the adrenal medulla that causes episodes of high blood pressure, headache, and sweating.<span class="chips"><span>MEN 2</span><span>Adrenal incidentaloma</span><span>Takotsubo</span></span><span class="src">Built-in dictionary · offline</span></div>
                 </div>
                 <div class="tool-body">
                     <div class="pub-badges"><span class="badge b-type">Anki add-on</span><span class="badge b-team">Built with a classmate</span><span class="badge b-lang">Python</span></div>
                     <h3 class="tool-title">AnkiMedRef</h3>
-                    <p class="tool-tag">Hover any medical word on a card for an instant definition</p>
+                    <p class="tool-tag">Hover any medical word on a card for a quick reference</p>
                     <p class="tool-credit"><b>Built with my classmate Agboade.</b> This one was his idea. We worked on it together, mostly growing the medical database and tweaking it so lookups are quick enough not to slow down your reviews.</p>
-                    <p class="tool-desc">When you hit a word you don't know during Anki reviews, you usually have to stop and Google it. With AnkiMedRef you just hover over it, and a small popup tells you what it means and whether it's a disease, drug, lab, and so on. Most lookups come from a database saved on your computer, so they're instant and work offline. If a term isn't there, it checks a few trusted sites online.</p>
+                    <p class="tool-desc">When you hit a word you don't know during Anki reviews, you usually have to stop and Google it. With AnkiMedRef, medical terms on your card get a faint underline, and hovering over one pops up a short reference card. For a drug, that's the mechanism, uses, side effects, and a high-yield pearl. Most lookups come from built-in dictionaries plus a 1.2-million-term database saved on your computer, so they're instant and work offline. If a term isn't there, it checks RxNorm, the FDA, MedlinePlus, and Wikipedia.</p>
                     <ul class="tool-feats">
-                        <li>Instant, offline lookups from a large UMLS / MeSH medical database</li>
-                        <li>First Aid and Pathoma terms built right in</li>
-                        <li>200+ medical abbreviations (HbA1c, SpO2, ABG…) with zero delay</li>
-                        <li>Badges for Disease, Drug, Anatomy, Lab, and more</li>
-                        <li>Drug identification through RxNorm, plus ICD-10 code highlighting</li>
-                        <li>Falls back to the UMLS API, MedlinePlus, and Wikipedia when needed</li>
+                        <li>1,000+ built-in entries, including 222 drugs and 95 drug classes</li>
+                        <li>Labs, clinical scores, ECG, micro, genetics, radiology, and signs</li>
+                        <li>Shelf coverage for IM, peds, psych, neuro, family med, and OB/GYN</li>
+                        <li>Deck-aware: on an OB/GYN deck, "hypertension" opens the pregnancy card</li>
+                        <li>Hover an acronym like MMAPP to see the mnemonic it spells</li>
+                        <li>Hold Cmd/Ctrl to freeze a tooltip, and click related terms to keep going</li>
                     </ul>
                     <details class="tool-how">
                         <summary>How to install</summary>
                         <ol>
-                            <li>Download the repository and copy the folder into your Anki <code>addons21</code> folder.</li>
-                            <li>(Optional) Build the full offline database with <code>build_umls_db.py</code> using the free UMLS release from the NLM.</li>
-                            <li>Restart Anki and hover any medical term while you review.</li>
+                            <li>On GitHub, click <b>Code → Download ZIP</b> and unzip it.</li>
+                            <li>Inside the folder, unzip the database with <code>gunzip -k med_terms.db.gz</code> (on Windows, use 7-Zip). It's about 458 MB. The add-on still works without it, just with fewer terms.</li>
+                            <li>In Anki, go to <b>Tools → Add-ons → View Files</b> and copy the whole folder in. Give it a simple name like <code>AnkiMedRef</code>.</li>
+                            <li>Restart Anki, start reviewing, and hover any underlined term. Settings are under <b>Tools → Medical Quick Reference Settings</b>.</li>
                         </ol>
                     </details>
-                    <div class="tool-stack"><span>Python</span><span>Anki add-on API</span><span>SQLite</span><span>UMLS / MeSH</span><span>RxNorm</span></div>
+                    <div class="tool-stack"><span>Python</span><span>Anki add-on API</span><span>SQLite</span><span>MeSH / UMLS</span><span>RxNorm</span><span>openFDA</span></div>
                     <div class="pub-actions">
                         <a class="gh-link" href="https://github.com/vishaljjohn/AnkiMedRef" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> View AnkiMedRef on GitHub</a>
                     </div>
+                    <p class="tool-note">A study aid only, not for patient care decisions.</p>
                 </div>
             </article>
 
