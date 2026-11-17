@@ -30,98 +30,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/base.css">
     <style>
-        .main-content h2, .main-content p { margin: 20px 0; }
-        /* hero: the Thailand cooking-class photo beside the intro */
-        .cb-hero { display: grid; grid-template-columns: minmax(0, 360px) 1fr; gap: 34px; align-items: center; margin: 0 0 10px; }
-        .cb-photo { margin: 0; position: relative; }
-        .cb-photo img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 14px; box-shadow: 0 14px 34px rgba(0,0,0,.18); transform: rotate(-1.5deg); }
-        .cb-photo figcaption { margin-top: 14px; font-size: 13px; color: #6b6b6b; text-align: center; }
-        .cb-kicker { font: 700 12px/1 system-ui, sans-serif; letter-spacing: 2px; text-transform: uppercase; color: #c2410c; margin: 0 0 10px !important; }
-        .cb-title { font-size: 40px; line-height: 1.1; margin: 0 0 14px; letter-spacing: -0.5px; color: var(--ink, #232529); }
-        .cb-lede { font-size: 16px; line-height: 1.7; color: #4a4f55; margin: 0 0 16px !important; }
-        .cb-stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 4px; }
-        .cb-stats span { background: #fff4ec; color: #9a3412; border-radius: 999px; padding: 7px 13px; font-size: 13px; font-weight: 600; }
-
-        /* toolbar, same look as Publications */
-        .pub-toolbar { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; justify-content: space-between; margin: 22px 0 18px; }
-        .pub-filters { display: flex; flex-wrap: wrap; gap: 8px; }
-        .pub-filter { border: 1.5px solid var(--line, #e8eaed); background: #fff; color: var(--ink-soft, #555a61); border-radius: 999px; padding: 9px 16px; font: 600 13px/1 var(--font, inherit); cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
-        .pub-filter:hover { border-color: #c2410c; color: #c2410c; }
-        .pub-filter.active { background: #c2410c; border-color: #c2410c; color: #fff; }
-        .pub-search { position: relative; flex: 1 1 220px; max-width: 320px; }
-        .pub-search i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--muted, #6b7280); font-size: 13px; pointer-events: none; }
-        .pub-search input { width: 100%; box-sizing: border-box; padding: 10px 14px 10px 36px; border: 1.5px solid var(--line, #e8eaed); border-radius: 999px; font: 14px var(--font, inherit); background: #fff; color: var(--ink, #232529); }
-        .pub-search input:focus { outline: none; border-color: #c2410c; box-shadow: 0 0 0 3px #fff1e6; }
-        .pub-empty { color: var(--muted, #6b7280); font-size: 14px; }
-        .pub-reset { background: none; border: 0; padding: 0; color: #c2410c; font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
-        [hidden] { display: none !important; }
-        .cb-count { color: #6b6b6b; font-size: 14px; margin: 4px 0 0 !important; }
-
-        /* recipe cards */
-        .cb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; align-items: start; }
-        .recipe { --rc: #c2410c; background: #fff; border: 1px solid #ece7e2; border-top: 4px solid var(--rc); border-radius: 10px; overflow: hidden; transition: box-shadow .2s, transform .2s; }
-        .recipe:hover { box-shadow: 0 8px 22px rgba(0,0,0,.08); }
-        .recipe[data-cat="main"] { --rc: #c2410c; } .recipe[data-cat="side"] { --rc: #15803d; } .recipe[data-cat="dessert"] { --rc: #be185d; }
-        .recipe summary { list-style: none; cursor: pointer; padding: 16px 18px; display: flex; gap: 14px; align-items: center; }
-        .recipe summary::-webkit-details-marker { display: none; }
-        .r-emoji { width: 52px; height: 52px; flex-shrink: 0; border-radius: 12px; background: #fff6ee; display: flex; align-items: center; justify-content: center; font-size: 28px; }
-        .recipe[data-cat="side"] .r-emoji { background: #effaf2; } .recipe[data-cat="dessert"] .r-emoji { background: #fdf0f6; }
-        .r-head { flex: 1; min-width: 0; }
-        .r-title { font-size: 16.5px; font-weight: 700; color: var(--ink, #232529); line-height: 1.3; margin: 0 0 6px; }
-        .r-badges { display: flex; flex-wrap: wrap; gap: 6px; }
-        .r-badge { font: 700 10.5px/1 system-ui, sans-serif; letter-spacing: .3px; padding: 4px 8px; border-radius: 999px; background: #f4f4f4; color: #555; }
-        .r-badge.cat { background: #fff1e6; color: #9a3412; }
-        .recipe[data-cat="side"] .r-badge.cat { background: #e9f8ee; color: #166534; } .recipe[data-cat="dessert"] .r-badge.cat { background: #fde7f1; color: #9d174d; }
-        .r-badge.travel { background: #eef2ff; color: #3730a3; }
-        .r-chev { color: var(--rc); transition: transform .2s; font-size: 14px; }
-        .recipe[open] .r-chev { transform: rotate(180deg); }
-        .r-body { padding: 0 18px 18px; border-top: 1px dashed #ece7e2; }
-        .r-note { font-size: 13.5px; color: #6b5b4e; background: #fffaf3; border-radius: 8px; padding: 9px 12px; margin: 14px 0 0 !important; line-height: 1.5; }
-        .r-sec { font: 700 11px/1 system-ui, sans-serif; letter-spacing: 1.2px; text-transform: uppercase; color: var(--rc); margin: 16px 0 8px !important; }
-        .r-ing { list-style: none; padding: 0; margin: 0; columns: 2 150px; column-gap: 18px; }
-        .r-ing li { break-inside: avoid; padding: 3px 0 3px 16px; position: relative; font-size: 13.5px; color: #3f4348; line-height: 1.45; }
-        .r-ing li::before { content: ""; position: absolute; left: 2px; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--rc); opacity: .7; }
-        .r-ing li.sub { padding-left: 0; font-weight: 700; color: #232529; margin-top: 4px; }
-        .r-ing li.sub::before { display: none; }
-        .r-steps { margin: 0; padding: 0 0 0 4px; list-style: none; counter-reset: s; }
-        .r-steps li { counter-increment: s; position: relative; padding: 4px 0 6px 32px; font-size: 14px; color: #3f4348; line-height: 1.6; }
-        .r-steps li::before { content: counter(s); position: absolute; left: 0; top: 5px; width: 22px; height: 22px; border-radius: 50%; background: var(--rc); color: #fff; font: 700 11.5px/22px system-ui, sans-serif; text-align: center; }
-        .r-actions { display: flex; gap: 8px; margin-top: 14px; }
-        .r-print { display: inline-flex; align-items: center; gap: 7px; background: none; border: 1.5px solid var(--line, #e8eaed); color: var(--ink-soft, #555a61); border-radius: 8px; padding: 8px 13px; font: 600 13px/1.2 var(--font, inherit); cursor: pointer; }
-        .r-print:hover { border-color: var(--rc); color: var(--rc); }
-
-        /* dark mode */
-        html.dark .cb-title { color: #f0f3f7; } html.dark .cb-lede { color: #cdd4de; }
-        html.dark .cb-photo figcaption, html.dark .cb-count { color: #9aa4b2; }
-        html.dark .cb-stats span { background: #3a2416; color: #fdba8c; }
-        html.dark .cb-kicker { color: #fb923c; }
-        html.dark .recipe { background: #1b2028; border-color: #2a313c; border-top-color: var(--rc); }
-        html.dark .r-title { color: #f0f3f7; } html.dark .r-ing li, html.dark .r-steps li { color: #cdd4de; } html.dark .r-ing li.sub { color: #f0f3f7; }
-        html.dark .r-body { border-color: #2a313c; } html.dark .r-note { background: #261f17; color: #e9d5bd; }
-        html.dark .r-emoji { background: #2a2018; } html.dark .recipe[data-cat="side"] .r-emoji { background: #17251d; } html.dark .recipe[data-cat="dessert"] .r-emoji { background: #2a1724; }
-        html.dark .pub-filter, html.dark .pub-search input, html.dark .r-print { background: #1b2028; border-color: #2a313c; color: #cdd4de; }
-        html.dark .pub-filter.active { background: #fb923c; border-color: #fb923c; color: #0f1115; }
-        html.dark .r-sec { filter: brightness(1.4); }
-
-        /* phones */
-        @media (max-width: 760px) {
-            .cb-hero { grid-template-columns: 1fr; gap: 22px; }
-            .cb-photo { max-width: 340px; margin: 0 auto; width: 100%; }
-            .cb-title { font-size: 32px; }
-            .pub-toolbar { flex-direction: column; align-items: stretch; }
-            .pub-search { max-width: none; flex-basis: auto; }
-            .pub-filter { padding: 12px 15px; }
-            .pub-search input { padding: 12px 14px 12px 36px; font-size: 16px; }
-            .cb-grid { grid-template-columns: 1fr; }
-            .r-print { padding: 11px 14px; }
-        }
-
-        /* printing one recipe */
-        @media print {
-            body.print-one header, body.print-one footer, body.print-one .project-nav, body.print-one .cb-hero, body.print-one .pub-toolbar,
-            body.print-one .cb-count, body.print-one .cb-intro-h, body.print-one .vjw-launch, body.print-one .vjw-call, body.print-one .vj-theme-toggle,
-            body.print-one .r-actions, body.print-one .recipe:not(.printing) { display: none !important; }
-            body.print-one .recipe.printing { border: 0; box-shadow: none; }
+        .main-content p { margin: 16px 0; }
+        .project-hero img { object-position: center 25%; }
+        .rc-intro { font-size: 16px; line-height: 1.7; color: #4a4f55; }
+        /* the Google Slides deck, kept at 16:9 at every width */
+        .rc-deck { position: relative; width: 100%; aspect-ratio: 16 / 9; margin: 22px 0 14px; border-radius: 12px; overflow: hidden; background: #f3f5f8; border: 1px solid #e3e6ea; box-shadow: 0 6px 20px rgba(20, 30, 50, .08); }
+        .rc-deck iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+        .rc-open { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px; background: #0a6db0; color: #fff !important; font-weight: 600; font-size: 14px; text-decoration: none; }
+        .rc-open:hover, .rc-open:focus-visible { background: #085a92; }
+        .rc-hint { font-size: 13px; color: #666; }
+        html.dark .rc-intro { color: #cdd4de; }
+        html.dark .rc-deck { background: #1b2028; border-color: #2a313c; }
+        html.dark .rc-hint { color: #9aa4b2; }
+        @media (max-width: 600px) {
+            .rc-deck { margin: 18px 0 12px; border-radius: 8px; }
+            .rc-open { width: 100%; box-sizing: border-box; justify-content: center; padding: 12px 18px; }
         }
     </style>
     <link rel="stylesheet" href="../assets/site.css">
@@ -150,36 +73,22 @@
 
     <div class="container">
     <div class="main-content">
-        <div class="cb-hero">
-            <figure class="cb-photo">
-                <img src="../images/cooking-thailand.jpg" width="1050" height="1400" alt="Vishal in a white apron stir-frying in a wok at a Thai cooking class in Thailand">
-                <figcaption>Cooking with a wok at a cooking class in Thailand</figcaption>
-            </figure>
+        <div class="project-hero">
+            <img src="../images/thumbs/cooking-thailand.jpg" alt="Me stir-frying with a wok at a cooking class in Thailand" decoding="async">
             <div>
-                <p class="cb-kicker">My recipe collection</p>
-                <h2 class="cb-title">Recipes I actually cook</h2>
-                <p class="cb-lede">I started cooking a lot more in med school because I needed meals that were cheap, quick, and healthy. These are the ones I keep coming back to, plus some desserts and the Thai dishes I learned at a cooking class in Thailand.</p>
-                <div class="cb-stats" id="cbStats"></div>
+                <p class="ph-title">Recipes</p>
+                <p class="ph-role">My go-to recipes, from weeknight dinners to desserts</p>
+                <div class="tag-row"><span class="tag">Cooking</span><span class="tag">Meal prep</span><span class="tag">Thai food</span></div>
             </div>
         </div>
 
-        <h2 class="cb-intro-h">The Recipes</h2>
-        <p class="cb-count" id="cbCount">&nbsp;</p>
-        <div class="pub-toolbar" role="search">
-            <div class="pub-filters" role="group" aria-label="Filter recipes">
-                <button type="button" class="pub-filter active" data-filter="all" aria-pressed="true">All</button>
-                <button type="button" class="pub-filter" data-filter="main" aria-pressed="false">Mains</button>
-                <button type="button" class="pub-filter" data-filter="side" aria-pressed="false">Snacks &amp; sides</button>
-                <button type="button" class="pub-filter" data-filter="dessert" aria-pressed="false">Desserts</button>
-                <button type="button" class="pub-filter" data-filter="travel" aria-pressed="false">Thai &amp; Southeast Asian</button>
-            </div>
-            <label class="pub-search">
-                <i class="fas fa-search" aria-hidden="true"></i>
-                <input type="search" id="cbSearch" placeholder="Search recipes or ingredients" aria-label="Search recipes or ingredients">
-            </label>
+        <p class="rc-intro">I started cooking a lot more in med school because I needed meals that were cheap, quick, and healthy. These are the ones I keep coming back to, plus some desserts and the Thai dishes I learned at a cooking class in Thailand.</p>
+
+        <div class="rc-deck">
+            <iframe src="https://docs.google.com/presentation/d/1-4XnYlHhUYzKcIAYts7QQNfQNNeDoBKkj0q52-mcUZs/embed?start=false&amp;loop=false&amp;delayms=5000" title="My Recipes slide deck" loading="lazy" allowfullscreen></iframe>
         </div>
-        <p class="pub-empty" id="cbEmpty" hidden>No recipes match that. <button type="button" class="pub-reset" id="cbReset">Show all recipes</button></p>
-        <div class="cb-grid" id="cbGrid"></div>
+        <p class="rc-hint">Use the arrows under the slides to flip through, or open the full deck.</p>
+        <a class="rc-open" href="https://docs.google.com/presentation/d/1-4XnYlHhUYzKcIAYts7QQNfQNNeDoBKkj0q52-mcUZs/edit?usp=sharing" target="_blank" rel="noopener"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Open in Google Slides</a>
     </div>
     </div>
 
@@ -199,129 +108,6 @@
 <script src="../assets/codeblue.js" defer></script>
 <!-- /site:footer -->
 
-    <script>
-    /* Recipes from Vishal's "Recipes" cookbook (Google Slides). cat: main | side | dessert; travel: Thai & Southeast Asian.
-       Ingredient lines starting with "#" are sub-headings. */
-    var RECIPES = [
-      { t: 'Chicken Orzo', e: '🍗', cat: 'main', ing: ['2 lb boneless, skinless chicken thighs', '1 tbsp olive oil', '2 tsp oregano', '2 tsp paprika', '½ tsp crushed red pepper flakes', '1 tsp salt', '¼ tsp pepper', '1 tbsp butter', '3–4 cloves garlic, minced', '½ small onion, diced (75 g)', '1 cup orzo (uncooked)', '2 tbsp white wine or vinegar', '2 cups chicken broth', '4 oz ⅓-less-fat cream cheese', '28 g parmesan (fresh off the block is best)', '5 oz spinach', '75 g drained sun-dried tomatoes (jarred in olive oil)'],
-        steps: ['Preheat the oven to 400°F.', 'Heat the olive oil in a large oven-safe skillet over medium-high heat. Rub the chicken with the oregano, paprika, red pepper flakes, salt, and pepper, then sear until golden, about 5 minutes per side. Set the chicken aside.', 'In the same skillet, cook the butter and onion until fragrant, about 3 minutes. Add the garlic and orzo and cook until lightly golden, 2–3 minutes.', 'Deglaze with the wine or vinegar, then add the broth. Bring to a gentle boil and cook 3–5 minutes.', 'Stir in the cream cheese, parmesan, spinach, and sun-dried tomatoes until the spinach wilts. Nestle the chicken back in.', 'Bake uncovered 10–15 minutes, until the chicken reaches 165°F.'],
-        note: 'I leave my meat thermometer in while it bakes so the chicken never overcooks.' },
-      { t: 'Salsa Chicken Burrito', e: '🌯', cat: 'main', ing: ['2 skinless, boneless chicken breast halves', '1 (4 oz) can tomato sauce', '¼ cup salsa', '1 (1.25 oz) packet taco seasoning', '1 tsp ground cumin', '2 cloves garlic, minced', '1 tsp chili powder', 'Hot sauce, to taste', 'Tortillas, to serve'],
-        steps: ['Put the chicken and tomato sauce in a medium saucepan over medium-high heat. Bring to a boil, then add the salsa, taco seasoning, cumin, garlic, and chili powder. Simmer 15 minutes.', 'Shred the chicken with a fork and keep cooking, covered, another 5–10 minutes. Add hot sauce to taste (and a splash of water if it gets too thick).', 'Spoon into tortillas and roll up.'] },
-      { t: 'Gnocchi From Scratch', e: '🥔', cat: 'main', ing: ['1 lb russet potatoes', '1 cup flour', '1 egg', 'Sauce of your choice (pesto is easiest)'],
-        steps: ['Peel the potatoes and cut into small chunks. Boil until a fork slides through easily.', 'Mash as finely as you can; the finer the better.', 'Beat the egg. Mix the potato, flour, and egg on the counter into one big ball.', 'Wrap tightly in cling wrap (to push out air pockets) and rest in the fridge 20 minutes.', 'Roll into logs about as thick as a gnocchi and cut into roughly 1-inch pieces.', 'Drop into boiling water. Once they float, give them 1 more minute, then lift out with a sieve.', 'Score with a fork and toss in warm sauce, or sauté in a buttered skillet.'],
-        note: 'Easiest finish: toss them in a pan with pesto.' },
-      { t: 'Buffalo Cauliflower Tacos', e: '🌮', cat: 'main', ing: ['1 cup flour', '1 cup milk', '¼ tsp each garlic powder, salt, and pepper', '1 head cauliflower (4–5 cups florets)', '¾ cup hot sauce (I use Frank’s)', 'Chopped fresh cilantro', 'Corn or flour tortillas'],
-        steps: ['Preheat the oven to 450°F. Whisk the flour, milk, garlic powder, salt, and pepper.', 'Dip each floret in the batter, let the excess drip off, and lay on a parchment-lined baking sheet.', 'Bake on an upper rack 15–20 minutes until lightly crisp and browned (or use the air fryer).', 'Toss the cauliflower in the hot sauce and return to the oven 5–10 minutes.', 'Serve in tortillas with cilantro.'] },
-      { t: 'Mozzarella Basil Pesto Sando', e: '🥪', cat: 'main', ing: ['Artisan French bread', 'Mozzarella slices', 'Basil pesto', '#Optional', 'Grilled chicken', 'Tomato', 'Spinach'],
-        steps: ['Spread basil pesto on the bread.', 'Layer on the mozzarella (and any optional fillings).', 'Broil at 400°F for 5–7 minutes.', 'Put the halves together and enjoy.'] },
-      { t: 'Pasta Sauce From Scratch (Any Type)', e: '🍝', cat: 'main', ing: ['10 g cornstarch', '150 g water', 'A vegetable of your choice (e.g. spinach, sun-dried tomato)', '3–5 garlic cloves', 'Parmesan', 'Juice of ½ lemon', '2 tbsp neutral oil'],
-        steps: ['Stir the cornstarch into the water and heat on the stove until fully dissolved. Set aside.', 'If using spinach, blanch it: boil 50 seconds, then cool.', 'Blend the lemon juice, vegetables, cornstarch water, parmesan, garlic, oil, and a little extra water until completely smooth.'] },
-      { t: 'Mongolian Beef', e: '🥩', cat: 'main', ing: ['#For the beef', '1 lb flank steak, thinly sliced', '2 tbsp water', '2 tsp Shaoxing rice wine', '½ tsp kosher salt', '¼ tsp baking soda', '2 tbsp cornstarch', '1 tbsp neutral oil', '#For the sauce', '1 tsp cracked black pepper', '1 tbsp Shaoxing rice wine', '3 tbsp sugar', '2 tbsp soy sauce', '#For the rest', '1 tbsp minced garlic', '½ large yellow onion, sliced', '1 bunch green onions, in 2-inch pieces (whites and greens separated)', '1 oz rice vermicelli (optional)', 'Oil for cooking'],
-        steps: ['Marinate the beef: mix it hard with the water, rice wine, salt, and baking soda. Add the cornstarch, then the oil. Rest 10–15 minutes (or overnight in the fridge).', 'Optional: fry the dry vermicelli in 350°F oil until puffy; drain on paper towels.', 'Sear the beef in a hot wok until golden brown. Set aside.', 'In the same pan, stir-fry the garlic, then the onion. Return the beef, add the pepper and rice wine, then the sugar and soy sauce, stirring to coat.', 'Toss in the green onion greens for a few seconds and serve over the crispy noodles.'],
-        note: 'Per serving: about 358 kcal · 34 g protein · 24 g carbs · 12 g fat.' },
-      { t: 'Korean Stuffed Bell Peppers', e: '🫑', cat: 'main', ing: ['800 g lean ground beef (I use topside, one of the leanest cuts)', '1 onion, chopped', 'Bell peppers, halved and seeded', '#Sauce', '80 g low-sodium soy sauce (light and dark mixed works)', '30 g honey', '4–5 garlic cloves, minced', '25 g gochujang', '10 ml sesame oil', '1 tsp sesame seeds'],
-        steps: ['Preheat the oven to 350°F (175°C). Whisk the sauce ingredients together.', 'Sauté the onion (and a little garlic) in a bit of oil until soft.', 'Add the beef and cook 5–6 minutes until browned, breaking it up. Drain excess fat.', 'Add the sauce and cook another 5 minutes until the beef is golden and a little crispy.', 'Spoon the filling into the bell peppers and bake until the peppers are tender.'],
-        note: 'Makes 4 portions. A great high-protein meal-prep option.' },
-      { t: 'Thai Red Curry Red Lentils', e: '🍛', cat: 'main', travel: 1, ing: ['200 g dry red lentils', '30 g Thai red curry paste', '400 g coconut milk', '500 g water', '120 g onion, diced', '10 g garlic', '10 g oil', 'About 4 g salt', '#Optional', '10 g lime juice', 'About 100 g of any vegetable'],
-        steps: ['Heat the oil in a pot over medium. Cook the onion 3–4 minutes.', 'Add the garlic and curry paste and fry 1–2 minutes until fragrant.', 'Add the lentils, coconut milk, and water.', 'Simmer uncovered 15–20 minutes, stirring now and then, until thick and creamy.', 'Salt to taste (and finish with lime if you’re feeling fancy).'],
-        note: 'Serves 4. Cheap, fast, and a pantry staple.' },
-      { t: 'Khao Soi', e: '🍜', cat: 'main', travel: 1, ing: ['400 g egg noodles', '500 g bone-in chicken thighs', '400 ml coconut milk', '2 tbsp red curry paste', '1 tsp turmeric', '1 tsp curry powder', '4 cups chicken broth', '2 tbsp fish sauce', '1 tbsp palm sugar', '1 tbsp vegetable oil', '1 cup coconut cream', '#To garnish', 'Pickled mustard greens', 'Thinly sliced shallots', 'Lime wedges', 'Fried noodles', 'Cilantro', 'Chili oil'],
-        steps: ['Cook the egg noodles according to the package and set aside.', 'Fry the curry paste, turmeric, and curry powder in the oil until fragrant, 1–2 minutes.', 'Add the chicken, coat it in the paste, and cook 5 minutes.', 'Add the coconut milk, broth, fish sauce, and palm sugar. Boil, then simmer 30 minutes.', 'Stir in the coconut cream and simmer 5 more minutes.', 'Ladle over the noodles and pile on the garnishes.'] },
-      { t: 'Pad Thai', e: '🍤', cat: 'main', travel: 1, ing: ['200 g rice noodles', '200 g shrimp, peeled and deveined', '2 eggs, lightly beaten', '1 cup bean sprouts', '3 green onions, chopped', '2 tbsp vegetable oil', '¼ cup roasted peanuts, crushed', '1 lime, in wedges', 'Fresh cilantro', '#Sauce', '3 tbsp fish sauce', '3 tbsp tamarind paste', '2 tbsp palm sugar', '1 tbsp soy sauce'],
-        steps: ['Soak the noodles in warm water 20–30 minutes until soft; drain.', 'Mix the sauce until the sugar dissolves.', 'Cook the shrimp in 1 tbsp oil over medium-high heat until pink, 2–3 minutes. Set aside.', 'Add the rest of the oil and scramble the eggs until just set.', 'Add the noodles and sauce and toss to coat. Add the shrimp, bean sprouts, and green onion and stir-fry 2–3 minutes.', 'Top with peanuts, lime, and cilantro.'] },
-      { t: 'Green Curry (Gaeng Keow Wan)', e: '🥘', cat: 'main', travel: 1, ing: ['400 ml coconut milk', '3 tbsp green curry paste', '500 g chicken breast, thinly sliced', '1 cup chicken broth', '2 tbsp fish sauce', '1 tbsp palm sugar', '1 cup bamboo shoots', '1 red bell pepper, sliced', '1 cup Thai eggplant, quartered', '½ cup fresh basil', '2 kaffir lime leaves, torn', '1 tbsp vegetable oil', 'Jasmine rice, to serve'],
-        steps: ['Fry the curry paste in the oil until fragrant, 1–2 minutes.', 'Add the chicken and cook until no longer pink.', 'Add the coconut milk and broth, bring to a boil, then simmer 10 minutes.', 'Add the bamboo shoots, bell pepper, eggplant, fish sauce, palm sugar, and lime leaves. Simmer 10 more minutes.', 'Stir in the basil for a minute or two and serve over jasmine rice.'] },
-      { t: 'Tom Kha Kai (Tom Kha Gai)', e: '🥥', cat: 'main', travel: 1, ing: ['400 ml coconut milk', '2 cups chicken broth', '500 g chicken breast, thinly sliced', '4 kaffir lime leaves, torn', '3 lemongrass stalks, smashed and cut in 2-inch pieces', '5 slices galangal', '200 g mushrooms, sliced', '2 tbsp fish sauce', '1 tbsp lime juice', '3–4 Thai chilies, smashed', 'Fresh cilantro'],
-        steps: ['Bring the broth, coconut milk, lime leaves, lemongrass, and galangal to a simmer.', 'Add the chicken and mushrooms and simmer about 10 minutes until cooked through.', 'Season with the fish sauce, lime juice, and chilies. Taste and adjust.', 'Serve topped with cilantro.'] },
-
-      { t: 'Pickled Red Onions', e: '🧅', cat: 'side', ing: ['1 red onion', 'Vinegar', 'Water', 'Salt', 'Sweetener and seasonings of your choice'],
-        steps: ['Bring the vinegar, water, salt, sweetener, and seasonings to a simmer (stovetop or microwave).', 'Meanwhile, slice the onion as thinly as you can (knife or mandoline).', 'Pack the onion into a mason jar, pour in the hot liquid, cover, and shake.', 'Let sit about 30 minutes, keeping the onion submerged, and they’re ready.'] },
-      { t: 'Roasted Brussels Sprouts with Balsamic and Honey', e: '🥬', cat: 'side', ing: ['Brussels sprouts, trimmed and halved', '3 tbsp oil, divided', 'Salt and pepper', 'Garlic powder', 'Balsamic vinegar', 'Honey'],
-        steps: ['Toss the halved sprouts with 2 tbsp oil, salt, pepper, and garlic powder on a baking sheet.', 'Roast, stirring once halfway, until tender and golden, about 20 minutes.', 'Drizzle with the last tablespoon of oil, the balsamic, and the honey, and toss to coat.'] },
-      { t: 'Kimchi', e: '🥢', cat: 'side', ing: ['½ small napa cabbage', '2 tbsp sea salt', 'Water to cover', '2 tsp grated garlic (2–3 cloves)', '½ tsp grated ginger', '½ tsp sugar', '1–2 tbsp seafood flavoring or water (optional)', '1–2 tbsp gochujang, to taste', '4 oz Korean radish or daikon, in matchsticks', '2 scallions, in 1-inch pieces', '1 medium carrot, in matchsticks', 'A 32 oz jar'],
-        steps: ['Quarter and core the cabbage, cut into bite-size pieces, toss with the salt, cover with water, weigh down with a plate, and leave 1–2 hours.', 'Rinse under cold water and drain 15–20 minutes.', 'Mix the garlic, ginger, sugar, seafood flavoring, and gochujang into a paste.', 'Squeeze the cabbage dry and mix it (with gloves) with the radish, scallions, carrot, and paste.', 'Pack tightly into the jar, pressing out air and keeping it under the brine, with space at the top.', 'Ferment at room temperature 1–5 days, pressing it down daily, then refrigerate. Keeps for months.'] },
-      { t: 'Cottage Cheese Ranch', e: '🥗', cat: 'side', ing: ['225 g (about 1 cup) low-fat cottage cheese', '28–30 g (1 packet) ranch seasoning', '15–30 ml milk or water (optional)', 'Fresh dill, parsley, or chives (optional)'],
-        steps: ['Blend the cottage cheese until completely smooth; this is what makes it creamy like real ranch.', 'Blend in the ranch seasoning.', 'Thin with milk or water a little at a time if needed.', 'Taste, adjust, add herbs, and chill at least an hour so the flavors meld.'],
-        note: 'A high-protein swap for regular ranch.' },
-      { t: 'Beurre Monté', e: '🧈', cat: 'side', ing: ['1 tbsp water', '225 g (2 sticks) cold unsalted butter, in tablespoon pieces'],
-        steps: ['Bring the water to a bare simmer in a small saucepan.', 'Turn the heat to low and whisk in one piece of cold butter at a time, adding the next only when the last is almost melted, so it emulsifies instead of just melting.', 'If it looks oily or starts to split, pull it off the heat and keep whisking until it comes back together.', 'Hold it warm, around 180°F (82°C); too hot and the emulsion breaks.'],
-        note: 'A classic French emulsified butter for poaching fish or seafood, or spooning over vegetables and meat.' },
-
-      { t: 'Mango Pie', e: '🥭', cat: 'dessert', ing: ['1 (30 oz) can Kesar mango pulp', '8 oz cream cheese', '1 large tub Cool Whip', '3 packets gelatin', '2 graham cracker pie crusts', 'Sugar, to taste'],
-        steps: ['Dissolve the gelatin in warm water.', 'Melt the cream cheese in a pot, then stir in the mango pulp.', 'Add the dissolved gelatin, then a quarter to half of the Cool Whip. Sweeten to taste and mix well.', 'Pour into the crusts and chill overnight (at least 6 hours) to set.'] },
-      { t: 'Crème Brûlée', e: '🍮', cat: 'dessert', ing: ['#For 4 (4 oz) ramekins', '4 egg yolks', '4 tbsp sugar, plus more for the top', '4 tsp vanilla extract', '2 cups heavy cream'],
-        steps: ['Whisk the yolks, sugar, vanilla, and cream until smooth.', 'Pour into ramekins and bake at 250°F for 45 minutes.', 'Chill at least an hour (or overnight) to set.', 'Sprinkle sugar on top and broil (or torch) until caramelized.'],
-        note: 'No torch? Caramelize 1 tbsp sugar per custard with a little honey and water in a pan, then pour it over the top.' },
-      { t: 'Banana Bread', e: '🍌', cat: 'dessert', ing: ['2 cups oat flour (gluten-free if needed)', '2 tsp baking powder', '¼ tsp salt', '½ cup neutral oil', '2 eggs', '½ cup sugar (brown, coconut, or white)', '3 large ripe bananas, mashed', '1 tsp vanilla extract', '½ cup chopped walnuts', 'Optional: peanut butter, protein powder, or chocolate chips'],
-        steps: ['Preheat the oven to 350°F (180°C) and line a loaf pan.', 'Mix the oat flour, baking powder, and salt.', 'In another bowl, whisk the oil, eggs, sugar, bananas, and vanilla.', 'Stir in the dry ingredients until just combined, then fold in the walnuts.', 'Bake 35–40 minutes, until a skewer comes out clean. Cool completely before slicing.'] },
-      { t: 'High-Protein Cottage Cheesecake', e: '🍰', cat: 'dessert', ing: ['#Crust', '2 tbsp graham cracker crumbs', '½ tbsp melted butter', '#Cheesecake', '½ cup cottage cheese', '1 large egg', '2 tbsp Greek yogurt', '2 tbsp honey', '½ tsp vanilla extract', '1 scoop protein powder or ¼ cup almond flour'],
-        steps: ['Preheat the oven to 375°F. Press the crumbs and butter into a small ramekin and bake 5–7 minutes until golden.', 'Lower the oven to 325°F.', 'Blend all the cheesecake ingredients until smooth and pour over the crust.', 'Bake 20–25 minutes until set. Cool, cover, and chill a few hours before slicing.'] },
-      { t: 'Mango Sticky Rice (Khao Niew Mamuang)', e: '🍚', cat: 'dessert', travel: 1, ing: ['1 cup glutinous (sticky) rice', '1½ cups coconut milk', '½ cup sugar', '¼ tsp salt', '2 ripe mangoes, sliced', '1 tbsp toasted sesame seeds (optional)'],
-        steps: ['Rinse the rice until the water runs clear, soak at least 1 hour, and drain.', 'Steam 20–25 minutes until tender.', 'Warm the coconut milk, sugar, and salt, stirring until the sugar dissolves.', 'Pour about ¾ of the sauce over the hot rice, stir, and let it soak in 10 minutes.', 'Serve with mango, the rest of the sauce, and sesame seeds.'] },
-      { t: 'Thai Tea (Cha Yen)', e: '🧋', cat: 'dessert', travel: 1, ing: ['4 cups water', '4 Thai tea bags (or 4 tbsp loose leaves)', '½ cup sugar', '½ cup evaporated milk', '½ cup sweetened condensed milk', 'Ice'],
-        steps: ['Boil the water, add the tea and sugar, stir to dissolve, and steep 5 minutes off the heat.', 'Strain (if loose leaf) and cool to room temperature.', 'Fill glasses with ice and pour the tea about ¾ of the way up.', 'Top with evaporated milk and a splash of condensed milk. Stir and serve.'] },
-      { t: 'Klepon Balls (Klepon)', e: '🟢', cat: 'dessert', travel: 1, ing: ['200 g glutinous rice flour', '180 ml pandan juice (or water with a few drops of pandan extract)', '¼ tsp salt', '100 g palm sugar (gula Melaka), finely chopped', '100 g grated coconut', 'A pinch of salt for the coating'],
-        steps: ['Make pandan juice by blending pandan leaves with water and straining (or use extract).', 'Knead the rice flour and salt with the pandan juice into a smooth dough.', 'Flatten small pieces in your palm, add a little palm sugar, and seal into balls.', 'Boil until they float, then 2–3 more minutes so the sugar melts inside.', 'Roll in the salted coconut and serve at room temperature.'],
-        note: 'They burst with melted palm sugar when you bite in.' }
-    ];
-    (function () {
-        var grid = document.getElementById('cbGrid'), search = document.getElementById('cbSearch'), empty = document.getElementById('cbEmpty'), count = document.getElementById('cbCount');
-        var CAT = { main: 'Main course', side: 'Snack / side', dessert: 'Dessert' };
-        function el(tag, cls, text) { var x = document.createElement(tag); if (cls) x.className = cls; if (text != null) x.textContent = text; return x; }
-        RECIPES.forEach(function (r, i) {
-            var d = el('details', 'recipe'); d.setAttribute('data-cat', r.cat); if (r.travel) d.setAttribute('data-travel', '1');
-            d.id = 'r-' + r.t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-            var s = el('summary'), em = el('span', 'r-emoji', r.e); em.setAttribute('aria-hidden', 'true');
-            var head = el('div', 'r-head'), title = el('h3', 'r-title', r.t), badges = el('div', 'r-badges');
-            badges.appendChild(el('span', 'r-badge cat', CAT[r.cat]));
-            if (r.travel) badges.appendChild(el('span', 'r-badge travel', 'From my travels'));
-            badges.appendChild(el('span', 'r-badge', r.ing.filter(function (x) { return x.charAt(0) !== '#'; }).length + ' ingredients'));
-            head.appendChild(title); head.appendChild(badges);
-            var chev = el('i', 'fas fa-chevron-down r-chev'); chev.setAttribute('aria-hidden', 'true');
-            s.appendChild(em); s.appendChild(head); s.appendChild(chev); d.appendChild(s);
-            var body = el('div', 'r-body');
-            if (r.note) body.appendChild(el('p', 'r-note', r.note));
-            body.appendChild(el('p', 'r-sec', 'Ingredients'));
-            var ul = el('ul', 'r-ing'); r.ing.forEach(function (x) { ul.appendChild(x.charAt(0) === '#' ? el('li', 'sub', x.slice(1)) : el('li', '', x)); }); body.appendChild(ul);
-            body.appendChild(el('p', 'r-sec', 'Directions'));
-            var ol = el('ol', 'r-steps'); r.steps.forEach(function (x) { ol.appendChild(el('li', '', x)); }); body.appendChild(ol);
-            var act = el('div', 'r-actions'), pr = el('button', 'r-print'); pr.type = 'button'; pr.innerHTML = '<i class="fas fa-print" aria-hidden="true"></i> Print this recipe';
-            pr.addEventListener('click', function () {
-                d.classList.add('printing'); document.body.classList.add('print-one'); window.print();
-                setTimeout(function () { d.classList.remove('printing'); document.body.classList.remove('print-one'); }, 500);
-            });
-            act.appendChild(pr); body.appendChild(act); d.appendChild(body);
-            d._text = (r.t + ' ' + r.ing.join(' ') + ' ' + CAT[r.cat]).toLowerCase();
-            grid.appendChild(d);
-        });
-        var cards = Array.prototype.slice.call(grid.children), filter = 'all';
-        var n = { main: 0, side: 0, dessert: 0, travel: 0 }; RECIPES.forEach(function (r) { n[r.cat]++; if (r.travel) n.travel++; });
-        document.getElementById('cbStats').innerHTML = '<span>' + RECIPES.length + ' recipes</span><span>' + n.main + ' mains</span><span>' + n.side + ' snacks &amp; sides</span><span>' + n.dessert + ' desserts</span><span>' + n.travel + ' Thai &amp; Southeast Asian</span>';
-        function apply() {
-            var q = search.value.trim().toLowerCase(), shown = 0;
-            cards.forEach(function (c) {
-                var ok = (filter === 'all' || c.getAttribute('data-cat') === filter || (filter === 'travel' && c.getAttribute('data-travel'))) && (!q || c._text.indexOf(q) >= 0);
-                c.hidden = !ok; if (ok) shown++;
-            });
-            empty.hidden = shown > 0;
-            count.textContent = (filter === 'all' && !q) ? 'Tap a recipe to open it.' : shown + ' of ' + cards.length + ' recipes';
-        }
-        Array.prototype.forEach.call(document.querySelectorAll('.pub-filter'), function (b) {
-            b.addEventListener('click', function () {
-                filter = b.getAttribute('data-filter');
-                Array.prototype.forEach.call(document.querySelectorAll('.pub-filter'), function (x) { var on = x === b; x.classList.toggle('active', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
-                apply();
-            });
-        });
-        search.addEventListener('input', apply);
-        document.getElementById('cbReset').addEventListener('click', function () { search.value = ''; document.querySelector('.pub-filter[data-filter="all"]').click(); });
-        apply();
-        // opening a shared link like cookbook.html#r-pad-thai opens that recipe
-        function openHash() { if (!location.hash) return; var t = document.getElementById(location.hash.slice(1)); if (t && t.tagName === 'DETAILS') { t.open = true; t.scrollIntoView({ block: 'start' }); } }
-        openHash(); window.addEventListener('hashchange', openHash);
-    })();
-    </script>
     <script src="../assets/site.js"></script>
     <script src="../assets/chat-widget.js" defer></script>
     <script src="../assets/theme.js"></script>
