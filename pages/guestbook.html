@@ -144,6 +144,9 @@
         .gb-admin input { padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; min-width: 0; flex: 1 1 180px; font-size: 16px; }
         .gb-admin button { padding: 8px 14px; border-radius: 6px; border: 0; background: #333; color: #fff; cursor: pointer; }
         .gb-admin .gb-admin-msg { margin: 8px 0 0; }
+        .gb-admin .gb-approve-all { background: #1f9d55; }
+        .gb-admin .gb-approve-all:hover { background: #18804a; }
+        .gb-admin .gb-warn { color: #b42318; font-weight: 600; }
         .mod { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 6px; z-index: 3; }
         /* the writer's own notes get a small delete button (only on the device that pinned them) */
         .note-del {
@@ -231,6 +234,7 @@
                 <strong>Moderation</strong>
                 <input type="password" id="gbKey" placeholder="Moderation key" autocomplete="current-password" aria-label="Moderation key">
                 <button type="submit">Show pending notes</button>
+                <button type="button" class="gb-approve-all" id="gbApproveAll" hidden>Approve all</button>
             </form>
             <p class="gb-admin-msg" id="gbAdminMsg" role="status"></p>
         </div>
@@ -324,10 +328,18 @@
             fetch(API + '/delete', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: n.id, token: tokens()[n.id] }) })
                 .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, d: d }; }); })
                 .then(function (res) {
-                    if (!res.ok && res.status !== 403) throw new Error();
-                    forget(n.id);   // 403: the note is already gone (or rejected), so just tidy up
-                    approved = res.d.notes || approved.filter(function (x) { return x.id !== n.id; });
-                    render(); say('Your note was removed.');
+                    if (res.ok) {
+                        forget(n.id);
+                        approved = res.d.notes || approved.filter(function (x) { return x.id !== n.id; });
+                        render(); return say('Your note was removed.');
+                    }
+                    if (res.status !== 403) throw new Error();
+                    // 403: either it's already gone (then tidy up) or it isn't this device's note
+                    return load().then(function () {
+                        var still = approved.some(function (x) { return x.id === n.id; });
+                        if (still) say('This note can only be deleted from the device that pinned it.', true);
+                        else { forget(n.id); render(); say('Your note was removed.'); }
+                    });
                 })
                 .catch(function () { say('Couldn\u2019t delete your note right now. Please try again in a bit.', true); });
         }
@@ -390,7 +402,7 @@
             if (isAdmin && adminKey && pendingAdmin.length) {
                 var lab = document.createElement('p'); lab.className = 'gb-section-label'; lab.style.gridColumn = '1 / -1';
                 lab.textContent = pendingAdmin.length + ' waiting for approval'; wall.appendChild(lab);
-                pendingAdmin.forEach(function (n) { wall.appendChild(noteEl(n, { i: i++, mod: [{ label: 'Approve', action: 'approve' }, { label: 'Reject', action: 'reject', no: true }] })); });
+                pendingAdmin.forEach(function (n) { wall.appendChild(noteEl(n, { i: i++, mod: [{ label: 'Approve', action: 'approve' }, { label: 'Delete', action: 'delete', no: true }] })); });
                 var lab2 = document.createElement('p'); lab2.className = 'gb-section-label'; lab2.style.gridColumn = '1 / -1'; lab2.style.marginTop = '14px';
                 lab2.textContent = 'On the wall'; wall.appendChild(lab2);
             }
@@ -403,10 +415,23 @@
             countEl.textContent = c ? c + ' note' + (c === 1 ? '' : 's') + ' pinned so far' : 'Be one of the first to pin a note!';
         }
 
+        // drop this device's copies of notes that no longer exist (rejected or deleted),
+        // so a "waiting for approval" ghost can't linger
+        function prune(liveIds) {
+            store('vj_gb_mine', (store('vj_gb_mine') || []).filter(function (n) { return liveIds.indexOf(n.id) >= 0; }));
+            var t = tokens(); Object.keys(t).forEach(function (id) { if (liveIds.indexOf(id) < 0) delete t[id]; }); store('vj_gb_tokens', t);
+        }
         function load() {
-            var url = isAdmin && adminKey ? API + '?pending=1&key=' + encodeURIComponent(adminKey) : API;
-            return fetch(url).then(function (r) { if (r.status === 401) throw new Error('key'); if (!r.ok) throw new Error('down'); return r.json(); })
-                .then(function (d) { approved = d.notes || []; pendingAdmin = d.pending || []; render(); return d; });
+            var mineIds = (store('vj_gb_mine') || []).map(function (n) { return n.id; }).concat(Object.keys(tokens()));
+            var url = isAdmin && adminKey ? API + '?pending=1&key=' + encodeURIComponent(adminKey)
+                : API + (mineIds.length ? '?mine=' + encodeURIComponent(mineIds.slice(0, 20).join(',')) : '');
+            return fetch(url).then(function (r) { if (r.status === 401) throw new Error('key'); if (r.status === 429) throw new Error('locked'); if (!r.ok) throw new Error('down'); return r.json(); })
+                .then(function (d) {
+                    approved = d.notes || []; pendingAdmin = d.pending || [];
+                    if (Array.isArray(d.alive)) prune(d.alive);
+                    else if (d.pending) prune(approved.concat(pendingAdmin).map(function (n) { return n.id; }));
+                    render(); return d;
+                });
         }
 
         // ---- writing a note ----
@@ -458,21 +483,40 @@
 
         // ---- moderation (?admin) ----
         function moderate(id, action) {
-            if (action !== 'approve' && !confirm(action === 'delete' ? 'Delete this note from the wall?' : 'Reject this note?')) return;
+            if (action === 'delete' && !confirm('Delete this note? This can\u2019t be undone.')) return;
+            if (action === 'approve_all' && !confirm('Approve all ' + pendingAdmin.length + ' waiting note' + (pendingAdmin.length === 1 ? '' : 's') + '? You can still delete any of them later.')) return;
             fetch(API + '/moderate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: adminKey, id: id, action: action }) })
-                .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
-                .then(function (d) { approved = d.notes || []; pendingAdmin = d.pending || []; render(); })
-                .catch(function () { alert('That didn’t work. Check the key and try again.'); });
+                .then(function (r) { if (r.status === 429) throw new Error('locked'); if (!r.ok) throw new Error(); return r.json(); })
+                .then(function (d) { approved = d.notes || []; pendingAdmin = d.pending || []; render(); adminStatus(d); })
+                .catch(function (err) { alert(err && err.message === 'locked' ? 'Too many wrong keys. Try again in 15 minutes.' : 'That didn\u2019t work. Check the key and try again.'); });
+        }
+        // moderation panel: pending count, Approve all, and a warning if the live Worker is out of date
+        function adminStatus(d) {
+            var amsg = document.getElementById('gbAdminMsg'), all = document.getElementById('gbApproveAll'), n = (d.pending || []).length;
+            all.hidden = n === 0; all.textContent = 'Approve all (' + n + ')';
+            amsg.textContent = n ? n + ' note' + (n === 1 ? '' : 's') + ' waiting. Approve or delete each one below, or approve them all.'
+                : 'No notes waiting. Notes on the wall have a Delete button.';
+            if (!d.api || d.api < 3) {
+                var w = document.createElement('span'); w.className = 'gb-warn';
+                w.textContent = ' Your Cloudflare Worker is out of date: redeploy cloudflare-worker.js.';
+                amsg.appendChild(w);
+            }
         }
         if (isAdmin) {
             var panel = document.getElementById('gbAdmin'), keyIn = document.getElementById('gbKey'), amsg = document.getElementById('gbAdminMsg');
             panel.classList.add('on');
             keyIn.value = store('vj_gb_key') || '';
             document.getElementById('gbAdminForm').addEventListener('submit', function (e) {
-                e.preventDefault(); adminKey = keyIn.value.trim(); amsg.textContent = 'Loading…';
-                load().then(function (d) { store('vj_gb_key', adminKey); amsg.textContent = (d.pending || []).length + ' note(s) waiting. Approve, reject, or delete below.'; })
-                    .catch(function (err) { adminKey = ''; amsg.textContent = err.message === 'key' ? 'That key didn’t work.' : 'Couldn’t reach the guestbook. Is the Worker deployed?'; });
+                e.preventDefault(); adminKey = keyIn.value.trim(); amsg.textContent = 'Loading\u2026';
+                load().then(function (d) { store('vj_gb_key', adminKey); adminStatus(d); })
+                    .catch(function (err) {
+                        adminKey = ''; document.getElementById('gbApproveAll').hidden = true;
+                        amsg.textContent = err.message === 'key' ? 'That key didn\u2019t work.' : err.message === 'locked' ? 'Too many wrong keys. Try again in 15 minutes.' : 'Couldn\u2019t reach the guestbook. Is the Worker deployed?';
+                    });
             });
+            document.getElementById('gbApproveAll').addEventListener('click', function () { moderate('', 'approve_all'); });
+            // this device already used the key: open straight into moderation
+            if (keyIn.value) setTimeout(function () { document.getElementById('gbAdminForm').requestSubmit ? document.getElementById('gbAdminForm').requestSubmit() : document.querySelector('#gbAdminForm button[type=submit]').click(); }, 0);
         }
 
         render();

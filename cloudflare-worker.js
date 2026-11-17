@@ -212,6 +212,7 @@ async function handleScores(request, env, origin, cors) {
 // Moderation uses the same ASK_LOG_KEY secret as the question log, from the
 // guestbook page itself: vishaljohn.com/pages/guestbook.html?admin
 const GB_MAX_NOTES = 300, GB_MAX_PENDING = 100, GB_COLORS = 6;
+const GB_API = 3;   // the page warns in moderation mode if the live Worker is older than this
 const GB_ANYWHERE = ["fuck", "fuk", "shit", "bitch", "cunt", "nigg", "nigr", "fagg", "whore", "slut", "porn", "nazi", "hitler", "asshole", "retard", "pussy", "dildo", "wank", "twat", "jizz", "kkk", "molest", "pedo"];
 const GB_WHOLE = ["ass", "arse", "cock", "dick", "cum", "tits", "fag", "rape", "rapist", "anal", "piss", "negro", "coon", "spic", "chink", "nude", "nudes", "sex"];
 
@@ -244,6 +245,18 @@ async function gbLooksBad(env, text) {
   } catch (e) { return false; } // Vishal still approves every note
 }
 function gbIsAdmin(env, key) { return !!(env.ASK_LOG_KEY && key && String(key) === env.ASK_LOG_KEY); }
+// Lock out key guessing: 10 wrong moderation keys from one address in 15 minutes -> wait
+async function gbAdminCheck(env, request, key) {
+  const failKey = "gb_fail:" + (request.headers.get("CF-Connecting-IP") || "unknown");
+  const fails = parseInt((await env.VISITS.get(failKey)) || "0", 10);
+  if (fails >= 10) return "locked";
+  if (gbIsAdmin(env, key)) return "ok";
+  await env.VISITS.put(failKey, String(fails + 1), { expirationTtl: 900 });
+  return "bad";
+}
+function gbDenied(state, cors) {
+  return state === "locked" ? json({ error: "Too many wrong keys. Try again in 15 minutes." }, 429, cors) : json({ error: "unauthorized" }, 401, cors);
+}
 // Each note gets a secret delete code that only the writer's browser keeps; the Worker stores
 // just its SHA-256 hash (field "k") and never sends that field out.
 async function gbHash(token) {
@@ -258,12 +271,20 @@ async function handleGuestbook(request, env, origin, cors, url) {
   const load = async function (k) { return JSON.parse((await env.VISITS.get(k)) || "[]"); };
 
   if (request.method === "GET") {
-    const notes = gbPublic(await load("gb_notes"));
+    const all = await load("gb_notes"), notes = gbPublic(all);
     if (url.searchParams.get("pending") === "1") {
-      if (!gbIsAdmin(env, url.searchParams.get("key"))) return json({ error: "unauthorized" }, 401, cors);
-      return json({ notes, pending: gbPublic(await load("gb_pending")) }, 200, cors);
+      const st = await gbAdminCheck(env, request, url.searchParams.get("key"));
+      if (st !== "ok") return gbDenied(st, cors);
+      return json({ api: GB_API, notes, pending: gbPublic(await load("gb_pending")) }, 200, cors);
     }
-    return json({ notes }, 200, cors);
+    // ?mine=id1,id2: which of the visitor's own notes still exist (ids only), so the page
+    // stops showing a "waiting" copy of a note that was rejected or deleted
+    const mineQ = (url.searchParams.get("mine") || "").split(",").filter(Boolean).slice(0, 20);
+    if (mineQ.length) {
+      const live = all.concat(await load("gb_pending")).map(function (n) { return n.id; });
+      return json({ api: GB_API, notes, alive: mineQ.filter(function (id) { return live.indexOf(id) >= 0; }) }, 200, cors);
+    }
+    return json({ api: GB_API, notes }, 200, cors);
   }
   if (request.method !== "POST" || !origin) return json({ error: "forbidden" }, 403, cors);
   let body;
@@ -283,23 +304,27 @@ async function handleGuestbook(request, env, origin, cors, url) {
     return json({ ok: true, notes: gbPublic(notes) }, 200, cors);
   }
 
-  // moderation: approve / reject a pending note, or delete a published one
+  // moderation: approve one or all waiting notes; reject/delete any note (waiting or published)
   if (url.pathname === "/guestbook/moderate") {
-    if (!gbIsAdmin(env, body.key)) return json({ error: "unauthorized" }, 401, cors);
+    const st = await gbAdminCheck(env, request, body.key);
+    if (st !== "ok") return gbDenied(st, cors);
     const id = String(body.id || ""), action = String(body.action || "");
     let notes = await load("gb_notes"), pending = await load("gb_pending");
     const note = pending.find(function (n) { return n.id === id; });
     if (action === "approve" && note) {
       pending = pending.filter(function (n) { return n.id !== id; });
-      notes.unshift(note); notes.length = Math.min(notes.length, GB_MAX_NOTES);
-    } else if (action === "reject") {
+      notes.unshift(note);
+    } else if (action === "approve_all") {
+      notes = pending.slice().reverse().concat(notes);   // newest first, like one-by-one approval
+      pending = [];
+    } else if (action === "reject" || action === "delete") {
       pending = pending.filter(function (n) { return n.id !== id; });
-    } else if (action === "delete") {
       notes = notes.filter(function (n) { return n.id !== id; });
     } else return json({ error: "unknown note or action" }, 400, cors);
+    notes.length = Math.min(notes.length, GB_MAX_NOTES);
     await env.VISITS.put("gb_notes", JSON.stringify(notes));
     await env.VISITS.put("gb_pending", JSON.stringify(pending));
-    return json({ notes: gbPublic(notes), pending: gbPublic(pending) }, 200, cors);
+    return json({ api: GB_API, notes: gbPublic(notes), pending: gbPublic(pending) }, 200, cors);
   }
 
   // a visitor pins a new note (held until Vishal approves it)
