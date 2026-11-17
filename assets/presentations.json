@@ -61,6 +61,45 @@
       "note": "First-author poster presentation"
     },
     {
+      "year": 2025,
+      "title": "Tail ligation recombinase polymerase amplification sequencing (TLDRseq) enables sensitive, same-day, multi-gene sequencing for plasma-based detection and timely monitoring of brain tumor ctDNA",
+      "authors": "Jack Wadden, Rayan Aittaleb, Tiffany Adam, Conner Jackson, **Vishal John**, Benison Lau, Rebecca Calvert, Andrea Franson, Rajen Mody, John Prensner, Santhosh Upadhyaya, Carl Koschmann.",
+      "conference": "Society for Neuro-Oncology (SNO) 30th Annual Meeting",
+      "location": "Honolulu, HI",
+      "date": "November 19–23, 2025",
+      "type": "abstract",
+      "highlight": false,
+      "note": "Published abstract (PATH-39): Neuro-Oncology, Vol 27, Suppl 5, p v249",
+      "url": "https://doi.org/10.1093/neuonc/noaf201.0991",
+      "doi": "10.1093/neuonc/noaf201.0991"
+    },
+    {
+      "year": 2025,
+      "title": "Molecular characterization of brain tumors from stereotactic needle biopsy surgical waste",
+      "authors": "Jack Wadden, Tiffany Adam, Benison Lau, Rodrigo Cartaxo, Kelsey Wink, Michael Niculcea, Seongbae Kong, **Vishal John**, Nicole Becker, Arushi Tripathy, Habib Serhan, Nathan Merrill, Sofia Merajver, Santhosh Upadhyaya, Jason Heth, Karin Muraszko, Hugh Garton, Neena Marupudi, Suresh Magge, Chandan Kumar-Sinha, Javad Nazarian, Wajd Al-Holou, Sriram Venneti, Carl Koschmann.",
+      "conference": "Neuro-Oncology Pediatrics abstract supplement",
+      "location": "",
+      "date": "August 2025",
+      "type": "abstract",
+      "highlight": false,
+      "note": "Published abstract (PATH-02): Neuro-Oncology Pediatrics, Vol 1, Suppl 1",
+      "url": "https://doi.org/10.1093/neuped/wuaf001.281",
+      "doi": "10.1093/neuped/wuaf001.281"
+    },
+    {
+      "year": 2024,
+      "title": "Sequencing of DNA recovered from brain tumor biopsy surgical waste improves sensitivity of rapid IDH/TP53-mutant tumor diagnoses",
+      "authors": "Jack Wadden, Tiffany Adam, Rodrigo Cartaxo, Michael Niculcea, Seongbae Kong, **Vishal John**, Arushi Tripathy, Cylaina Bird, Javad Nazarian, Jason Heth, Karin Muraszko, Neena Marupudi, Suresh Magge, Hugh Garton, Wajd Al-Holou, Carl Koschmann.",
+      "conference": "Society for Neuro-Oncology (SNO) 29th Annual Meeting",
+      "location": "Houston, TX",
+      "date": "November 21–24, 2024",
+      "type": "abstract",
+      "highlight": false,
+      "note": "Published abstract (PATH-58): Neuro-Oncology, Vol 26, Suppl 8, p viii192",
+      "url": "https://doi.org/10.1093/neuonc/noae165.0757",
+      "doi": "10.1093/neuonc/noae165.0757"
+    },
+    {
       "year": 2023,
       "title": "Nanopore Sequencing for the Real-time Detection of Melanoma-Involved Lymph Nodes",
       "authors": "Rebecca W. Gao, Jack Wadden, Robert Dickson, Rayan Aittaleb, **Vishal John**, Carl Koschmann, Steven Chinn.",
@@ -72,6 +111,32 @@
       "note": "Co-author. Abstract published in Otolaryngology–Head and Neck Surgery, 169(S1), 2023.",
       "doi": "10.1002/ohn.435",
       "url": "https://doi.org/10.1002/ohn.435"
+    },
+    {
+      "year": 2023,
+      "title": "Concatemeric consensus error corrected sequencing (CCEC-Seq) approach for plasma cell-free tumor DNA-based treatment response monitoring in patients with brain tumors",
+      "authors": "Jack Wadden, **Vishal John**, Rayan Aittaleb, Carl Koschmann.",
+      "conference": "Society for Neuro-Oncology (SNO) 28th Annual Meeting",
+      "location": "Vancouver, BC, Canada",
+      "date": "November 15–19, 2023",
+      "type": "abstract",
+      "highlight": false,
+      "note": "Published abstract (BIOM-60): Neuro-Oncology, Vol 25, Suppl 5, p v18",
+      "url": "https://doi.org/10.1093/neuonc/noad179.0071",
+      "doi": "10.1093/neuonc/noad179.0071"
+    },
+    {
+      "year": 2023,
+      "title": "Zero-waste molecular diagnostics from biopsy needle washes",
+      "authors": "Jack Wadden, **Vishal John**, Michael Niculcea, Seongbae Kong, Rayan Aittaleb, Rodrigo Cartaxo, Kait Verbal, Amy Bruzek, Suresh Magge, Sridevi Yadavilli, Nir Erez, Noa Furth, Efrat Shema, Neena Marapudi, Jason Heth, Wajd Al-Holou, Hugh Garton, Javad Nazarian, Carl Koschmann.",
+      "conference": "Society for Neuro-Oncology (SNO) 28th Annual Meeting",
+      "location": "Vancouver, BC, Canada",
+      "date": "November 15–19, 2023",
+      "type": "abstract",
+      "highlight": false,
+      "note": "Published abstract (BIOM-58): Neuro-Oncology, Vol 25, Suppl 5, pp v17–v18",
+      "url": "https://doi.org/10.1093/neuonc/noad179.0069",
+      "doi": "10.1093/neuonc/noad179.0069"
     },
     {
       "year": 2022,

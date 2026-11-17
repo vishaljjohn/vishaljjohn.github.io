@@ -1,0 +1,38 @@
+name: Yearly new-paper check
+
+# Once a year, in mid-December: ask OpenAlex for papers by Vishal that aren't on the
+# Publications page yet, and open one GitHub issue listing them (nothing if there are none).
+on:
+  schedule:
+    - cron: "23 15 15 12 *"   # December 15, every year
+  workflow_dispatch:           # "Run workflow" button to check right now
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/find-new-papers.py
+      - name: Flag new papers in a GitHub issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -s new-papers.md ]; then
+            # only mark them as reported once the issue really exists, so nothing is lost if it fails
+            if gh issue create --title "New papers found for the Publications page ($(date +%Y))" --body-file new-papers.md; then
+              python3 tools/find-new-papers.py --mark
+            fi
+            rm -f new-papers.md new-papers.dois
+          fi
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- assets/new-papers.json; then echo "nothing new"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add assets/new-papers.json
+          git commit -m "Yearly new-paper check"
+          git push

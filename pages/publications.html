@@ -226,7 +226,7 @@
     }
     function citeTalk(p) {
         const lead = { poster: 'Poster presented at: ', abstract: 'Abstract presented at: ', talk: 'Presented at: ' }[p.type] || 'Presented at: ';
-        return amaAuthors(p.authors) + '. ' + plainText(p.title) + '. ' + lead + p.conference + '; ' + p.date + '; ' + p.location + '.' + (p.doi ? ' doi:' + p.doi : '');
+        return amaAuthors(p.authors) + '. ' + plainText(p.title) + '. ' + lead + [p.conference, p.date, p.location].filter(Boolean).join('; ') + '.' + (p.doi ? ' doi:' + p.doi : '');
     }
 
     let PUBS = [], PRES = [];
@@ -245,7 +245,7 @@
             + '<div class="pub-authors">' + fmt(p.authors) + '</div>'
             + (isPaper
                 ? '<div class="pub-journal">' + p.journal + ', ' + p.year_detail + '. DOI: ' + p.doi + '</div>' + explainer(p, idx)
-                : '<div class="pub-journal">' + p.conference + ' &middot; ' + p.location + ' &middot; ' + p.date + '</div>'
+                : '<div class="pub-journal">' + [p.conference, p.location, p.date].filter(Boolean).join(' &middot; ') + '</div>'
                   + (p.note ? '<div class="pub-abstract">' + p.note + '</div>' : ''))
             + '<div class="pub-actions">'
             + (p.url ? '<a href="' + p.url + '" target="_blank" rel="noopener" class="pub-link">' + (isPaper ? 'Read Paper' : 'View') + '</a>' : '')

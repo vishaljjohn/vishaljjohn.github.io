@@ -5,7 +5,7 @@ Google Scholar has no public API, so this uses OpenAlex (which collects Crossref
 ORCID, PubMed and publisher records). Vishal's OpenAlex author profile(s) are found
 from the papers already in assets/publications.json, so nothing needs configuring.
 
-Run by the daily GitHub Action; run by hand with:  python3 tools/find-new-papers.py
+Run once a year (Dec 15) by .github/workflows/find-new-papers.yml; run by hand with:  python3 tools/find-new-papers.py
 - Keeps its state in assets/new-papers.json (candidates found, ones already reported,
   and an "ignore" list: add a DOI there to stop a paper from being suggested again).
 - Writes new-papers.md when there's something new; the Action turns it into a GitHub
