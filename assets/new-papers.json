@@ -5,6 +5,20 @@
   ],
   "candidates": [
     {
+      "year": 2026,
+      "title": "NURSES' PERCEPTIONS OF ORGANIZATIONAL SUPPORT AND ITS INFLUENCE ON QUALITY OF PATIENT CARE IN TERTIARY CARE HOSPITALS IN KARACHI.",
+      "authors": "Riaz SUPBIAKMBASZAP, Kalhoro IA, Naeem U, Joseph J, Sattar A, Zaheer F, **John V**, Mirab S.",
+      "journal": "Zenodo (CERN European Organization for Nuclear Research)",
+      "year_detail": "Nov 2026",
+      "doi": "10.5281/zenodo.23977216",
+      "url": "https://doi.org/10.5281/zenodo.23977216",
+      "abstract": "",
+      "plain": "",
+      "kid": "",
+      "role": "co-author",
+      "highlight": false
+    },
+    {
       "year": 2025,
       "title": "PATH-39. Tail ligation recombinase polymerase amplification sequencing (TLDRseq) enables sensitive, same-day, multi-gene sequencing for plasma-based detection and timely monitoring of brain tumor ctDNA",
       "authors": "Wadden J, Aittaleb R, Adam T, …, **John V**, …, Koschmann CJ.",
@@ -75,6 +89,13 @@
       "highlight": false
     }
   ],
-  "notified": [],
+  "notified": [
+    "10.1093/neuonc/noad179.0069",
+    "10.1093/neuonc/noad179.0071",
+    "10.1093/neuonc/noae165.0757",
+    "10.1093/neuonc/noaf201.0991",
+    "10.1093/neuped/wuaf001.281",
+    "10.5281/zenodo.23977216"
+  ],
   "ignore": []
 }
