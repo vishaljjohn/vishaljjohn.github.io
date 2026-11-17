@@ -23,7 +23,7 @@ PAGES = {
     "pages/publications.html": ("Publications", "images/Photo1.jpg"),
     "pages/blog.html": ("My Writing", "images/Vishal John Headshot.jpg"),
     "pages/contact.html": ("Get in Touch", "images/Vishal John Headshot.jpg"),
-    "pages/guestbook.html": ("Guestbook", "images/Vishal John Headshot.jpg"),
+    "pages/guestbook.html": ("Leave Me A Note", "images/Vishal John Headshot.jpg"),
     "pages/card.html": ("Digital Business Card", "images/Vishal John Headshot.jpg"),
     "pages/balloonanimals.html": ("Balloon Animals", "images/balloon_clownnose1.jpg"),
     "pages/rockcancer.html": ("Rock Cancer", "images/RockCancer.jpg"),
@@ -35,7 +35,7 @@ PAGES = {
     "pages/HELP.html": ("Hospital Elder Life Program", "images/help.jpg"),
     "pages/japan.html": ("Ishinomaki, Japan", "images/japan1.jpg"),
     "pages/codingprojects.html": ("Coding Projects & Tools", "images/projects/block-sim.jpg"),
-    "pages/cookbook.html": ("My Cookbook", "images/cooking-thailand.jpg"),
+    "pages/cookbook.html": ("Recipes", "images/cooking-thailand.jpg"),
 }
 
 CARD = """<!DOCTYPE html><html><head><meta charset="utf-8"><style>

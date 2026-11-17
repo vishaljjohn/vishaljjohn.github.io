@@ -32,7 +32,7 @@
     { k: ['volunteer','service','community','elder life','help program','breakfast','andrew'],
       a: "i'm on the board of Rock Cancer, and in Ann Arbor i volunteered with Saint Andrew's Breakfast Program and the Hospital Elder Life Program (HELP) until 2024." },
     { k: ['coding','code','github','program','tool','block sim','blocksim','anki add','extension','software'],
-      a: "i build free study tools for med school, like Block Sim (board-style practice exams from your own PDFs) and Anki add-ons. see my <a href='/pages/codingprojects.html'>Coding Projects &amp; Tools</a> page." },
+      a: "i build free study tools for med school, like Test Simulator (board-style practice exams from your own PDFs) and Anki add-ons. see my <a href='/pages/codingprojects.html'>Coding Projects &amp; Tools</a> page." },
     { k: ['cook','recipe','food','chef','thai','kitchen','bake'],
       a: "i love to cook! my <a href='/pages/cookbook.html'>cookbook</a> has 25 of my go-to recipes, including thai dishes from a cooking class in thailand." },
     { k: ['guestbook','guest book','sticky note','leave a note','sign your','pin a note'],
