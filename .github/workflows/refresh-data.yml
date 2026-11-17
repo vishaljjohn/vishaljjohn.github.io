@@ -25,8 +25,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if [ -s new-papers.md ]; then
-            gh issue create --title "New paper found for the Publications page ($(date +%Y-%m-%d))" --body-file new-papers.md || true
-            rm -f new-papers.md
+            # only mark them as reported once the issue really exists, so nothing is lost if it fails
+            if gh issue create --title "New paper found for the Publications page ($(date +%Y-%m-%d))" --body-file new-papers.md; then
+              python3 tools/find-new-papers.py --mark
+            fi
+            rm -f new-papers.md new-papers.dois
           fi
       - name: Commit if changed
         env:
