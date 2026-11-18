@@ -172,6 +172,7 @@
                     if (src.kind === 'rss2json' && json.status !== 'ok') throw new Error('rss2json error');
                     if (!json.items || !json.items.length) throw new Error('empty');
                     renderItems(json.items);
+                    if (src.kind === 'local') addNewerPosts(json.items);
                 } else {
                     renderRSS(JSON.parse(text).contents);
                 }
@@ -180,6 +181,27 @@
             } finally {
                 clearTimeout(timer);
             }
+        }
+
+        // The saved copy is refreshed once a day, so a post published since then would be missing.
+        // After the page shows it, quietly ask the live feed (via rss2json) for anything newer and add it.
+        function textOf(html) { const d = document.createElement('div'); d.innerHTML = html || ''; return (d.textContent || '').replace(/\s+/g, ' ').trim(); }
+        function firstImg(html) { const m = /<img[^>]+src="(https:[^"]+)"/.exec(html || ''); return m && m[1].indexOf('/_/stat') < 0 ? m[1] : ''; }
+        async function addNewerPosts(saved) {
+            try {
+                const ctrl = new AbortController(); setTimeout(() => ctrl.abort(), 8000);
+                const res = await fetch(sources[1].url(feedUrl), { signal: ctrl.signal, cache: 'no-cache' });
+                const json = await res.json();
+                if (json.status !== 'ok' || !json.items) return;
+                const key = l => String(l || '').split('?')[0];
+                const have = new Set(saved.map(it => key(it.link)));
+                const fresh = json.items.filter(it => !have.has(key(it.link))).map(it => {
+                    const words = textOf(it.content || it.description).split(' ');
+                    return { title: it.title, link: it.link, pubDate: it.pubDate, image: it.thumbnail || firstImg(it.content),
+                             preview: words.slice(0, 42).join(' ') + (words.length > 42 ? '…' : ''), minutes: Math.max(1, Math.round(words.length / 230)) };
+                });
+                if (fresh.length) renderItems(fresh.concat(saved).sort((a, b) => (new Date(String(b.pubDate).replace(' ', 'T')) - new Date(String(a.pubDate).replace(' ', 'T'))) || 0));
+            } catch (e) { /* keep the saved list */ }
         }
 
         list.innerHTML = '<li style="color:#888;">Loading articles...</li>';
