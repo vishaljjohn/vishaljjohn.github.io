@@ -1691,11 +1691,90 @@
             });
         }
 
+        /* ---- Goodbye screen shared by "End call" and "Decline": a knock-knock joke or riddle
+           (punchline after a beat, tap to skip), or sometimes a one-liner ---- */
+        function pickOne(a) { return a[Math.floor(Math.random() * a.length)]; }
+        var knock = [
+            ["lettuce", "lettuce in, it's cold out here!"],
+            ["boo", "don't cry, it's just the classic site."],
+            ["atch", "bless you! please cover your cough."],
+            ["anita", "anita take you to my classic site."],
+            ["olive", "olive my projects are on the classic site."],
+            ["cash", "no thanks, i'll have some peanuts."],
+            ["orange", "orange you glad i didn't say banana?"],
+            ["tank", "you're welcome!"],
+            ["howl", "howl you know unless you visit the website?"],
+            ["nobel", "nobel, so i knocked."],
+            ["hipaa", "sorry, i can't share that information."],
+            ["genoa", "genoa good doctor? i'm feeling a little off."],
+            ["minneapolis", "minneapolis a day keeps the doctor away."],
+            ["shore", "shore hope you like bad jokes."],
+            ["harry", "harry up, the classic site is waiting!"],
+            ["water", "water you waiting for? come on in."],
+            ["icy", "icy you checking out my website!"],
+            ["dewey", "dewey have to keep doing knock-knock jokes?"],
+            ["luke", "luke through the peephole and find out."],
+            ["candice", "candice door open or what?"]
+        ];
+        var riddles = [
+            ["what do you call a fake noodle?", "an impasta."],
+            ["what do you call a bear with no teeth?", "a gummy bear."],
+            ["what do you call a sleeping dinosaur?", "a dino-snore."],
+            ["what do you call a cow with no legs?", "ground beef."],
+            ["what do you call an alligator in a vest?", "an investigator."],
+            ["what do you call a fish wearing a bowtie?", "sofishticated."],
+            ["what do you call a pile of cats?", "a meowtain."],
+            ["why did the cookie go to the doctor?", "it was feeling crummy."],
+            ["why didn't the skeleton go to the party?", "he had no body to go with."],
+            ["why are frogs so happy?", "they eat whatever bugs them."],
+            ["what did the left eye say to the right eye?", "between you and me, something smells."],
+            ["why did the banana go to the doctor?", "it wasn't peeling well."],
+            ["what do you call doctors who work at google?", "google docs."],
+            ["what do you call a surgeon with eight arms?", "a doctopus."],
+            ["what do you call a doctor who fixes websites?", "a url-ologist."],
+            ["why did the doctor carry a red pen?", "in case she needed to draw blood."],
+            ["why did the pillow go to the doctor?", "it was feeling all stuffed up."],
+            ["what did the doctor say to the patient who thought he was a deck of cards?", "i'll deal with you later."],
+            ["what's a skeleton's least favorite room?", "the living room."],
+            ["why can't you trust atoms?", "they make up everything."],
+            ["what do you call cheese that isn't yours?", "nacho cheese."],
+            ["what do you call a dog magician?", "a labracadabrador."],
+            ["why did the scarecrow win an award?", "he was outstanding in his field."],
+            ["what did one wall say to the other wall?", "i'll meet you at the corner."],
+            ["what do you call a sad cup of coffee?", "depresso."],
+            ["why did the math book look so sad?", "it had too many problems."]
+        ];
+        function showEnd(title, oneLiners, plainWait) {
+            var ec = document.getElementById('endingCall');
+            var sub = ec.querySelector('.ec-sub'), punch = ec.querySelector('.ec-punch'), skip = ec.querySelector('.ec-skip');
+            var roll = Math.random(), wait = plainWait, line = '';
+            ec.querySelector('.ec-title').textContent = title;
+            punch.textContent = ''; punch.classList.remove('show'); skip.hidden = true;
+            if (roll < 0.4) {
+                var k = pickOne(knock);
+                sub.textContent = "knock knock.\nwho's there?\n" + k[0] + ".\n" + k[0] + " who?";
+                line = k[1]; wait = 6500;
+            } else if (roll < 0.8) {
+                var r = pickOne(riddles);
+                sub.textContent = r[0]; line = r[1]; wait = 5000;
+            } else {
+                sub.textContent = pickOne(oneLiners);
+            }
+            ec.classList.add('show');
+            var gone = false;
+            var go = function () { if (gone) return; gone = true; window.location.href = 'index_classic.html'; };
+            if (line) {
+                setTimeout(function () { punch.textContent = line; punch.classList.add('show'); }, wait > 6000 ? 2400 : 1700);
+                skip.hidden = false;
+                ec.addEventListener('click', go, { once: true });
+            }
+            setTimeout(go, wait);
+        }
+
         /* ---- "End call" -> classic site, with a friendly transition ---- */
         var endBtn = document.getElementById('endCall');
         if (endBtn) {
             endBtn.addEventListener('click', function () {
-                var ec = document.getElementById('endingCall');
                 var byes = [
                     "taking you to my classic site",
                     "signing out to the night team…",
@@ -1711,13 +1790,8 @@
                     "ending call before i run out of small talk",
                     "hibachi break, back in a bit"
                 ];
-                ec.querySelector('.ec-title').textContent = 'ending call…'; // a decline may have changed these before coming Back
-                ec.querySelector('.ec-sub').textContent = byes[Math.floor(Math.random() * byes.length)];
-                ec.querySelector('.ec-punch').textContent = ''; ec.querySelector('.ec-punch').classList.remove('show');
-                ec.querySelector('.ec-skip').hidden = true;
-                ec.classList.add('show');
                 buzz(40);
-                setTimeout(function () { window.location.href = 'index_classic.html'; }, 2000);
+                showEnd('ending call…', byes, 2000); // also resets the screen if a decline changed it before coming Back
             });
             // coming Back from the classic site restores this page from the cache with the
             // "ending call…" screen still up; take it down again
@@ -1750,10 +1824,6 @@
             accept.addEventListener('click', function () { remember(); buzz(20); hide(); startCall(); });
             document.getElementById('ringDecline').addEventListener('click', function () {
                 remember(); buzz([30, 40, 30]);
-                var ec = document.getElementById('endingCall');
-                ec.querySelector('.ec-title').textContent = 'call declined';
-                function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
-                // one-liners, or a joke whose punchline shows a moment later
                 var sayings = [
                     "fair enough. this could have been an email anyway.",
                     "no hard feelings. the website will see you now.",
@@ -1765,78 +1835,8 @@
                     "i'll chart that as \u201cpatient declined.\u201d",
                     "understandable. the vitals look fine from here."
                 ];
-                var knock = [
-                    ["lettuce", "lettuce in, it's cold out here!"],
-                    ["boo", "don't cry, it's just the classic site."],
-                    ["atch", "bless you! please cover your cough."],
-                    ["anita", "anita take you to my classic site."],
-                    ["olive", "olive my projects are on the classic site."],
-                    ["cash", "no thanks, i'll have some peanuts."],
-                    ["orange", "orange you glad i didn't say banana?"],
-                    ["tank", "you're welcome!"],
-                    ["howl", "howl you know unless you visit the website?"],
-                    ["nobel", "nobel, so i knocked."],
-                    ["hipaa", "sorry, i can't share that information."],
-                    ["genoa", "genoa good doctor? i'm feeling a little off."],
-                    ["minneapolis", "minneapolis a day keeps the doctor away."],
-                    ["shore", "shore hope you like bad jokes."],
-                    ["harry", "harry up, the classic site is waiting!"],
-                    ["water", "water you waiting for? come on in."],
-                    ["icy", "icy you checking out my website!"],
-                    ["dewey", "dewey have to keep doing knock-knock jokes?"],
-                    ["luke", "luke through the peephole and find out."],
-                    ["candice", "candice door open or what?"]
-                ];
-                var riddles = [
-                    ["what do you call a fake noodle?", "an impasta."],
-                    ["what do you call a bear with no teeth?", "a gummy bear."],
-                    ["what do you call a sleeping dinosaur?", "a dino-snore."],
-                    ["what do you call a cow with no legs?", "ground beef."],
-                    ["what do you call an alligator in a vest?", "an investigator."],
-                    ["what do you call a fish wearing a bowtie?", "sofishticated."],
-                    ["what do you call a pile of cats?", "a meowtain."],
-                    ["why did the cookie go to the doctor?", "it was feeling crummy."],
-                    ["why didn't the skeleton go to the party?", "he had no body to go with."],
-                    ["why are frogs so happy?", "they eat whatever bugs them."],
-                    ["what did the left eye say to the right eye?", "between you and me, something smells."],
-                    ["why did the banana go to the doctor?", "it wasn't peeling well."],
-                    ["what do you call doctors who work at google?", "google docs."],
-                    ["what do you call a surgeon with eight arms?", "a doctopus."],
-                    ["what do you call a doctor who fixes websites?", "a url-ologist."],
-                    ["why did the doctor carry a red pen?", "in case she needed to draw blood."],
-                    ["why did the pillow go to the doctor?", "it was feeling all stuffed up."],
-                    ["what did the doctor say to the patient who thought he was a deck of cards?", "i'll deal with you later."],
-                    ["what's a skeleton's least favorite room?", "the living room."],
-                    ["why can't you trust atoms?", "they make up everything."],
-                    ["what do you call cheese that isn't yours?", "nacho cheese."],
-                    ["what do you call a dog magician?", "a labracadabrador."],
-                    ["why did the scarecrow win an award?", "he was outstanding in his field."],
-                    ["what did one wall say to the other wall?", "i'll meet you at the corner."],
-                    ["what do you call a sad cup of coffee?", "depresso."],
-                    ["why did the math book look so sad?", "it had too many problems."]
-                ];
-                var sub = ec.querySelector('.ec-sub'), punch = ec.querySelector('.ec-punch'), skip = ec.querySelector('.ec-skip');
-                var roll = Math.random(), wait = 4000, line = '';
-                punch.textContent = ''; punch.classList.remove('show');
-                if (roll < 0.4) {
-                    var k = pick(knock);
-                    sub.textContent = "knock knock.\nwho's there?\n" + k[0] + ".\n" + k[0] + " who?";
-                    line = k[1]; wait = 6500;
-                } else if (roll < 0.8) {
-                    var r = pick(riddles);
-                    sub.textContent = r[0]; line = r[1]; wait = 5000;
-                } else {
-                    sub.textContent = pick(sayings);
-                }
-                ec.classList.add('show');
+                showEnd('call declined', sayings, 4000);
                 hide();
-                var go = function () { window.location.href = 'index_classic.html'; };
-                if (line) {
-                    setTimeout(function () { punch.textContent = line; punch.classList.add('show'); }, line && wait > 6000 ? 2400 : 1700);
-                    skip.hidden = false;
-                    ec.addEventListener('click', go, { once: true });
-                }
-                setTimeout(go, wait);
             });
         })();
 
