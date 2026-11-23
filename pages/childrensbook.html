@@ -44,7 +44,15 @@
         .amazon-button { display: inline-block; padding: 12px 24px; background-color: #FF9900; color: #111; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px; transition: background-color 0.3s; margin-top: 8px; }
         .amazon-button:hover { background-color: #e68a00; }
         .amazon-button i { margin-right: 8px; }
-        .characters-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; margin: 24px 0; }
+        .characters-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 24px 0; }
+        /* 6 characters: 3 per row on desktop, 2 per row on phones (no lone card on the last row) */
+        @media (max-width: 600px) {
+            .characters-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+            .characters-grid .character-card { height: 190px; }
+            .characters-grid .card-front, .characters-grid .card-back { padding: 10px; }
+            .characters-grid .character-name { font-size: 14px; }
+            .characters-grid .character-role { font-size: 12px; line-height: 1.4; }
+        }
         .character-card { background: transparent; border: none; height: 175px; perspective: 1000px; cursor: pointer; }
         .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
         .character-card.flipped .card-inner { transform: rotateY(180deg); }

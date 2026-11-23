@@ -1095,9 +1095,9 @@
             { k: ['coding','code','github','program','tool','block sim','blocksim','anki add','extension','software','app'],
               a: "i build free study tools for med school: Test Simulator (board-style practice exams from your own PDFs), AnkiMedRef, Anki Face Control, and UWorld2Anki. they're all on my <a href='pages/codingprojects.html'>Coding Projects &amp; Tools</a> page." },
             { k: ['cook','recipe','food','chef','thai','kitchen','bake'],
-              a: "i love to cook! my <a href='pages/cookbook.html'>cookbook</a> has 25 of my go-to recipes, including the thai dishes i learned at a cooking class in thailand." },
+              a: "i love to cook! i started as a kid, making meals for my sister and me while our parents were at work. if i couldn't do medicine, i'd 100% be a hibachi chef. my <a href='pages/cookbook.html'>recipes</a> page has my go-to dishes, family recipes, and the thai food i learned at a cooking class in thailand." },
             { k: ['guestbook','guest book','sticky note','leave a note','sign your','pin a note'],
-              a: "i'd love that! pin a sticky note on my <a href='pages/guestbook.html'>guestbook wall</a>: where you're from, how we met, or just hi. i read every one." },
+              a: "i'd love that! <a href='pages/guestbook.html'>leave me a note</a> on my sticky-note wall: where you're from, how we met, or just hi. i read every one." },
             { k: ['contact','email','reach','get in touch','hire','message','connect'],
               a: "the best way to reach me is my <a href='pages/contact.html'>Contact</a> page — i'd love to hear from you." },
             { k: ['link','social','linkedin','github','online','find you','medium'],
@@ -1744,8 +1744,12 @@
             ["what do you call a sad cup of coffee?", "depresso."],
             ["why did the math book look so sad?", "it had too many problems."]
         ];
+        var endSkip = null, endTimers = [];
         function showEnd(title, oneLiners, plainWait) {
             var ec = document.getElementById('endingCall');
+            // a second tap on End call, or a fresh hang-up after coming Back: drop the earlier screen's timers and skip handler
+            endTimers.forEach(clearTimeout); endTimers = [];
+            if (endSkip) { ec.removeEventListener('click', endSkip); endSkip = null; }
             var sub = ec.querySelector('.ec-sub'), punch = ec.querySelector('.ec-punch'), skip = ec.querySelector('.ec-skip');
             var roll = Math.random(), wait = plainWait, line = '';
             ec.querySelector('.ec-title').textContent = title;
@@ -1764,11 +1768,12 @@
             var gone = false;
             var go = function () { if (gone) return; gone = true; window.location.href = 'index_classic.html'; };
             if (line) {
-                setTimeout(function () { punch.textContent = line; punch.classList.add('show'); }, wait > 6000 ? 2400 : 1700);
+                endTimers.push(setTimeout(function () { punch.textContent = line; punch.classList.add('show'); }, wait > 6000 ? 2400 : 1700));
                 skip.hidden = false;
+                endSkip = go;
                 ec.addEventListener('click', go, { once: true });
             }
-            setTimeout(go, wait);
+            endTimers.push(setTimeout(go, wait));
         }
 
         /* ---- "End call" -> classic site, with a friendly transition ---- */

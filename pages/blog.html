@@ -200,7 +200,9 @@
                     return { title: it.title, link: it.link, pubDate: it.pubDate, image: it.thumbnail || firstImg(it.content),
                              preview: words.slice(0, 42).join(' ') + (words.length > 42 ? '…' : ''), minutes: Math.max(1, Math.round(words.length / 230)) };
                 });
-                if (fresh.length) renderItems(fresh.concat(saved).sort((a, b) => (new Date(String(b.pubDate).replace(' ', 'T')) - new Date(String(a.pubDate).replace(' ', 'T'))) || 0));
+                // rss2json sends "2026-11-18 01:10:00" (UTC); the saved feed sends "Wed, 18 Nov 2026 01:23:27 GMT"
+                const when = d => { const t = Date.parse(/^\d{4}-\d\d-\d\d \d/.test(d || '') ? d.replace(' ', 'T') + 'Z' : d); return isNaN(t) ? 0 : t; };
+                if (fresh.length) renderItems(fresh.concat(saved).sort((a, b) => when(b.pubDate) - when(a.pubDate)));
             } catch (e) { /* keep the saved list */ }
         }
 
