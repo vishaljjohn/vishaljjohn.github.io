@@ -71,6 +71,13 @@
         .tool-feats { list-style: none; padding: 0; margin: 0 0 14px; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr)); gap: 8px 18px; }
         .tool-feats li { position: relative; padding-left: 22px; font-size: 13.5px; color: #4a4f55; line-height: 1.5; }
         .tool-feats li::before { content: ""; position: absolute; left: 2px; top: 6px; width: 10px; height: 10px; border-radius: 3px; background: var(--tc); opacity: .85; }
+        /* AnkiMedRef screenshots */
+        .amr-shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 4px 0 6px; }
+        .amr-shots a { display: block; border-radius: 8px; overflow: hidden; border: 1px solid #e3e6ea; background: #1e1e1e; }
+        .amr-shots img { display: block; width: 100%; height: auto; transition: transform .2s; }
+        .amr-shots a:hover img { transform: scale(1.02); }
+        .amr-cap { font-size: 12.5px; color: #666; margin: 0 0 14px !important; }
+        .amr-copy { cursor: pointer; background: none; }
         .tool-how { margin: 0 0 16px; border: 1px solid #e8eaed; border-radius: 8px; background: #fafbfc; }
         .tool-how summary { cursor: pointer; padding: 11px 14px; font: 600 13.5px/1.2 var(--font, inherit); color: var(--ink, #232529); list-style: none; display: flex; align-items: center; gap: 8px; }
         .tool-how summary::-webkit-details-marker { display: none; }
@@ -78,6 +85,8 @@
         .tool-how[open] summary::before { transform: rotate(90deg); }
         .tool-how ol { margin: 0; padding: 2px 18px 12px 34px; font-size: 13.5px; color: #4a4f55; line-height: 1.6; }
         .tool-how li { margin: 4px 0; }
+        .tool-how a { color: #0a6db0; font-weight: 600; }
+        html.dark .tool-how a { color: #7cc0f2; }
         .tool-how code { background: #eef1f5; border-radius: 4px; padding: 1px 5px; font-size: 12.5px; }
         .tool-stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; }
         .tool-stack span { font-size: 11.5px; color: #555a61; background: #f2f4f7; border-radius: 6px; padding: 3px 8px; }
@@ -132,6 +141,7 @@
         html.dark .tool-desc, html.dark .tool-feats li, html.dark .tool-how ol, html.dark .cp-why span { color: #cdd4de; }
         html.dark .tool-title, html.dark .tool-how summary { color: #f0f3f7; }
         html.dark .tool-how { background: #161a20; border-color: #2a313c; }
+        html.dark .amr-shots a { border-color: #2a313c; } html.dark .amr-cap { color: #9aa4b2; }
         html.dark .tool-how code, html.dark .tool-stack span { background: #232a35; color: #cdd4de; }
         html.dark .tool-credit { background: #2a2414; color: #f1dfa8; }
         html.dark .gh-link, html.dark .pub-search input { background: #1b2028; border-color: #2a313c; color: #cdd4de; }
@@ -156,6 +166,7 @@
             .pub-search input { padding: 12px 14px 12px 36px; font-size: 16px; }
             .pub-link, .gh-link { padding: 12px 16px; }
             .tool-how summary { padding: 14px; }
+            .amr-shots { grid-template-columns: minmax(0, 1fr); }
         }
         @media (max-width: 400px) {
             .tool-title { font-size: 19px; }
@@ -258,7 +269,7 @@
                     <div class="mock-tip"><b>Pheochromocytoma <span class="sem">Disease</span></b>A catecholamine-secreting tumor of the adrenal medulla that causes episodes of high blood pressure, headache, and sweating.<span class="chips"><span>MEN 2</span><span>Adrenal incidentaloma</span><span>Takotsubo</span></span><span class="src">Built-in dictionary · offline</span></div>
                 </div>
                 <div class="tool-body">
-                    <div class="pub-badges"><span class="badge b-type">Anki add-on</span><span class="badge b-team">Built with a classmate</span><span class="badge b-lang">Python</span></div>
+                    <div class="pub-badges"><span class="badge b-type">Anki add-on</span><span class="badge b-free">On AnkiWeb · free</span><span class="badge b-team">Built with a classmate</span><span class="badge b-lang">Python</span></div>
                     <h3 class="tool-title">AnkiMedRef</h3>
                     <p class="tool-tag">Hover any medical word on a card for a quick reference</p>
                     <p class="tool-credit"><b>Built with my classmate Agboade.</b> We worked on it together, mostly growing the medical database and tweaking it so lookups are quick enough not to slow down your reviews.</p>
@@ -271,17 +282,24 @@
                         <li>Hover an acronym like MMAPP to see the mnemonic it spells</li>
                         <li>Hold Cmd/Ctrl to freeze a tooltip, and click related terms to keep going</li>
                     </ul>
+                    <div class="amr-shots">
+                        <a href="../images/projects/ankimedref-angina.jpg" target="_blank" rel="noopener"><img src="../images/projects/ankimedref-angina.jpg" width="1600" height="1039" loading="lazy" decoding="async" alt="AnkiMedRef tooltip for angina during an Anki review, with a picture plus criteria, key features, and treatment"></a>
+                        <a href="../images/projects/ankimedref-syncope.jpg" target="_blank" rel="noopener"><img src="../images/projects/ankimedref-syncope.jpg" width="1600" height="1039" loading="lazy" decoding="async" alt="AnkiMedRef tooltip for syncope during an Anki review, listing criteria, key features, and treatment"></a>
+                    </div>
+                    <p class="amr-cap">Real tooltips while reviewing: hovering "angina" and "syncope." Tap a screenshot to see it full size.</p>
                     <details class="tool-how">
                         <summary>How to install</summary>
                         <ol>
-                            <li>On GitHub, click <b>Code → Download ZIP</b> and unzip it.</li>
-                            <li>Inside the folder, unzip the database with <code>gunzip -k med_terms.db.gz</code> (on Windows, use 7-Zip). It's about 458 MB. The add-on still works without it, just with fewer terms.</li>
-                            <li>In Anki, go to <b>Tools → Add-ons → View Files</b> and copy the whole folder in. Give it a simple name like <code>AnkiMedRef</code>.</li>
-                            <li>Restart Anki, start reviewing, and hover any underlined term. Settings are under <b>Tools → Medical Quick Reference Settings</b>.</li>
+                            <li>In Anki, go to <b>Tools → Add-ons → Get Add-ons…</b>, paste the code <code>122836299</code>, and click <b>OK</b>.</li>
+                            <li>Restart Anki, start reviewing, and hover any underlined medical term.</li>
+                            <li>Change the hover delay, tooltip look, and lookup sources under <b>Tools → Medical Quick Reference Settings</b>. No API keys needed.</li>
+                            <li><b>Optional, for the full 1.2-million-term offline database:</b> download <code>med_terms.db.gz</code> from the <a href="https://github.com/vishaljjohn/AnkiMedRef" target="_blank" rel="noopener">GitHub repo</a> and unzip it to get <code>med_terms.db</code> (about 458 MB; on Windows, use 7-Zip). Then go to <b>Tools → Add-ons</b>, select AnkiMedRef, click <b>View Files</b>, drop <code>med_terms.db</code> into that folder, and restart Anki.</li>
                         </ol>
                     </details>
                     <div class="tool-stack"><span>Python</span><span>Anki add-on API</span><span>SQLite</span><span>MeSH / UMLS</span><span>RxNorm</span><span>openFDA</span></div>
                     <div class="pub-actions">
+                        <a class="pub-link" href="https://ankiweb.net/shared/info/122836299" target="_blank" rel="noopener"><i class="fas fa-download" aria-hidden="true"></i> Get it on AnkiWeb</a>
+                        <button type="button" class="gh-link amr-copy" data-code="122836299"><i class="far fa-copy" aria-hidden="true"></i> <span>Copy code 122836299</span></button>
                         <a class="gh-link" href="https://github.com/vishaljjohn/AnkiMedRef" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> View AnkiMedRef on GitHub</a>
                     </div>
                     <p class="tool-note">A study aid only, not for patient care decisions.</p>
@@ -396,6 +414,17 @@
         search.addEventListener('input', apply);
         document.getElementById('cpReset').addEventListener('click', function () { search.value = ''; apply(); search.focus(); });
     })();
+    </script>
+    <script>
+    /* AnkiMedRef: copy the AnkiWeb add-on code */
+    document.querySelectorAll('.amr-copy').forEach(function (b) {
+        b.addEventListener('click', function () {
+            var code = b.getAttribute('data-code'), label = b.querySelector('span');
+            function done(ok) { label.textContent = ok ? 'Copied!' : 'Code: ' + code; setTimeout(function () { label.textContent = 'Copy code ' + code; }, 1800); }
+            if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(function () { done(true); }, function () { done(false); });
+            else done(false);
+        });
+    });
     </script>
     <script src="../assets/site.js"></script>
     <script src="../assets/chat-widget.js" defer></script>
