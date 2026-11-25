@@ -235,9 +235,11 @@
         var box = document.querySelector('.image-section');
         if (!box) return;
         function toggle() { var on = box.classList.toggle('swapped'); box.setAttribute('aria-pressed', on ? 'true' : 'false'); }
-        // Phones (no hover): 2 seconds after the photo comes into view, flip to the fun photo
-        // and quickly flip back. Replays each time it scrolls back into view; tapping still toggles.
-        if (window.matchMedia && window.matchMedia('(hover: none)').matches && 'IntersectionObserver' in window) {
+        // Phones and desktop: 2 seconds after the photo comes into view, flip to the fun photo
+        // and quickly flip back. Replays each time it scrolls back into view; tapping/clicking still toggles.
+        // Skipped for people who ask their device to reduce motion.
+        var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!still && 'IntersectionObserver' in window) {
             var fun = box.querySelector('.img-fun'); if (fun) fun.loading = 'eager';   // ready before the flip
             var t1 = null, t2 = null;
             new IntersectionObserver(function (entries) {
