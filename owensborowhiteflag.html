@@ -513,9 +513,8 @@ html:not(.js) .chips { display: none; }
 
 <footer class="page-footer">
   <div class="wrap">
-    <p data-es="Hecho por &lt;strong&gt;Vishal John&lt;/strong&gt;, estudiante de medicina de 3.er año, University of Louisville School of Medicine. &lt;strong&gt;En una emergencia, llama al &lt;a href=&quot;tel:911&quot;&gt;911&lt;/a&gt;.&lt;/strong&gt;">Made by <strong>Vishal John</strong>, 3rd-year medical student, University of Louisville School of Medicine. <strong>In an emergency, call <a href="tel:911">911</a>.</strong></p>
+    <p data-es="&lt;strong&gt;En una emergencia, llama al &lt;a href=&quot;tel:911&quot;&gt;911&lt;/a&gt;.&lt;/strong&gt;"><strong>In an emergency, call <a href="tel:911">911</a>.</strong></p>
     <p class="sm" data-es="&lt;strong&gt;Accesibilidad:&lt;/strong&gt; esta página está hecha para cumplir con WCAG 2.2 nivel AA: funciona con lectores de pantalla, teclado, zoom y modo de alto contraste. ¿Algo no te funciona? &lt;a href=&quot;pages/contact.html&quot;&gt;Avísame&lt;/a&gt;."><strong>Accessibility:</strong> this page is built to meet WCAG 2.2 Level AA. It works with screen readers, keyboards, zoom, and high-contrast mode. Something not working for you? <a href="pages/contact.html">Let me know</a>.</p>
-    <p class="sm"><a href="index_classic.html">vishaljohn.com</a> · <span data-es="Sin cookies ni rastreo.">No cookies, no tracking.</span></p>
   </div>
 </footer>
 
@@ -679,7 +678,7 @@ html:not(.js) .chips { display: none; }
   }
   function clockLabel(iso, l) {
     try {
-      return new Intl.DateTimeFormat(l === 'es' ? 'es-US' : 'en-US', { timeZone: 'America/Chicago', hour: 'numeric', minute: '2-digit', weekday: 'short' }).format(new Date(iso));
+      return new Intl.DateTimeFormat(l === 'es' ? 'es-US' : 'en-US', { timeZone: 'America/Chicago', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date(iso));
     } catch (e) { return new Date(iso).toLocaleString(); }
   }
 
