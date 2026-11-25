@@ -47,6 +47,7 @@ SHORT_LINKS = {
     "cv": "pages/about.html#cv", "book": "pages/childrensbook.html", "rockcancer": "pages/rockcancer.html",
     "pubs": "pages/publications.html", "contact": "pages/contact.html", "card": "pages/card.html",
     "biodesign": "pages/bluegrassbiodesign.html", "mircore": "pages/mircore.html", "newsletter": "pages/blog.html",
+    "whiteflag": "owensborowhiteflag.html",
 }
 
 
@@ -172,7 +173,7 @@ def paper_pages():
 
 def sitemap():
     skip = {"404.html", "pages/thanks.html"}
-    pages = ["index.html", "index_classic.html"] + sorted(glob.glob("pages/*.html")) + sorted(glob.glob("pages/papers/*.html"))
+    pages = ["index.html", "index_classic.html", "owensborowhiteflag.html"] + sorted(glob.glob("pages/*.html")) + sorted(glob.glob("pages/papers/*.html"))
     def lastmod(p):
         # date of the last commit that touched the page, so search engines know what changed
         try:

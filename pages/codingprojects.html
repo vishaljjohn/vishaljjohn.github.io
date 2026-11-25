@@ -121,6 +121,19 @@
         .face-cam { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 12px; color: #5b2a92; font-weight: 700; padding: 4px 0 2px; }
         .face-cam span { font-size: 26px; }
         /* UWorld2Anki: the button it adds */
+        .mock-wf { background: #1f2328; padding: 12px; display: grid; gap: 10px; font-size: 12.5px; }
+        .mock-wf .wf-lang { justify-self: end; display: flex; gap: 2px; background: rgba(255,255,255,.1); border-radius: 999px; padding: 3px; }
+        .mock-wf .wf-lang span { color: #fff; padding: 3px 9px; border-radius: 999px; font-weight: 700; font-size: 11px; }
+        .mock-wf .wf-lang span.on { background: #fff; color: #1f2328; }
+        .mock-wf .wf-card { background: #fdeceb; border: 2px solid #e7a3a3; border-radius: 12px; padding: 10px 12px; color: #1c1f23; }
+        .mock-wf .wf-k { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #5a6068; }
+        .mock-wf .wf-t { font-size: 16px; font-weight: 800; color: #b3121b; margin: 2px 0 4px; }
+        .mock-wf .wf-n { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 8px; }
+        .mock-wf .wf-n span { background: #fff; border: 1px solid #e4ddd2; border-radius: 8px; text-align: center; font-weight: 800; padding: 4px 0; line-height: 1.25; }
+        .mock-wf .wf-n .r { color: #b3121b; border-color: #e7a3a3; } .mock-wf .wf-n .a { color: #8a4b00; border-color: #f0c674; }
+        .mock-wf .wf-bar { display: grid; grid-template-columns: 1.4fr 1fr; gap: 6px; }
+        .mock-wf .wf-bar span { color: #fff; font-weight: 800; text-align: center; padding: 7px 0; border-radius: 8px; background: #0a6db0; }
+        .mock-wf .wf-bar .e { background: #b3121b; }
         .mock-uw { background: #fff; border: 1px solid #e2e6ea; }
         .mock-uw .uw-top { background: #174a7c; color: #fff; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; flex-wrap: wrap; }
         .mock-uw .uw-qid { background: #fff; color: #174a7c; border-radius: 4px; padding: 4px 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
@@ -215,7 +228,7 @@
         <p>A lot of med school is doing the same things over and over: questions, flashcards, looking up terms. When something in my routine bugged me enough, I tried to code a fix. These are the ones that worked well enough to share. They're free, and the code is on GitHub if you want to use or change it.</p>
 
         <h2>The Tools</h2>
-        <p class="cp-count" id="cpCount">4 free, open-source tools</p>
+        <p class="cp-count" id="cpCount">5 free tools</p>
         <div class="pub-toolbar" role="search">
             <label class="pub-search">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -377,6 +390,38 @@
                     <p class="tool-note">Not affiliated with UWorld, AnKing, or Anki.</p>
                 </div>
             </article>
+
+            <!-- 5. Owensboro White Flag & Help Finder -->
+            <article class="tool-card" data-tags="access" style="--tc:#b3121b" id="owensboro-white-flag">
+                <div class="mock mock-wf" aria-hidden="true">
+                    <div class="wf-lang"><span class="on">English</span><span>Español</span></div>
+                    <div class="wf-card">
+                        <div class="wf-k">Tonight, 6 PM to 7 AM</div>
+                        <div class="wf-t">White Flag likely tonight</div>
+                        <div class="wf-l">Coldest: feels like <b>29°F</b> around 10 PM</div>
+                        <div class="wf-n"><span class="a">Wed<br>34°</span><span class="r">Thu<br>21°</span><span class="r">Fri<br>24°</span><span class="a">Sat<br>34°</span></div>
+                    </div>
+                    <div class="wf-bar"><span class="b">Help: 211</span><span class="e">911</span></div>
+                </div>
+                <div class="tool-body">
+                    <div class="pub-badges"><span class="badge b-type">Web page</span><span class="badge b-free">Free · English &amp; Spanish</span><span class="badge b-lang">HTML · JavaScript</span></div>
+                    <h3 class="tool-title">Owensboro White Flag &amp; Help Finder</h3>
+                    <p class="tool-tag">Is the warming shelter open tonight, and where can I get help?</p>
+                    <p class="tool-desc">During my family medicine rotation in Owensboro, I gave a cold-weather safety talk at St. Benedict's Women &amp; Family Services, a day shelter. I made this page for people experiencing homelessness, shelter staff, and outreach workers. It checks the National Weather Service forecast to show whether a White Flag night is likely, lists free shelter, food, health care, and support with tap-to-call numbers, and has a 2-minute cold safety guide. It's built to load fast on old phones and slow data, and it works in English or Spanish.</p>
+                    <ul class="tool-feats">
+                        <li>Live White Flag check from the NWS forecast, counting wind chill</li>
+                        <li>Next few nights at a glance, plus NWS cold weather alerts</li>
+                        <li>35 local resources with tap-to-call numbers and maps</li>
+                        <li>English and Spanish, light and dark mode</li>
+                        <li>Works with a weak signal and keeps the last forecast</li>
+                        <li>No accounts, no cookies, no tracking</li>
+                    </ul>
+                    <div class="tool-stack"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>NWS API</span></div>
+                    <div class="pub-actions">
+                        <a class="pub-link" href="../owensborowhiteflag.html"><i class="fas fa-flag" aria-hidden="true"></i> Open the page</a>
+                    </div>
+                </div>
+            </article>
         </div>
     </div>
     </div>
@@ -409,9 +454,10 @@
                 c.hidden = !ok; if (ok) shown++;
             });
             empty.hidden = shown > 0;
-            count.textContent = !q ? cards.length + ' free, open-source tools' : shown + ' of ' + cards.length + ' tools shown';
+            count.textContent = !q ? cards.length + ' free tools' : shown + ' of ' + cards.length + ' tools shown';
         }
         search.addEventListener('input', apply);
+        apply(); // count the cards on load (the number in the HTML is only a no-JS fallback)
         document.getElementById('cpReset').addEventListener('click', function () { search.value = ''; apply(); search.focus(); });
     })();
     </script>
