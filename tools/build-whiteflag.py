@@ -359,7 +359,7 @@ def build():
 
     page = TEMPLATE
     for k, v in {
-        "%%SPRITE%%": SPRITE, "%%NAV%%": nav_html, "%%FILTERS%%": filter_html, "%%GROUPS%%": "".join(groups),
+        "%%SPRITE%%": SPRITE, "%%FILTERS%%": filter_html, "%%GROUPS%%": "".join(groups),
         "%%FACTS%%": facts_html, "%%GUIDE%%": guide_html, "%%DANGER%%": danger_html,
         "%%STRINGS%%": json.dumps(JS_STRINGS, ensure_ascii=False), "%%SLIDES%%": SLIDES_URL, "%%PDF%%": PDF,
     }.items():
