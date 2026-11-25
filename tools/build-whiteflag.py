@@ -93,8 +93,9 @@ CATS = [
              a="1631 Breckenridge St.", p=[("270-240-2773", "", "")]),
         dict(n="My Sister's Keeper", d=("Overnight shelter for women &amp; children.", "Refugio de noche para mujeres y niños."),
              a="2820 W. 4th St.", p=[("270-925-3032", "", "")]),
-        dict(n="St. Benedict's Women &amp; Family Day Shelter", d=("Monday–Friday, 8 AM–noon.", "Lunes a viernes, de 8 a. m. a mediodía."),
-             a="905 Hickman Ave.", p=[("270-541-1003", "", "")]),
+        # hours and phone corrected by St. Benedict's Women & Family Services staff (email, Nov 2026)
+        dict(n="St. Benedict's Women &amp; Family Day Shelter", d=("Monday–Friday, 8 AM–4 PM.", "Lunes a viernes, de 8 a. m. a 4 p. m."),
+             a="905 Hickman Ave.", p=[("270-216-5910", "", "")]),
         dict(n="St. Benedict's Men's Shelter", d=("Open 24 hours.", "Abierto las 24 horas."),
              a="1001 W. 7th St.", p=[("270-541-1003", "", "")]),
         dict(n="St. Gerard Maternal Home", d=("Free housing for pregnant women 18 and older. You can stay up to 3 months after birth.", "Vivienda gratis para mujeres embarazadas de 18 años o más. Puedes quedarte hasta 3 meses después del parto."),
