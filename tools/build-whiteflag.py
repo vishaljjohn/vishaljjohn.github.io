@@ -74,6 +74,8 @@ ICONS = {
     "check": '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
     "info": '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
     "globe": '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+    "speaker": '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>',
+    "stop": '<rect x="6" y="6" width="12" height="12" rx="2"/>',
     "mail": '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
 }
 SPRITE = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' + "".join(
@@ -179,7 +181,7 @@ def resource_card(cat, r):
     if r.get("a"):
         q = plain(name_en) + ", " + r["a"] if not name_en.startswith(("Free", "Medicaid")) else r["a"]
         out.append(f'<p class="res-addr">{icon("pin")}<a href="{esc(maps(q))}" target="_blank" rel="noopener" '
-                   f'aria-label="{esc("Map: " + r["a"])}" data-es-aria="{esc("Mapa: " + r["a"])}">{r["a"]}</a></p>')
+                   f'aria-label="{esc("Map: " + r["a"] + " (opens in a new tab)")}" data-es-aria="{esc("Mapa: " + r["a"] + " (se abre en otra pestaña)")}">{r["a"]}</a></p>')
     btns = []
     for num, len_, les in r.get("p", []):
         who = plain(name_en)
@@ -230,6 +232,8 @@ JS_STRINGS = {
         "alertFrom": "Weather alert from the National Weather Service",
         "savedNote": "No connection right now. Showing the forecast saved {time}.",
         "coldest": "(coldest hour)", "nightOf": "Night of",
+        "read": "Read out loud", "stopRead": "Stop reading", "bigText": "A+ Larger text", "bigTextOff": "Normal text",
+        "live": "{title}. {detail}",
     },
     "es": {
         "title": "White Flag y guía de ayuda en Owensboro | Vishal John",
@@ -260,6 +264,8 @@ JS_STRINGS = {
         "alertFrom": "Alerta del Servicio Nacional de Meteorología (National Weather Service)",
         "savedNote": "Sin conexión ahora. Mostrando el pronóstico guardado: {time}.",
         "coldest": "(la hora más fría)", "nightOf": "Noche del",
+        "read": "Escuchar en voz alta", "stopRead": "Dejar de leer", "bigText": "A+ Letra más grande", "bigTextOff": "Letra normal",
+        "live": "{title}. {detail}",
     },
 }
 
@@ -287,7 +293,7 @@ def build():
         ("pin", ("Where", "Dónde"),
          f'<p><strong>Daniel Pitino Shelter</strong><br>501 Walnut St., Owensboro</p>'
          f'<div class="fact-actions"><a class="btn-call" href="tel:+12706889000" aria-label="Call Daniel Pitino Shelter: 270-688-9000" data-es-aria="Llamar a Daniel Pitino Shelter: 270-688-9000">{icon("phone")}<span class="btxt"><span class="num">270-688-9000</span></span></a>'
-         f'<a class="btn-ghost-link" href="{esc(maps("Daniel Pitino Shelter, 501 Walnut St."))}" target="_blank" rel="noopener">{icon("pin")}{t("Directions", "Cómo llegar")}</a></div>'),
+         f'<a class="btn-ghost-link" href="{esc(maps("Daniel Pitino Shelter, 501 Walnut St."))}" target="_blank" rel="noopener">{icon("pin")}{t("Directions", "Cómo llegar")}{t(" (opens in a new tab)", " (se abre en otra pestaña)", "span", "sr")}</a></div>'),
         ("clock", ("When", "Cuándo"),
          t("<strong>6 PM to 7 AM</strong>, only on White Flag nights. Open to men, women, and children.",
            "<strong>De 6 p. m. a 7 a. m.</strong>, solo en noches de White Flag. Abierto para hombres, mujeres y niños.", "p")),

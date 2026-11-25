@@ -104,6 +104,25 @@ a { color: var(--link); }
 .seg button { font: 700 16px/1 var(--font); color: var(--hero-ink); background: transparent; border: 0; border-radius: 999px; min-height: 44px; min-width: 96px; padding: 0 16px; cursor: pointer; }
 .seg button[aria-pressed="true"] { background: #ffffff; color: #1c1f23; }
 .seg button:focus-visible { outline-color: #ffffff; }
+.langbar .wrap { flex-wrap: nowrap; }
+.langbar-lbl { margin-right: auto; }
+.size-btn { flex: none; min-width: 52px; min-height: 52px; border-radius: 14px; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); color: #fff; font: 800 20px/1 var(--font); cursor: pointer; }
+.size-btn sup { font-size: 13px; }
+.size-btn[aria-pressed="true"] { background: #fff; color: #1c1f23; }
+.size-btn:focus-visible { outline-color: #fff; }
+html.big { zoom: 1.2; }
+/* larger text on small phones: let things stack instead of running off the screen */
+@media (max-width: 480px) {
+  html.big .langbar .wrap { flex-wrap: wrap; justify-content: flex-end; padding: 6px 0; gap: 8px; }
+  html.big .seg button { padding: 0 10px; }
+  html.big .callbox { grid-template-columns: minmax(0, 1fr); }
+  html.big .res-actions .btn-call, html.big .fact-actions a, html.big .status-actions > *, html.big .slides .row a { width: 100%; }
+  html.big .btn-call, html.big .btn { padding: 8px 12px; }
+  html.big .hero h1 { font-size: 30px; }
+  html.big .jump a, html.big .jump button { padding: 0 14px; }
+  html.big .helpbar .inner { grid-template-columns: 1fr 1fr; }
+  html.big .helpbar small { display: none; }
+}
 
 /* ---------- site header (matches vishaljohn.com) ---------- */
 .site-header { position: relative; z-index: 50; background: var(--header); box-shadow: 0 3px 10px rgba(0,0,0,.1); display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; }
@@ -151,6 +170,8 @@ main { display: block; }
 .sec-num { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); }
 .sec h2 { font-size: clamp(28px, 4.6vw, 38px); letter-spacing: -.015em; margin-top: 6px; }
 .sec-lede { color: var(--ink2); margin-top: 8px; max-width: 62ch; }
+.sec-head .read-btn { margin-top: 14px; }
+.read-btn[aria-pressed="true"] { border-color: var(--brand); color: var(--brand); }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
 
 /* ---------- White Flag status ---------- */
@@ -352,6 +373,7 @@ html:not(.js) .chips { display: none; }
       <button type="button" data-lang="en" aria-pressed="true" lang="en">English</button>
       <button type="button" data-lang="es" aria-pressed="false" lang="es">Español</button>
     </div>
+    <button type="button" class="size-btn" id="sizeBtn" aria-pressed="false" aria-label="A+ Larger text" hidden><span aria-hidden="true">A<sup>+</sup></span></button>
   </div>
 </div>
 
@@ -388,8 +410,9 @@ html:not(.js) .chips { display: none; }
         <p class="sec-lede" data-es="White Flag es un refugio de emergencia para pasar la noche que abre cuando hace un frío peligroso.">White Flag is an emergency overnight warming shelter that opens when it's dangerously cold.</p>
       </div>
 
-      <div class="alerts" id="alerts" aria-live="polite" hidden></div>
-      <div class="status loading" id="status" aria-live="polite" aria-busy="true">
+      <p class="sr" id="liveMsg" role="status" aria-live="polite"></p>
+      <div class="alerts" id="alerts" hidden></div>
+      <div class="status loading" id="status">
         <div class="status-top">
           <div class="status-badge" id="statusIcon">%%I:refresh%%</div>
           <div>
@@ -403,6 +426,7 @@ html:not(.js) .chips { display: none; }
         <div class="status-actions" id="statusActions" hidden>
           <a class="btn-call" href="tel:+12706889000">%%I:phone%%<span class="btxt"><span class="lbl" data-es="Llamar al refugio">Call the shelter</span><span class="num">270-688-9000</span></span></a>
           <button type="button" class="btn" id="retryBtn" hidden>%%I:refresh%%<span id="retryTxt">Try again</span></button>
+          <button type="button" class="btn read-btn" data-read="tonight" aria-pressed="false" hidden>%%I:speaker%%<span class="read-txt">Read out loud</span></button>
         </div>
         <div class="outlook" id="outlook" hidden>
           <p class="outlook-h" id="outlookTitle"></p>
@@ -452,6 +476,7 @@ html:not(.js) .chips { display: none; }
       <div class="sec-head">
         <p class="sec-num">%%I:snow%%<span data-es="Guía de 2 minutos">2-minute guide</span></p>
         <h2 id="h-cold" data-es="Cómo protegerte del frío">Staying safe in the cold</h2>
+        <button type="button" class="btn read-btn" data-read="cold" aria-pressed="false" hidden>%%I:speaker%%<span class="read-txt">Read out loud</span></button>
       </div>
       <div class="tips">%%GUIDE%%</div>
       <div class="dangers">%%DANGER%%</div>
@@ -478,7 +503,7 @@ html:not(.js) .chips { display: none; }
           <p data-es="Consejo: la última diapositiva tiene todos los números de ayuda en una sola página. Toma una captura de pantalla para guardarla.">Tip: the last slide has every help number on one page. Take a screenshot to keep it.</p>
           <div class="row">
             <a class="btn btn-primary" href="%%PDF%%">%%I:file%%<span data-es="Ver diapositivas (PDF, 93 KB)">View slides (PDF, 93 KB)</span></a>
-            <a class="btn" href="%%SLIDES%%" target="_blank" rel="noopener">%%I:ext%%<span data-es="Abrir en Google Slides">Open in Google Slides</span></a>
+            <a class="btn" href="%%SLIDES%%" target="_blank" rel="noopener">%%I:ext%%<span data-es="Abrir en Google Slides">Open in Google Slides</span><span class="sr" data-es=" (se abre en otra pestaña)"> (opens in a new tab)</span></a>
           </div>
         </div>
       </div>
@@ -529,6 +554,8 @@ html:not(.js) .chips { display: none; }
     document.title = STR[lang].title;
     document.getElementById('retryTxt').textContent = STR[lang].retry;
     document.getElementById('hourlyTxt').textContent = STR[lang].hourly;
+    var sb = document.getElementById('sizeBtn'); if (sb) sb.setAttribute('aria-label', STR[lang].bigText);
+    if (typeof stopReading === 'function' && readBtns) stopReading();
     drawStatus();
     updateShowing();
     if (save) { try { localStorage.setItem('owb-lang', lang); } catch (e) {} }
@@ -572,7 +599,7 @@ html:not(.js) .chips { display: none; }
   var toastT;
   function toast(msg) {
     var t = document.getElementById('toast'); t.textContent = msg; t.className = 'toast show';
-    clearTimeout(toastT); toastT = setTimeout(function () { t.className = 'toast'; }, 2200);
+    clearTimeout(toastT); toastT = setTimeout(function () { t.className = 'toast'; }, 4000);
   }
   if (navigator.share || (navigator.clipboard && navigator.clipboard.writeText)) {
     shareBtn.hidden = false;
@@ -736,11 +763,18 @@ html:not(.js) .chips { display: none; }
     })['catch'](function () { /* alerts are extra; the forecast still works without them */ });
   }
 
+  var lastSpoken = '';
+  function announce() {
+    // one short sentence for screen readers, only when it changes
+    var t = $('statusTitle').innerText, b = $('statusBody').innerText.split('\n')[0] || '';
+    var msg = fill(STR[lang].live, { title: t.replace(/\.$/, ''), detail: b });
+    if (alerts.length) msg = alerts.map(function (a) { return a.event; }).join('. ') + '. ' + msg;
+    if (msg !== lastSpoken) { lastSpoken = msg; $('liveMsg').textContent = msg; }
+  }
   function drawStatus() {
     var S = STR[lang], box = $('status'), body = $('statusBody');
     drawAlerts();
     if (!last) { $('statusTitle').textContent = S.loading; $('statusWindow').textContent = ''; return; }
-    box.setAttribute('aria-busy', 'false');
     $('statusActions').hidden = false;
     if (last.error) {
       box.className = 'status error';
@@ -750,6 +784,7 @@ html:not(.js) .chips { display: none; }
       body.innerHTML = '';
       $('retryBtn').hidden = false;
       $('hourly').hidden = true; $('outlook').hidden = true;
+      announce();
       return;
     }
     var r = last.result, n = r.tonight;
@@ -790,6 +825,7 @@ html:not(.js) .chips { display: none; }
       $('outlookNote').textContent = S.outlookNote;
       $('outlook').hidden = false;
     } else { $('outlook').hidden = true; }
+    announce();
   }
 
   function save(data) { try { localStorage.setItem(SAVE_KEY, JSON.stringify({ at: Date.now(), data: data })); } catch (e) {} }
@@ -806,7 +842,7 @@ html:not(.js) .chips { display: none; }
     busy = true;
     if (!quiet || !last || last.error) {
       last = null;
-      var box = $('status'); box.className = 'status loading'; box.setAttribute('aria-busy', 'true');
+      var box = $('status'); box.className = 'status loading';
       setIcon('refresh'); $('statusBody').innerHTML = ''; $('retryBtn').hidden = true; $('hourly').hidden = true; $('outlook').hidden = true;
       drawStatus();
     }
@@ -837,6 +873,62 @@ html:not(.js) .chips { display: none; }
   document.addEventListener('visibilitychange', function () {
     if (!document.hidden && lastFetch && Date.now() - lastFetch > 15 * 60 * 1000) load(true);
   });
+
+  /* ---------------- read out loud (phone's built-in voice) ---------------- */
+  var synth = window.speechSynthesis, reading = null;
+  var readBtns = document.querySelectorAll('.read-btn');
+  function readText(which) {
+    var parts = [];
+    // textContent, not innerText: avoids ALL-CAPS from styling; trailing periods are trimmed so pauses aren't doubled
+    var grab = function (sel) { each(document.querySelectorAll(sel), function (e) {
+      if (e.closest('[hidden]')) return;
+      var t = (e.textContent || '').replace(/\s+/g, ' ').trim().replace(/[.:]+$/, '');
+      if (t) parts.push(t);
+    }); };
+    if (which === 'tonight') { grab('#alerts .alert'); grab('#statusWindow'); grab('#statusTitle'); grab('#statusBody p'); grab('#outlook .outlook-h'); grab('#outlookList li'); grab('#tonight .disclaimer'); }
+    else { grab('#cold .tip'); grab('#cold .danger'); grab('#cold .call911 p'); }
+    return parts.join('. ').replace(/°F?/g, (lang === 'es' ? ' grados' : ' degrees')).replace(/\s+/g, ' ') + '.';
+  }
+  function setReadUI() {
+    each(readBtns, function (b) {
+      var on = reading === b.getAttribute('data-read');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.querySelector('.read-txt').textContent = on ? STR[lang].stopRead : STR[lang].read;
+      b.querySelector('use').setAttribute('href', on ? '#i-stop' : '#i-speaker');
+    });
+  }
+  function stopReading() { if (synth) synth.cancel(); reading = null; setReadUI(); }
+  if (synth && window.SpeechSynthesisUtterance) {
+    each(readBtns, function (b) {
+      b.hidden = false;
+      b.addEventListener('click', function () {
+        var which = b.getAttribute('data-read');
+        if (reading === which) { stopReading(); return; }
+        synth.cancel();
+        var u = new SpeechSynthesisUtterance(readText(which));
+        u.lang = lang === 'es' ? 'es-US' : 'en-US';
+        var vs = synth.getVoices ? synth.getVoices() : [];
+        for (var i = 0; i < vs.length; i++) if (vs[i].lang && vs[i].lang.toLowerCase().indexOf(lang) === 0) { u.voice = vs[i]; break; }
+        u.rate = 0.92;
+        u.onend = u.onerror = function () { if (reading === which) { reading = null; setReadUI(); } };
+        reading = which; setReadUI();
+        synth.speak(u);
+      });
+    });
+  }
+
+  /* ---------------- larger text ---------------- */
+  var sizeBtn = document.getElementById('sizeBtn');
+  if ('zoom' in doc.style) {
+    sizeBtn.hidden = false;
+    var setSize = function (big, save) {
+      doc.classList.toggle('big', big);
+      sizeBtn.setAttribute('aria-pressed', big ? 'true' : 'false');
+      if (save) { try { localStorage.setItem('owb-big', big ? '1' : '0'); } catch (e) {} }
+    };
+    sizeBtn.addEventListener('click', function () { setSize(!doc.classList.contains('big'), true); });
+    try { if (localStorage.getItem('owb-big') === '1') setSize(true, false); } catch (e) {}
+  }
 
   /* ---------------- start ---------------- */
   var saved = null;
