@@ -128,7 +128,7 @@ CATS = [
              a="2811 New Hartford Rd.", p=[("270-691-6205", "", "")]),
         dict(n=("Free glasses (Audubon Area Community Services)", "Lentes gratis (Audubon Area Community Services)"), d=("You need an eye exam from the past year.", "Necesitas un examen de la vista del último año."),
              a="1800 W. 4th St.", p=[("270-852-6506", "", "")]),
-        dict(n=("Medicaid &amp; SNAP (food stamps)", "Medicaid y SNAP (cupones de alimentos)"), d=("Apply through DCBS.", "Solicítalos a través de DCBS."),
+        dict(n=("Medicaid &amp; SNAP (food stamps)", "Medicaid y SNAP (cupones de alimentos)"), d=("Apply through DCBS (Kentucky's Department for Community Based Services).", "Solicítalos a través de DCBS (Department for Community Based Services de Kentucky)."),
              a="3649 Wathen's Crossing", p=[("855-306-8959", "", "")]),
     ]),
     ("safety", "shield", "Safety &amp; Support", "Seguridad y apoyo", "Safety &amp; support", "Seguridad y apoyo", [
@@ -293,7 +293,7 @@ def build():
         ("pin", ("Where", "Dónde"),
          f'<p><strong>Daniel Pitino Shelter</strong><br>501 Walnut St., Owensboro</p>'
          f'<div class="fact-actions"><a class="btn-call" href="tel:+12706889000" aria-label="Call Daniel Pitino Shelter: 270-688-9000" data-es-aria="Llamar a Daniel Pitino Shelter: 270-688-9000">{icon("phone")}<span class="btxt"><span class="num">270-688-9000</span></span></a>'
-         f'<a class="btn-ghost-link" href="{esc(maps("Daniel Pitino Shelter, 501 Walnut St."))}" target="_blank" rel="noopener">{icon("pin")}{t("Directions", "Cómo llegar")}{t(" (opens in a new tab)", " (se abre en otra pestaña)", "span", "sr")}</a></div>'),
+         f'<a class="btn-ghost-link" href="{esc(maps("Daniel Pitino Shelter, 501 Walnut St."))}" target="_blank" rel="noopener">{icon("pin")}{t("Directions to the shelter", "Cómo llegar al refugio")}{t(" (opens in a new tab)", " (se abre en otra pestaña)", "span", "sr")}</a></div>'),
         ("clock", ("When", "Cuándo"),
          t("<strong>6 PM to 7 AM</strong>, only on White Flag nights. Open to men, women, and children.",
            "<strong>De 6 p. m. a 7 a. m.</strong>, solo en noches de White Flag. Abierto para hombres, mujeres y niños.", "p")),

@@ -39,25 +39,25 @@
 /* ---------- tokens ---------- */
 :root {
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --bg: #f7f4ef; --card: #ffffff; --ink: #1c1f23; --ink2: #3f454d; --muted: #5a6068; --line: #e4ddd2;
-  --brand: #b3121b; --brand-soft: #fbecec;
+  --bg: #f7f4ef; --card: #ffffff; --ink: #1c1f23; --ink2: #353a41; --muted: #454b53; --line: #d9d1c4;
+  --brand: #8f0e15; --brand-soft: #fbecec; --danger: #8f0e15; --danger-hover: #a8121b;
   --hero: #1f2328; --hero-ink: #f5f6f7; --hero-muted: #c6ccd3;
-  --call: #0a6db0; --call-hover: #075488; --call-ink: #ffffff; --link: #0a5c96;
-  --red: #b3121b; --red-bg: #fdeceb; --red-line: #e7a3a3;
-  --amber: #8a4b00; --amber-bg: #fff2d9; --amber-line: #f0c674;
-  --green: #136434; --green-bg: #e6f4eb; --green-line: #9dd3b0;
-  --gray: #46505c; --gray-bg: #eef0f3; --gray-line: #cdd3da;
+  --call: #0a4f82; --call-hover: #083d66; --call-ink: #ffffff; --link: #0a4f82;
+  --red: #8f0e15; --red-bg: #fdeceb; --red-line: #d98a8a;
+  --amber: #663800; --amber-bg: #fff2d9; --amber-line: #d9a640;
+  --green: #0d4f28; --green-bg: #e6f4eb; --green-line: #7fbf96;
+  --gray: #3a424c; --gray-bg: #eef0f3; --gray-line: #b9c1ca;
   --header: #ffffff; --header-ink: #1c1f23; --footer: #1f2328;
   --shadow: 0 1px 2px rgba(20,24,30,.06), 0 6px 20px rgba(20,24,30,.07);
   --radius: 16px;
-  --focus: #0a6db0;
+  --focus: #0a4f82;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
-    --bg: #111316; --card: #1a1e23; --ink: #eef1f4; --ink2: #ccd3db; --muted: #a9b2bd; --line: #2c3239;
-    --brand: #ff6b6b; --brand-soft: #2a1517;
-    --hero: #0b0d10; --call: #1f6fb3; --call-hover: #2a80c8; --link: #8cc8ff;
+    --bg: #111316; --card: #1a1e23; --ink: #eef1f4; --ink2: #ccd3db; --muted: #bcc4ce; --line: #2c3239;
+    --brand: #ff9c9c; --brand-soft: #2a1517; --danger: #8f0e15; --danger-hover: #a8121b;
+    --hero: #0b0d10; --call: #0a4f82; --call-hover: #0d5f9b; --link: #9fd0ff;
     --red: #ff8a8a; --red-bg: #2b1517; --red-line: #6b2b2f;
     --amber: #ffc56b; --amber-bg: #2a2010; --amber-line: #6b5120;
     --green: #74d99d; --green-bg: #11261a; --green-line: #2a5c3d;
@@ -68,9 +68,9 @@
   }
 }
 :root.dark {
-  --bg: #111316; --card: #1a1e23; --ink: #eef1f4; --ink2: #ccd3db; --muted: #a9b2bd; --line: #2c3239;
-  --brand: #ff6b6b; --brand-soft: #2a1517;
-  --hero: #0b0d10; --call: #1f6fb3; --call-hover: #2a80c8; --link: #8cc8ff;
+  --bg: #111316; --card: #1a1e23; --ink: #eef1f4; --ink2: #ccd3db; --muted: #bcc4ce; --line: #2c3239;
+  --brand: #ff9c9c; --brand-soft: #2a1517; --danger: #8f0e15; --danger-hover: #a8121b;
+  --hero: #0b0d10; --call: #0a4f82; --call-hover: #0d5f9b; --link: #9fd0ff;
   --red: #ff8a8a; --red-bg: #2b1517; --red-line: #6b2b2f;
   --amber: #ffc56b; --amber-bg: #2a2010; --amber-line: #6b5120;
   --green: #74d99d; --green-bg: #11261a; --green-line: #2a5c3d;
@@ -131,14 +131,14 @@ html.big { zoom: 1.2; }
   background-size: 46px 46px, 23px 23px; background-position: 0 0, 11px 17px;
   -webkit-mask-image: linear-gradient(100deg, transparent 30%, #000 85%); mask-image: linear-gradient(100deg, transparent 30%, #000 85%); }
 .hero .wrap { position: relative; padding: 40px 0 34px; }
-.kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #ff9a9a; }
+.kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #ffb3b3; }
 .hero h1 { color: #fff; font-size: clamp(32px, 6.2vw, 52px); letter-spacing: -.02em; margin: 12px 0 14px; max-width: 18ch; }
 .hero-lede { font-size: 19px; color: var(--hero-muted); max-width: 58ch; }
 .jump { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 .jump a, .jump button { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 18px; border-radius: 999px; font: 700 16px/1 var(--font); text-decoration: none; color: #fff; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); cursor: pointer; }
 .jump a:hover, .jump button:hover { background: rgba(255,255,255,.18); }
-.jump .first { background: #b3121b; border-color: #b3121b; }
-.jump .first:hover { background: #cf1d27; }
+.jump .first { background: #8f0e15; border-color: #8f0e15; }
+.jump .first:hover { background: #a8121b; }
 .jump :focus-visible { outline-color: #fff; }
 
 /* ---------- sections ---------- */
@@ -170,9 +170,9 @@ main { display: block; }
 @media (prefers-reduced-motion: reduce) { .status.loading .status-badge .ic { animation: none; } html { scroll-behavior: auto; } }
 .status-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 .alerts { display: grid; gap: 10px; margin-bottom: 12px; }
-.alert { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 14px; background: #7a0c12; color: #fff; font-size: 17px; }
+.alert { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 14px; background: #6e0b10; color: #fff; font-size: 17px; }
 .alert .ic { width: 24px; height: 24px; margin-top: 2px; }
-.alert small { color: #ffd7d7; font-size: 14px; }
+.alert small { color: #ffe3e3; font-size: 14px; }
 .status-saved { font-size: 15px; font-weight: 700; color: var(--amber); }
 .outlook { margin-top: 16px; border-top: 1px solid rgba(127,127,127,.25); padding-top: 14px; }
 .outlook-h { font-weight: 800; font-size: 17px; }
@@ -182,19 +182,21 @@ main { display: block; }
 .night-day { font-weight: 800; font-size: 16px; text-transform: capitalize; }
 .night b { font-size: 20px; }
 .night-word { font-size: 14px; font-weight: 700; color: var(--muted); line-height: 1.2; }
-.night-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--gray-line); }
-.night.red { border-color: var(--red-line); } .night.red .night-dot { background: var(--red); } .night.red .night-word, .night.red b { color: var(--red); }
-.night.amber { border-color: var(--amber-line); } .night.amber .night-dot { background: var(--amber); } .night.amber .night-word, .night.amber b { color: var(--amber); }
-.night.green .night-dot { background: var(--green); } .night.green .night-word { color: var(--green); }
+.night-ic { width: 20px; height: 20px; color: var(--gray); }
+.night.red { border-color: var(--red-line); } .night.red .night-ic { color: var(--red); } .night.red .night-word, .night.red b { color: var(--red); }
+.night.amber { border-color: var(--amber-line); } .night.amber .night-ic { color: var(--amber); } .night.amber .night-word, .night.amber b { color: var(--amber); }
+.night.green .night-ic { color: var(--green); } .night.green .night-word { color: var(--green); }
 .hourly { margin-top: 14px; border-top: 1px solid rgba(127,127,127,.25); padding-top: 12px; }
 .hourly summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; gap: 8px; color: var(--ink); }
 .hours { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 8px; margin-top: 10px; }
 .hr { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; text-align: center; }
 .hr b { display: block; font-size: 20px; }
 .hr span { display: block; font-size: 14px; color: var(--muted); }
-.hr.cold { border-color: var(--red-line); } .hr.cold b { color: var(--red); }
+.hr.cold { border-color: var(--red-line); border-width: 2px; } .hr.cold b { color: var(--red); }
+.hr .hr-ic { width: 16px; height: 16px; vertical-align: -2px; margin-right: 3px; }
 .hr.cool b { color: var(--amber); }
 .hr.min { box-shadow: 0 0 0 2px var(--ink) inset; }
+.disclaimer span, .sources p, .call911 p, .slides p, .status-body p, .fact-body p, .tip li, .danger li { max-width: 75ch; }
 .disclaimer { display: flex; gap: 12px; margin-top: 14px; padding: 14px 16px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; font-size: 16px; color: var(--ink2); }
 .disclaimer .ic { color: var(--muted); margin-top: 3px; }
 .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 14px; margin-top: 22px; }
@@ -211,9 +213,9 @@ main { display: block; }
 .btn-call { background: var(--call); color: var(--call-ink); }
 .btn-call:hover { background: var(--call-hover); }
 .btn-call .btxt { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
-.btn-call .lbl { font-size: 14px; font-weight: 600; opacity: .9; }
+.btn-call .lbl { font-size: 14px; font-weight: 700; }
 .btn-call .num { font-variant-numeric: tabular-nums; letter-spacing: .01em; white-space: nowrap; }
-.btn-911 { background: #b3121b; } .btn-911:hover { background: #cf1d27; }
+.btn-911 { background: var(--danger); } .btn-911:hover { background: var(--danger-hover); }
 .btn-call.btn-ghost, .btn-ghost-link, .btn { background: transparent; color: var(--ink); border-color: var(--line); }
 .btn-call.btn-ghost:hover, .btn-ghost-link:hover, .btn:hover { border-color: var(--ink2); }
 .btn-ghost-link .ic, .btn .ic { color: var(--brand); }
@@ -224,7 +226,7 @@ main { display: block; }
 .callbox p small { display: block; font-size: 15px; font-weight: 500; color: var(--hero-muted); margin-top: 2px; }
 .callbox .btn-call { min-width: 150px; }
 .callbox .btn-call .btxt { min-width: 0; }
-.callbox .btn-call:not(.btn-911) { background: #ffffff; color: #0b4f82; }
+.callbox .btn-call:not(.btn-911) { background: #ffffff; color: #083d66; }
 .callbox .btn-call:not(.btn-911):hover { background: #e6f1fa; }
 .callbox :focus-visible { outline-color: #fff; }
 @media (max-width: 700px) { .callbox { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 16px; } .callbox p { grid-column: 1 / -1; } .callbox .btn-call { min-width: 0; padding: 8px 12px; } }
@@ -268,7 +270,7 @@ html:not(.js) .chips { display: none; }
 .danger-top .ic { width: 26px; height: 26px; }
 .danger-h { font-size: 22px; }
 .danger-lbl { font-size: 14px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
-.call911 { display: flex; gap: 16px; align-items: center; margin-top: 16px; padding: 20px; border-radius: 18px; background: #b3121b; color: #fff; }
+.call911 { display: flex; gap: 16px; align-items: center; margin-top: 16px; padding: 20px; border-radius: 18px; background: #8f0e15; color: #fff; }
 .call911 p { color: #fff; font-size: 19px; font-weight: 600; }
 .call911 .ic-big { flex: none; width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.16); display: grid; place-items: center; }
 .call911 .ic-big .ic { width: 28px; height: 28px; }
@@ -284,9 +286,9 @@ html:not(.js) .chips { display: none; }
 .slides h3 { font-size: 22px; }
 .slides p { color: var(--ink2); margin-top: 8px; }
 .slides .row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-.btn-primary { background: var(--brand); color: #fff; border-color: transparent; }
-:root.dark .btn-primary { background: #b3121b; }
-@media (prefers-color-scheme: dark) { :root:not(.light) .btn-primary { background: #b3121b; } }
+.btn-primary { background: #8f0e15; color: #fff; border-color: transparent; }
+:root.dark .btn-primary { background: #8f0e15; }
+@media (prefers-color-scheme: dark) { :root:not(.light) .btn-primary { background: #8f0e15; } }
 .btn-primary .ic { color: #fff !important; }
 .btn-primary:hover { filter: brightness(1.1); border-color: transparent; }
 @media (max-width: 760px) { .slides { grid-template-columns: 1fr; } }
@@ -296,16 +298,16 @@ html:not(.js) .chips { display: none; }
 .page-footer p + p { margin-top: 8px; }
 .page-footer strong { color: #fff; }
 .page-footer a { color: #fff; }
-.page-footer .sm { color: #9aa4b2; font-size: 14px; }
+.page-footer .sm { color: #d0d6dd; font-size: 15px; }
 
 /* ---------- sticky help bar ---------- */
 .helpbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 100; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(31,35,40,.96); box-shadow: 0 -6px 20px rgba(0,0,0,.2); }
 @supports ((-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))) { .helpbar { background: rgba(31,35,40,.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); } }
 .helpbar .inner { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; max-width: 620px; margin: 0 auto; }
 .helpbar a { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; border-radius: 14px; text-decoration: none; font: 800 18px/1.1 var(--font); color: #fff; text-align: center; padding: 0 10px; }
-.helpbar .h211 { background: #0a6db0; }
-.helpbar .h911 { background: #b3121b; }
-.helpbar small { display: block; font-size: 14px; font-weight: 600; opacity: .92; }
+.helpbar .h211 { background: #0a4f82; }
+.helpbar .h911 { background: #8f0e15; }
+.helpbar small { display: block; font-size: 14px; font-weight: 700; }
 .helpbar :focus-visible { outline-color: #fff; }
 
 .toast { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 12px; font-weight: 700; z-index: 200; opacity: 0; pointer-events: none; transition: opacity .2s; }
@@ -435,7 +437,7 @@ html:not(.js) .chips { display: none; }
 
       <div class="sources">
         <p data-es="&lt;strong&gt;Información revisada por última vez: 24 de noviembre de 2026.&lt;/strong&gt; Los horarios y los lugares disponibles cambian, así que llama antes de ir. Fuentes: The Center of Owensboro-Daviess County Resource Directory (nov. 2026), Owensboro Times y las organizaciones mencionadas."><strong>Information last checked: November 24, 2026.</strong> Hours and openings change, so please call ahead. Sources: The Center of Owensboro-Daviess County Resource Directory (Nov. 2026), Owensboro Times, and the organizations listed.</p>
-        <p>%%I:mail%% <a href="pages/contact.html" data-es="¿Ves algo incorrecto? Contáctame">See something wrong? Contact me</a></p>
+        <p>%%I:mail%% <a href="pages/contact.html" data-es="¿Ves algo incorrecto? Avísame en mi página de contacto">See something wrong? Tell me on my contact page</a></p>
       </div>
     </div>
   </section>
@@ -452,7 +454,7 @@ html:not(.js) .chips { display: none; }
       <div class="dangers">%%DANGER%%</div>
       <div class="call911" role="note">
         <div class="ic-big">%%I:alert%%</div>
-        <p data-es="Llama al 911 si alguien está confundido, tiene mucho sueño, o estaba temblando y dejó de temblar. La sala de emergencias atiende a todos, con o sin seguro.">Call 911 if someone is confused, very sleepy, or was shivering and then stopped. The ER treats everyone, with or without insurance.</p>
+        <p data-es="Llama al 911 si alguien está confundido, tiene mucho sueño, o estaba temblando y dejó de temblar. La sala de emergencias atiende a todos, con o sin seguro.">Call 911 if someone is confused, very sleepy, or was shivering and then stopped. The emergency room (ER) treats everyone, with or without insurance.</p>
         <a class="btn-call" href="tel:911">%%I:phone%%<span class="btxt"><span class="num"><span class="sr" data-es="Llamar al">Call</span> 911</span></span></a>
       </div>
     </div>
@@ -484,7 +486,7 @@ html:not(.js) .chips { display: none; }
 <footer class="page-footer">
   <div class="wrap">
     <p data-es="&lt;strong&gt;En una emergencia, llama al &lt;a href=&quot;tel:911&quot;&gt;911&lt;/a&gt;.&lt;/strong&gt;"><strong>In an emergency, call <a href="tel:911">911</a>.</strong></p>
-    <p class="sm" data-es="&lt;strong&gt;Accesibilidad:&lt;/strong&gt; esta página está hecha para cumplir con WCAG 2.2 nivel AA: funciona con lectores de pantalla, teclado, zoom y modo de alto contraste. ¿Algo no te funciona? &lt;a href=&quot;pages/contact.html&quot;&gt;Avísame&lt;/a&gt;."><strong>Accessibility:</strong> this page is built to meet WCAG 2.2 Level AA. It works with screen readers, keyboards, zoom, and high-contrast mode. Something not working for you? <a href="pages/contact.html">Let me know</a>.</p>
+    <p class="sm" data-es="&lt;strong&gt;Accesibilidad:&lt;/strong&gt; esta página cumple con WCAG 2.2 nivel AA y con las reglas más estrictas de nivel AAA para contraste de color, tamaño de botones, nombres de enlaces, abreviaturas y lenguaje sencillo. No depende solo del color, funciona con lectores de pantalla, teclado, zoom y modo de alto contraste, y puede leerse en voz alta. ¿Algo no te funciona? &lt;a href=&quot;pages/contact.html&quot;&gt;Avísame en mi página de contacto&lt;/a&gt;."><strong>Accessibility:</strong> this page meets WCAG 2.2 Level AA, plus the stricter Level AAA rules for color contrast, button size, link names, abbreviations, and plain language. It never relies on color alone, works with screen readers, keyboards, zoom, and high-contrast mode, and can read itself out loud. Something not working for you? <a href="pages/contact.html">Tell me on my contact page</a>.</p>
   </div>
 </footer>
 
@@ -765,7 +767,8 @@ html:not(.js) .chips { display: none; }
     var html = '';
     for (var i = 0; i < n.hours.length; i++) {
       var h = n.hours[i], f = Math.round(h.f);
-      html += '<li class="hr' + (f <= 32 ? ' cold' : (f <= 36 ? ' cool' : '')) + (i === n.minIndex ? ' min' : '') + '"><span>' + hourLabel(h.h, lang) + '</span><b>' + f + '°F</b><span>' + S.feels + '</span>' + (i === n.minIndex ? '<span class="sr">' + S.coldest + '</span>' : '') + '</li>';
+      var mk = f <= 32 ? '<svg class="hr-ic" aria-hidden="true" focusable="false"><use href="#i-snow"></use></svg>' : (f <= 36 ? '<svg class="hr-ic" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg>' : '');
+      html += '<li class="hr' + (f <= 32 ? ' cold' : (f <= 36 ? ' cool' : '')) + (i === n.minIndex ? ' min' : '') + '"><span>' + hourLabel(h.h, lang) + '</span><b>' + mk + f + '°F</b><span>' + S.feels + '</span>' + (i === n.minIndex ? '<span class="sr">' + S.coldest + '</span>' : '') + '</li>';
     }
     $('hours').innerHTML = html;
     $('hourly').hidden = false;
@@ -776,7 +779,7 @@ html:not(.js) .chips { display: none; }
         var nt = r.next[k], lv = nt.season ? nt.level : 'off';
         var word = nt.season ? S['o_' + nt.level] : S.o_off;
         o += '<li class="night ' + lv + '"><span class="night-day"><span class="sr">' + S.nightOf + ' </span>' + WEEK[lang][weekday(nt.key)] + '</span>' +
-             '<span class="night-dot" aria-hidden="true"></span><b>' + nt.low + '°F</b><span class="night-word">' + word + '</span></li>';
+             '<svg class="night-ic" aria-hidden="true" focusable="false"><use href="#i-' + ({ red: 'flag', amber: 'alert', green: 'check', off: 'info' })[lv] + '"></use></svg><b>' + nt.low + '°F</b><span class="night-word">' + word + '</span></li>';
       }
       $('outlookList').innerHTML = o;
       $('outlookTitle').textContent = S.outlook;
