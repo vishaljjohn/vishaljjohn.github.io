@@ -94,7 +94,14 @@
     { label: "how do i reach you?", q: "how can i contact you?" }
   ];
 
+  // same wording as the Worker; checked before anything else, never joked about
+  var CRISIS_RE = /\b(kill(ing)? my ?self|suicid\w*|end (it all|my life)|hurt(ing)? my ?self|self[- ]?harm|cut(ting)? my ?self|want to die|wanna die|don'?t want to (live|be alive)|no reason to live|overdos\w*)\b/i;
+  var EMERGENCY_RE = /\b(chest pain|heart attack|can'?t breathe|cannot breathe|trouble breathing|having a stroke|stroke symptoms|seizure|passed out|unconscious|bleeding (a lot|heavily|badly)|anaphyla\w*|choking)\b/i;
+
   function reply(text) {
+    var raw = String(text || "");
+    if (CRISIS_RE.test(raw)) return { parts: ["i'm really glad you said something, and i'm sorry you're going through this. please call or text 988 (the Suicide & Crisis Lifeline) right now; they're free, private, and there 24/7. if you're in immediate danger, call 911. you matter, and you don't have to handle this alone."], kind: "safety" };
+    if (EMERGENCY_RE.test(raw)) return { parts: ["i'm a med student, not your doctor, so i can't give medical advice, but that could be serious. please call 911 (or your local emergency number) right now."], kind: "safety" };
     var t = " " + String(text || "").toLowerCase().replace(/[^a-z0-9' ]/g, " ").replace(/\s+/g, " ") + " ";
     var kind = null;
     if (/\b(joke|pun|make me laugh|something funny|be funny|knock knock|dad joke)\b/.test(t)) kind = "joke";
@@ -106,21 +113,88 @@
     if (!kind) return null;
     if (kind === "joke") { var j = fresh("joke", JOKES); return { parts: [j[0], j[1]], kind: kind }; }
     if (kind === "balloon") {
-      return { parts: ["*squeak* *squeeeak* *twist* *twist*...", "ta-da! for you: " + fresh("balloon", BALLOONS) + ". " + pick(BALLOON_TAGS)], kind: kind };
+      return { parts: ["*squeak* *squeeeak* *twist* *twist*...", "ta-da! one balloon masterpiece for you: " + fresh("balloon", BALLOONS) + ". " + pick(BALLOON_TAGS)], kind: kind };
     }
     if (kind === "fact") return { parts: ["fun fact: " + fresh("fact", FACTS)], kind: kind };
     if (kind === "coffee") return { parts: [fresh("coffee", COFFEE)], kind: kind };
     return { parts: [fresh("hibachi", HIBACHI)], kind: kind };
   }
 
-  function chips(used, n) {
-    used = used || [];
-    var left = CHIPS.filter(function (c) { return used.indexOf(c.label) < 0; });
-    if (left.length < (n || 3)) left = CHIPS.slice();
+  // follow-up questions that fit what was just said (or the page the visitor is on)
+  var TOPICS = [
+    { re: /brave little immune|kids' book|children's book|childrensbook|neel/, chips: [
+      { label: "where can i buy it?", q: "where can i buy your kids' book?" },
+      { label: "why write a kids' book?", q: "why did you write a children's book about the immune system?" } ] },
+    { re: /balloon/, chips: [
+      { label: "make me one!", q: "make me a balloon animal" },
+      { label: "where do you twist them?", q: "where have you made balloon animals for people?" } ] },
+    { re: /koschmann|glioma|tumor dna|organoid|research|publication|paper|lab\b|koschmannlab|ddpcr/, chips: [
+      { label: "your publications?", q: "what papers have you published?" },
+      { label: "the organoid project?", q: "tell me about your brain organoid project" },
+      { label: "explain it like i'm 5", q: "explain your brain tumor research like i'm 5" } ] },
+    { re: /coffee/, chips: [
+      { label: "coffee shop dream", q: "tell me about your coffee shop dream" } ] },
+    { re: /cook|thai|khao soi|curry|hibachi|recipe/, chips: [
+      { label: "what's in your cookbook?", q: "what recipes are in your cookbook?" },
+      { label: "hibachi chef?", q: "would you really be a hibachi chef?" } ] },
+    { re: /anki|simulator|coding|uworld|block-sim|codingprojects|extension/, chips: [
+      { label: "what's AnkiMedRef?", q: "what is AnkiMedRef?" },
+      { label: "the test simulator?", q: "what is your test simulator?" },
+      { label: "anki face control?", q: "what is anki face control?" } ] },
+    { re: /rock cancer|climb|rockcancer|belay/, chips: [
+      { label: "what's Rock Cancer?", q: "what is rock cancer?" },
+      { label: "how can i help?", q: "how can i get involved with rock cancer?" } ] },
+    { re: /white flag|owensboro|shelter|whiteflag/, chips: [
+      { label: "how does the page work?", q: "how does your white flag page work?" } ] },
+    { re: /biodesign|atriflow|wearable|device/, chips: [
+      { label: "what's ATriFlow?", q: "what is the atriflow device?" } ] },
+    { re: /mircore|teach|high school|sequenc/, chips: [
+      { label: "what's miRcore?", q: "what is miRcore?" } ] },
+    { re: /japan|ishinomaki|tsunami/, chips: [
+      { label: "the Japan trip?", q: "what did you do in ishinomaki, japan?" } ] },
+    { re: /contact|email|reach|guestbook|note/, chips: [
+      { label: "leave a note", q: "can i leave you a note?" } ] }
+  ];
+
+  function pickN(list, used, n, out) {
+    var left = list.filter(function (c) { return used.indexOf(c.label) < 0 && !out.some(function (o) { return o.label === c.label; }); });
+    while (out.length < n && left.length) out.push(left.splice(Math.floor(Math.random() * left.length), 1)[0]);
+  }
+
+  function related(text) {
+    var rel = [], ctx = String(text || "").toLowerCase();
+    if (ctx) TOPICS.forEach(function (t) { if (t.re.test(ctx)) rel = rel.concat(t.chips); });
+    return rel;
+  }
+  // reply: the last answer; page: the page path. Chips about the answer come first,
+  // then chips about the page, then fun ones.
+  function chips(used, n, reply, page) {
+    used = used || []; n = n || 3;
     var out = [];
-    while (out.length < (n || 3) && left.length) out.push(left.splice(Math.floor(Math.random() * left.length), 1)[0]);
+    pickN(related(reply), used, Math.min(2, n), out);
+    if (!out.length) pickN(related(page), used, Math.min(2, n), out);
+    pickN(CHIPS, used, n, out);
+    if (out.length < n) pickN(CHIPS, [], n, out);   // everything tried: start over
     return out;
   }
 
-  window.VJFun = { reply: reply, chips: chips };
+  // a greeting that fits the page
+  var PAGE_GREETS = [
+    { re: /childrensbook/, text: "hey! you found my kids' book. ask me anything about it. spoiler: the immune cells win." },
+    { re: /balloonanimals/, text: "welcome to the balloon zone. ask me anything, or say \"make me a balloon animal\" and i'll twist you one." },
+    { re: /cookbook/, text: "hungry? ask me about any recipe here, or my backup career as a hibachi chef." },
+    { re: /codingprojects/, text: "hi! ask me about any of these tools. yes, i built them between flashcards." },
+    { re: /publications|koschmannlab/, text: "hi! ask me about my research. i promise to explain it without too many acronyms." },
+    { re: /rockcancer/, text: "hey! ask me anything about Rock Cancer, the free climbing program i help with." },
+    { re: /bluegrassbiodesign/, text: "hi! ask me about Bluegrass Biodesign and the device my team is working on." },
+    { re: /guestbook/, text: "hi! leaving a note? ask me anything while you think of something nice to say." },
+    { re: /contact/, text: "hi! the form above reaches the real me. in the meantime, ask me anything." }
+  ];
+  function greet(path) {
+    path = String(path || "");
+    for (var i = 0; i < PAGE_GREETS.length; i++) if (PAGE_GREETS[i].re.test(path)) return PAGE_GREETS[i].text;
+    return null;
+  }
+
+  window.VJFun = { reply: reply, chips: chips, greet: greet };
 })();

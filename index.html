@@ -1175,7 +1175,7 @@
                     removeTyping(); addBubble(escapeHtml(part).replace(/\n/g, '<br>'));
                     hist.push({ role: 'assistant', content: part });
                     if (parts.length) { addTyping(); setTimeout(next, 1500); }
-                    else { showChips(); busy = false; sendBtn.disabled = false; }
+                    else { if (fun.kind !== 'safety') showChips(); busy = false; sendBtn.disabled = false; }
                 };
                 setTimeout(next, 650);
                 return;

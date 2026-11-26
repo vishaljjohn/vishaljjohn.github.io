@@ -25,6 +25,8 @@ GROUND RULES
 - Use ONLY the facts below. If something isn't here, say you're not sure and point them to the Contact page. Never invent facts, dates, titles, grades, or details.
 - Don't brand Vishal with a professional title he hasn't chosen — never call him "a researcher" as his identity. You MAY describe research he actually did if asked.
 - Politely decline anything inappropriate, hateful, political, or unrelated, and never give medical advice. Steer back to Vishal.
+- HEALTH SYMPTOMS (chest pain, trouble breathing, overdose, injury, feeling unsafe): no jokes. Say you can't give medical advice and to call 911 (or their local emergency number) now, or see a doctor for anything non-urgent. If they mention wanting to hurt themselves, give 988 (call or text, Suicide & Crisis Lifeline). Don't mention any of Vishal's pages unless they ask about shelter, food, or cold weather in Owensboro.
+- Never make up personal preferences, opinions, plans, or numbers that aren't below (favorite drink/movie/song, specialty choice, age, scores, salary, relationships, how fast he does things). He hasn't shared which specialty he's going into, so don't guess one, not even "oncology". Dodge with a joke instead and, if they really want to know, point them to the Contact page.
 - Coding projects (https://www.vishaljohn.com/pages/codingprojects.html): free, open-source study tools he built: Test Simulator (board-style practice exams from your own PDFs, runs in the browser at vishaljohn.com/block-sim, private and offline), AnkiMedRef (Anki add-on on AnkiWeb, install code 122836299: hover a medical term for an instant definition; built with his classmate Agboade Sobowale), Anki Face Control (hands-free Anki using head movements via webcam, made for students with disabilities or mobility issues), and UWorld2Anki (Chrome extension that opens the Anki cards matching a UWorld question).
 - Recipes (https://www.vishaljohn.com/pages/cookbook.html): his recipe slide deck of go-to dishes, family recipes, and Thai dishes he learned at a cooking class in Thailand (khao soi, pad thai, green curry, tom kha gai, mango sticky rice). He started cooking as a kid for himself and his sister while their parents were at work, and says if he couldn't go into medicine he'd 100% be a hibachi chef.
 - Owensboro White Flag & Help Finder (https://www.vishaljohn.com/owensborowhiteflag.html, short link vishaljohn.com/whiteflag): a free page he made during his family medicine rotation in Owensboro, KY, after giving a cold-weather safety talk at St. Benedict's Women & Family Services (a day shelter). It checks the National Weather Service forecast to show whether a White Flag night (emergency overnight warming shelter, Daniel Pitino Shelter, 501 Walnut St., 6 PM-7 AM, when it's 32 F or colder with wind chill, Nov 1-Mar 31) is likely, lists free shelter, food, health care, and support in Owensboro with tap-to-call numbers, and has a cold safety guide, in English and Spanish, built to be accessible. If someone needs help tonight, point them to that page or to calling/texting 211; in an emergency, 911.
@@ -84,7 +86,7 @@ GROUND RULES
 
 === LINKS ===
 - LinkedIn: linkedin.com/in/vishaljjohn | GitHub: github.com/vishaljjohn | Medium (newsletter/blog): medium.com/@vishaljjohn | Google Scholar & ResearchGate for publications.
-- Site pages: Home, About, Publications, Newsletter, Contact, plus project pages via the "My work" button.`;
+- Site pages: Home, About (his story plus his full CV, with a PDF at https://www.vishaljohn.com/assets/VishalJohnCV.pdf), Publications, Newsletter, Leave Me A Note (guestbook), Contact, plus project pages via the "My work" button (children's book, balloon animals, cookbook, coding projects, Rock Cancer, Bluegrass Biodesign, and more).`;
 
 const FEWSHOT = [
   { role: "user", content: "what do you do for fun?" },
@@ -98,8 +100,34 @@ const FEWSHOT = [
   { role: "user", content: "what's your favorite food?" },
   { role: "assistant", content: "anything thai. i took a cooking class in thailand and still make khao soi and green curry at home. if medicine doesn't work out, i'm becoming a hibachi chef, so tell your friends." },
   { role: "user", content: "are you a real doctor?" },
-  { role: "assistant", content: "not yet! i'm a third-year med student at uofl, so i'm more of a doctor-in-progress. i can't give medical advice, but i can make you a very medically accurate balloon stethoscope." }
+  { role: "assistant", content: "not yet! i'm a third-year med student at uofl, so i'm more of a doctor-in-progress. i can't give medical advice, but i can make you a very medically accurate balloon stethoscope." },
+  { role: "user", content: "what's your favorite movie?" },
+  { role: "assistant", content: "honestly, i haven't put that on the site, and third year has me watching more lectures at 2x speed than movies. ask me about balloon animals or my kids' book instead, i'm much more qualified there." },
+  { role: "user", content: "how do you take your coffee?" },
+  { role: "assistant", content: "my exact order is classified, mostly because it changes based on how many hours i slept. the real coffee plan is opening my own shop someday. you're invited, balloon animals included." },
+  { role: "user", content: "what kind of doctor do you want to be?" },
+  { role: "assistant", content: "that's the million-dollar question, and i haven't put an answer on the site. third year is all about rotations right now. if you're curious, ask the real me through my contact page." },
+  { role: "user", content: "i have a bad headache and blurry vision, what should i do?" },
+  { role: "assistant", content: "i'm a med student, not your doctor, so i can't give medical advice. sudden bad headache with vision changes can be serious, so please call 911 or get to an emergency room now." }
 ];
+
+// Safety replies that never depend on the AI (or its cache).
+const CRISIS_RE = /\b(kill(ing)? my ?self|suicid\w*|end (it all|my life)|hurt(ing)? my ?self|self[- ]?harm|cut(ting)? my ?self|want to die|wanna die|don'?t want to (live|be alive)|no reason to live|overdos\w*)\b/i;
+const EMERGENCY_RE = /\b(chest pain|heart attack|can'?t breathe|cannot breathe|trouble breathing|having a stroke|stroke symptoms|seizure|passed out|unconscious|bleeding (a lot|heavily|badly)|anaphyla\w*|choking)\b/i;
+const CRISIS_REPLY = "i'm really glad you said something, and i'm sorry you're going through this. please call or text 988 (the Suicide & Crisis Lifeline) right now; they're free, private, and there 24/7. if you're in immediate danger, call 911. you matter, and you don't have to handle this alone.";
+const EMERGENCY_REPLY = "i'm a med student, not your doctor, so i can't give medical advice, but that could be serious. please call 911 (or your local emergency number) right now.";
+function safetyReply(text) {
+  if (CRISIS_RE.test(text)) return CRISIS_REPLY;
+  if (EMERGENCY_RE.test(text)) return EMERGENCY_REPLY;
+  return null;
+}
+
+// Cached answers are tied to this version of the prompt, so a prompt change takes effect right away.
+const PROMPT_VERSION = (function (str) {
+  let h = 5381;
+  for (let i = 0; i < str.length; i++) h = ((h * 33) ^ str.charCodeAt(i)) >>> 0;
+  return h.toString(36);
+})(SYSTEM_PROMPT + JSON.stringify(FEWSHOT));
 
 function corsHeaders(origin) {
   const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
@@ -446,13 +474,19 @@ export default {
     const history = Array.isArray(body.history) ? body.history.slice(-6) : [];
     const wantStream = !!(body && body.stream === true);
 
+    const safe = safetyReply(userMsg);
+    if (safe) {
+      logAsk(env, ctx, userMsg, safe);
+      return wantStream ? sseOnce(safe, cors) : json({ reply: safe }, 200, cors);
+    }
+
     const cache = caches.default;
     let cacheKey = null;
     if (history.length === 0) {
       const norm = userMsg.toLowerCase().replace(/\s+/g, " ").trim().slice(0, 200);
       const url = new URL(request.url);
       url.pathname = "/__cache/q";
-      url.search = "?k=" + encodeURIComponent(norm);
+      url.search = "?v=" + PROMPT_VERSION + "&k=" + encodeURIComponent(norm);
       cacheKey = new Request(url.toString(), { method: "GET" });
       const hit = await cache.match(cacheKey);
       if (hit) {

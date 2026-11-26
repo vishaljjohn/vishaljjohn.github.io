@@ -172,7 +172,8 @@
   function clearChips(){ var c = thread.querySelectorAll('.vjw-chips'); for (var i = 0; i < c.length; i++) c[i].remove(); }
   function showChips(){
     clearChips();
-    var list = window.VJFun ? window.VJFun.chips(usedChips, 3) : [];
+    var lastBot = msgs.length && !msgs[msgs.length - 1].me ? strip(msgs[msgs.length - 1].h) : '';
+    var list = window.VJFun ? window.VJFun.chips(usedChips, 3, lastBot, location.pathname) : [];
     if (!list.length) return;
     var wrap = document.createElement('div'); wrap.className = 'vjw-chips';
     list.forEach(function(c){
@@ -253,7 +254,7 @@
         rmTyping(); addBubble(esc(part).replace(/\n/g, '<br>'));
         hist.push({role:'assistant', content:part});
         if (parts.length){ addTyping(); setTimeout(next, 1500); }
-        else { busy = false; sendBtn.disabled = false; save(); showChips(); }
+        else { busy = false; sendBtn.disabled = false; save(); if (fun.kind !== 'safety') showChips(); }
       };
       setTimeout(next, 650);
       return;
@@ -286,9 +287,13 @@
     "hi there! i'm vishal's ai twin. i know about my research, my kids' book, my balloon animal skills, and an alarming number of medical puns.",
     "welcome! ask me anything. warning: i will offer you a balloon animal at some point."
   ];
+  function pickGreet(){
+    var g = window.VJFun && window.VJFun.greet && window.VJFun.greet(location.pathname);
+    return g || GREETS[Math.floor(Math.random() * GREETS.length)];
+  }
   function openPanel(){
     panel.classList.add('open'); tip.style.display = 'none'; launch.setAttribute('aria-expanded', 'true');
-    if (!greeted){ greeted = true; setTimeout(function(){ addTyping(); setTimeout(function(){ rmTyping(); addBubble(GREETS[Math.floor(Math.random() * GREETS.length)]); showChips(); }, 700); }, 250); }
+    if (!greeted){ greeted = true; setTimeout(function(){ addTyping(); setTimeout(function(){ rmTyping(); addBubble(pickGreet()); showChips(); }, 700); }, 250); }
     else if (!thread.querySelector('.vjw-chips') && !busy) showChips();
     setTimeout(function(){ field.focus(); }, 200);
   }
@@ -296,7 +301,7 @@
   panel.querySelector('.vjw-new').addEventListener('click', function(){
     if (busy) return;
     msgs = []; hist = []; usedChips = []; thread.innerHTML = ''; save();
-    addBubble(GREETS[Math.floor(Math.random() * GREETS.length)]); showChips(); field.focus();
+    addBubble(pickGreet()); showChips(); field.focus();
   });
 
   launch.addEventListener('click', function(){ panel.classList.contains('open') ? closePanel() : openPanel(); });
