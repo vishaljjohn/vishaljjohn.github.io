@@ -10,7 +10,7 @@ Static site on GitHub Pages; pushing to `main` deploys in about a minute.
 - CV: `assets/cv.json` (rendered on `pages/about.html`). Rebuild the PDF with `./tools/build-cv-pdf.sh` after any CV, publication, or presentation change.
 - Publications: `assets/publications.json`. Presentations: `assets/presentations.json`. Both feed the Publications page and the CV.
 - Shared styles: `assets/site.css` (loaded after each page's inline styles). Shared scripts: `assets/site.js`, `assets/theme.js`, `assets/gallery.js`, `assets/chat-widget.js`.
-- Chat backend: `cloudflare-worker.js` runs on Cloudflare and must be redeployed there by hand.
+- Chat backend: `cloudflare-worker.js` runs on Cloudflare (Worker `vishal-chat`, config in `wrangler.toml`). `.github/workflows/deploy-worker.yml` deploys it automatically on push to `main` once the `CLOUDFLARE_API_TOKEN` repository secret is set; until then it must be pasted into the Cloudflare dashboard by hand.
 - Guestbook: `pages/guestbook.html`, stored by the Worker's `/guestbook` endpoints; moderate at `pages/guestbook.html?admin` (see `DEPLOY_CHAT_AI.md`).
 - Shared header/footer: edit `tools/partials/`, then run `python3 tools/build.py` (also regenerates paper pages, short links and the sitemap). Base layout CSS is `assets/base.css`.
 - Project tiles on both homepages use 600px copies in `images/thumbs/`; `tools/build.py` creates missing ones.

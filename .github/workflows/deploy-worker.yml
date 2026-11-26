@@ -1,0 +1,44 @@
+name: Deploy Cloudflare Worker
+
+# Deploys cloudflare-worker.js (chat bot, guestbook, contact inbox) whenever it changes on main.
+# Needs one repository secret: CLOUDFLARE_API_TOKEN (Cloudflare "Edit Cloudflare Workers" token).
+on:
+  push:
+    branches: [main]
+    paths: ["cloudflare-worker.js", "wrangler.toml", ".github/workflows/deploy-worker.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-worker
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      HAS_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+    steps:
+      - name: Skip if the Cloudflare token isn't set up yet
+        if: env.HAS_TOKEN != 'true'
+        run: echo "::warning::Add the CLOUDFLARE_API_TOKEN repository secret to turn on automatic Worker deploys."
+      - uses: actions/checkout@v4
+        if: env.HAS_TOKEN == 'true'
+      - name: Check the Worker parses
+        if: env.HAS_TOKEN == 'true'
+        run: node --check cloudflare-worker.js
+      - name: Deploy with Wrangler
+        if: env.HAS_TOKEN == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - name: Check the live Worker
+        if: env.HAS_TOKEN == 'true'
+        run: |
+          sleep 10
+          curl -fsS -H "Origin: https://www.vishaljohn.com" https://vishal-chat.vishaljjohn.workers.dev/guestbook | grep -q '"api":3'
+          code=$(curl -s -o /dev/null -w "%{http_code}" -H "Origin: https://www.vishaljohn.com" "https://vishal-chat.vishaljjohn.workers.dev/contact?key=wrong")
+          echo "contact inbox answered $code (401 means it is deployed)"
+          test "$code" = "401" || test "$code" = "429"

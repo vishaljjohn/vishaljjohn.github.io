@@ -1,0 +1,19 @@
+# Cloudflare Worker for the site's chat bot, guestbook, contact inbox, visitor counter and game scores.
+# Deployed automatically by .github/workflows/deploy-worker.yml when cloudflare-worker.js changes.
+name = "vishal-chat"
+main = "cloudflare-worker.js"
+compatibility_date = "2025-01-01"
+workers_dev = true
+# keep variables set in the Cloudflare dashboard (secrets like ASK_LOG_KEY are always kept)
+keep_vars = true
+
+[[kv_namespaces]]
+binding = "VISITS"
+id = "d9ce8c7555b446299eb1edf56d4ceaec"
+
+[ai]
+binding = "AI"
+
+# Workers Logs: see errors and requests in the Cloudflare dashboard
+[observability]
+enabled = true
