@@ -1120,7 +1120,7 @@
             { k: ['bye','goodbye','see you','later','cya'],
               a: "take care, come back soon!" }
         ];
-        var FALLBACK = "great question! i don't have a quick answer for that one, but you can ask me about the children's book, balloon animals, my volunteering, or how to reach me. for anything else, my <a href='pages/contact.html'>Contact</a> page is the best bet.";
+        var FALLBACK = "ooh, that one stumped me, and i've survived organic chemistry. ask me about the children's book, balloon animals or volunteering, or say \"tell me a joke.\" for anything else, the real me reads my <a href='pages/contact.html'>Contact</a> page.";
 
         function kbReply(text) {
             var q = ' ' + text.toLowerCase().replace(/[^a-z0-9.@ ]/g, ' ') + ' ';
@@ -1166,6 +1166,20 @@
             hist.push({ role: 'user', content: text });
             field.value = '';
             addTyping();
+            var fun = window.VJFun && window.VJFun.reply(text);
+            if (fun) {
+                // instant reply: setup, a beat, then the punchline (works even if the AI is down)
+                var parts = fun.parts.slice();
+                var next = function () {
+                    var part = parts.shift();
+                    removeTyping(); addBubble(escapeHtml(part).replace(/\n/g, '<br>'));
+                    hist.push({ role: 'assistant', content: part });
+                    if (parts.length) { addTyping(); setTimeout(next, 1500); }
+                    else { showChips(); busy = false; sendBtn.disabled = false; }
+                };
+                setTimeout(next, 650);
+                return;
+            }
             var started = Date.now();
             aiReply(text).then(function (reply) {
                 var fromAI = !!reply;
@@ -2045,6 +2059,7 @@
                 { label: 'My work', act: function () { openOv('ovWork'); } },
                 { label: 'The book', href: 'pages/childrensbook.html' },
                 { label: 'Balloon animals', href: 'pages/balloonanimals.html' },
+                { label: 'Tell me a joke', act: function () { send('tell me a joke'); } },
                 { label: 'Find me online', act: function () { openOv('ovLinks'); } }
             ]);
         }
@@ -2072,5 +2087,6 @@
     })();
     </script>
     <script src="assets/codeblue.js" defer></script>
+    <script src="assets/chat-fun.js" defer></script>
 </body>
 </html>

@@ -11,6 +11,11 @@
 
   var AI_ENDPOINT = "https://vishal-chat.vishaljjohn.workers.dev";
 
+  /* ---- Instant fun replies (jokes, balloon animals, fun facts): assets/chat-fun.js ---- */
+  var ME = document.currentScript;
+  var BASE = ME && ME.src ? ME.src.replace(/chat-widget\.js(\?.*)?$/, '') : '/assets/';
+  if (!window.VJFun) { var funS = document.createElement('script'); funS.src = BASE + 'chat-fun.js'; funS.defer = true; document.head.appendChild(funS); }
+
   /* ---- Offline fallback knowledge (used if the AI is unreachable) ---- */
   var KB = [
     { k: ['who are you','about you','yourself','your name','what do you do'],
@@ -44,11 +49,11 @@
     { k: ['hi','hey','hello','yo','howdy'],
       a: "hey! great to see you. ask me anything: my research, the kids' book, balloon animals, or how to reach me." },
     { k: ['thank','thanks'],
-      a: "anytime!" },
+      a: "anytime! tell your friends i'm hilarious." },
     { k: ['bye','goodbye','later'],
-      a: "take care, come back soon!" }
+      a: "bye! go drink some water. that's the only medical advice i'm allowed to give." }
   ];
-  var FALLBACK = "great question! i'm not sure about that one — try my Contact page and i'll get back to you. you can also ask about my research, the book, balloon animals, or volunteering.";
+  var FALLBACK = "ooh, that one stumped me, and i've survived organic chemistry. send it through my <a href='/pages/contact.html'>Contact page</a> and the real me will answer. or ask me for a joke, a balloon animal, or a fun fact.";
 
   function kbReply(text) {
     var q = ' ' + text.toLowerCase().replace(/[^a-z0-9.@ ]/g, ' ') + ' ';
@@ -81,7 +86,7 @@
    + 'display:flex;align-items:center;justify-content:center;flex-shrink:0;}'
    + '.vjw-ava .h{color:#e5484d;font-size:11px;}'
    + '.vjw-name{font-weight:700;font-size:15px;line-height:1.1;}'
-   + '.vjw-status{font-size:11px;opacity:.9;display:flex;align-items:center;gap:5px;}'
+   + '.vjw-status{font-size:11px;opacity:.9;display:flex;align-items:center;gap:5px;white-space:nowrap;}'
    + '.vjw-dot{width:6px;height:6px;border-radius:50%;background:#5ee0a0;display:inline-block;}'
    + '.vjw-x{margin-left:auto;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;opacity:.9;}'
    + '.vjw-thread{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f6f7f9;}'
@@ -98,6 +103,19 @@
    + '.vjw-field:focus{border-color:#0a6db0;}'
    + '.vjw-send{width:40px;height:40px;flex-shrink:0;border:none;border-radius:50%;background:#0a6db0;color:#fff;cursor:pointer;font-size:16px;}'
    + '.vjw-send:disabled{opacity:.5;}'
+   + '.vjw-chips{display:flex;flex-wrap:wrap;gap:6px;align-self:flex-start;max-width:100%;}'
+   + '.vjw-chip{border:1.5px solid #0a6db0;background:#fff;color:#0a5a92;border-radius:999px;padding:8px 12px;font:600 13px/1.1 -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;cursor:pointer;min-height:36px;}'
+   + '@media (hover:hover){.vjw-chip:hover{background:#0a6db0;color:#fff;}}'
+   + '.vjw-new{background:#074a7a;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:999px;font:600 12px/1 -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;padding:7px 10px;cursor:pointer;margin-left:auto;}'
+   + '.vjw-new + .vjw-x{margin-left:4px;}'
+   + '.vjw-new{white-space:nowrap;flex-shrink:0;}'
+   + '@media (max-width:360px){.vjw-new{padding:6px 8px;font-size:11px;}}'
+   + '.vjw-panel :focus-visible{outline:3px solid #6cb6ff;outline-offset:2px;}'
+   + 'html.dark .vjw-panel{background:#161a20;}html.dark .vjw-thread{background:#0f1216;}'
+   + 'html.dark .vjw-b.bot{background:#1d232b;color:#e6e9ee;border-color:#2a313c;}html.dark .vjw-b a{color:#8cc8ff;}'
+   + 'html.dark .vjw-input{background:#161a20;border-color:#2a313c;}html.dark .vjw-field{background:#0f1216;color:#e6e9ee;border-color:#3a4250;}'
+   + 'html.dark .vjw-chip{background:#161a20;color:#9fd0ff;border-color:#3d8fd6;}@media (hover:hover){html.dark .vjw-chip:hover{background:#1f6fb3;color:#fff;}}'
+   + '@media (prefers-reduced-motion:reduce){.vjw-panel.open{animation:none;}.vjw-typing span{animation:none;opacity:.6;}.vjw-launch{transition:none;}}'
    + '.vjw-call{position:fixed;right:88px;bottom:25px;z-index:2147483000;display:flex;align-items:center;gap:7px;background:#0a6db0;color:#fff;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-weight:700;font-size:13px;height:46px;padding:0 16px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,0.28);}'
    + '.vjw-call:hover{background:#085a93;}'
    + '.vjw-call svg{width:18px;height:18px;}'
@@ -106,7 +124,7 @@
 
   /* ---- DOM ---- */
   var launch = document.createElement('button');
-  launch.className = 'vjw-launch'; launch.setAttribute('aria-label', 'Chat with Vishal');
+  launch.className = 'vjw-launch'; launch.setAttribute('aria-label', 'Chat with Vishal'); launch.setAttribute('aria-expanded', 'false');
   launch.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>';
   document.body.appendChild(launch);
 
@@ -118,7 +136,8 @@
   document.body.appendChild(vcBtn);
 
   var tip = document.createElement('div');
-  tip.className = 'vjw-tip'; tip.textContent = 'Hi! Ask me anything'; tip.style.display = 'none';
+  tip.className = 'vjw-tip'; tip.style.display = 'none';
+  tip.textContent = ['Hi! Ask me anything', 'psst. i can make you a balloon animal.', 'ask me for a medical pun. i dare you.', 'want a fun fact about me?'][Math.floor(Math.random() * 4)];
   document.body.appendChild(tip);
 
   var panel = document.createElement('div');
@@ -127,23 +146,51 @@
       '<div class="vjw-head">'
     + '  <div class="vjw-ava">V<span class="h">&#9829;</span>J</div>'
     + '  <div><div class="vjw-name">Vishal John</div><div class="vjw-status"><span class="vjw-dot"></span> ask me anything</div></div>'
-    + '  <button class="vjw-x" aria-label="Close chat">&times;</button>'
+    + '  <button class="vjw-new" type="button" aria-label="Start a new chat">new chat</button>'
+    + '  <button class="vjw-x" type="button" aria-label="Close chat">&times;</button>'
     + '</div>'
-    + '<div class="vjw-thread" id="vjwThread"></div>'
+    + '<div class="vjw-thread" id="vjwThread" role="log" aria-live="polite" aria-relevant="additions"></div>'
     + '<div class="vjw-input"><input class="vjw-field" id="vjwField" type="text" autocomplete="off" placeholder="Ask me anything…" aria-label="Message Vishal"><button class="vjw-send" id="vjwSend" aria-label="Send">&#8593;</button></div>';
   document.body.appendChild(panel);
 
   var thread = panel.querySelector('#vjwThread');
   var field = panel.querySelector('#vjwField');
   var sendBtn = panel.querySelector('#vjwSend');
-  var hist = [], greeted = false, busy = false;
+  var hist = [], greeted = false, busy = false, msgs = [], usedChips = [];
 
+  /* the conversation follows the visitor from page to page during a visit */
+  var SAVE = 'vjw-chat-v1';
+  function save(){ try { sessionStorage.setItem(SAVE, JSON.stringify({ msgs: msgs.slice(-40), hist: hist.slice(-12), used: usedChips })); } catch(e){} }
   function scrollDown(){ thread.scrollTop = thread.scrollHeight; }
-  function addBubble(html, me){
+  function addBubble(html, me, noSave){
     var b = document.createElement('div'); b.className = 'vjw-b ' + (me ? 'me' : 'bot');
     if (me) b.textContent = html; else b.innerHTML = html;
     thread.appendChild(b); scrollDown();
+    if (!noSave){ msgs.push({ h: html, me: !!me }); save(); }
+    return b;
   }
+  function clearChips(){ var c = thread.querySelectorAll('.vjw-chips'); for (var i = 0; i < c.length; i++) c[i].remove(); }
+  function showChips(){
+    clearChips();
+    var list = window.VJFun ? window.VJFun.chips(usedChips, 3) : [];
+    if (!list.length) return;
+    var wrap = document.createElement('div'); wrap.className = 'vjw-chips';
+    list.forEach(function(c){
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'vjw-chip'; b.textContent = c.label;
+      b.addEventListener('click', function(){ usedChips.push(c.label); send(c.q); });
+      wrap.appendChild(b);
+    });
+    thread.appendChild(wrap); scrollDown();
+  }
+  (function restore(){
+    try {
+      var st = JSON.parse(sessionStorage.getItem(SAVE) || 'null');
+      if (st && st.msgs && st.msgs.length){
+        msgs = st.msgs; hist = st.hist || []; usedChips = st.used || []; greeted = true;
+        msgs.forEach(function(m){ addBubble(m.h, m.me, true); });
+      }
+    } catch(e){}
+  })();
   function addTyping(){
     var t = document.createElement('div'); t.className = 'vjw-b bot'; t.id = 'vjwTyping';
     t.innerHTML = '<span class="vjw-typing"><span></span><span></span><span></span></span>';
@@ -194,9 +241,23 @@
   }
   function send(text){
     text = (text||'').trim(); if (!text || busy) return;
-    busy = true; sendBtn.disabled = true;
+    busy = true; sendBtn.disabled = true; clearChips();
     addBubble(text, true); hist.push({role:'user', content:text}); field.value = '';
     addTyping();
+    var fun = window.VJFun && window.VJFun.reply(text);
+    if (fun){
+      // instant reply: setup, a beat, then the punchline
+      var parts = fun.parts.slice();
+      var next = function(){
+        var part = parts.shift();
+        rmTyping(); addBubble(esc(part).replace(/\n/g, '<br>'));
+        hist.push({role:'assistant', content:part});
+        if (parts.length){ addTyping(); setTimeout(next, 1500); }
+        else { busy = false; sendBtn.disabled = false; save(); showChips(); }
+      };
+      setTimeout(next, 650);
+      return;
+    }
     var bubble = null, shown = '';
     function ensureBubble(){ if (!bubble){ rmTyping(); bubble = document.createElement('div'); bubble.className = 'vjw-b bot'; thread.appendChild(bubble); } }
     function onToken(tok){ shown += tok; ensureBubble(); bubble.textContent = shown; scrollDown(); }
@@ -204,32 +265,45 @@
       rmTyping(); var kb = kbReply(text);
       if (bubble){ bubble.innerHTML = kb; } else { addBubble(kb); }
       scrollDown(); hist.push({role:'assistant', content:strip(kb)});
-      busy = false; sendBtn.disabled = false;
+      if (bubble){ msgs.push({ h: kb, me: false }); }
+      busy = false; sendBtn.disabled = false; save(); showChips();
     }
     aiReplyStream(text, onToken).then(function(res){
       if (res && res.ok && res.full && res.full.trim()){
         var reply = res.full.trim();
         ensureBubble(); bubble.innerHTML = linkify(reply); scrollDown();
         hist.push({role:'assistant', content:strip(reply)});
-        busy = false; sendBtn.disabled = false;
+        msgs.push({ h: linkify(reply), me: false });
+        busy = false; sendBtn.disabled = false; save(); showChips();
       } else {
         fallback();
       }
     }).catch(fallback);
   }
 
+  var GREETS = [
+    "hey! i'm vishal. well, the ai version of me: same jokes, more sleep. ask me anything, or tap a button below.",
+    "hi there! i'm vishal's ai twin. i know about my research, my kids' book, my balloon animal skills, and an alarming number of medical puns.",
+    "welcome! ask me anything. warning: i will offer you a balloon animal at some point."
+  ];
   function openPanel(){
-    panel.classList.add('open'); tip.style.display = 'none';
-    if (!greeted){ greeted = true; setTimeout(function(){ addTyping(); setTimeout(function(){ rmTyping(); addBubble("hey! i'm vishal (well, an ai version of me). ask me anything about my work, the kids' book, balloon animals, or how to get in touch."); }, 700); }, 150); }
+    panel.classList.add('open'); tip.style.display = 'none'; launch.setAttribute('aria-expanded', 'true');
+    if (!greeted){ greeted = true; setTimeout(function(){ addTyping(); setTimeout(function(){ rmTyping(); addBubble(GREETS[Math.floor(Math.random() * GREETS.length)]); showChips(); }, 700); }, 250); }
+    else if (!thread.querySelector('.vjw-chips') && !busy) showChips();
     setTimeout(function(){ field.focus(); }, 200);
   }
-  function closePanel(){ panel.classList.remove('open'); }
+  function closePanel(){ if (!panel.classList.contains('open')) return; panel.classList.remove('open'); launch.setAttribute('aria-expanded', 'false'); launch.focus(); }
+  panel.querySelector('.vjw-new').addEventListener('click', function(){
+    if (busy) return;
+    msgs = []; hist = []; usedChips = []; thread.innerHTML = ''; save();
+    addBubble(GREETS[Math.floor(Math.random() * GREETS.length)]); showChips(); field.focus();
+  });
 
   launch.addEventListener('click', function(){ panel.classList.contains('open') ? closePanel() : openPanel(); });
   panel.querySelector('.vjw-x').addEventListener('click', closePanel);
   sendBtn.addEventListener('click', function(){ send(field.value); });
   field.addEventListener('keydown', function(e){ if (e.key === 'Enter'){ e.preventDefault(); send(field.value); } });
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closePanel(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && panel.classList.contains('open')) closePanel(); });
 
   /* gentle one-time invite */
   setTimeout(function(){ if (!panel.classList.contains('open')) { tip.style.display = 'block';
