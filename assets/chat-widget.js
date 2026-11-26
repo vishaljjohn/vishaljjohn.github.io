@@ -242,7 +242,7 @@
   }
   function send(text){
     text = (text||'').trim(); if (!text || busy) return;
-    busy = true; sendBtn.disabled = true; clearChips();
+    busy = true; sendBtn.disabled = true; clearChips(); cancelGreeting();
     addBubble(text, true); hist.push({role:'user', content:text}); field.value = '';
     addTyping();
     var fun = window.VJFun && window.VJFun.reply(text);
@@ -291,16 +291,24 @@
     var g = window.VJFun && window.VJFun.greet && window.VJFun.greet(location.pathname);
     return g || GREETS[Math.floor(Math.random() * GREETS.length)];
   }
+  var greetTimer = null;
+  function cancelGreeting(){ if (greetTimer){ clearTimeout(greetTimer); greetTimer = null; } var g = document.getElementById('vjwGreetTyping'); if (g) g.remove(); }
   function openPanel(){
     panel.classList.add('open'); tip.style.display = 'none'; launch.setAttribute('aria-expanded', 'true');
-    if (!greeted){ greeted = true; setTimeout(function(){ addTyping(); setTimeout(function(){ rmTyping(); addBubble(pickGreet()); showChips(); }, 700); }, 250); }
+    if (!greeted){
+      greeted = true;
+      greetTimer = setTimeout(function(){
+        var t = addTyping(); t.id = 'vjwGreetTyping';
+        greetTimer = setTimeout(function(){ greetTimer = null; t.remove(); addBubble(pickGreet()); showChips(); }, 700);
+      }, 250);
+    }
     else if (!thread.querySelector('.vjw-chips') && !busy) showChips();
     setTimeout(function(){ field.focus(); }, 200);
   }
   function closePanel(){ if (!panel.classList.contains('open')) return; panel.classList.remove('open'); launch.setAttribute('aria-expanded', 'false'); launch.focus(); }
   panel.querySelector('.vjw-new').addEventListener('click', function(){
     if (busy) return;
-    msgs = []; hist = []; usedChips = []; thread.innerHTML = ''; save();
+    cancelGreeting(); msgs = []; hist = []; usedChips = []; thread.innerHTML = ''; save();
     addBubble(pickGreet()); showChips(); field.focus();
   });
 
