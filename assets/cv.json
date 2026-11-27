@@ -16,7 +16,7 @@
   "name": "Vishal John",
   "headline": "M.D. Candidate, Class of 2028 · University of Louisville School of Medicine",
   "location": "Louisville, KY",
-  "updated": "2026-11-17",
+  "updated": "2026-11-27",
   "contact": [
     {
       "label": "vishal.john@louisville.edu",
@@ -110,6 +110,53 @@
           "bullets": [
             "Identified an unmet clinical need through clinical observation and physician interviews, then designed, prototyped, and tested a device with an engineering team.",
             "Completed customer discovery and business training through UofL's NSF I-Corps program."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Software & Tools",
+      "type": "entries",
+      "items": [
+        {
+          "title": "Test Simulator, Creator & Developer",
+          "org": "Free open-source web app (vishaljohn.com/block-sim)",
+          "dates": "Nov 2026",
+          "bullets": [
+            "Built a board-style practice exam simulator that turns question PDFs into timed blocks with highlighting, lab values, a calculator, and missed-question review; runs privately and offline in the browser."
+          ]
+        },
+        {
+          "title": "AnkiMedRef, Co-Developer",
+          "org": "Anki add-on published on AnkiWeb",
+          "dates": "May 2026 – Present",
+          "note": "Built with Agboade Sobowale.",
+          "bullets": [
+            "Shows an instant reference card when hovering over a medical term during Anki reviews, using built-in dictionaries and a 1.2-million-term offline database."
+          ]
+        },
+        {
+          "title": "Anki Face Control, Creator",
+          "org": "Free open-source Anki add-on",
+          "dates": "Sep 2026",
+          "bullets": [
+            "Enables hands-free flashcard review through webcam head and face tracking, designed for students with disabilities or limited mobility."
+          ]
+        },
+        {
+          "title": "UWorld2Anki, Creator",
+          "org": "Free Chrome extension",
+          "dates": "Jun 2026",
+          "bullets": [
+            "Adds an \"Open in Anki\" button to each question ID that opens the matching AnKing-tagged Anki cards, with a count of matches."
+          ]
+        },
+        {
+          "title": "Owensboro White Flag & Help Finder, Creator",
+          "org": "Community web app, Owensboro, KY",
+          "dates": "Nov 2026",
+          "bullets": [
+            "Built during a family medicine rotation: uses the National Weather Service forecast to show whether the emergency warming shelter is likely open and lists free local shelter, food, and health resources, in English and Spanish, built to WCAG accessibility standards."
           ]
         }
       ]
